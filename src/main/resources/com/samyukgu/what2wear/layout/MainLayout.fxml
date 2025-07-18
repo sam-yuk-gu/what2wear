@@ -22,12 +22,9 @@
                 <!-- 메뉴 그룹 -->
                 <VBox spacing="20">
                     <Button fx:id="closetButton" text="내 옷장" styleClass="menu-button" minHeight="53" maxWidth="Infinity"/>
-    <!--            <Button fx:id="closetButton" text="내 옷장" onAction="#handleCloset"/>-->
                     <Button fx:id="friendButton" text="친구" onAction="#handleClickFriend" styleClass="menu-button" minHeight="53" maxWidth="Infinity"/>
                     <Button fx:id="boardButton" text="게시판" styleClass="menu-button" minHeight="53" maxWidth="Infinity"/>
-    <!--            <Button fx:id="boardButton" text="게시판" onAction="#handleBoard"/>-->
                     <Button fx:id="mypageButton" text="마이페이지" styleClass="menu-button" minHeight="53" maxWidth="Infinity"/>
-    <!--            <Button fx:id="mypageButton" text="마이페이지" onAction="#handleMyPage"/>-->
                 </VBox>
             </VBox>
             <Region fx:id="spacer" />
