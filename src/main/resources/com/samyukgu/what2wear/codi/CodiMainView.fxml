@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.Button?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.samyukgu.what2wear.codi.controller.CodiMainController"
+      spacing="5"
+      stylesheets="@/com/samyukgu/what2wear/codi/style.css"
+>
+
+    <padding>
+        <Insets top="20" left="20" right="20"/>
+    </padding>
+
+    <Text fx:id="welcomeTitle" text="안녕하세요, 코사님" styleClass="welcome-title"/>
+    <Text fx:id="welcomeSubtext" text="오늘 날씨는 외출하기 좋은 기온이에요!" styleClass="welcome-subtext"/>
+    <!--    <ImageView fitWidth="200" fitHeight="200">-->
+    <!--        <image>-->
+    <!--            <Image url="@/assets/images/cute.jpg" preserveRatio="true"/>-->
+    <!--        </image>-->
+    <!--    </ImageView>-->
+    <Button text="스택 테스트" onAction="#handleClickAddCodi"/>
+</VBox>
