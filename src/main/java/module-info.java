@@ -4,5 +4,7 @@ module com.samyukgu.what2wear {
 
 
     opens com.samyukgu.what2wear to javafx.fxml;
+    opens com.samyukgu.what2wear.wardrobe to javafx.fxml;
     exports com.samyukgu.what2wear;
+    opens com.samyukgu.what2wear.wardrobe.controller to javafx.fxml;
 }
