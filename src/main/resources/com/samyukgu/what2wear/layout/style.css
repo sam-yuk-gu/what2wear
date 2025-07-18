@@ -1,0 +1,50 @@
+#mainLayout {
+    -fx-background-color: #F9FBFC;
+}
+
+/* 전체 사이드바 컨테이너 */
+.sidebar {
+    -fx-background-color: #F9FBFC;
+    -fx-padding: 55 40 55 40;
+}
+
+/* 기본 메뉴 버튼 스타일 */
+.menu-button {
+    -fx-font-family: "Pretendard Medium";
+    -fx-background-color: transparent;
+    -fx-text-fill: #5D5D5D;
+    -fx-font-size: 16px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 0 20;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
+
+/* 선택된 메뉴 (하이라이트) */
+.menu-button.selected {
+    -fx-background-color: #FFF9D9;
+    -fx-text-fill: #000000;
+    -fx-border-color: #C0C0C0;
+    -fx-border-width: 1;
+}
+
+/* 로고 버튼 */
+.logo-button {
+    -fx-font-family: "Pretendard Bold";
+    -fx-background-color: transparent;
+    -fx-text-fill: #000000;
+    -fx-font-size: 20px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 0;
+}
+
+.content-pane {
+    -fx-background-color: white;
+    -fx-background-radius: 20 0 0 20; /* 왼쪽 위, 왼쪽 아래만 둥글게 */
+
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 10, 0.2, 0, 4);
+    /*               ↑             ↑     ↑     ↑   ↑  ↑
+       타입         색상           블러  스프레드 X Y */
+
+    -fx-padding: 20; /* 내용 여백 (선택사항) */
+}

@@ -19,8 +19,8 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/samyukgu/what2wear/layout/MainLayout.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1280, 768);
 
         // 전역 CSS 연결 및 폰트 등록
         URL styleUrl = getClass().getResource("/styles/style.css");
@@ -30,7 +30,8 @@ public class HelloApplication extends Application {
             throw new IllegalStateException("style.css not found");
         }
 
-        stage.setTitle("Hello!");
+        stage.setResizable(false);  // 크기 고정
+        stage.setTitle("내일 뭐 입지?");
         stage.setScene(scene);
         stage.show();
     }
