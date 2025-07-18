@@ -12,10 +12,11 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/samyukgu/what2wear/post/post_list.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1280, 768);
 
-        // CSS 추가
+        Scene scene = new Scene(fxmlLoader.load(), 1280, 768);
+        // css 추가
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/com/samyukgu/what2wear/post/style.css")).toExternalForm());
+
 
         stage.setTitle("Hello!");
         stage.setScene(scene);
