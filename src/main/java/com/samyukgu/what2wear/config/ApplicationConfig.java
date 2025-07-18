@@ -1,6 +1,9 @@
 package com.samyukgu.what2wear.config;
 
 import com.samyukgu.what2wear.di.DIContainer;
+import com.samyukgu.what2wear.member.dao.MemberDAO;
+import com.samyukgu.what2wear.member.dao.MemberOracleDAO;
+import com.samyukgu.what2wear.member.service.MemberService;
 
 public class ApplicationConfig {
     public static void configure() {
@@ -15,7 +18,8 @@ public class ApplicationConfig {
         */
 
         // DAO
-
+        container.registerSingleton(MemberDAO.class, new MemberOracleDAO());
         // Service
+        container.registerSingleton(MemberService.class, new MemberService(container.resolve(MemberDAO.class)));
     }
 }
