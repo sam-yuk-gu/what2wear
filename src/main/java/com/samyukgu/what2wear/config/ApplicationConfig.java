@@ -1,6 +1,6 @@
-package com.samyukgu.config;
+package com.samyukgu.what2wear.config;
 
-import com.samyukgu.di.DIContainer;
+import com.samyukgu.what2wear.di.DIContainer;
 
 public class ApplicationConfig {
     public static void configure() {

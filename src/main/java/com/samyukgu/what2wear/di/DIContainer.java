@@ -1,4 +1,4 @@
-package com.samyukgu.di;
+package com.samyukgu.what2wear.di;
 
 import java.util.concurrent.ConcurrentHashMap;
 
