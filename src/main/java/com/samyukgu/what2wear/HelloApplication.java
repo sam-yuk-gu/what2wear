@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class HelloApplication extends Application {
     @Override
@@ -20,6 +21,15 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+
+        // 전역 CSS 연결 및 폰트 등록
+        URL styleUrl = getClass().getResource("/styles/style.css");
+        if (styleUrl != null) {
+            scene.getStylesheets().add(styleUrl.toExternalForm());
+        } else {
+            throw new IllegalStateException("style.css not found");
+        }
+
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
