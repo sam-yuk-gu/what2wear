@@ -1,7 +1,7 @@
 package com.samyukgu.what2wear;
 
-import com.samyukgu.config.ApplicationConfig;
-import com.samyukgu.di.DIContainer;
+import com.samyukgu.what2wear.config.ApplicationConfig;
+import com.samyukgu.what2wear.di.DIContainer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
