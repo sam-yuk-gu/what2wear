@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      spacing="5"
+      alignment="TOP_LEFT"
+      styleClass="welcome-header"
+      stylesheets="@/com/samyukgu/what2wear/codi/style.css"
+      prefHeight="1030"
+      prefWidth="768"
+>
+
+    <padding>
+        <Insets top="20" left="20" right="20" bottom="0"/>
+    </padding>
+
+    <Text fx:id="welcomeTitle" text="안녕하세요, 코사님" styleClass="welcome-title"/>
+    <Text fx:id="welcomeSubtext" text="오늘 날씨는 외출하기 좋은 기온이에요!" styleClass="welcome-subtext"/>
+<!--    <ImageView fitWidth="200" fitHeight="200">-->
+<!--        <image>-->
+<!--            <Image url="@/assets/images/cute.jpg" preserveRatio="true"/>-->
+<!--        </image>-->
+<!--    </ImageView>-->
+</VBox>
