@@ -1,0 +1,16 @@
+.side_ankerpane {
+    -fx-background-color: #353A56;
+    -fx-border-width: 2px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-border-style: solid;
+}
+
+.inner_pane {
+    -fx-background-color: #743CF1;
+    -fx-border-width: 2px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-border-style: solid;
+    -fx-border-color: #743CF1;
+}
