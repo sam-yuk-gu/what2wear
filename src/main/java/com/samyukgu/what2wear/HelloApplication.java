@@ -3,9 +3,11 @@ package com.samyukgu.what2wear;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Objects;
 
 public class HelloApplication extends Application {
@@ -17,6 +19,13 @@ public class HelloApplication extends Application {
         // css 추가
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/com/samyukgu/what2wear/post/style.css")).toExternalForm());
 
+        // font 설정
+        URL styleUrl = getClass().getResource("/styles/style.css");
+        if (styleUrl != null) {
+            scene.getStylesheets().add(styleUrl.toExternalForm());
+        } else {
+            throw new IllegalStateException("style.css not found");
+        }
 
         stage.setTitle("Hello!");
         stage.setScene(scene);

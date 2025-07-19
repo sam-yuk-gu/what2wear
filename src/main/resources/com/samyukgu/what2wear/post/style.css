@@ -1,16 +1,186 @@
-.side_ankerpane {
-    -fx-background-color: #353A56;
-    -fx-border-width: 2px;
-    -fx-border-radius: 20px;
-    -fx-background-radius: 20px;
-    -fx-border-style: solid;
+/* 공통 스타일 */
+
+.root {
+    -fx-background-color: #F9FBFC;
 }
 
-.inner_pane {
-    -fx-background-color: #743CF1;
-    -fx-border-width: 2px;
-    -fx-border-radius: 20px;
-    -fx-background-radius: 20px;
-    -fx-border-style: solid;
-    -fx-border-color: #743CF1;
+.board_vbox {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 20px 0px 0px 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0.2, 0, 4);
 }
+
+/* post_list 관련 css * */
+
+.inner_pane {
+
+}
+
+.menu_item {
+    -fx-background-color: transparent;
+    -fx-padding: 10 20;
+    -fx-spacing: 10;
+    -fx-alignment: CENTER_LEFT;
+    -fx-cursor: hand;
+    -fx-background-radius: 12;
+}
+
+.menu_item:hover {
+    -fx-background-color: #f5f5f5;
+}
+
+.selected_tab {
+    -fx-background-color: #FFF6D6; /* 연한 노란색 */
+    -fx-border-color: #f1d389;
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+}
+
+.board_top_hbox {
+}
+
+.logo_text {
+    -fx-font-family: "Pretendard Bold";
+}
+
+.black_background_button {
+    -fx-background-color: #000000;
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 5px;
+    -fx-font-size: 14px;
+    -fx-font-family: "Pretendard SemiBold";
+}
+
+
+.title_text {
+    -fx-font-family: "Pretendard Medium";
+}
+
+.search_title {
+  -fx-background-color: #FFFFFF;
+  -fx-border-width: 1px;
+  -fx-border-color: #C0C0C0;
+  -fx-border-radius: 5px;
+}
+
+.select_title {
+  -fx-background-color: #FFFFFF;
+  -fx-border-width: 1px;
+  -fx-border-color: #C0C0C0;
+  -fx-border-radius: 5px;
+  -fx-font-size: 14px;
+   -fx-font-family: "Pretendard Regular";
+}
+
+.board_bottom_hbox {
+    -fx-alignment: center;
+}
+
+/* 헤더 배경 색 및 정렬 */
+.table-view .column-header-background {
+    -fx-background-color: #F9F9F9;
+}
+
+/* 헤더 텍스트 스타일 */
+.table-view .column-header .label {
+    -fx-font-size: 14px;
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-alignment: center;
+}
+
+/* 셀 텍스트 정렬 */
+.table-view .table-cell {
+    -fx-font-size: 14px;
+    -fx-font-family: "Pretendard Regular";
+    -fx-padding: 10 0 10 0;
+    -fx-alignment: center;
+}
+
+/* 테이블 전체 스타일 */
+.table-view {
+    -fx-table-cell-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+/* 행 간격, 그리드 제거 */
+.table-view .filler,
+.table-view .column-header,
+.table-view .corner {
+    -fx-background-color: transparent;
+}
+
+/* 스크롤 제거 */
+.table-view .scroll-bar:vertical,
+.table-view .scroll-bar:horizontal {
+    -fx-opacity: 0;
+    -fx-pref-width: 0px;
+    -fx-pref-height: 0px;
+    -fx-max-width: 0px;
+    -fx-max-height: 0px;
+    -fx-min-width: 0px;
+    -fx-min-height: 0px;
+}
+
+.colNo, .colTitle, .colAuthor, .colDate, .colLikes  {
+  -fx-background-color: #F9F9F9;
+  -fx-font-size: 14px;
+  -fx-font-family: "Pretendard Regular";
+}
+
+.gray-stroke-button {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-border-color: lightgray;
+    -fx-padding: 10 20;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+    -fx-font-family: "Pretendard SemiBold";
+}
+
+.black_background_button {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+    -fx-padding: 10 20;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+    -fx-font-family: "Pretendard SemiBold";
+}
+
+.double_button {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+}
+
+.arrow_button {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+}
+
+.page-number:hover {
+    -fx-background-color: #f0f0f0;
+}
+
+.page-number.selected {
+    -fx-background-color: #000000;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 13px;
+}
+
+/* post_create 관련 css */
+
+.header_pane {
+    -fx-border-color: transparent transparent #C0C0C0 transparent;
+    -fx-border-width: 0 0 1px 0;
+}
+
+.header_text, .title_text, .content_text, .codi_text {
+    -fx-font-family: "Pretendard Medium";
+}
+
+
+

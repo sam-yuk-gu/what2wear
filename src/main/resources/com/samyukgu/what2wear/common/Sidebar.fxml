@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<!-- 사이드바 컴포넌트화 !-->
+<VBox prefHeight="768.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <AnchorPane fx:id="side_ankerpane" prefHeight="768.0" prefWidth="250.0" styleClass="side_ankerpane">
+            <children>
+                <VBox fx:id="menu_vbox" layoutX="40.0" layoutY="151.0" prefHeight="250.0" prefWidth="170.0" spacing="20.0">
+                    <children>
+
+                        <!-- 메뉴 아이템들 -->
+                        <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="170.0" spacing="10.0" styleClass="menu_item">
+                            <ImageView fitHeight="24" fitWidth="24">
+                                <image>
+                                    <Image url="@/assets/images/wardrobe_icon.png" />
+                                </image>
+                            </ImageView>
+                            <Label text="내 옷장">
+                                <font><Font size="16.0" /></font>
+                            </Label>
+                        </HBox>
+
+                        <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="170.0" spacing="10.0" styleClass="menu_item">
+                            <ImageView fitHeight="24" fitWidth="24">
+                                <image>
+                                    <Image url="@/assets/images/friend_icon.png" />
+                                </image>
+                            </ImageView>
+                            <Label text="친구">
+                                <font><Font size="16.0" /></font>
+                            </Label>
+                        </HBox>
+
+                        <!-- 선택된 탭 -->
+                        <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="170.0" spacing="10.0" styleClass="menu_item">
+                            <ImageView fitHeight="24" fitWidth="24">
+                                <image>
+                                    <Image url="@/assets/images/board_icon.png" />
+                                </image>
+                            </ImageView>
+                            <Label text="게시판">
+                                <font><Font size="16.0" /></font>
+                            </Label>
+                        </HBox>
+
+                        <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="170.0" spacing="10.0" styleClass="menu_item">
+                            <ImageView fitHeight="24" fitWidth="24">
+                                <image>
+                                    <Image url="@/assets/images/mypage_icon.png" />
+                                </image>
+                            </ImageView>
+                            <Label text="마이페이지">
+                                <font><Font size="16.0" /></font>
+                            </Label>
+                        </HBox>
+                    </children>
+                </VBox>
+
+                <VBox fx:id="menu_bottom_vbox" layoutX="40.0" layoutY="593.0" prefHeight="130.0" prefWidth="170.0">
+                    <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="170.0" spacing="10.0" styleClass="menu_item">
+                        <ImageView fitHeight="24" fitWidth="24">
+                            <image>
+                                <Image url="@/assets/images/alert_icon.png" />
+                            </image>
+                        </ImageView>
+                        <Label text="알림함">
+                            <font><Font size="16.0" /></font>
+                        </Label>
+                    </HBox>
+
+                    <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="170.0" spacing="10.0" styleClass="menu_item">
+                        <ImageView fitHeight="24" fitWidth="24">
+                            <image>
+                                <Image url="@/assets/images/logout_icon.png" />
+                            </image>
+                        </ImageView>
+                        <Label text="로그아웃">
+                            <font><Font size="16.0" /></font>
+                        </Label>
+                    </HBox>
+                </VBox>
+
+                <HBox alignment="CENTER" layoutX="40.0" layoutY="30.0" prefHeight="50.0" prefWidth="170.0" spacing="10.0" styleClass="menu_item">
+                    <children>
+                        <ImageView fitHeight="28" fitWidth="28">
+                            <image>
+                                <Image url="@/assets/images/logo_icon.png" />
+                            </image>
+                        </ImageView>
+                        <Label fx:id="logo_text" styleClass="logo_text" text="내일뭐입지">
+                            <font><Font size="20.0" /></font>
+                        </Label>
+                    </children>
+                </HBox>
+            </children>
+        </AnchorPane>
+    </children>
+</VBox>
