@@ -43,7 +43,7 @@
                         <TextField fx:id="search_title" layoutX="132.0" layoutY="60.0" prefHeight="45.0" prefWidth="300.0" promptText="검색어를 입력해주세요." styleClass="search_title" />
                         <ImageView fx:id="searchIcon" fitHeight="20.0" fitWidth="20.0" layoutX="384.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@/assets/images/search.png" />
+                              <Image url="@/assets/icons/search.png" />
                            </image>
                         </ImageView>
                         <Line fx:id="line" endX="807.0" layoutX="101.0" layoutY="118.0" startX="-101.00001525878906" strokeWidth="1.5" />
@@ -76,7 +76,7 @@
                      <graphic>
                         <ImageView fitHeight="16" fitWidth="30">
                            <image>
-                              <Image url="@/assets/images/double_left_arrow.png" />
+                              <Image url="@/assets/icons/doubleLeftArrow.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -85,7 +85,7 @@
                      <graphic>
                         <ImageView fitHeight="16" fitWidth="30">
                            <image>
-                              <Image url="@/assets/images/left_arrow.png" />
+                              <Image url="@/assets/icons/leftArrow.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -101,7 +101,7 @@
                      <graphic>
                         <ImageView fitHeight="16" fitWidth="30">
                            <image>
-                              <Image url="@/assets/images/right_arrow.png" />
+                              <Image url="@/assets/icons/rightArrow.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -110,7 +110,7 @@
                      <graphic>
                         <ImageView fitHeight="16" fitWidth="30">
                            <image>
-                              <Image url="@/assets/images/double_right_arrow.png" />
+                              <Image url="@/assets/icons/doubleRightArrow.png" />
                            </image>
                         </ImageView>
                      </graphic>

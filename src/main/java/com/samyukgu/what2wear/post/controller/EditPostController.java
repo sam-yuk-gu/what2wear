@@ -5,52 +5,55 @@ import com.samyukgu.what2wear.common.controller.MainLayoutController;
 import com.samyukgu.what2wear.common.controller.PostHeaderController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
-public class CreatePostController {
+public class EditPostController {
 
     @FXML private StackPane root;
+    @FXML private VBox mainVBox;
     @FXML private Button cancelButton;
-    @FXML private Button registerButton;
+    @FXML private Button confirmButton;
 
     @FXML
     public void initialize() {
-        // PostHeader 로드 및 설정
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/PostHeader.fxml"));
             HBox headerNode = loader.load();
             PostHeaderController controller = loader.getController();
-            controller.setTitle("게시글 등록");
+
+            controller.setTitle("게시글 수정");
             // back 버튼 사용 안 함
             controller.setBackButtonVisible(false);
-            root.getChildren().add(0, headerNode);
+
+            // 최상단에 header 삽입
+            mainVBox.getChildren().add(0, headerNode);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        // 버튼 클릭 이벤트
-        cancelButton.setOnAction(event -> handleCancelClick());
-        registerButton.setOnAction(event -> showConfirmationModal());
+        // 버튼 이벤트 설정
+        cancelButton.setOnAction(e -> handleCancelClick());
+        confirmButton.setOnAction(e -> handleConfirmClick());
     }
 
-    // 취소 버튼 클릭 → 게시글 목록 화면으로 이동
+    // 수정 취소 후 목록 확면으로 전환하는 메서드
     private void handleCancelClick() {
         MainLayoutController.loadView("/com/samyukgu/what2wear/post/ListPost.fxml");
     }
 
-    // 모달 띄우기 → 확인 클릭 시 게시글 등록
-    private void showConfirmationModal() {
+    // 수정 확인 후 모달창 띄우는 메서드
+    private void handleConfirmClick() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/CustomModal.fxml"));
             StackPane modal = loader.load();
 
             CustomModalController controller = loader.getController();
             controller.configure(
-                    "게시글 등록 완료",
-                    "정상적으로 게시글이 등록되었습니다.",
+                    "게시글 수정 완료",
+                    "정상적으로 게시글이 수정되었습니다.",
                     "/assets/icons/greenCheck.png",
                     "#4CAF50",
                     "취소",
@@ -59,7 +62,7 @@ public class CreatePostController {
                     () -> {
                         root.getChildren().remove(modal);
                         MainLayoutController.loadView("/com/samyukgu/what2wear/post/ListPost.fxml");
-                        // TODO: 게시글 등록 로직 추가
+                        // TODO: 수정된 게시글 저장 처리
                     }
             );
 

@@ -27,7 +27,7 @@
                 <graphic>
                     <ImageView fitHeight="30" fitWidth="30">
                         <image>
-                            <Image url="@/assets/images/close_button.png" />
+                            <Image url="@/assets/icons/close.png" />
                         </image>
                     </ImageView>
                 </graphic>

@@ -11,19 +11,11 @@
     <!-- 게시판 화면 -->
    <VBox prefHeight="768.0" prefWidth="1030.0" spacing="40.0" styleClass="board_vbox">
       <children>
-          <!-- 헤더 -->
-         <HBox prefHeight="70.0" prefWidth="1030.0">
-            <children>
-               <Pane fx:id="header_pane" prefHeight="70.0" prefWidth="1030.0" styleClass="header_pane">
-                  <children>
-                     <Label fx:id="header_text" layoutX="463.0" layoutY="25.0" styleClass="header_text" text="게시글 등록">
-                        <font>
-                           <Font size="16.0" />
-                        </font>
-                     </Label>
-                  </children>
-               </Pane>
-            </children></HBox>
+         <!-- 헤더 -->
+         <HBox alignment="CENTER" prefHeight="81.0" prefWidth="1030.0">
+            <fx:include fx:id="headerPane" source="/com/samyukgu/what2wear/common/PostHeader.fxml"/>
+         </HBox>
+
          <VBox fx:id="content_vbox" prefHeight="300.0" prefWidth="1030.0">
             <children>
                <Pane fx:id="title_pane" prefHeight="100.0" prefWidth="1010.0">
@@ -57,7 +49,7 @@
                         <graphic>
                            <ImageView fitHeight="24" fitWidth="24">
                               <image>
-                                 <Image url="@/assets/images/black_logo_icon.png" />
+                                 <Image url="@/assets/icons/blackLogo.png" />
                               </image>
                            </ImageView>
                         </graphic>
@@ -70,12 +62,12 @@
             <children>
                <Pane fx:id="bottom_two_button_pane" prefHeight="60.0" prefWidth="1030.0">
                   <children>
-                     <Button fx:id="cancelButton" onAction="#handleCancelClick" layoutX="676.0" layoutY="3.0" prefHeight="55.0" prefWidth="150.0" styleClass="gray_stroke_button" text="취소하기">
+                     <Button fx:id="cancelButton" layoutX="676.0" layoutY="3.0" prefHeight="55.0" prefWidth="150.0" styleClass="gray_stroke_button" text="취소하기">
                         <font>
                            <Font size="24.0" />
                         </font>
                      </Button>
-                     <Button fx:id="registerButton" onAction="#handleRegisterClick" layoutX="834.0" layoutY="3.0" prefHeight="55.0" prefWidth="150.0" styleClass="black_background_button" text="등록하기">
+                     <Button fx:id="registerButton" layoutX="834.0" layoutY="3.0" prefHeight="55.0" prefWidth="150.0" styleClass="black_background_button" text="등록하기">
                         <font>
                            <Font size="24.0" />
                         </font>

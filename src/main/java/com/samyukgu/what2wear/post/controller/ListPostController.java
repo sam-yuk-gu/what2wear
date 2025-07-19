@@ -78,9 +78,6 @@ public class ListPostController implements Initializable {
         MainLayoutController.loadView("/com/samyukgu/what2wear/post/CreatePost.fxml");
     }
 
-
     // 게시글 클릭 후 상세 조회 화면 이동
-    private void openPostDetail(Post selectedPost) {
-        MainLayoutController.loadPostDetailView(selectedPost);
-    }
+    private void openPostDetail(Post selectedPost) { MainLayoutController.loadPostDetailView(selectedPost);}
 }
