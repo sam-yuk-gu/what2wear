@@ -27,7 +27,7 @@ public class HelloApplication extends Application {
             throw new IllegalStateException("style.css not found");
         }
 
-        stage.setTitle("Hello!");
+        stage.setTitle("내일뭐입지?");
         stage.setScene(scene);
         stage.show();
     }

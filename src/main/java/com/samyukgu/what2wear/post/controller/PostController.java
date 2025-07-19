@@ -13,8 +13,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -37,8 +35,6 @@ public class PostController implements Initializable {
     private TableColumn<Post, Integer> colLikes;
     @FXML
     private Button button_text;
-    @FXML
-    private ImageView backImage;
 
 
     @Override
@@ -46,44 +42,41 @@ public class PostController implements Initializable {
         // 버튼 이벤트 설정
         button_text.setOnAction(event -> openPostCreate());
 
-        // 1. 컬럼 셀 데이터 설정
+        // 컬럼 셀 데이터 설정
         colNo.setCellValueFactory(new PropertyValueFactory<>("no"));
         colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         colAuthor.setCellValueFactory(new PropertyValueFactory<>("author"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         colLikes.setCellValueFactory(new PropertyValueFactory<>("likes"));
 
-        // 2. 테스트 데이터 넣기
+        // 테스트 데이터 삽입
         ObservableList<Post> postList = FXCollections.observableArrayList(
-                new Post(1, "오늘의 OOTD", "코사", "2025-07-15", 13),
-                new Post(2, "작성글 test title 2", "패션테러리스트", "2025-07-15", 1004),
-                new Post(3, "작성글 test title 3", "재벌집막내아들", "2025-07-15", 5),
-                new Post(4, "작성글 test title 4", "서울수경", "2025-07-15", 325),
-                new Post(5, "작성글 test title 5", "나형돈", "2025-07-15", 62),
-                new Post(6, "작성글 test title 6", "백호두", "2025-07-15", 0),
-                new Post(7, "작성글 test title 7", "연홍시", "2025-07-15", 722)
+                new Post(1, "오늘의 OOTD", "코사", "오늘의 OOTD 입니다~~", "2025-07-15", 13),
+                new Post(2, "작성글 test title 2", "패션테러리스트", "작성글 test title 2 입니다~~", "2025-07-15", 1004),
+                new Post(3, "작성글 test title 3", "재벌집막내아들", "작성글 test title 3 입니다~~", "2025-07-15", 5),
+                new Post(4, "작성글 test title 4", "서울수경", "작성글 test title 4 입니다~~", "2025-07-15", 325),
+                new Post(5, "작성글 test title 5", "나형돈", "작성글 test title 5 입니다~~", "2025-07-15", 62),
+                new Post(6, "작성글 test title 6", "백호두", "작성글 test title 6 입니다~~", "2025-07-15", 0),
+                new Post(7, "작성글 test title 7", "연홍시", "작성글 test title 7 입니다~~", "2025-07-15", 722)
         );
 
         table_board.setItems(postList);
 
-        // 3. 첫 번째 행 배경 연그레이로 설정
-        table_board.setRowFactory(tv -> new TableRow<>() {
-            @Override
-            protected void updateItem(Post item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (empty || item == null) {
-                    setStyle(""); // 빈 칸은 스타일 제거
-                } else if (getIndex() == 0 && getItem() == table_board.getItems().get(0)) {
-                    setStyle("-fx-background-color: #F2F2F2;"); // 첫 번째 줄 연회색
-                } else {
-                    setStyle("-fx-background-color: white;"); // 나머지는 흰색
+        // 테이블 클릭 시 이벤트 추가
+        table_board.setRowFactory(tv -> {
+            TableRow<Post> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getClickCount() == 1) {
+                    Post clickedPost = row.getItem();
+                    openPostDetail(clickedPost);
                 }
-            }
+            });
+            return row;
         });
+
     }
 
-    // 글쓰기 버튼 클릭 시 화면 이동하는 openPostCreate() 메서드
+    // 글쓰기 버튼 클릭 시 화면 이동하는 메서드
     private void openPostCreate() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/post/post_create.fxml"));
@@ -99,4 +92,26 @@ public class PostController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    // 게시글 클릭 시 상세 화면으로 이동하는 메서드
+    private void openPostDetail(Post selectedPost) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/post/post_detail.fxml"));
+            Parent detailRoot = loader.load();
+
+            // 컨트롤러에 게시글 데이터 전달
+            PostDetailController controller = loader.getController();
+            controller.setPost(selectedPost);
+
+            Stage stage = (Stage) table_board.getScene().getWindow();
+            stage.setScene(new Scene(detailRoot));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 }
