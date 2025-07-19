@@ -1,5 +1,6 @@
-/* 공통 스타일 */
-
+/* =======================
+   공통 배경
+   ======================= */
 .root {
     -fx-background-color: #F9FBFC;
 }
@@ -10,12 +11,43 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0.2, 0, 4);
 }
 
-/* post_list 관련 css * */
-
-.inner_pane {
-
+.board_bottom_hbox {
+    -fx-alignment: center;
 }
 
+/* =======================
+   공통 텍스트
+   ======================= */
+.title_text,
+.header_text,
+.content_text,
+.codi_text {
+    -fx-font-family: "Pretendard Medium";
+}
+
+.logo_text {
+    -fx-font-family: "Pretendard Bold";
+}
+
+.select_title {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #C0C0C0;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-font-size: 14px;
+    -fx-font-family: "Pretendard Regular";
+}
+
+.search_title {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #C0C0C0;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+}
+
+/* =======================
+   메뉴
+   ======================= */
 .menu_item {
     -fx-background-color: transparent;
     -fx-padding: 10 20;
@@ -29,88 +61,38 @@
     -fx-background-color: #f5f5f5;
 }
 
-.selected_tab {
-    -fx-background-color: #FFF6D6; /* 연한 노란색 */
-    -fx-border-color: #f1d389;
-    -fx-border-width: 1;
-    -fx-border-radius: 12;
+/* =======================
+   테이블 스타일
+   ======================= */
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-table-cell-border-color: transparent;
 }
 
-.board_top_hbox {
-}
-
-.logo_text {
-    -fx-font-family: "Pretendard Bold";
-}
-
-.black_background_button {
-    -fx-background-color: #000000;
-    -fx-text-fill: #ffffff;
-    -fx-background-radius: 5px;
-    -fx-font-size: 14px;
-    -fx-font-family: "Pretendard SemiBold";
-}
-
-
-.title_text {
-    -fx-font-family: "Pretendard Medium";
-}
-
-.search_title {
-  -fx-background-color: #FFFFFF;
-  -fx-border-width: 1px;
-  -fx-border-color: #C0C0C0;
-  -fx-border-radius: 5px;
-}
-
-.select_title {
-  -fx-background-color: #FFFFFF;
-  -fx-border-width: 1px;
-  -fx-border-color: #C0C0C0;
-  -fx-border-radius: 5px;
-  -fx-font-size: 14px;
-   -fx-font-family: "Pretendard Regular";
-}
-
-.board_bottom_hbox {
-    -fx-alignment: center;
-}
-
-/* 헤더 배경 색 및 정렬 */
 .table-view .column-header-background {
     -fx-background-color: #F9F9F9;
 }
 
-/* 헤더 텍스트 스타일 */
 .table-view .column-header .label {
     -fx-font-size: 14px;
     -fx-font-family: "Pretendard SemiBold";
     -fx-alignment: center;
 }
 
-/* 셀 텍스트 정렬 */
 .table-view .table-cell {
     -fx-font-size: 14px;
     -fx-font-family: "Pretendard Regular";
-    -fx-padding: 10 0 10 0;
+    -fx-padding: 10 0;
     -fx-alignment: center;
 }
 
-/* 테이블 전체 스타일 */
-.table-view {
-    -fx-table-cell-border-color: transparent;
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
-}
-
-/* 행 간격, 그리드 제거 */
 .table-view .filler,
 .table-view .column-header,
 .table-view .corner {
     -fx-background-color: transparent;
 }
 
-/* 스크롤 제거 */
 .table-view .scroll-bar:vertical,
 .table-view .scroll-bar:horizontal {
     -fx-opacity: 0;
@@ -122,38 +104,57 @@
     -fx-min-height: 0px;
 }
 
-.colNo, .colTitle, .colAuthor, .colDate, .colLikes  {
-  -fx-background-color: #F9F9F9;
-  -fx-font-size: 14px;
-  -fx-font-family: "Pretendard Regular";
+/* =======================
+   테이블 컬럼별 스타일
+   ======================= */
+.colNo,
+.colTitle,
+.colAuthor,
+.colDate,
+.colLikes {
+    -fx-background-color: #F9F9F9;
+    -fx-font-size: 14px;
+    -fx-font-family: "Pretendard Regular";
 }
 
-.gray-stroke-button {
+/* =======================
+   헤더
+   ======================= */
+.header_pane {
+    -fx-border-color: transparent transparent #C0C0C0 transparent;
+    -fx-border-width: 0 0 1px 0;
+}
+
+/* =======================
+   버튼 스타일
+   ======================= */
+.gray_stroke_button {
+    -fx-padding: 10 20;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+
     -fx-background-color: white;
     -fx-text-fill: black;
     -fx-border-color: lightgray;
-    -fx-padding: 10 20;
-    -fx-font-size: 14px;
-    -fx-cursor: hand;
-    -fx-font-family: "Pretendard SemiBold";
 }
 
 .black_background_button {
-    -fx-background-color: black;
-    -fx-text-fill: white;
     -fx-padding: 10 20;
     -fx-font-size: 14px;
     -fx-cursor: hand;
     -fx-font-family: "Pretendard SemiBold";
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+
+    -fx-background-color: black;
+    -fx-text-fill: white;
+    -fx-border-color: black;
 }
 
-.double_button {
-    -fx-background-color: white;
-    -fx-text-fill: black;
-    -fx-font-size: 13px;
-    -fx-cursor: hand;
-}
-
+.double_button,
 .arrow_button {
     -fx-background-color: white;
     -fx-text-fill: black;
@@ -161,26 +162,15 @@
     -fx-cursor: hand;
 }
 
-.page-number:hover {
+/* Modal Button 관련 */
+.close_button {
+    -fx-background-color: white;
+    -fx-cursor: hand;
+}
+
+/* hover 스타일 */
+.gray_stroke_button:hover,
+.double_button:hover,
+.arrow_button:hover {
     -fx-background-color: #f0f0f0;
 }
-
-.page-number.selected {
-    -fx-background-color: #000000;
-    -fx-text-fill: #FFFFFF;
-    -fx-font-size: 13px;
-}
-
-/* post_create 관련 css */
-
-.header_pane {
-    -fx-border-color: transparent transparent #C0C0C0 transparent;
-    -fx-border-width: 0 0 1px 0;
-}
-
-.header_text, .title_text, .content_text, .codi_text {
-    -fx-font-family: "Pretendard Medium";
-}
-
-
-

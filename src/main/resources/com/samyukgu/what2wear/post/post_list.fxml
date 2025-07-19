@@ -92,13 +92,13 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button styleClass="gray-stroke-button" text="1" />
-                  <Button styleClass="gray-stroke-button" text="2" />
-                  <Button styleClass="gray-stroke-button" text="3" />
-                  <Button styleClass="gray-stroke-button" text="4" />
-                  <Button styleClass="gray-stroke-button" text="5" />
-                  <Button styleClass="gray-stroke-button" text="6" />
-                  <Button styleClass="gray-stroke-button" text="7" />
+                  <Button styleClass="gray_stroke_button" text="1" />
+                  <Button styleClass="gray_stroke_button" text="2" />
+                  <Button styleClass="gray_stroke_button" text="3" />
+                  <Button styleClass="gray_stroke_button" text="4" />
+                  <Button styleClass="gray_stroke_button" text="5" />
+                  <Button styleClass="gray_stroke_button" text="6" />
+                  <Button styleClass="gray_stroke_button" text="7" />
                   <Button fx:id="right_button" styleClass="arrow_button">
                      <graphic>
                         <ImageView fitHeight="16" fitWidth="30">

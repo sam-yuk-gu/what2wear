@@ -5,8 +5,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1280.0" stylesheets="/com/samyukgu/what2wear/post/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.post.controller.PostCreateController">
+<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1280.0" stylesheets="/com/samyukgu/what2wear/post/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.post.controller.PostCreateController">
 
+   <HBox>
     <!-- 사이드 바 -->
     <fx:include source="/com/samyukgu/what2wear/common/Sidebar.fxml" />
 
@@ -60,7 +61,7 @@
                            <Font size="18.0" />
                         </font>
                      </Label>
-                     <Button fx:id="codi_button" layoutX="165.0" layoutY="21.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="224.0" styleClass="gray-stroke-button" text="내 코디 불러오기">
+                     <Button fx:id="codi_button" layoutX="165.0" layoutY="21.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="224.0" styleClass="gray_stroke_button" text="내 코디 불러오기">
                         <graphic>
                            <ImageView fitHeight="24" fitWidth="24">
                               <image>
@@ -77,12 +78,12 @@
             <children>
                <Pane fx:id="bottom_two_button_pane" prefHeight="60.0" prefWidth="1030.0">
                   <children>
-                     <Button fx:id="cancel_button" layoutX="676.0" layoutY="3.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" styleClass="gray-stroke-button" text="취소하기">
+                     <Button fx:id="cancel_button" layoutX="676.0" layoutY="3.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" styleClass="gray_stroke_button" text="취소하기">
                         <font>
                            <Font size="24.0" />
                         </font>
                      </Button>
-                     <Button fx:id="create_button" layoutX="834.0" layoutY="3.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" styleClass="black_background_button" text="등록하기">
+                     <Button fx:id="registerButton" layoutX="834.0" layoutY="3.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" styleClass="black_background_button" text="등록하기">
                         <font>
                            <Font size="24.0" />
                         </font>
@@ -91,5 +92,7 @@
                </Pane>
             </children>
          </HBox>
-      </children></VBox>
-</HBox>
+      </children>
+   </VBox>
+   </HBox>
+</StackPane>

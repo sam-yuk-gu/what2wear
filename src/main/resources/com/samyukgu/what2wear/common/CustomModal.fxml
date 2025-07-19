@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Rectangle?>
+
+<?import javafx.scene.image.Image?>
+<StackPane fx:id="modalOverlay"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.samyukgu.what2wear.common.CustomModalController"
+           prefWidth="1280" prefHeight="768"
+           maxWidth="-Infinity" maxHeight="-Infinity"
+           stylesheets="/com/samyukgu/what2wear/common/style.css"
+           styleClass="modal_overlay">
+
+    <!-- 회색 반투명 배경 -->
+    <Rectangle fx:id="dimBackground" styleClass="modal-dim-background" />
+
+    <!-- 흰색 모달 박스 -->
+    <VBox fx:id="modalContainer" styleClass="modal_container" alignment="CENTER" spacing="20"
+          maxWidth="400" maxHeight="300">
+
+        <!-- 닫기 버튼 -->
+        <HBox alignment="TOP_RIGHT" prefWidth="400">
+            <Button fx:id="closeButton" styleClass="close_button" onAction="#handleClose">
+                <graphic>
+                    <ImageView fitHeight="30" fitWidth="30">
+                        <image>
+                            <Image url="@/assets/images/close_button.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+        </HBox>
+
+        <!-- 아이콘 -->
+        <ImageView fx:id="icon" fitHeight="60" fitWidth="60" />
+
+        <!-- 제목 -->
+        <Label fx:id="titleLabel" styleClass="modal_title" text="title" />
+
+        <!-- 설명 -->
+        <Label fx:id="descLabel" styleClass="modal_description" wrapText="true"
+               text="subtitle" />
+
+        <!-- 버튼 영역 -->
+        <HBox fx:id="two_button_hbox" styleClass="two_button_hbox" spacing="20" alignment="CENTER">
+            <Button fx:id="cancelButton" text="btn1" onAction="#handleCancel" styleClass="cancel_button"/>
+            <Button fx:id="confirmButton" text="btn2" onAction="#handleConfirm" styleClass="confirm_button"/>
+        </HBox>
+    </VBox>
+</StackPane>
