@@ -40,7 +40,7 @@ public class CreatePostController {
             controller.configure(
                     "게시글 등록",
                     "등록된 게시글은 수정/삭제할 수 있습니다.",
-                    "/assets/images/check_icon.png",  
+                    "/assets/images/green_check_icon.png",
                     "#4CAF50",
                     "취소",
                     "확인",
@@ -48,6 +48,7 @@ public class CreatePostController {
                     () -> {
                         root.getChildren().remove(modal);  // 확인 시 모달 제거
                         MainLayoutController.loadView("/com/samyukgu/what2wear/post/ListPost.fxml"); // 뷰 전환
+                        /* 등록 로직 필요 */
                     }
             );
 
