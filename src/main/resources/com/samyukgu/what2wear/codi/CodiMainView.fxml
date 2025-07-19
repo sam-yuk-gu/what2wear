@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.geometry.Insets?>
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
@@ -24,7 +21,7 @@
         <VBox spacing="20">
             <HBox>
                 <HBox alignment="CENTER_LEFT" spacing="10">
-                    <Button fx:id="prevMonthButton" onAction="#handlePrevMonth" style="-fx-background-color: transparent;">
+                    <Button onAction="#handlePrevMonth" style="-fx-background-color: transparent;">
                         <graphic>
                             <ImageView fitWidth="15" pickOnBounds="true" preserveRatio="true">
                                 <Image url="@/assets/icons/left-arrow.png"/>
@@ -32,7 +29,7 @@
                         </graphic>
                     </Button>
                     <Label fx:id="monthLabel" text="2025년 7월" styleClass="month-label" onMouseClicked="#handleMonthLabelClick"/>
-                    <Button fx:id="nextMonthButton" onAction="#handleNextMonth" style="-fx-background-color: transparent;">
+                    <Button onAction="#handleNextMonth" style="-fx-background-color: transparent;">
                         <graphic>
                             <ImageView fitWidth="15" pickOnBounds="true" preserveRatio="true">
                                 <Image url="@/assets/icons/right-arrow.png"/>
