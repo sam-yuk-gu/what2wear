@@ -87,7 +87,7 @@
                         <children>
                            <ImageView fitHeight="40" fitWidth="40">
                               <image>
-                                 <Image preserveRatio="true" url="@plus2.png" />
+                                 <Image preserveRatio="true" url="@images/plus2.png" />
                               </image>
                            </ImageView>
                            <Label style="-fx-text-fill: black; -fx-font-size: 12;" text="추가하기" />
@@ -97,7 +97,7 @@
                         <children>
                            <ImageView fitHeight="40" fitWidth="40">
                               <image>
-                                 <Image preserveRatio="true" url="@myCodiImg.png" />
+                                 <Image preserveRatio="true" url="@images/myCodiImg.png" />
                               </image>
                            </ImageView>
                            <Label style="-fx-text-fill: black; -fx-font-size: 12;" text="나만의 옷장" />
@@ -117,7 +117,7 @@
                               <!-- 상품 이미지 -->
                               <ImageView fitHeight="220.0" fitWidth="176.0" preserveRatio="true">
                                  <image>
-<!--                                    <Image url="@product.png" />-->
+                                    <Image url="@images/firstImg.png" />
                                  </image>
                               </ImageView>
                               <!-- 하트 아이콘 (오른쪽 위로 정렬됨) -->
@@ -126,7 +126,7 @@
                                     <Insets  bottom="8"  right="8" />
                                  </StackPane.margin>
                                  <image>
-                                    <Image url="@heart.png" />
+                                    <Image url="@images/heart.png" />
                                  </image>
                               </ImageView>
                            </StackPane>
@@ -139,7 +139,7 @@
                               <!-- 상품 이미지 -->
                               <ImageView fitHeight="220.0" fitWidth="176.0" preserveRatio="true">
                                  <image>
-                                    <!--                                    <Image url="@product.png" />-->
+                                    <Image url="@images/firstImg.png" />
                                  </image>
                               </ImageView>
                               <!-- 하트 아이콘 (오른쪽 위로 정렬됨) -->
@@ -148,7 +148,7 @@
                                     <Insets  bottom="8"  right="8" />
                                  </StackPane.margin>
                                  <image>
-                                    <Image url="@heart.png" />
+                                    <Image url="@images/heart.png" />
                                  </image>
                               </ImageView>
                            </StackPane>
@@ -161,7 +161,7 @@
                               <!-- 상품 이미지 -->
                               <ImageView fitHeight="220.0" fitWidth="176.0" preserveRatio="true">
                                  <image>
-                                    <!--                                    <Image url="@product.png" />-->
+                                    <Image url="@images/firstImg.png" />
                                  </image>
                               </ImageView>
                               <!-- 하트 아이콘 (오른쪽 위로 정렬됨) -->
@@ -170,7 +170,7 @@
                                     <Insets  bottom="8"  right="8" />
                                  </StackPane.margin>
                                  <image>
-                                    <Image url="@heart.png" />
+                                    <Image url="@images/heart.png" />
                                  </image>
                               </ImageView>
                            </StackPane>
@@ -183,7 +183,7 @@
                               <!-- 상품 이미지 -->
                               <ImageView fitHeight="220.0" fitWidth="176.0" preserveRatio="true">
                                  <image>
-                                    <!--                                    <Image url="@product.png" />-->
+                                    <Image url="@images/firstImg.png" />
                                  </image>
                               </ImageView>
                               <!-- 하트 아이콘 (오른쪽 위로 정렬됨) -->
@@ -192,7 +192,7 @@
                                     <Insets  bottom="8"  right="8" />
                                  </StackPane.margin>
                                  <image>
-                                    <Image url="@heart.png" />
+                                    <Image url="@images/heart.png" />
                                  </image>
                               </ImageView>
                            </StackPane>
@@ -205,7 +205,7 @@
                               <!-- 상품 이미지 -->
                               <ImageView fitHeight="220.0" fitWidth="176.0" preserveRatio="true">
                                  <image>
-                                    <!--                                    <Image url="@product.png" />-->
+                                    <Image url="@images/firstImg.png" />
                                  </image>
                               </ImageView>
                               <!-- 하트 아이콘 (오른쪽 위로 정렬됨) -->
@@ -214,7 +214,7 @@
                                     <Insets  bottom="8"  right="8" />
                                  </StackPane.margin>
                                  <image>
-                                    <Image url="@heart.png" />
+                                    <Image url="@images/heart.png" />
                                  </image>
                               </ImageView>
                            </StackPane>
@@ -234,7 +234,7 @@
                               <!-- 상품 이미지 -->
                               <ImageView fitHeight="220.0" fitWidth="176.0" preserveRatio="true">
                                  <image>
-                                    <!--                                    <Image url="@product.png" />-->
+                                    <Image url="@images/firstImg.png" />
                                  </image>
                               </ImageView>
                               <!-- 하트 아이콘 (오른쪽 위로 정렬됨) -->
@@ -243,7 +243,7 @@
                                     <Insets  bottom="8"  right="8" />
                                  </StackPane.margin>
                                  <image>
-                                    <Image url="@heart.png" />
+                                    <Image url="@images/heart.png" />
                                  </image>
                               </ImageView>
                            </StackPane>
@@ -256,7 +256,7 @@
                               <!-- 상품 이미지 -->
                               <ImageView fitHeight="220.0" fitWidth="176.0" preserveRatio="true">
                                  <image>
-                                    <!--                                    <Image url="@product.png" />-->
+                                    <Image url="@images/firstImg.png" />
                                  </image>
                               </ImageView>
                               <!-- 하트 아이콘 (오른쪽 위로 정렬됨) -->
@@ -265,7 +265,7 @@
                                     <Insets  bottom="8"  right="8" />
                                  </StackPane.margin>
                                  <image>
-                                    <Image url="@heart.png" />
+                                    <Image url="@images/heart.png" />
                                  </image>
                               </ImageView>
                            </StackPane>
@@ -278,7 +278,7 @@
                               <!-- 상품 이미지 -->
                               <ImageView fitHeight="220.0" fitWidth="176.0" preserveRatio="true">
                                  <image>
-                                    <!--                                    <Image url="@product.png" />-->
+                                    <Image url="@images/firstImg.png" />
                                  </image>
                               </ImageView>
                               <!-- 하트 아이콘 (오른쪽 위로 정렬됨) -->
@@ -287,7 +287,7 @@
                                     <Insets  bottom="8"  right="8" />
                                  </StackPane.margin>
                                  <image>
-                                    <Image url="@heart.png" />
+                                    <Image url="@images/heart.png" />
                                  </image>
                               </ImageView>
                            </StackPane>
@@ -300,7 +300,7 @@
                               <!-- 상품 이미지 -->
                               <ImageView fitHeight="220.0" fitWidth="176.0" preserveRatio="true">
                                  <image>
-                                    <!--<Image url="@product.png" />-->
+                                    <Image url="@images/firstImg.png" />
                                  </image>
                               </ImageView>
                               <!-- 하트 아이콘 (오른쪽 위로 정렬됨) -->
@@ -309,7 +309,7 @@
                                     <Insets  bottom="8"  right="8" />
                                  </StackPane.margin>
                                  <image>
-                                    <Image url="@heart.png" />
+                                    <Image url="@images/heart.png" />
                                  </image>
                               </ImageView>
                            </StackPane>
@@ -322,7 +322,7 @@
                               <!-- 상품 이미지 -->
                               <ImageView fitHeight="220.0" fitWidth="176.0" preserveRatio="true">
                                  <image>
-                                    <!--                                    <Image url="@product.png" />-->
+                                    <Image url="@images/firstImg.png" />
                                  </image>
                               </ImageView>
                               <!-- 하트 아이콘 (오른쪽 위로 정렬됨) -->
@@ -331,7 +331,7 @@
                                     <Insets  bottom="8"  right="8" />
                                  </StackPane.margin>
                                  <image>
-                                    <Image url="@heart.png" />
+                                    <Image url="@images/heart.png" />
                                  </image>
                               </ImageView>
                            </StackPane>
