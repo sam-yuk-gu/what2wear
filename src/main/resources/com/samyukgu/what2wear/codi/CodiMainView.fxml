@@ -1,29 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
-<?import javafx.scene.control.Button?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.samyukgu.what2wear.codi.controller.CodiMainController"
-      spacing="5"
+      spacing="50"
       stylesheets="@/com/samyukgu/what2wear/codi/style.css"
+      styleClass="container"
 >
+    <VBox spacing="7">
+        <Label fx:id="welcomeTitle" text="안녕하세요, 코사님" styleClass="welcome-title"/>
+        <Label fx:id="welcomeSubtext" text="오늘 날씨는 외출하기 좋은 기온이에요!" styleClass="welcome-subtext"/>
+    </VBox>
+    <HBox>
+        <!-- 좌측: 캘린더 영역 -->
+        <VBox spacing="20">
+            <HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Button fx:id="prevMonthButton" onAction="#handlePrevMonth" style="-fx-background-color: transparent;">
+                        <graphic>
+                            <ImageView fitWidth="15" pickOnBounds="true" preserveRatio="true">
+                                <Image url="@/assets/icons/left-arrow.png"/>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                    <Label fx:id="monthLabel" text="2025년 7월" styleClass="month-label" onMouseClicked="#handleMonthLabelClick"/>
+                    <Button fx:id="nextMonthButton" onAction="#handleNextMonth" style="-fx-background-color: transparent;">
+                        <graphic>
+                            <ImageView fitWidth="15" pickOnBounds="true" preserveRatio="true">
+                                <Image url="@/assets/icons/right-arrow.png"/>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                </HBox>
+                <Region HBox.hgrow="ALWAYS" />
+                <HBox spacing="10">
+                    <Button styleClass="ai-btn">
+                        <graphic>
+                            <HBox spacing="10" alignment="CENTER">
+                                <ImageView fitWidth="19" pickOnBounds="true" preserveRatio="true">
+                                    <Image url="@/assets/icons/ai.png" />
+                                </ImageView>
+                                <Label text="AI 추천" />
+                            </HBox>
+                        </graphic>
+                    </Button>
+                    <Button styleClass="add-btn" onAction="#handleClickAddCodi">
+                        <graphic>
+                            <HBox spacing="10" alignment="CENTER">
+                                <ImageView fitWidth="16" pickOnBounds="true" preserveRatio="true">
+                                    <Image url="@/assets/icons/plus.png" />
+                                </ImageView>
+                                <Label text="추가" />
+                            </HBox>
+                        </graphic>
+                    </Button>
+                </HBox>
+            </HBox>
+            <GridPane fx:id="calendarGrid" styleClass="calendar"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS" />
+        <!-- 우측: 일정 영역 -->
+        <VBox spacing="15" styleClass="schedule">
+            <Label fx:id="selectedDateLabel" styleClass="date-label"/>
+            <Label fx:id="scheduleLabel" styleClass="schedule-label"/>
 
-    <padding>
-        <Insets top="20" left="20" right="20"/>
-    </padding>
+            <VBox fx:id="codiListContainer" spacing="10">
+                <!-- 동적으로 옷 카드 삽입 -->
+            </VBox>
 
-    <Text fx:id="welcomeTitle" text="안녕하세요, 코사님" styleClass="welcome-title"/>
-    <Text fx:id="welcomeSubtext" text="오늘 날씨는 외출하기 좋은 기온이에요!" styleClass="welcome-subtext"/>
-    <!--    <ImageView fitWidth="200" fitHeight="200">-->
-    <!--        <image>-->
-    <!--            <Image url="@/assets/images/cute.jpg" preserveRatio="true"/>-->
-    <!--        </image>-->
-    <!--    </ImageView>-->
-    <Button text="스택 테스트" onAction="#handleClickAddCodi"/>
+            <!-- empty state -->
+            <Label fx:id="emptyLabel" text="일정이 존재하지 않습니다. 추가해보세요."
+                   styleClass="empty-message" visible="false" managed="false"/>
+        </VBox>
+    </HBox>
 </VBox>

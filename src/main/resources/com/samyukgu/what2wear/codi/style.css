@@ -3,3 +3,157 @@
     -fx-text-fill: #333333;
     -fx-font-family: "Pretendard Bold";
 }
+
+.welcome-subtext {
+    -fx-font-size: 13px;
+    -fx-text-fill: #919191;
+    -fx-font-family: "Pretendard Medium";
+}
+
+.container {
+    -fx-padding: 50 55 50 55;
+}
+
+.month-label {
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-font-size: 17;
+    -fx-text-fill: #252525;
+}
+
+.ai-btn {
+    -fx-pref-width: 102;
+    -fx-pref-height: 35;
+    -fx-border-width: 1;
+    -fx-border-color: #D9D9D9;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-background-color: #FFFDF0;
+    -fx-font-family: "Pretendard Medium";
+    -fx-font-size: 14;
+    -fx-text-fill: #434343;
+}
+
+.ai-btn:hover {
+    -fx-border-width: 0;
+    -fx-background-color: #fff8da;
+}
+
+.add-btn {
+    -fx-pref-width: 87;
+    -fx-pref-height: 35;
+    -fx-border-width: 1;
+    -fx-border-color: #D9D9D9;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-background-color: #F2FBFF;
+    -fx-font-family: "Pretendard Medium";
+    -fx-font-size: 14;
+    -fx-text-fill: #434343;
+}
+
+.add-btn:hover {
+    -fx-border-width: 0;
+    -fx-background-color: #e0f6ff;
+}
+
+.calendar {
+    -fx-pref-width: 570;
+    -fx-background-color: #ffffff;
+
+    -fx-border-color: #ECEAF3;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(236, 234, 243, 0.8), 20, 0.1, 0, 4);
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+}
+
+.day-header {
+    -fx-alignment: center;
+    -fx-pref-width: 81.43;
+    -fx-pref-height: 43;
+    -fx-border-color: #ECEAF3;
+    -fx-border-width: 0 0.5 0.5 0;
+    -fx-background-color: #F9FBFC;
+    -fx-text-fill: #676767;
+    -fx-font-family: "Pretendard Medium";
+    -fx-font-size: 12;
+}
+
+.start-header {
+    -fx-border-radius: 20 0 0 0;
+    -fx-background-radius: 20 0 0 0;
+}
+
+.end-header {
+    -fx-border-radius: 0 20 0 0;
+    -fx-background-radius: 0 20 0 0;
+}
+
+.day-cell {
+    -fx-alignment: top-right;
+    -fx-padding: 10 10;
+    -fx-pref-width: 80;
+    -fx-pref-height: 77;
+    -fx-border-color: #ECEAF3;
+    -fx-border-width: 0 0.5 0.5 0;
+    -fx-font-family: "Pretendard Medium";
+    -fx-font-size: 14;
+}
+
+.left-bottom-cell {
+    -fx-border-radius: 0 0 0 20;
+    -fx-background-radius: 0 0 0 20;
+}
+
+.right-bottom-cell {
+    -fx-border-radius: 0 0 20 0;
+    -fx-background-radius: 0 0 20 0;
+}
+
+.outside-month {
+    -fx-text-fill: #D5D5D5;
+}
+
+.inside-month {
+    -fx-text-fill: #838383;
+}
+
+.day-circle {
+    -fx-pref-width: 23px;
+    -fx-pref-height: 23px;
+    -fx-alignment: center;
+    -fx-border-radius: 100;
+    -fx-background-radius: 100;
+    -fx-background-color: transparent;
+    -fx-font-size: 12px;
+    -fx-font-family: "Pretendard Medium";
+}
+
+.day-circle-selected {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+    -fx-font-family: "Pretendard SemiBold";
+}
+
+.schedule {
+    -fx-pref-width: 315;
+    -fx-border-width: 1;
+    -fx-border-color: #ECEAF3;
+    -fx-border-radius: 20;
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(194,194,194,0.3), 13, 0, 0, 0);
+}
+
+.calendar-day {
+    -fx-alignment: center;
+    -fx-padding: 5;
+    -fx-border-color: #dddddd;
+    -fx-border-radius: 10;
+}
+
+.dots-box {
+    -fx-spacing: 7;
+    -fx-alignment: top-right;
+    -fx-padding: 4 6 0 0;
+}
