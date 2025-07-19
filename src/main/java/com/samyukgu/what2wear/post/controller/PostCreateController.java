@@ -1,12 +1,12 @@
 package com.samyukgu.what2wear.post.controller;
 
-import com.samyukgu.what2wear.common.CustomModalController;
+import com.samyukgu.what2wear.common.controller.CustomModalController;
+import com.samyukgu.what2wear.common.controller.MainLayoutController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -19,25 +19,23 @@ public class PostCreateController {
     @FXML private Button registerButton;
     @FXML
     public void initialize() {
-        cancelButton.setOnAction(event -> handleBack());
+        cancelButton.setOnAction(event -> handleCancelClick());
         registerButton.setOnAction(event -> showConfirmationModal());
     }
 
-    // 게시판 목록 화면으로 이동하는 메서드
+    // 게시글 등록 취소
     @FXML
-    private void handleBack() {
-        try {
-            Parent postList = FXMLLoader.load(getClass().getResource("/com/samyukgu/what2wear/post/post_list.fxml"));
-            Scene scene = new Scene(postList);
-            Stage stage = (Stage) root.getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void handleCancelClick() {
+        MainLayoutController.loadView("/com/samyukgu/what2wear/post/post_list.fxml");
     }
 
-    // 게시물 등록 확인 모달창 띄우는 메서든
+    // 게시글 등록 
+    @FXML
+    private void handleRegisterClick() {
+        MainLayoutController.loadView("/com/samyukgu/what2wear/post/post_list.fxml");
+    }
+
+    // 게시글 등록 확인 모달창 띄우기
     private void showConfirmationModal() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/CustomModal.fxml"));
@@ -54,18 +52,7 @@ public class PostCreateController {
                     () -> root.getChildren().remove(modal),  // 취소 시 모달 제거
                     () -> {
                         root.getChildren().remove(modal);  // 확인 시 모달 제거
-
-                        // post_list.fxml로 이동
-                        try {
-                            Parent postList = FXMLLoader.load(getClass().getResource("/com/samyukgu/what2wear/post/post_list.fxml"));
-                            Scene scene = new Scene(postList);
-                            // 현재 stage 얻기
-                            Stage stage = (Stage) root.getScene().getWindow();
-                            stage.setScene(scene);
-                            stage.show();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
+                        MainLayoutController.loadView("/com/samyukgu/what2wear/post/post_list.fxml"); // 뷰 전환
                     }
             );
 

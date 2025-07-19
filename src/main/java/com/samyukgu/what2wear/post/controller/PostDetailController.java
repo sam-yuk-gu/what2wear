@@ -1,5 +1,6 @@
 package com.samyukgu.what2wear.post.controller;
 
+import com.samyukgu.what2wear.common.controller.MainLayoutController;
 import com.samyukgu.what2wear.post.model.Post;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -63,17 +64,9 @@ public class PostDetailController {
         likesLabel.setText(String.valueOf(likeCount));
     }
 
-    // 뒤로가기 메서드 (게시글 목록 화면으로 이동)
+    // 뒤로가기
     @FXML
     private void handleBack() {
-        try {
-            Parent postList = FXMLLoader.load(getClass().getResource("/com/samyukgu/what2wear/post/post_list.fxml"));
-            Scene scene = new Scene(postList);
-            Stage stage = (Stage) root.getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        MainLayoutController.loadView("/com/samyukgu/what2wear/post/post_list.fxml");
     }
 }

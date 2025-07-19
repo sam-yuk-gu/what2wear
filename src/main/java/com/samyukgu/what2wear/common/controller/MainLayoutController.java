@@ -28,6 +28,11 @@ public class MainLayoutController {
     private static MainLayoutController instance;
     private Button currentSelectedButton;
 
+    // MainLayoutController.getInstance() 접근을 위한 getInstance() 정의
+    public static MainLayoutController getInstance() {
+        return instance;
+    }
+
     // 하이라이트 대상 버튼 목록 (logoButton 제외)
     private List<Button> menuButtons;
 
@@ -73,5 +78,12 @@ public class MainLayoutController {
     private void handleClickFriend() {
         selectMenu(friendButton);
         loadView("/com/samyukgu/what2wear/friend/FriendView.fxml");
+    }
+
+    // 게시판 탭 연동
+    @FXML
+    private void handleClickBoard() { 
+        selectMenu(boardButton); // 버튼 하이라이트 처리
+        loadView("/com/samyukgu/what2wear/post/post_list.fxml");
     }
 }

@@ -8,15 +8,12 @@
 <StackPane fx:id="root" prefHeight="768.0" prefWidth="1280.0" stylesheets="/com/samyukgu/what2wear/post/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.post.controller.PostDetailController">
 
     <HBox>
-        <!-- 사이드바 -->
-        <fx:include source="/com/samyukgu/what2wear/common/Sidebar.fxml" />
-
         <VBox fx:id="mainVBox" prefWidth="1030.0" spacing="20.0">
 
             <!-- 게시글 본문 + 댓글 목록 스크롤 -->
         <ScrollPane fx:id="scrollPane" fitToWidth="true" styleClass="board_scroll_pane" VBox.vgrow="ALWAYS">
         <content>
-            <VBox fx:id="board_vbox" prefHeight="768.0" spacing="40.0" styleClass="board_vbox">
+            <VBox fx:id="board_vbox" prefHeight="768.0" spacing="40.0" styleClass="board_detail_vbox">
             <!-- 헤더 -->
             <HBox alignment="CENTER" prefHeight="81.0" prefWidth="1030.0">
                 <Pane fx:id="header_pane" prefHeight="89.0" prefWidth="1030.0" styleClass="header_pane">

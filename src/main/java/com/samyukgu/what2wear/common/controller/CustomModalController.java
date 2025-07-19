@@ -1,4 +1,4 @@
-package com.samyukgu.what2wear.common;
+package com.samyukgu.what2wear.common.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -81,16 +81,19 @@ public class CustomModalController implements Initializable {
         modalOverlay.setVisible(false);
     }
 
+    /* 취소 버튼 핸들러 */
     @FXML
     private void handleCancel(ActionEvent event) {
         modalOverlay.setVisible(false);
     }
 
+    /* 확인 버튼 핸들러 */
     @FXML
     private void handleConfirm(ActionEvent event) {
         modalOverlay.setVisible(false);
     }
 
+    /* 오버레이 */
     public StackPane getModalOverlay() {
         return modalOverlay;
     }

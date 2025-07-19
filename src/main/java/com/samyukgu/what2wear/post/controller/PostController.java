@@ -1,8 +1,10 @@
 package com.samyukgu.what2wear.post.controller;
 
+import com.samyukgu.what2wear.common.controller.MainLayoutController;
 import com.samyukgu.what2wear.post.model.Post;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -40,7 +42,7 @@ public class PostController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // 버튼 이벤트 설정
-        button_text.setOnAction(event -> openPostCreate());
+        button_text.setOnAction(event -> handlePostClick());
 
         // 컬럼 셀 데이터 설정
         colNo.setCellValueFactory(new PropertyValueFactory<>("no"));
@@ -67,8 +69,7 @@ public class PostController implements Initializable {
             TableRow<Post> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getClickCount() == 1) {
-                    Post clickedPost = row.getItem();
-                    openPostDetail(clickedPost);
+                    openPostDetail();
                 }
             });
             return row;
@@ -77,41 +78,14 @@ public class PostController implements Initializable {
     }
 
     // 글쓰기 버튼 클릭 시 화면 이동하는 메서드
-    private void openPostCreate() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/post/post_create.fxml"));
-            Parent postCreateRoot = loader.load();
-
-            Stage stage = (Stage) button_text.getScene().getWindow(); // 현재 스테이지 가져오기
-            Scene scene = new Scene(postCreateRoot);
-
-            stage.setScene(scene); // 씬 변경
-            stage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // 게시글 클릭 시 상세 화면으로 이동하는 메서드
-    private void openPostDetail(Post selectedPost) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/post/post_detail.fxml"));
-            Parent detailRoot = loader.load();
-
-            // 컨트롤러에 게시글 데이터 전달
-            PostDetailController controller = loader.getController();
-            controller.setPost(selectedPost);
-
-            Stage stage = (Stage) table_board.getScene().getWindow();
-            stage.setScene(new Scene(detailRoot));
-            stage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    @FXML
+    private void handlePostClick() {
+        MainLayoutController.loadView("/com/samyukgu/what2wear/post/post_create.fxml");
     }
 
 
-
+    // 게시글 클릭 후 상세 조회 화면 이동
+    private void openPostDetail() {
+        MainLayoutController.loadView("/com/samyukgu/what2wear/post/post_detail.fxml");
+    }
 }
