@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <HBox fx:id="root" prefHeight="768.0" prefWidth="1280.0"
       xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.samyukgu.what2wear.post.controller.PostController"
+      fx:controller="com.samyukgu.what2wear.post.controller.ListPostController"
       stylesheets="/com/samyukgu/what2wear/post/style.css">
    <children>
 

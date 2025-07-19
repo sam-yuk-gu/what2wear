@@ -1,6 +1,6 @@
 package com.samyukgu.what2wear.common.controller;
 
-import com.samyukgu.what2wear.post.controller.PostDetailController;
+import com.samyukgu.what2wear.post.controller.DetailPostController;
 import com.samyukgu.what2wear.post.model.Post;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -59,11 +59,11 @@ public class MainLayoutController {
     // PostDetailController에 저장한 게시글 데이터 설정
     public static void loadPostDetailView(Post post) {
         try {
-            FXMLLoader loader = new FXMLLoader(MainLayoutController.class.getResource("/com/samyukgu/what2wear/post/post_detail.fxml"));
+            FXMLLoader loader = new FXMLLoader(MainLayoutController.class.getResource("/com/samyukgu/what2wear/post/DetailPost.fxml"));
             Parent view = loader.load();
 
             // Controller 가져와서 게시글 데이터 주입
-            PostDetailController controller = loader.getController();
+            DetailPostController controller = loader.getController();
             controller.setPost(post);
 
             // 메인 화면에 해당 뷰 출력
@@ -104,6 +104,6 @@ public class MainLayoutController {
     @FXML
     private void handleClickBoard() { 
         selectMenu(boardButton); // 버튼 하이라이트 처리
-        loadView("/com/samyukgu/what2wear/post/post_list.fxml");
+        loadView("/com/samyukgu/what2wear/post/ListPost.fxml");
     }
 }

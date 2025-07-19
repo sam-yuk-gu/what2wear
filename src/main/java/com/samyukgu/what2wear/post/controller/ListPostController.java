@@ -15,7 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class PostController implements Initializable {
+public class ListPostController implements Initializable {
 
     @FXML
     private TableView<Post> table_board;
@@ -46,7 +46,7 @@ public class PostController implements Initializable {
         colLikes.setCellValueFactory(new PropertyValueFactory<>("likes"));
 
         // 테스트 데이터 삽입
-        ObservableList<Post> postList = FXCollections.observableArrayList(
+        ObservableList<Post> listPost = FXCollections.observableArrayList(
                 new Post(1, "오늘의 OOTD", "코사", "오늘의 OOTD 입니다~~", "2025-07-15", 13),
                 new Post(2, "작성글 test title 2", "패션테러리스트", "작성글 test title 2 입니다~~", "2025-07-15", 1004),
                 new Post(3, "작성글 test title 3", "재벌집막내아들", "작성글 test title 3 입니다~~", "2025-07-15", 5),
@@ -56,7 +56,7 @@ public class PostController implements Initializable {
                 new Post(7, "작성글 test title 7", "연홍시", "작성글 test title 7 입니다~~", "2025-07-15", 722)
         );
 
-        table_board.setItems(postList);
+        table_board.setItems(listPost);
 
         // 테이블 클릭 시 이벤트 추가
         table_board.setRowFactory(tv -> {
@@ -75,7 +75,7 @@ public class PostController implements Initializable {
     // 글쓰기 버튼 클릭 시 화면 이동하는 메서드
     @FXML
     private void handlePostClick() {
-        MainLayoutController.loadView("/com/samyukgu/what2wear/post/post_create.fxml");
+        MainLayoutController.loadView("/com/samyukgu/what2wear/post/CreatePost.fxml");
     }
 
 

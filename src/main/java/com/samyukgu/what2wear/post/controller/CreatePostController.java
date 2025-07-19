@@ -4,15 +4,10 @@ import com.samyukgu.what2wear.common.controller.CustomModalController;
 import com.samyukgu.what2wear.common.controller.MainLayoutController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 
-import java.io.IOException;
-
-public class PostCreateController {
+public class CreatePostController {
 
     @FXML private StackPane root;
     @FXML private Button cancelButton;
@@ -26,13 +21,13 @@ public class PostCreateController {
     // 게시글 등록 취소
     @FXML
     private void handleCancelClick() {
-        MainLayoutController.loadView("/com/samyukgu/what2wear/post/post_list.fxml");
+        MainLayoutController.loadView("/com/samyukgu/what2wear/post/ListPost.fxml");
     }
 
     // 게시글 등록 
     @FXML
     private void handleRegisterClick() {
-        MainLayoutController.loadView("/com/samyukgu/what2wear/post/post_list.fxml");
+        MainLayoutController.loadView("/com/samyukgu/what2wear/post/ListPost.fxml");
     }
 
     // 게시글 등록 확인 모달창 띄우기
@@ -52,7 +47,7 @@ public class PostCreateController {
                     () -> root.getChildren().remove(modal),  // 취소 시 모달 제거
                     () -> {
                         root.getChildren().remove(modal);  // 확인 시 모달 제거
-                        MainLayoutController.loadView("/com/samyukgu/what2wear/post/post_list.fxml"); // 뷰 전환
+                        MainLayoutController.loadView("/com/samyukgu/what2wear/post/ListPost.fxml"); // 뷰 전환
                     }
             );
 

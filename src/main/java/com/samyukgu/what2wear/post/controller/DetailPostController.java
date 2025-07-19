@@ -3,19 +3,12 @@ package com.samyukgu.what2wear.post.controller;
 import com.samyukgu.what2wear.common.controller.MainLayoutController;
 import com.samyukgu.what2wear.post.model.Post;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 
-import java.io.IOException;
-
-public class PostDetailController {
+public class DetailPostController {
 
     @FXML private Label titleLabel;
     @FXML private Label contentLabel;
@@ -66,6 +59,6 @@ public class PostDetailController {
     // 뒤로가기
     @FXML
     private void handleBack() {
-        MainLayoutController.loadView("/com/samyukgu/what2wear/post/post_list.fxml");
+        MainLayoutController.loadView("/com/samyukgu/what2wear/post/ListPost.fxml");
     }
 }
