@@ -4,20 +4,14 @@ import com.samyukgu.what2wear.common.controller.MainLayoutController;
 import com.samyukgu.what2wear.post.model.Post;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -69,7 +63,8 @@ public class PostController implements Initializable {
             TableRow<Post> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getClickCount() == 1) {
-                    openPostDetail();
+                    Post selectedPost = row.getItem();
+                    openPostDetail(selectedPost);
                 }
             });
             return row;
@@ -85,7 +80,7 @@ public class PostController implements Initializable {
 
 
     // 게시글 클릭 후 상세 조회 화면 이동
-    private void openPostDetail() {
-        MainLayoutController.loadView("/com/samyukgu/what2wear/post/post_detail.fxml");
+    private void openPostDetail(Post selectedPost) {
+        MainLayoutController.loadPostDetailView(selectedPost);
     }
 }

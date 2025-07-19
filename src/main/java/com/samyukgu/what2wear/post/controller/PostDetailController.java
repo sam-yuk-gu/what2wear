@@ -24,7 +24,6 @@ public class PostDetailController {
     @FXML private Button likeButton;
     @FXML private ImageView likeIcon;
     @FXML private Label likesLabel;
-    @FXML private StackPane root;
 
     private int likeCount; // 좋아요 수 선언
     private boolean isLiked = false; // 기본값: false
