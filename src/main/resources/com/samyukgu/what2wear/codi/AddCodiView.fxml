@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.control.Button?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.samyukgu.what2wear.codi.controller.AddCodiController"
+      spacing="5"
+      stylesheets="@/com/samyukgu/what2wear/codi/style.css"
+>
+
+    <padding>
+        <Insets top="20" left="20" right="20"/>
+    </padding>
+
+    <Text text="코디 추가 화면"/>
+    <Button text="뒤로 가기" onAction="#handleClickBack"/>
+</VBox>
