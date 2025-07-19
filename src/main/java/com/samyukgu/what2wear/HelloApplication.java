@@ -1,5 +1,7 @@
 package com.samyukgu.what2wear;
 
+import com.samyukgu.what2wear.config.ApplicationConfig;
+import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.member.dao.MemberOracleDAO;
 import com.samyukgu.what2wear.member.service.MemberService;
 import javafx.application.Application;
@@ -13,6 +15,12 @@ import java.net.URL;
 import java.util.Objects;
 
 public class HelloApplication extends Application {
+    @Override
+    public void init() throws Exception{
+        // 애플리케이션 시작 -> 의존관계 설정
+        ApplicationConfig.configure();
+    }
+
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/samyukgu/what2wear/layout/MainLayout.fxml"));
@@ -41,6 +49,12 @@ public class HelloApplication extends Application {
         stage.setTitle("내일 뭐 입지?");
         stage.setScene(scene);
         stage.show();
+    }
+
+    @Override
+    public void stop() throws Exception {
+        // 애플리케이션 종료 -> container clear
+        DIContainer.getInstance().clear();
     }
 
     public static void main(String[] args) {
