@@ -15,13 +15,29 @@ import java.io.IOException;
 public class PostCreateController {
 
     @FXML private StackPane root;
+    @FXML private Button cancelButton;
     @FXML private Button registerButton;
-
     @FXML
     public void initialize() {
+        cancelButton.setOnAction(event -> handleBack());
         registerButton.setOnAction(event -> showConfirmationModal());
     }
 
+    // 게시판 목록 화면으로 이동하는 메서드
+    @FXML
+    private void handleBack() {
+        try {
+            Parent postList = FXMLLoader.load(getClass().getResource("/com/samyukgu/what2wear/post/post_list.fxml"));
+            Scene scene = new Scene(postList);
+            Stage stage = (Stage) root.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // 게시물 등록 확인 모달창 띄우는 메서든
     private void showConfirmationModal() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/CustomModal.fxml"));
@@ -58,11 +74,5 @@ public class PostCreateController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    // 뒤로가기 메서드
-    @FXML
-    public void handleBack(MouseEvent mouseEvent) {
-        System.out.println("뒤로가기 클릭됨");
     }
 }

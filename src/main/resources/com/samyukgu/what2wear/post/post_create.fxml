@@ -19,11 +19,6 @@
             <children>
                <Pane fx:id="header_pane" prefHeight="70.0" prefWidth="1030.0" styleClass="header_pane">
                   <children>
-                      <ImageView fx:id="backImage" fitHeight="24" fitWidth="24" layoutX="29.0" layoutY="23.0" onMouseClicked="#handleBack">
-                          <image>
-                              <Image url="@/assets/images/title_left_arrow.png" />
-                          </image>
-                     </ImageView>
                      <Label fx:id="header_text" layoutX="463.0" layoutY="25.0" styleClass="header_text" text="게시글 등록">
                         <font>
                            <Font size="16.0" />
@@ -78,7 +73,7 @@
             <children>
                <Pane fx:id="bottom_two_button_pane" prefHeight="60.0" prefWidth="1030.0">
                   <children>
-                     <Button fx:id="cancel_button" layoutX="676.0" layoutY="3.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" styleClass="gray_stroke_button" text="취소하기">
+                     <Button fx:id="cancelButton" layoutX="676.0" layoutY="3.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" styleClass="gray_stroke_button" text="취소하기">
                         <font>
                            <Font size="24.0" />
                         </font>
