@@ -2,8 +2,23 @@
     -fx-background-color: "white";
 }
 
+.content-area{
+    -fx-background-color: "white";
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0.3, 0, 2);
+}
+
+#bg{
+    -fx-background-color: #F9FBFC;
+}
+
 .bold-text {
     -fx-font-family: "Pretendard Bold";
+}
+
+.semi-bold-text {
+    -fx-font-family: "Pretendard SemiBold";
 }
 
 .text-red{
