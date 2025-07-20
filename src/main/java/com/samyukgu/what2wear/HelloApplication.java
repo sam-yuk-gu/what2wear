@@ -25,20 +25,11 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/samyukgu/what2wear/layout/MainLayout.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1280, 768);
-        // css 추가
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/com/samyukgu/what2wear/post/style.css")).toExternalForm());
+
         // font 설정
         URL styleUrl = getClass().getResource("/styles/style.css");
 
-        // 태스트
-        System.setProperty("file.encoding", "UTF-8");
-        MemberService service = new MemberService(new MemberOracleDAO());
-        service.getAllMembers().forEach(member -> {
-            System.out.println("ID: " + member.getId() + ", Name: " + member.getName());
-        });
-
-
-
+        // null 체크로 통일 (없을 경우 명시적으로 IllegalStateException 발생시킴)
         if (styleUrl != null) {
             scene.getStylesheets().add(styleUrl.toExternalForm());
         } else {
