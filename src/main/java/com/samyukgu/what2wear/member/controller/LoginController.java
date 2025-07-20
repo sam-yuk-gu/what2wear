@@ -2,6 +2,8 @@ package com.samyukgu.what2wear.member.controller;
 
 import com.samyukgu.what2wear.di.DIContainer;
 import java.io.IOException;
+
+import com.samyukgu.what2wear.member.service.MemberService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,23 +24,14 @@ public class LoginController {
     @FXML private Label signupLabel;
     @FXML private Label findIdLabel;
     @FXML private Label findPasswordLabel;
+    @FXML ImageView loginBanner;
 
-    @FXML
-   ImageView loginBanner;
+    private MemberService memberService;
 
     @FXML
     public void initialize(){
-        instance = this;
-
-        int arcWidth = 30, arcHeight = 30;
-
-        Rectangle clip = new Rectangle(loginBanner.getFitWidth(), loginBanner.getFitHeight());
-        clip.setArcWidth(arcWidth);
-        clip.setArcHeight(arcHeight);
-
-        loginBanner.setClip(clip);
-
-        DIContainer diContainer = DIContainer.getInstance();
+        setupUI();
+        setupDI();
     }
 
     @FXML
@@ -58,15 +51,26 @@ public class LoginController {
 
     @FXML
     private void handleClickFindIdLabel(){
-        switchScene("/com/samyukgu/what2wear/member/FindIdView.fxml", "아이디 찾기");
+        switchScene("/com/samyukgu/what2wear/member/FindAccountIdStep1View.fxml", "아이디 찾기");
     }
 
     @FXML
     private void handleClickFindPasswordLabel(){
-        switchScene("/com/samyukgu/what2wear/member/FindPasswordView.fxml", "아이디 찾기");
+        switchScene("/com/samyukgu/what2wear/member/FindPasswordStep1View.fxml", "아이디 찾기");
     }
 
+    private void setupDI() {
+        DIContainer diContainer = DIContainer.getInstance();
+        memberService = diContainer.resolve(MemberService.class);
+    }
 
+    private void setupUI() {
+        int arcWidth = 30, arcHeight = 30;
+        Rectangle clip = new Rectangle(loginBanner.getFitWidth(), loginBanner.getFitHeight());
+        clip.setArcWidth(arcWidth);
+        clip.setArcHeight(arcHeight);
+        loginBanner.setClip(clip);
+    }
 
     private void switchScene(String fxmlPath, String title){
         try {
