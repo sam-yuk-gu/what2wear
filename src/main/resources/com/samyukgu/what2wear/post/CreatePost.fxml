@@ -13,49 +13,68 @@
       <children>
          <!-- 헤더 -->
          <HBox alignment="CENTER" prefHeight="81.0" prefWidth="1030.0">
-            <fx:include fx:id="headerPane" source="/com/samyukgu/what2wear/common/PostHeader.fxml"/>
+            <fx:include fx:id="headerPane" source="/com/samyukgu/what2wear/common/PostHeader.fxml" />
          </HBox>
 
-         <VBox fx:id="content_vbox" prefHeight="300.0" prefWidth="1030.0">
+         <!-- 제목 + 내용 + 코디 !-->
+         <VBox fx:id="content_vbox" prefHeight="483.0" prefWidth="1030.0">
             <children>
-               <Pane fx:id="title_pane" prefHeight="100.0" prefWidth="1010.0">
-                  <children>
-                     <Label fx:id="title_text" layoutX="31.0" layoutY="39.0" styleClass="title_text" text="제목">
-                        <font>
-                           <Font size="18.0" />
-                        </font>
-                     </Label>
-                     <TextField fx:id="input_title" layoutX="165.0" layoutY="26.0" prefHeight="50.0" prefWidth="820.0" promptText="제목을 입력해주세요." />
-                  </children>
-               </Pane>
-               <Pane fx:id="content_pane" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="1010.0">
-                  <children>
-                     <Label fx:id="content_text" layoutX="31.0" layoutY="39.0" styleClass="content_text" text="내용">
-                        <font>
-                           <Font size="18.0" />
-                        </font>
-                     </Label>
-                     <TextField fx:id="content_input" layoutX="165.0" layoutY="26.0" prefHeight="50.0" prefWidth="820.0" promptText="내용을 입력해주세요." />
-                  </children>
-               </Pane>
-               <Pane fx:id="codi_pane" layoutX="10.0" layoutY="110.0" prefHeight="100.0" prefWidth="1010.0">
-                  <children>
-                     <Label fx:id="codi_text" layoutX="31.0" layoutY="39.0" styleClass="codi_text" text="코디">
-                        <font>
-                           <Font size="18.0" />
-                        </font>
-                     </Label>
-                     <Button fx:id="codi_button" layoutX="165.0" layoutY="21.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="224.0" styleClass="gray_stroke_button" text="내 코디 불러오기">
-                        <graphic>
-                           <ImageView fitHeight="24" fitWidth="24">
-                              <image>
-                                 <Image url="@/assets/icons/blackLogo.png" />
-                              </image>
-                           </ImageView>
-                        </graphic>
-                     </Button>
-                  </children>
-               </Pane>
+               <!-- 제목 !-->
+                  <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #EEEEEE; -fx-border-width: 0 0 1 0;">
+                     <children>
+                     <Pane fx:id="title_pane" prefHeight="100.0" prefWidth="1010.0">
+                        <children>
+                           <Label fx:id="title_text" layoutX="29.0" layoutY="22.0" styleClass="create_title_text" text="제목">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                           <TextField fx:id="input_title" layoutX="152.0" layoutY="23.0" prefHeight="50.0" prefWidth="810.0" promptText="제목을 입력해주세요." />
+                        </children>
+                     </Pane>
+                     </children>
+                  </HBox>
+
+               <!-- 내용 !-->
+                  <HBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="1010.0" style="-fx-border-color: #EEEEEE; -fx-border-width: 0 0 1 0;">
+                     <children>
+                        <Pane fx:id="content_pane" prefHeight="100.0" prefWidth="1010.0">
+                           <children>
+                              <Label fx:id="content_text" layoutX="29.0" layoutY="22.0" styleClass="create_title_text" text="내용">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <!-- wrapText 으로 자동으로 줄 바꿈 !-->
+                              <TextArea fx:id="content_title" layoutX="152.0" layoutY="22.0" prefHeight="50.0" prefWidth="810.0" wrapText="true" promptText="내용을 입력해주세요." />
+                           </children>
+                        </Pane>
+                     </children>
+                  </HBox>
+
+               <!-- 코디 !-->
+                  <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #EEEEEE; -fx-border-width: 0 0 1 0;">
+                     <children>
+                     <Pane fx:id="codi_pane" prefHeight="100.0" prefWidth="1010.0">
+                        <children>
+                           <Label fx:id="codi_text" layoutX="29.0" layoutY="22.0" styleClass="create_title_text" text="코디">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                           <Button fx:id="codi_button" layoutX="151.0" layoutY="20.0" prefHeight="60.0" prefWidth="224.0" styleClass="gray_stroke_button" text="내 코디 불러오기">
+                              <graphic>
+                                 <ImageView fitHeight="24" fitWidth="24">
+                                    <image>
+                                       <Image url="@/assets/icons/blackLogo.png" />
+                                    </image>
+                                 </ImageView>
+                              </graphic>
+                           </Button>
+                        </children>
+                     </Pane>
+                     </children>
+                  </HBox>
             </children>
          </VBox>
          <HBox fx:id="bottom_two_button_hbox" alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="1030.0" styleClass="bottom_two_button">

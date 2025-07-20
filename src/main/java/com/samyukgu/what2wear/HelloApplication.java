@@ -2,18 +2,12 @@ package com.samyukgu.what2wear;
 
 import com.samyukgu.what2wear.config.ApplicationConfig;
 import com.samyukgu.what2wear.di.DIContainer;
-import com.samyukgu.what2wear.member.dao.MemberOracleDAO;
-import com.samyukgu.what2wear.member.service.MemberService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
-
 public class HelloApplication extends Application {
     @Override
     public void init() throws Exception{

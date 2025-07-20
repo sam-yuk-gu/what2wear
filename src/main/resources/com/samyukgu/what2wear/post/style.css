@@ -23,10 +23,8 @@
 /* =======================
    Text 관련
    ======================= */
-.title_text,
 .header_text,
-.content_text,
-.codi_text {
+.create_title_text {
     -fx-font-family: "Pretendard Medium";
 }
 

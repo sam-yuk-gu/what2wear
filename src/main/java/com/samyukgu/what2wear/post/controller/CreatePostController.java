@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 
@@ -15,6 +16,7 @@ public class CreatePostController {
     @FXML private StackPane root;
     @FXML private Button cancelButton;
     @FXML private Button registerButton;
+    @FXML private TextArea content_title; // 내용 입력란
 
     @FXML
     public void initialize() {
@@ -27,9 +29,25 @@ public class CreatePostController {
             // back 버튼 사용 안 함
             controller.setBackButtonVisible(false);
             root.getChildren().add(0, headerNode);
+
+            // 내용 자동 줄 바꿈 활성화
+            content_title.setWrapText(true);
+            
+            // 내용 자동 줄 바꿈 계산
+            content_title.textProperty().addListener((obs, oldText, newText) -> {
+                int approxCharsPerLine = 109;       // 한 줄에 들어갈 수 있는 평균 문자 수 (810px 기준)
+                int lineBreaks = newText.split("\n").length;
+                int wrappedLines = newText.length() / approxCharsPerLine;
+
+                int totalLines = Math.max(1, lineBreaks + wrappedLines);
+                content_title.setPrefHeight(24 * totalLines + 20);      // 줄 수 × 줄 높이 + 패딩
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        content_title.setWrapText(true);
+
 
         // 버튼 클릭 이벤트
         cancelButton.setOnAction(event -> handleCancelClick());
