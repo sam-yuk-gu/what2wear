@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<HBox fx:controller="com.samyukgu.what2wear.common.controller.PostHeaderController"
+      alignment="CENTER" prefHeight="81.0" prefWidth="1030.0"
+      xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+    <Pane fx:id="header_pane" prefHeight="89.0" prefWidth="1030.0" styleClass="header_pane">
+        <Button fx:id="backButton" layoutY="19.0" onAction="#handleBack" styleClass="arrow_button">
+            <graphic>
+                <ImageView fitHeight="24" fitWidth="24">
+                    <image>
+                        <Image url="@/assets/icons/titleLeftArrow.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+        <Label fx:id="header_text" layoutX="463.0" layoutY="25.0" styleClass="header_text" text="게시글 등록">
+            <font>
+                <Font size="16.0"/>
+            </font>
+        </Label>
+    </Pane>
+</HBox>

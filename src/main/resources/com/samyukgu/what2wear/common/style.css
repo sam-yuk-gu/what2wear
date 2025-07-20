@@ -1,0 +1,62 @@
+.modal_overlay {
+    -fx-background-color: transparent;
+}
+
+.modal-dim-background {
+    -fx-fill: rgba(0, 0, 0, 0.4);
+}
+
+.modal_container {
+    -fx-background-color: #FFFFFF;
+    -fx-padding: 30;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.2, 0, 4);
+}
+
+/* Button 관련 */
+.two_button_hbox {
+    -fx-padding: 20 0;
+}
+
+.cancel_button {
+    -fx-padding: 12 56;
+    -fx-text-fill: #000000;
+    -fx-font-size: 16px;
+    -fx-background-radius: 10;
+    -fx-background-color: #E6E6E6;
+    -fx-font-family: "Pretendard Bold";
+    -fx-cursor: hand;
+}
+
+.confirm_button {
+    -fx-padding: 12 56;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 16px;
+    -fx-background-radius: 10;
+    -fx-background-color: #79C998;
+    -fx-font-family: "Pretendard Bold";
+    -fx-cursor: hand;
+}
+
+.modal_close_button {
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+    -fx-font-size: 16px;
+    -fx-cursor: hand;
+}
+
+/* Text 관련 */
+.modal_description {
+    -fx-text-fill: #9C9C9C;
+    -fx-font-size: 16px;
+    -fx-cursor: hand;
+    -fx-font-family: "Pretendard Regular";
+}
+
+.modal_title {
+    -fx-text-fill: #000000;
+    -fx-font-size: 24px;
+    -fx-cursor: hand;
+    -fx-font-family: "Pretendard SemiBold";
+}
+
