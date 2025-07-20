@@ -22,7 +22,6 @@ public class SignupStep1Controller {
     @FXML private Label passwordCheckRes;
     @FXML private ImageView signupBanner;
     @FXML private TextField inputIdField;
-    @FXML private Button checkDuplicateId;
     @FXML private PasswordField inputPasswordField;
     @FXML private PasswordField inputPasswordCheckField;
     @FXML private Button prevButton;
@@ -48,7 +47,9 @@ public class SignupStep1Controller {
 
     @FXML
     private void handleClickNextButton(){
-        switchScene("/com/samyukgu/what2wear/member/SignupStep2View.fxml", "회원 가입");
+        String accountId = inputIdField.getText();
+        String password = inputPasswordField.getText();
+        switchSceneWithUserData("/com/samyukgu/what2wear/member/SignupStep2View.fxml", "회원 가입", accountId, password);
     }
 
     @FXML
@@ -99,9 +100,7 @@ public class SignupStep1Controller {
     }
 
     private void handlePasswordCheckFieldChange() {
-        String password = inputPasswordField.getText();
-        if(isValidPasswordLength(password))
-            validatePasswordMatch();
+        validatePasswordMatch();
         validateForm();
     }
 
@@ -109,7 +108,7 @@ public class SignupStep1Controller {
         String password = inputPasswordField.getText();
         String passwordCheck = inputPasswordCheckField.getText();
 
-        if (isValidPasswordLength(password) && !password.equals(passwordCheck)) {
+        if (isValidPasswordLength(passwordCheck) && !password.equals(passwordCheck)) {
             showErrorMessage(passwordCheckRes, "비밀번호가 일치하지 않습니다.");
         } else {
             clearLabel(passwordCheckRes);
@@ -178,6 +177,26 @@ public class SignupStep1Controller {
             Parent root = loader.load();
 
             Stage stage = (Stage) signupBanner.getScene().getWindow();
+            Scene scene = new Scene(root, 1280, 768);
+            stage.setScene(scene);
+            stage.setTitle(title);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void switchSceneWithUserData(String fxmlPath, String title, String accountId, String password) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
+
+            // 컨트롤러 가져오기
+            SignupStep2Controller controller = loader.getController();
+            controller.setUserData(accountId, password);
+
+            Stage stage = (Stage) inputIdField.getScene().getWindow();
             Scene scene = new Scene(root, 1280, 768);
             stage.setScene(scene);
             stage.setTitle(title);
