@@ -9,6 +9,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -55,7 +56,7 @@
             </VBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="prevButton" onAction="#handleClickPrevButton" mnemonicParsing="false" prefHeight="60.0" prefWidth="150.0" text="돌아가기">
+                  <Button fx:id="prevButton" mnemonicParsing="false" onAction="#handleClickPrevButton" prefHeight="60.0" prefWidth="150.0" text="돌아가기">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
@@ -64,7 +65,7 @@
                         <String fx:value="semi-bold-text" />
                      </styleClass>
                   </Button>
-                  <Button fx:id="nextButton" onAction="#handleClickNextButton" mnemonicParsing="false" prefHeight="60.0" prefWidth="150.0" text="확인">
+                  <Button fx:id="nextButton" mnemonicParsing="false" onAction="#handleClickNextButton" prefHeight="60.0" prefWidth="150.0" text="확인">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -80,5 +81,15 @@
             <Insets />
          </opaqueInsets>
       </VBox>
+      <Pane layoutX="370.0" layoutY="577.0" prefHeight="28.0" prefWidth="445.0">
+         <children>
+            <Label fx:id="emailCheckResLabel" layoutY="7.0" styleClass="text-red" />
+         </children>
+      </Pane>
+      <Pane layoutX="370.0" layoutY="471.0" prefHeight="28.0" prefWidth="445.0">
+         <children>
+            <Label fx:id="nameCheckResLabel" layoutX="1.0" layoutY="7.0" styleClass="text-red" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
