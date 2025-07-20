@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1280.0" styleClass="root" stylesheets="@/com/samyukgu/what2wear/member/style.css, @/com/samyukgu/what2wear/layout/style.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.member.controller.LoginController">
+   <children>
+      <AnchorPane prefHeight="768.0" prefWidth="564.0">
+         <children>
+            <Pane layoutY="53.0" prefHeight="663.0" prefWidth="593.0">
+               <children>
+                  <Pane layoutX="121.0" layoutY="46.0" prefHeight="162.0" prefWidth="352.0">
+                     <children>
+                        <VBox alignment="TOP_CENTER" prefHeight="162.0" prefWidth="352.0">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <ImageView fitHeight="42.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true" />
+                                    <Label alignment="CENTER" prefHeight="99.0" prefWidth="234.0" styleClass="bold-text" text="내일뭐입지">
+                                       <font>
+                                          <Font size="40.0" />
+                                       </font></Label>
+                                 </children>
+                              </HBox>
+                              <Label alignment="CENTER" prefHeight="27.0" prefWidth="289.0" styleClass="description" text="코디 저장부터 추천까지," textFill="#6f6f6f">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font></Label>
+                              <Label alignment="CENTER" prefHeight="27.0" prefWidth="357.0" styleClass="description" text="지속 가능한 패션을 시작해보세요" textFill="#6f6f6f">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font></Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </Pane>
+                  <Pane layoutX="98.0" layoutY="248.0" prefHeight="205.0" prefWidth="398.0">
+                     <children>
+                        <VBox alignment="CENTER_LEFT" prefHeight="205.0" prefWidth="398.0">
+                           <children>
+                              <Label prefHeight="34.0" prefWidth="91.0" styleClass="bold-text" text="아이디">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font></Label>
+                              <TextField fx:id="inputIdField" maxWidth="1.7976931348623157E308" prefHeight="60.0" prefWidth="398.0" promptText="아이디를 입력하세요." styleClass="input-field">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font></TextField>
+                              <Label prefHeight="36.0" prefWidth="105.0" styleClass="bold-text" text="비밀번호">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin></Label>
+                              <PasswordField fx:id="inputPasswordField" maxWidth="1.7976931348623157E308" prefHeight="60.0" prefWidth="410.0" promptText="비밀번호를 입력하세요." styleClass="input-field">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font></PasswordField>
+                           </children>
+                        </VBox>
+                     </children>
+                  </Pane>
+                  <Pane layoutX="45.0" layoutY="464.0" prefHeight="162.0" prefWidth="512.0">
+                     <HBox layoutX="249.0" layoutY="81.0" prefHeight="63.0" prefWidth="289.0">
+                        <Label fx:id="signupLabel" alignment="CENTER" onMouseClicked="#handleClickSignupLabel" prefHeight="14.0" prefWidth="50.0" styleClass="label-clickable" text="회원가입" />
+                        <Label text="|">
+                           <HBox.margin>
+                              <Insets left="2.0" right="2.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="findIdLabel" alignment="CENTER" onMouseClicked="#handleClickFindIdLabel" prefHeight="14.0" prefWidth="64.0" styleClass="label-clickable" text="아이디 찾기" />
+                        <Label text="|">
+                           <HBox.margin>
+                              <Insets left="2.0" right="2.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="findPasswordLabel" alignment="CENTER" onMouseClicked="#handleClickFindPasswordLabel" styleClass="label-clickable" text="비밀번호 찾기" />
+                     </HBox>
+                     <Button fx:id="loginButton" layoutX="57.0" mnemonicParsing="false" onAction="#handleClickLoginButton" prefHeight="64.0" prefWidth="398.0" text="로그인">
+                        <styleClass>
+                           <String fx:value="btn-black" />
+                           <String fx:value="bold-text" />
+                        </styleClass></Button>
+                  </Pane>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="768.0" prefWidth="727.0">
+         <children>
+            <ImageView fx:id="loginBanner" fitHeight="663.0" fitWidth="661.0" layoutY="53.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../../../../assets/imgs/raccoon.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </children>
+</HBox>

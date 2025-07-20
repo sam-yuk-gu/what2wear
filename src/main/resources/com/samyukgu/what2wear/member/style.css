@@ -1,0 +1,60 @@
+.root{
+    -fx-background-color: "white";
+}
+
+.bold-text {
+    -fx-font-family: "Pretendard Bold";
+}
+
+.text-red{
+    -fx-text-fill: #FF5F63;
+    -fx-font-family: "Pretendard SemiBold";
+}
+
+.text-green{
+    -fx-text-fill: #79C998;
+    -fx-font-family: "Pretendard SemiBold";
+}
+
+.btn-black{
+    -fx-background-color: "black";
+    -fx-text-fill: "white";
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 24;
+}
+
+.btn-gray{
+    -fx-background-color: #8E8E8E;
+    -fx-text-fill: "white";
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 20;
+}
+
+.btn-red{
+    -fx-background-color: FF5F63;
+    -fx-text-fill: "white";
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 18;
+}
+
+.btn-green{
+    -fx-background-color: #79C998;
+    -fx-text-fill: "white";
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 20;
+}
+
+.input-field{
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-font-size: 18;
+}
+
+.label-clickable {
+    -fx-cursor: hand;
+}
