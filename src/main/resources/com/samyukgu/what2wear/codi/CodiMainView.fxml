@@ -39,7 +39,7 @@
                 </HBox>
                 <Region HBox.hgrow="ALWAYS" />
                 <HBox spacing="10">
-                    <Button styleClass="ai-btn">
+                    <Button fx:id="aiButton" styleClass="ai-btn">
                         <graphic>
                             <HBox spacing="10" alignment="CENTER">
                                 <ImageView fitWidth="19" pickOnBounds="true" preserveRatio="true">
@@ -49,7 +49,7 @@
                             </HBox>
                         </graphic>
                     </Button>
-                    <Button styleClass="add-btn" onAction="#handleClickAddCodi">
+                    <Button fx:id="addButton" styleClass="add-btn" onAction="#handleClickAddCodi">
                         <graphic>
                             <HBox spacing="10" alignment="CENTER">
                                 <ImageView fitWidth="16" pickOnBounds="true" preserveRatio="true">
@@ -65,17 +65,17 @@
         </VBox>
         <Region HBox.hgrow="ALWAYS" />
         <!-- 우측: 일정 영역 -->
-        <VBox spacing="15" styleClass="schedule">
-            <Label fx:id="selectedDateLabel" styleClass="date-label"/>
-            <Label fx:id="scheduleLabel" styleClass="schedule-label"/>
-
-            <VBox fx:id="codiListContainer" spacing="10">
-                <!-- 동적으로 옷 카드 삽입 -->
-            </VBox>
-
-            <!-- empty state -->
-            <Label fx:id="emptyLabel" text="일정이 존재하지 않습니다. 추가해보세요."
-                   styleClass="empty-message" visible="false" managed="false"/>
+        <VBox styleClass="schedule">
+            <ScrollPane fx:id="scheduleScrollPane"
+                        fitToHeight="true" fitToWidth="true"
+                        hbarPolicy="NEVER" vbarPolicy="NEVER" styleClass="scroll-container">
+                <VBox fx:id="scheduleWrapper" styleClass="scroll-content" VBox.vgrow="ALWAYS">
+                    <VBox fx:id="scheduleListContainer"/>
+                    <Label fx:id="emptyLabel" text="코디 일정을 추가하고 옷장을 관리해보세요."
+                           styleClass="empty-message" visible="false" managed="false" />
+                </VBox>
+            </ScrollPane>
+            <Region styleClass="scroll-corner-mask"/>
         </VBox>
     </HBox>
 </VBox>

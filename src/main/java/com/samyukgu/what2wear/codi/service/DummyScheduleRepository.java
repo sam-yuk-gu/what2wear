@@ -26,13 +26,22 @@ public class DummyScheduleRepository {
 
         map.put(LocalDate.of(2025, 7, 15), List.of(
                 new CodiSchedule("외부 미팅", LocalDate.of(2025, 7, 15), List.of(
-                        new CodiItem("상의", "하늘색 셔츠", "file:resources/assets/icons/logo.png")
+                        new CodiItem("상의", "하늘색 셔츠", "file:resources/assets/icons/logo.png"),
+                        new CodiItem("하의", "슬랙스", "file:resources/assets/icons/logo.png"),
+                        new CodiItem("하의", "슬랙스", "file:resources/assets/icons/logo.png")
                 ), ScheduleVisibility.FRIENDS),
                 new CodiSchedule("팀 회의", LocalDate.of(2025, 7, 15), List.of(
+                        new CodiItem("하의", "슬랙스", "file:resources/assets/icons/logo.png"),
+                        new CodiItem("하의", "슬랙스", "file:resources/assets/icons/logo.png"),
+                        new CodiItem("하의", "슬랙스", "file:resources/assets/icons/logo.png"),
+                        new CodiItem("하의", "슬랙스", "file:resources/assets/icons/logo.png"),
+                        new CodiItem("하의", "슬랙스", "file:resources/assets/icons/logo.png"),
                         new CodiItem("하의", "슬랙스", "file:resources/assets/icons/logo.png")
                 ), ScheduleVisibility.PUBLIC),
                 new CodiSchedule("저녁 약속", LocalDate.of(2025, 7, 15), List.of(
-                        new CodiItem("아우터", "자켓", "file:resources/assets/icons/logo.png")
+                        new CodiItem("아우터", "자켓", "file:resources/assets/icons/logo.png"),
+                        new CodiItem("하의", "슬랙스", "file:resources/assets/icons/logo.png"),
+                        new CodiItem("하의", "슬랙스", "file:resources/assets/icons/logo.png")
                 ), ScheduleVisibility.PRIVATE)
         ));
 
