@@ -173,12 +173,6 @@ public class SignupStep2Controller {
 
         // TODO: 실제 회원가입 로직 구현
         // memberService.createMember(accountId, password, name, nickname, email);
-        System.out.println("accountId : " + accountId);
-        System.out.println("password : " + password);
-        System.out.println("name : " + name);
-        System.out.println("nickname : " + nickname);
-        System.out.println("email : " + email);
-
         switchScene("/com/samyukgu/what2wear/member/LoginView.fxml", "로그인");
     }
 
