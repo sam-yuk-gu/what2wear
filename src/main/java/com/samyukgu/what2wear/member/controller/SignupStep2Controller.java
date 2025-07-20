@@ -173,7 +173,9 @@ public class SignupStep2Controller {
 
         // TODO: 실제 회원가입 로직 구현
         // memberService.createMember(accountId, password, name, nickname, email);
-        switchScene("/com/samyukgu/what2wear/member/LoginView.fxml", "로그인");
+        // try-catch로 회원가입 메서드 실행 -> 실패할시 회원가입 실패창, 성공할시 회원가입 성공창
+        switchScene("/com/samyukgu/what2wear/member/SignupSuccessView.fxml", "회원가입 성공!");
+//        switchScene("/com/samyukgu/what2wear/member/SignupFailureView.fxml", "회원가입 실패");
     }
 
     @FXML

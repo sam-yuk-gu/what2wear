@@ -20,4 +20,6 @@ public class MemberService {
     }
 
     public boolean isExist(String name, String email){ return false; }
+
+    public boolean isExist(String accountId){ return false; }
 }
