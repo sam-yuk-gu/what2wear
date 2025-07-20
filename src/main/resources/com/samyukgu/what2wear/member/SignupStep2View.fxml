@@ -6,13 +6,13 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
@@ -78,13 +78,19 @@
                                     <ComboBox fx:id="domainCombobox" prefHeight="60.0" prefWidth="180.0" promptText="주소" styleClass="input-field" />
                                  </children>
                               </VBox>
-<!--                              <Button mnemonicParsing="false" onMouseClicked="#handleClickCheckDuplicateButton" prefHeight="52.0" prefWidth="103.0" text="메일전송">-->
-                              <Button fx:id="sendMailButton" mnemonicParsing="false" prefHeight="52.0" prefWidth="103.0" text="메일전송">
-                                  <styleClass>
-                                      <String fx:value="btn-red" />
-                                      <String fx:value="bold-text" />
-                                  </styleClass>
-                              </Button>
+                              <HBox alignment="CENTER" maxHeight="60.0" prefHeight="60.0" prefWidth="127.0">
+                                 <children>
+                                    <Button fx:id="sendMailButton" mnemonicParsing="false" onAction="#handleClickSendMailButton" prefHeight="52.0" prefWidth="102.0" text="메일전송">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                       <styleClass>
+                                          <String fx:value="btn-red" />
+                                          <String fx:value="bold-text" />
+                                       </styleClass>
+                                    </Button>
+                                 </children>
+                              </HBox>
                            </children>
                            <VBox.margin>
                               <Insets bottom="10.0" />
@@ -99,18 +105,31 @@
                                           <Font size="20.0" />
                                        </font>
                                     </Label>
-                                    <Label prefHeight="34.0" text="*" textFill="#ff5f63">
-                                       <font>
-                                          <Font size="20.0" />
-                                       </font>
-                                    </Label>
                                  </children>
                               </TextFlow>
-                                        <PasswordField fx:id="authMailField" maxWidth="1.7976931348623157E308" prefHeight="60.0" prefWidth="410.0" promptText="인증번호를 입력하세요." styleClass="input-field">
-                                            <font>
-                                                <Font size="18.0" />
-                                            </font>
-                              </PasswordField>
+                              <TextField fx:id="authMailField" prefHeight="60.0" prefWidth="410.0" promptText="인증번호를 입력하세요." styleClass="input-field">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </TextField>
+                              <HBox alignment="CENTER" maxHeight="60.0" prefHeight="60.0" prefWidth="127.0">
+                                 <children>
+                                    <Button fx:id="checkAuthButton" mnemonicParsing="false" onAction="#handleClickCheckAuthButton" prefHeight="52.0" prefWidth="102.0" text="인증">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                       <styleClass>
+                                          <String fx:value="btn-red" />
+                                          <String fx:value="bold-text" />
+                                       </styleClass>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" maxHeight="60.0" prefHeight="60.0" prefWidth="56.0">
+                                 <children>
+                                    <Label fx:id="timerLabel" />
+                                 </children>
+                              </HBox>
                            </children>
                            <VBox.margin>
                               <Insets bottom="10.0" />
@@ -127,11 +146,11 @@
                                     </Label>
                                  </children>
                               </TextFlow>
-                              <PasswordField fx:id="inputNameField" maxWidth="1.7976931348623157E308" prefHeight="60.0" prefWidth="410.0" promptText="이름을 입력하세요" styleClass="input-field">
+                              <TextField fx:id="inputNameField" prefHeight="60.0" prefWidth="410.0" promptText="이름을 입력하세요" styleClass="input-field">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
-                              </PasswordField>
+                              </TextField>
                            </children>
                            <VBox.margin>
                               <Insets bottom="10.0" />
@@ -146,30 +165,35 @@
                                           <Font size="20.0" />
                                        </font>
                                     </Label>
+                                    <Label prefHeight="34.0" text="*" textFill="#ff5f63">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
                                  </children>
                               </TextFlow>
-                              <PasswordField fx:id="inputNicknameField" maxWidth="1.7976931348623157E308" prefHeight="60.0" prefWidth="395.0" promptText="닉네임을 입력하세요" styleClass="input-field">
+                              <TextField fx:id="inputNicknameField" prefHeight="60.0" prefWidth="410.0" promptText="닉네임을 입력하세요." styleClass="input-field">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
-                              </PasswordField>
-                              <VBox prefHeight="200.0" prefWidth="100.0">
+                              </TextField>
+                              <HBox alignment="CENTER" maxHeight="60.0" prefHeight="60.0" prefWidth="127.0">
                                  <children>
-                                    <Button fx:id="checkDuplicateNickname" mnemonicParsing="false" prefHeight="52.0" prefWidth="122.0" text="중복확인">
+                                    <Button fx:id="checkDuplicateButton" onAction="#handleClickCheckDuplicateButton" mnemonicParsing="false" prefHeight="52.0" prefWidth="100.0" text="중복확인">
                                        <styleClass>
                                           <String fx:value="btn-red" />
                                           <String fx:value="bold-text" />
                                        </styleClass>
                                     </Button>
                                  </children>
-                              </VBox>
+                              </HBox>
                            </children>
                         </HBox>
                               </children>
                           </VBox>
                   <Pane layoutX="222.0" layoutY="463.0" prefHeight="200.0" prefWidth="454.0">
                      <children>
-                        <Button fx:id="prevButton" layoutY="133.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="212.0" text="이전으로">
+                        <Button fx:id="prevButton" onAction="#handleClickPrevButton" layoutY="133.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="212.0" text="이전으로">
                            <styleClass>
                               <String fx:value="btn-gray" />
                               <String fx:value="bold-text" />
@@ -181,6 +205,26 @@
                            </styleClass></Button>
                      </children>
                   </Pane>
+                    <Region layoutX="357.0" layoutY="267.0" prefHeight="28.0" prefWidth="340.0" />
+                        <HBox alignment="TOP_RIGHT" layoutX="222.0" layoutY="267.0" prefHeight="18.0" prefWidth="454.0">
+                            <children>
+                                <Label fx:id="authResLabel" textAlignment="RIGHT">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <Region layoutX="171.0" layoutY="435.0" prefHeight="28.0" prefWidth="493.0" />
+                        <HBox alignment="TOP_RIGHT" layoutX="210.0" layoutY="440.0" prefHeight="18.0" prefWidth="454.0">
+                            <children>
+                                <Label fx:id="nicknameCheckRes" textAlignment="RIGHT">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
                     </children>
                 </Pane>
             </children>
