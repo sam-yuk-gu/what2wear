@@ -31,6 +31,7 @@
     -fx-font-family: "Pretendard Medium";
     -fx-font-size: 14;
     -fx-text-fill: #434343;
+    -fx-cursor: hand;
 }
 
 .add-btn {
@@ -44,6 +45,7 @@
     -fx-font-family: "Pretendard Medium";
     -fx-font-size: 14;
     -fx-text-fill: #434343;
+    -fx-cursor: hand;
 }
 
 .calendar {

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<HBox fx:controller="com.samyukgu.what2wear.common.controller.BasicHeaderController"
+      alignment="CENTER_LEFT"
+      prefHeight="70"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      stylesheets="@/com/samyukgu/what2wear/common/style.css"
+      styleClass="basic-header">
+
+    <!-- 왼쪽: 뒤로가기 버튼 -->
+    <Button fx:id="backButton" onAction="#handleBack" styleClass="header-back-button">
+        <graphic>
+            <ImageView fitHeight="20" fitWidth="20">
+                <image>
+                    <Image url="@/assets/icons/titleLeftArrow.png"/>
+                </image>
+            </ImageView>
+        </graphic>
+    </Button>
+
+    <!-- 좌측 Spacer -->
+    <Region fx:id="leftSpacer" HBox.hgrow="ALWAYS" />
+
+    <!-- 가운데: 타이틀 -->
+    <Label fx:id="titleLabel" text="페이지 제목" styleClass="header-title-text">
+        <font>
+            <Font size="16"/>
+        </font>
+    </Label>
+
+    <!-- 우측 Spacer -->
+    <Region fx:id="rightSpacer" HBox.hgrow="ALWAYS" />
+
+    <!-- 오른쪽: 20x20 가상공간 -->
+
+
+</HBox>
