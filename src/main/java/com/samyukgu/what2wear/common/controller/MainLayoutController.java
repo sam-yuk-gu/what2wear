@@ -19,7 +19,7 @@ public class MainLayoutController {
     @FXML private Region spacer;
 
     @FXML private Button logoButton;
-    @FXML private Button closetButton;
+    @FXML private Button wardrobeButton;
     @FXML private Button friendButton;
     @FXML private Button boardButton;
     @FXML private Button mypageButton;
@@ -35,7 +35,7 @@ public class MainLayoutController {
     public void initialize() {
         instance = this;
 
-        menuButtons = List.of(closetButton, friendButton, boardButton, mypageButton);   // 버튼 리스트 초기화 (로고 제외)
+        menuButtons = List.of(wardrobeButton, friendButton, boardButton, mypageButton);   // 버튼 리스트 초기화 (로고 제외)
         loadView("/com/samyukgu/what2wear/codi/CodiMainView.fxml");
         VBox.setVgrow(spacer, Priority.ALWAYS);     // 최대 여백 설정
     }
