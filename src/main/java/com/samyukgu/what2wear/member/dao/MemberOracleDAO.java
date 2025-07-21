@@ -69,6 +69,38 @@ public class MemberOracleDAO implements MemberDAO {
         }
     }
 
+    public Member findByAccountId(String accountId){
+        String sql = """
+            SELECT *
+            FROM member
+            WHERE account_id = ?
+            """;
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)
+        ) {
+
+            pstmt.setString(1, accountId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return new Member(
+                        rs.getLong("id"),
+                        rs.getString("account_id"),
+                        rs.getString("email"),
+                        rs.getString("name"),
+                        rs.getString("password"),
+                        rs.getBytes("profile_img"),
+                        rs.getString("deleted"),
+                        rs.getLong("count")
+                );
+            }
+            return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error By Select User");
+        }
+    }
+
     public List<Member> findAll(){
         String sql = """
             SELECT *

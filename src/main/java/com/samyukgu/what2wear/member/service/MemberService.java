@@ -18,4 +18,8 @@ public class MemberService {
     public List<Member> getAllMembers(){
         return dao.findAll();
     }
+
+    public boolean isExist(String name, String email){ return false; }
+
+    public boolean isExist(String accountId){ return false; }
 }

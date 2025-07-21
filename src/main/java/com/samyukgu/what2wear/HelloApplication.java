@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+
 public class HelloApplication extends Application {
     @Override
     public void init() throws Exception{
@@ -20,10 +21,8 @@ public class HelloApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/samyukgu/what2wear/layout/MainLayout.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1280, 768);
 
-        // font 설정
+        // 전역 CSS 연결 및 폰트 등록
         URL styleUrl = getClass().getResource("/styles/style.css");
-
-        // null 체크로 통일 (없을 경우 명시적으로 IllegalStateException 발생시킴)
         if (styleUrl != null) {
             scene.getStylesheets().add(styleUrl.toExternalForm());
         } else {

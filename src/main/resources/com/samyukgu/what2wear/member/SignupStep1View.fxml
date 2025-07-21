@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1280.0" styleClass="root" stylesheets="@/com/samyukgu/what2wear/layout/style.css, @/com/samyukgu/what2wear/member/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.member.controller.SignupStep1Controller">
+    <children>
+        <AnchorPane prefHeight="768.0" prefWidth="500.0">
+            <children>
+                <ImageView fx:id="signupBanner" fitHeight="663.0" fitWidth="407.0" layoutX="47.0" layoutY="53.0" pickOnBounds="true">
+                    <image>
+                        <Image url="@../../../../assets/imgs/raccoon.jpg" />
+                    </image>
+                </ImageView>
+            </children>
+        </AnchorPane>
+        <AnchorPane prefHeight="768.0" prefWidth="564.0">
+            <children>
+                <Pane layoutY="53.0" prefHeight="663.0" prefWidth="779.0">
+                    <children>
+                              <Label alignment="CENTER" prefHeight="81.0" prefWidth="234.0" styleClass="bold-text" text="회원 정보 입력">
+                                  <font>
+                                      <Font size="32.0" />
+                                  </font>
+                  </Label>
+                          <VBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="120.0" prefHeight="268.0" prefWidth="750.0">
+                              <children>
+                        <HBox prefHeight="100.0" prefWidth="603.0">
+                           <children>
+                              <TextFlow prefHeight="34.0" prefWidth="140.0">
+                                 <children>
+                                              <Label prefHeight="34.0" styleClass="bold-text" text="아이디">
+                                                  <font>
+                                                      <Font size="20.0" />
+                                                  </font>
+                                    </Label>
+                                    <Label prefHeight="34.0" text="*" textFill="#ff5f63">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </TextFlow>
+                                        <TextField fx:id="inputIdField" maxWidth="1.7976931348623157E308" prefHeight="60.0" prefWidth="410.0" promptText="아이디를 입력하세요." styleClass="input-field">
+                                            <font>
+                                                <Font size="18.0" />
+                                            </font>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </TextField>
+                              <HBox alignment="CENTER" maxHeight="60.0" prefHeight="60.0" prefWidth="127.0">
+                                 <children>
+                                    <Button fx:id="checkDuplicateId" mnemonicParsing="false" onMouseClicked="#handleClickCheckDuplicateButton" prefHeight="52.0" prefWidth="103.0" text="중복확인">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                        <styleClass>
+                                            <String fx:value="btn-red" />
+                                            <String fx:value="bold-text" />
+                                        </styleClass></Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <TextFlow prefHeight="34.0" prefWidth="140.0">
+                                 <children>
+                                    <Label prefHeight="36.0" styleClass="bold-text" text="비밀번호">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="34.0" text="*" textFill="#ff5f63">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </TextFlow>
+                                        <PasswordField fx:id="inputPasswordField" maxWidth="1.7976931348623157E308" prefHeight="60.0" prefWidth="410.0" promptText="비밀번호를 입력하세요." styleClass="input-field">
+                                            <font>
+                                                <Font size="18.0" />
+                                            </font>
+                              </PasswordField>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <TextFlow prefHeight="34.0" prefWidth="140.0">
+                                 <children>
+                                    <Label prefHeight="36.0" styleClass="bold-text" text="비밀번호 확인">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="34.0" text="*" textFill="#ff5f63">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </TextFlow>
+                              <PasswordField fx:id="inputPasswordCheckField" maxWidth="1.7976931348623157E308" prefHeight="60.0" prefWidth="410.0" promptText="비밀번호 확인을 입력하세요." styleClass="input-field">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </PasswordField>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                              </children>
+                          </VBox>
+                  <Pane layoutX="222.0" layoutY="463.0" prefHeight="200.0" prefWidth="454.0">
+                     <children>
+                        <Button fx:id="prevButton" layoutY="133.0" mnemonicParsing="false" onAction="#handleClickPrevButton" prefHeight="60.0" prefWidth="212.0" text="이전으로">
+                           <styleClass>
+                              <String fx:value="btn-gray" />
+                              <String fx:value="bold-text" />
+                           </styleClass></Button>
+                        <Button fx:id="nextButton" layoutX="227.0" layoutY="133.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="212.0" text="다음으로">
+                           <styleClass>
+                              <String fx:value="btn-gray" />
+                              <String fx:value="bold-text" />
+                           </styleClass></Button>
+                     </children>
+                  </Pane>
+                  <Region layoutX="297.0" layoutY="176.0" prefHeight="34.0" prefWidth="379.0" />
+                  <HBox alignment="TOP_RIGHT" layoutX="227.0" layoutY="184.0" prefHeight="18.0" prefWidth="454.0">
+                     <children>
+                        <Label fx:id="duplicateResLabel" textAlignment="RIGHT">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Region layoutX="357.0" layoutY="267.0" prefHeight="28.0" prefWidth="340.0" />
+                  <HBox alignment="TOP_RIGHT" layoutX="227.0" layoutY="272.0" prefHeight="18.0" prefWidth="454.0">
+                     <children>
+                        <Label fx:id="passwordRes" textAlignment="RIGHT">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Region layoutX="202.0" layoutY="358.0" prefHeight="28.0" prefWidth="493.0" />
+                  <HBox alignment="TOP_RIGHT" layoutX="222.0" layoutY="363.0" prefHeight="18.0" prefWidth="454.0">
+                     <children>
+                        <Label fx:id="passwordCheckRes" textAlignment="RIGHT">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                    </children>
+                </Pane>
+            </children>
+        </AnchorPane>
+    </children>
+</HBox>
