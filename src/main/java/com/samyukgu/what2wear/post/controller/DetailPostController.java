@@ -9,6 +9,7 @@ import com.samyukgu.what2wear.post.service.PostService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -68,9 +69,7 @@ public class DetailPostController {
         contentLabel.setText(post.getContent());
         authorLabel.setText(post.getMember_id().toString());
         dateLabel.setText(post.getCreate_at().toString());
-
-        likeCount = 0;  // 임시 설정, 실제 DB 값 사용 가능
-        likesLabel.setText(String.valueOf(likeCount));
+        likesLabel.setText(String.valueOf(post.getLike_count()));
     }
 
     private void checkAndShowButtons(Post post) {
@@ -87,7 +86,6 @@ public class DetailPostController {
         editPostButton.setManaged(true);
         deletePostButton.setManaged(true);
     }
-
 
     private void hideEditDeleteButtons() {
         editPostButton.setVisible(false);
@@ -159,9 +157,12 @@ public class DetailPostController {
         commentTextLabel.setVisible(true);
     }
 
+    // 내가 쓴 게시글 수정하기 버튼 클릭 시
     public void handlePostEditClick() {
-        MainLayoutController.loadView("/com/samyukgu/what2wear/post/EditPost.fxml");
+        // 데이터 불러와서 수정 화면으로 전환
+        MainLayoutController.loadEditPostView(currentPost);
     }
+
 
     public void handlePostDeleteClick() {
         try {
@@ -178,12 +179,9 @@ public class DetailPostController {
                     "확인",
                     () -> root.getChildren().remove(modal),
                     () -> {
-                        // 게시글 삭제 
                         PostService postService = new PostService(new PostOracleDAO());
                         postService.deletePost(currentPost.getId());
-                        // 모달창 닫기
                         root.getChildren().remove(modal);
-                        // 화면 전환
                         MainLayoutController.loadView("/com/samyukgu/what2wear/post/ListPost.fxml");
                     }
             );
@@ -193,5 +191,4 @@ public class DetailPostController {
             e.printStackTrace();
         }
     }
-
 }

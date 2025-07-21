@@ -68,8 +68,8 @@ public class Post {
         this.title = title;
     }
 
-    public void setContent(String title) {
-        this.title = title;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public void setCreate_at(Date create_at) {

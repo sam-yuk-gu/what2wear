@@ -5,47 +5,39 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<StackPane fx:id="root" xmlns="http://javafx.com/javafx/17.0.12"
-           xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="com.samyukgu.what2wear.post.controller.EditPostController"
-           prefWidth="1280.0" prefHeight="768.0"
-           stylesheets="/com/samyukgu/what2wear/post/style.css">
+<StackPane fx:id="root" prefHeight="768.0" prefWidth="1280.0" stylesheets="/com/samyukgu/what2wear/post/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.post.controller.EditPostController">
 
     <HBox>
         <VBox fx:id="mainVBox" prefHeight="768.0" prefWidth="1030.0" spacing="40.0" styleClass="board_vbox">
-            <VBox fx:id="content_vbox" prefHeight="300.0" prefWidth="1030.0">
+            <VBox fx:id="content_vbox" prefHeight="495.0" prefWidth="1030.0">
                 <children>
-                    <Pane fx:id="title_pane" prefHeight="100.0" prefWidth="1010.0">
+                    <Pane fx:id="title_pane" prefHeight="110.0" prefWidth="1030.0">
                         <children>
                             <Label fx:id="title_text" layoutX="31.0" layoutY="39.0" styleClass="title_text" text="제목">
-                                <font><Font size="18.0"/></font>
+                                <font><Font size="18.0" /></font>
                             </Label>
-                            <TextField fx:id="input_title" layoutX="165.0" layoutY="26.0"
-                                       prefHeight="50.0" prefWidth="820.0" promptText="제목을 입력해주세요."/>
+                            <TextField fx:id="input_title" layoutX="165.0" layoutY="26.0" prefHeight="50.0" prefWidth="820.0" promptText="제목을 입력해주세요." />
                         </children>
                     </Pane>
 
-                    <Pane fx:id="content_pane" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="1010.0">
+                    <Pane fx:id="content_pane" layoutX="10.0" layoutY="10.0" prefHeight="284.0" prefWidth="1030.0">
                         <children>
-                            <Label fx:id="content_text" layoutX="31.0" layoutY="39.0" styleClass="content_text" text="내용">
-                                <font><Font size="18.0"/></font>
+                            <Label fx:id="content_text" layoutX="31.0" layoutY="39.0" styleClass="title_text" text="내용">
+                                <font><Font size="18.0" /></font>
                             </Label>
-                            <TextField fx:id="content_input" layoutX="165.0" layoutY="26.0"
-                                       prefHeight="50.0" prefWidth="820.0" promptText="내용을 입력해주세요."/>
+                            <TextArea fx:id="content_input" layoutX="165.0" layoutY="26.0" prefHeight="218.0" prefWidth="820.0" promptText="내용을 입력해주세요." />
                         </children>
                     </Pane>
 
-                    <Pane fx:id="codi_pane" layoutX="10.0" layoutY="110.0" prefHeight="100.0" prefWidth="1010.0">
+                    <Pane fx:id="codi_pane" layoutX="10.0" layoutY="180.0" prefHeight="100.0" prefWidth="1030.0">
                         <children>
-                            <Label fx:id="codi_text" layoutX="31.0" layoutY="39.0" styleClass="codi_text" text="코디">
-                                <font><Font size="18.0"/></font>
+                            <Label fx:id="codi_text" layoutX="31.0" styleClass="codi_text" text="코디">
+                                <font><Font size="18.0" /></font>
                             </Label>
-                            <Button fx:id="codi_button" layoutX="165.0" layoutY="21.0"
-                                    prefHeight="60.0" prefWidth="224.0"
-                                    styleClass="gray_stroke_button" text="내 코디 불러오기">
+                            <Button fx:id="codi_button" layoutX="165.0" prefHeight="60.0" prefWidth="224.0" styleClass="gray_stroke_button" text="내 코디 불러오기">
                                 <graphic>
                                     <ImageView fitHeight="24" fitWidth="24">
-                                        <image><Image url="@/assets/icons/blackLogo.png"/></image>
+                                        <image><Image url="@/assets/icons/blackLogo.png" /></image>
                                     </ImageView>
                                 </graphic>
                             </Button>
@@ -58,10 +50,8 @@
                 <children>
                     <Pane fx:id="bottom_two_button_pane" prefHeight="60.0" prefWidth="1030.0">
                         <children>
-                            <Button fx:id="cancelButton" layoutX="676.0" layoutY="3.0"
-                                    prefHeight="55.0" prefWidth="150.0" styleClass="gray_stroke_button" text="취소하기"/>
-                            <Button fx:id="confirmButton" layoutX="834.0" layoutY="3.0"
-                                    prefHeight="55.0" prefWidth="150.0" styleClass="black_background_button" text="수정하기"/>
+                            <Button fx:id="cancelButton" layoutX="676.0" layoutY="3.0" prefHeight="55.0" prefWidth="150.0" styleClass="gray_stroke_button" text="취소하기" />
+                            <Button fx:id="confirmButton" layoutX="834.0" layoutY="3.0" prefHeight="55.0" prefWidth="150.0" styleClass="black_background_button" text="수정하기" />
                         </children>
                     </Pane>
                 </children>

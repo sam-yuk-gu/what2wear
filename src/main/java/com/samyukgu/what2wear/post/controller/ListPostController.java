@@ -91,10 +91,9 @@ public class ListPostController implements Initializable {
                         "최소 하나의 필터를 선택해야 합니다.",
                         "/assets/icons/redCheck.png",
                         "#FA7B7F",
-                        "확인",
                         "취소",
+                        "확인",
                         () -> root.getChildren().remove(modal),
-
                         () -> root.getChildren().remove(modal)
                 );
 
