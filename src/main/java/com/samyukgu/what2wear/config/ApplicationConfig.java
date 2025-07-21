@@ -4,6 +4,12 @@ import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.member.dao.MemberDAO;
 import com.samyukgu.what2wear.member.dao.MemberOracleDAO;
 import com.samyukgu.what2wear.member.service.MemberService;
+import com.samyukgu.what2wear.myCodi.dao.MyCodiDAO;
+import com.samyukgu.what2wear.myCodi.dao.MyCodiOracleDAO;
+import com.samyukgu.what2wear.myCodi.service.MyCodiService;
+import com.samyukgu.what2wear.wardrobe.dao.WardrobeDAO;
+import com.samyukgu.what2wear.wardrobe.dao.WardrobeOracleDAO;
+import com.samyukgu.what2wear.wardrobe.service.WardrobeService;
 
 public class ApplicationConfig {
     public static void configure() {
@@ -21,5 +27,13 @@ public class ApplicationConfig {
         container.registerSingleton(MemberDAO.class, new MemberOracleDAO());
         // Service
         container.registerSingleton(MemberService.class, new MemberService(container.resolve(MemberDAO.class)));
+
+        // wardrobe
+        container.registerSingleton(WardrobeDAO.class, new WardrobeOracleDAO());
+        container.registerSingleton(WardrobeService.class, new WardrobeService(container.resolve(WardrobeDAO.class)));
+
+        // myCodi
+        container.registerSingleton(MyCodiDAO.class, new MyCodiOracleDAO());
+        container.registerSingleton(MyCodiService.class, new MyCodiService(container.resolve(MyCodiDAO.class)));
     }
 }

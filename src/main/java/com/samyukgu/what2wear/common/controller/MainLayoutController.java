@@ -74,4 +74,10 @@ public class MainLayoutController {
         selectMenu(friendButton);
         loadView("/com/samyukgu/what2wear/friend/FriendView.fxml");
     }
+
+    @FXML
+    private void handleClickWardrobe() {
+        selectMenu(wardrobeButton);
+        loadView("/com/samyukgu/what2wear/wardrobe/wardrobeList.fxml");
+    }
 }
