@@ -11,11 +11,12 @@ import java.io.IOException;
 
 public class FindPasswordStep2Controller {
     @FXML private Button prevButton;
-
+    // 이전 버튼 클릭하면 로그인으로 이동
     public void handleClickPrevButton(){
         switchScene("/com/samyukgu/what2wear/member/LoginView.fxml", "로그인");
     }
 
+    // scene 이동 메서드
     private void switchScene(String fxmlPath, String title){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
