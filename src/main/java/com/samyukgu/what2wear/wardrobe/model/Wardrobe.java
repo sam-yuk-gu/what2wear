@@ -6,121 +6,71 @@ public class Wardrobe {
     private Long category_id;
     private String name;
     private String memo;
-    private String like; // 'Y' or 'N'
+    private String liked;
     private byte[] picture;
     private String keyword;
-    private String size;
+    private String item_size;
     private String color;
     private String brand;
-    private String deleted; // 'Y' or 'N'
+    private String deleted;
 
-    public Long getId() {
-        return id;
+    public Wardrobe() {}
+
+    // 모든 필드에 대한 getter & setter
+    public void setId(Long id) { this.id = id; }
+    public Long getId() { return id; }
+
+    // 올바른 코드
+    public void setMemberId(Long memberId) {
+        this.member_id = memberId;     // 매개변수 memberId를 필드 member_id에 저장
+    }
+    public void setCategoryId(Long categoryId) {
+        this.category_id = categoryId; // 매개변수 categoryId를 필드 category_id에 저장
     }
 
-    public Long getMember_id() {
-        return member_id;
-    }
 
-    public Long getCategory_id() {
-        return category_id;
-    }
+    public Long getMemberId() { return member_id; }
 
-    public String getName() {
-        return name;
-    }
+    public Long getCategoryId() { return category_id; }
 
-    public String getMemo() {
-        return memo;
-    }
+    public void setName(String name) { this.name = name; }
+    public String getName() { return name; }
 
-    public String getLike() {
-        return like;
-    }
+    public void setMemo(String memo) { this.memo = memo; }
+    public String getMemo() { return memo; }
 
-    public byte[] getPicture() {
-        return picture;
-    }
+    public void setLike(String like) { this.liked = liked; }
+    public String getLike() { return liked; }
 
-    public String getKeyword() {
-        return keyword;
-    }
+    public void setPicture(byte[] picture) { this.picture = picture; }
+    public byte[] getPicture() { return picture; }
 
-    public String getSize() {
-        return size;
-    }
+    public void setKeyword(String keyword) { this.keyword = keyword; }
+    public String getKeyword() { return keyword; }
 
-    public String getColor() {
-        return color;
-    }
+    public void setSize(String item_size) { this.item_size = item_size; }
+    public String getSize() { return item_size; }
 
-    public String getBrand() {
-        return brand;
-    }
+    public void setColor(String color) { this.color = color; }
+    public String getColor() { return color; }
 
-    public String getDeleted() {
-        return deleted;
-    }
+    public void setBrand(String brand) { this.brand = brand; }
+    public String getBrand() { return brand; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public void setDeleted(String deleted) { this.deleted = deleted; }
+    public String getDeleted() { return deleted; }
 
-    public void setMember_id(Long member_id) {
-        this.member_id = member_id;
-    }
-
-    public void setCategory_id(Long category_id) {
-        this.category_id = category_id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setMemo(String memo) {
-        this.memo = memo;
-    }
-
-    public void setLike(String like) {
-        this.like = like;
-    }
-
-    public void setPicture(byte[] picture) {
-        this.picture = picture;
-    }
-
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public void setDeleted(String deleted) {
-        this.deleted = deleted;
-    }
-
-    public Wardrobe(Long id, Long member_id, Long category_id, String name, String memo, String like, byte[] picture,
-                    String keyword, String size, String color, String brand, String deleted) {
+    public Wardrobe(Long id, Long member_id, Long category_id, String name, String memo, String liked, byte[] picture,
+                    String keyword, String item_size, String color, String brand, String deleted) {
         this.id = id;
         this.member_id = member_id;
         this.category_id = category_id;
         this.name = name;
         this.memo = memo;
-        this.like = like;
+        this.liked = liked;
         this.picture = picture;
         this.keyword = keyword;
-        this.size = size;
+        this.item_size = item_size;
         this.color = color;
         this.brand = brand;
         this.deleted = deleted;

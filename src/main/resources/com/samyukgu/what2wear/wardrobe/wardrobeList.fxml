@@ -2,23 +2,19 @@
 
 <?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21.0.8"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.samyukgu.what2wear.wardrobe.controller.WardrobeController">
+<HBox prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.wardrobe.controller.ListWardrobeController">
    <children>
       <!-- 왼쪽 사이드바 -->
       <VBox prefHeight="768.0" prefWidth="250.0" style="-fx-background-color: #f5f5f5;" />
@@ -30,15 +26,15 @@
             <children>
                <HBox layoutX="14.0" layoutY="6.0" spacing="10.0">
                   <children>
-                     <Button style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="전체" />
-                     <Button style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="상의" />
-                     <Button style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="바지" />
-                     <Button style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="원피스 / 스커트" />
-                     <Button style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="가방" />
-                     <Button style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="아우터" />
-                     <Button style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="신발" />
-                     <Button style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="악세사리" />
-                     <Button style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="기타" />
+                     <Button fx:id="allButton" onAction="#filterAll" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="전체" />
+                     <Button fx:id="topButton" onAction="#filterTops" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="상의" />
+                     <Button fx:id="pantsButton" onAction="#filterPants" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="바지" />
+                     <Button fx:id="dressButton" onAction="#filterDress" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="원피스 / 스커트" />
+                     <Button fx:id="bagButton" onAction="#filterBags" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="가방" />
+                     <Button fx:id="outerButton" onAction="#filterOuter" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="아우터" />
+                     <Button fx:id="shoesButton" onAction="#filterShoes" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="신발" />
+                     <Button fx:id="accessoryButton" onAction="#filterAccessory" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="악세사리" />
+                     <Button fx:id="etcButton" onAction="#filterEtc" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="기타" />
                   </children>
                </HBox>
             </children>
@@ -51,20 +47,19 @@
                <!-- 오른쪽 상단 필터 및 검색창 -->
                <HBox alignment="CENTER_RIGHT" layoutX="571.0" layoutY="26.0" prefHeight="29.0" prefWidth="425.0" spacing="10.0">
                   <children>
-<!--                     <Button style="-fx-background-color: transparent; -fx-border-color: black; -fx-text-fill: black;" text="즐겨찾기" />-->
-                     <Button style="                                     -fx-background-color: transparent;                                     -fx-border-color: #cccccc;                                     -fx-border-width: 1;                                     -fx-text-fill: #000000;                                     -fx-font-size: 13px;                                     -fx-font-weight: normal;                                     -fx-background-radius: 4;                                     -fx-border-radius: 4;                                     -fx-padding: 6 12;                                     -fx-cursor: hand;" text="즐겨찾기" />
-                     <ComboBox prefWidth="100" promptText="등록일 순">
+                     <Button fx:id="favoriteButton" onAction="#filterFavorites" style="-fx-background-color: transparent; -fx-border-color: #cccccc; -fx-border-width: 1; -fx-text-fill: #000000; -fx-font-size: 13px; -fx-font-weight: normal; -fx-background-radius: 4; -fx-border-radius: 4; -fx-padding: 6 12; -fx-cursor: hand;" text="즐겨찾기" />
+                     <ComboBox fx:id="sortComboBox" onAction="#handleSortChange" prefWidth="100" promptText="등록일 순">
                         <items>
                            <FXCollections fx:factory="observableArrayList">
                               <String fx:value="등록일 순" />
-                              <String fx:value="인기순" />
                               <String fx:value="이름순" />
+                              <String fx:value="최근 착용순" />
                            </FXCollections>
                         </items>
                      </ComboBox>
                      <HBox alignment="CENTER_LEFT" style="-fx-background-color: #d9d9d9; -fx-background-radius: 5;">
                         <children>
-                           <TextField focusTraversable="false" prefWidth="200" promptText="검색어를 입력하세요" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
+                           <TextField fx:id="searchField" focusTraversable="false" prefWidth="200" promptText="검색어를 입력하세요" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
                            <Label style="-fx-font-size: 14px; -fx-text-fill: gray; -fx-padding: 5;" text="🔍" />
                         </children>
                      </HBox>
@@ -74,7 +69,7 @@
                <!-- 상단 버튼들 -->
                <HBox layoutX="11.0" layoutY="5.0" prefHeight="81.0" prefWidth="200.0" spacing="5.0">
                   <children>
-                     <VBox fx:id="addButton" alignment="CENTER" onMouseClicked="#handleAddWardrobeClick" prefHeight="70.0" prefWidth="70.0" spacing="5" style="-fx-background-color: #f2f2f2; -fx-background-radius: 10;">
+                     <VBox fx:id="addButton" alignment="CENTER" onMouseClicked="#handleAddWardrobeClick" prefHeight="70.0" prefWidth="70.0" spacing="5" style="-fx-background-color: #f2f2f2; -fx-background-radius: 10; -fx-cursor: hand;">
                         <children>
                            <ImageView fitHeight="40" fitWidth="40">
                               <image>
@@ -84,7 +79,7 @@
                            <Label style="-fx-text-fill: black; -fx-font-size: 12;" text="추가하기" />
                         </children>
                      </VBox>
-                     <VBox fx:id="myWardrobeButton" alignment="CENTER" onMouseClicked="#handleMyCodiClick" prefHeight="70.0" prefWidth="70.0" spacing="5" style="-fx-background-color: #f2f2f2; -fx-background-radius: 10;">
+                     <VBox fx:id="myWardrobeButton" alignment="CENTER" onMouseClicked="#handleMyCodiClick" prefHeight="70.0" prefWidth="70.0" spacing="5" style="-fx-background-color: #f2f2f2; -fx-background-radius: 10; -fx-cursor: hand;">
                         <children>
                            <ImageView fitHeight="40" fitWidth="40">
                               <image>
@@ -97,248 +92,25 @@
                   </children>
                </HBox>
 
-               <!-- 콘텐츠 목록 -->
-               <VBox layoutX="74.0" layoutY="92.0" spacing="1.0">
-                  <!-- 1열 -->
-                  <HBox prefHeight="254.0" prefWidth="880.0" spacing="0.0">
-                     <children>
-                        <VBox fx:id="itemBox1" alignment="CENTER" prefHeight="254.0" prefWidth="176.0"
-                              spacing="10.0" style="-fx-background-color: #e0e0e0;"
-                              onMouseClicked="#handleImgClick">
+               <!-- 콘텐츠 목록 - 스크롤 가능한 영역 -->
+               <ScrollPane fitToWidth="true" layoutX="21.0" layoutY="93.0" prefHeight="480.0" prefWidth="988.0" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+                  <content>
+                     <VBox fx:id="contentContainer" prefWidth="990.0" spacing="1.0">
+                        <!-- 동적으로 생성될 아이템들이 들어갈 공간 -->
+                     </VBox>
+                  </content>
+               </ScrollPane>
 
-                           <!-- 겹치기 위한 StackPane -->
-                           <StackPane alignment="BOTTOM_RIGHT" >
-                              <!-- 상품 이미지 -->
-                              <ImageView fitHeight="220.0" fitWidth="176.0" focusTraversable="true" nodeOrientation="RIGHT_TO_LEFT" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/pants.png" />
-                                 </image>
-                                 <cursor>
-                                    <Cursor fx:constant="DEFAULT" />
-                                 </cursor>
-                              </ImageView>
-                              <!-- 하트 아이콘 (오른쪽 위로 정렬됨) -->
-                              <ImageView fitHeight="24.0" fitWidth="24.0" preserveRatio="true">
-                                 <StackPane.margin>
-                                    <Insets bottom="8" right="8" />
-                                 </StackPane.margin>
-                                 <image>
-                                    <Image url="@images/heart.png" />
-                                 </image>
-                              </ImageView>
-                           </StackPane>
-                           <!-- 상품명 라벨 -->
-                           <Label alignment="CENTER" prefHeight="24.0" prefWidth="176.0" style="-fx-font-size: 12;" text="상품명" />
-                        </VBox>
-                        <VBox alignment="CENTER" prefHeight="254.0" prefWidth="176.0" spacing="10.0" style="-fx-background-color: #e0e0e0;">
-                           <!-- 겹치기 위한 StackPane -->
-                           <StackPane alignment="BOTTOM_RIGHT">
-                              <!-- 상품 이미지 -->
-                              <ImageView fitHeight="220.0" fitWidth="176.0" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/firstImg.png" />
-                                 </image>
-                              </ImageView>
-                              <!-- 하트 아이콘 (오른쪽 위로 정렬됨) -->
-                              <ImageView fitHeight="24.0" fitWidth="24.0" preserveRatio="true">
-                                 <StackPane.margin>
-                                    <Insets bottom="8" right="8" />
-                                 </StackPane.margin>
-                                 <image>
-                                    <Image url="@images/heart.png" />
-                                 </image>
-                              </ImageView>
-                           </StackPane>
-                           <!-- 상품명 라벨 -->
-                           <Label alignment="CENTER" prefHeight="24.0" prefWidth="176.0" style="-fx-font-size: 12;" text="상품명" />
-                        </VBox>
-                        <VBox alignment="CENTER" prefHeight="254.0" prefWidth="176.0" spacing="10.0" style="-fx-background-color: #e0e0e0;">
-                           <!-- 겹치기 위한 StackPane -->
-                           <StackPane alignment="BOTTOM_RIGHT">
-                              <!-- 상품 이미지 -->
-                              <ImageView fitHeight="220.0" fitWidth="176.0" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/firstImg.png" />
-                                 </image>
-                              </ImageView>
-                              <!-- 하트 아이콘 (오른쪽 위로 정렬됨) -->
-                              <ImageView fitHeight="24.0" fitWidth="24.0" preserveRatio="true">
-                                 <StackPane.margin>
-                                    <Insets bottom="8" right="8" />
-                                 </StackPane.margin>
-                                 <image>
-                                    <Image url="@images/heart.png" />
-                                 </image>
-                              </ImageView>
-                           </StackPane>
-                           <!-- 상품명 라벨 -->
-                           <Label alignment="CENTER" prefHeight="24.0" prefWidth="176.0" style="-fx-font-size: 12;" text="상품명" />
-                        </VBox>
-                        <VBox alignment="CENTER" prefHeight="254.0" prefWidth="176.0" spacing="10.0" style="-fx-background-color: #e0e0e0;">
-                           <!-- 겹치기 위한 StackPane -->
-                           <StackPane alignment="BOTTOM_RIGHT">
-                              <!-- 상품 이미지 -->
-                              <ImageView fitHeight="220.0" fitWidth="176.0" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/firstImg.png" />
-                                 </image>
-                              </ImageView>
-                              <!-- 하트 아이콘 (오른쪽 위로 정렬됨) -->
-                              <ImageView fitHeight="24.0" fitWidth="24.0" preserveRatio="true">
-                                 <StackPane.margin>
-                                    <Insets bottom="8" right="8" />
-                                 </StackPane.margin>
-                                 <image>
-                                    <Image url="@images/heart.png" />
-                                 </image>
-                              </ImageView>
-                           </StackPane>
-                           <!-- 상품명 라벨 -->
-                           <Label alignment="CENTER" prefHeight="24.0" prefWidth="176.0" style="-fx-font-size: 12;" text="상품명" />
-                        </VBox>
-                        <VBox alignment="CENTER" prefHeight="254.0" prefWidth="176.0" spacing="10.0" style="-fx-background-color: #e0e0e0;">
-                           <!-- 겹치기 위한 StackPane -->
-                           <StackPane alignment="BOTTOM_RIGHT">
-                              <!-- 상품 이미지 -->
-                              <ImageView fitHeight="220.0" fitWidth="176.0" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/firstImg.png" />
-                                 </image>
-                              </ImageView>
-                              <!-- 하트 아이콘 (오른쪽 위로 정렬됨) -->
-                              <ImageView fitHeight="24.0" fitWidth="24.0" preserveRatio="true">
-                                 <StackPane.margin>
-                                    <Insets bottom="8" right="8" />
-                                 </StackPane.margin>
-                                 <image>
-                                    <Image url="@images/heart.png" />
-                                 </image>
-                              </ImageView>
-                           </StackPane>
-                           <!-- 상품명 라벨 -->
-                           <Label alignment="CENTER" prefHeight="24.0" prefWidth="176.0" style="-fx-font-size: 12;" text="상품명" />
-                        </VBox>
+               <!-- 페이지네이션 -->
+               <Pagination fx:id="pagination" layoutX="361.0" layoutY="580.0" prefHeight="51.0" prefWidth="305.0" />
 
-                     </children>
-                  </HBox>
-
-                  <!-- 2열 -->
-                  <HBox prefHeight="254.0" prefWidth="880.0" spacing="0.0">
-                     <children>
-                        <VBox alignment="CENTER" prefHeight="254.0" prefWidth="176.0" spacing="10.0" style="-fx-background-color: #e0e0e0;">
-                           <!-- 겹치기 위한 StackPane -->
-                           <StackPane alignment="BOTTOM_RIGHT">
-                              <!-- 상품 이미지 -->
-                              <ImageView fitHeight="220.0" fitWidth="176.0" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/firstImg.png" />
-                                 </image>
-                              </ImageView>
-                              <!-- 하트 아이콘 (오른쪽 위로 정렬됨) -->
-                              <ImageView fitHeight="24.0" fitWidth="24.0" preserveRatio="true">
-                                 <StackPane.margin>
-                                    <Insets bottom="8" right="8" />
-                                 </StackPane.margin>
-                                 <image>
-                                    <Image url="@images/heart.png" />
-                                 </image>
-                              </ImageView>
-                           </StackPane>
-                           <!-- 상품명 라벨 -->
-                           <Label alignment="CENTER" prefHeight="24.0" prefWidth="176.0" style="-fx-font-size: 12;" text="상품명" />
-                        </VBox>
-                        <VBox alignment="CENTER" prefHeight="254.0" prefWidth="176.0" spacing="10.0" style="-fx-background-color: #e0e0e0;">
-                           <!-- 겹치기 위한 StackPane -->
-                           <StackPane alignment="BOTTOM_RIGHT">
-                              <!-- 상품 이미지 -->
-                              <ImageView fitHeight="220.0" fitWidth="176.0" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/firstImg.png" />
-                                 </image>
-                              </ImageView>
-                              <!-- 하트 아이콘 (오른쪽 위로 정렬됨) -->
-                              <ImageView fitHeight="24.0" fitWidth="24.0" preserveRatio="true">
-                                 <StackPane.margin>
-                                    <Insets bottom="8" right="8" />
-                                 </StackPane.margin>
-                                 <image>
-                                    <Image url="@images/heart.png" />
-                                 </image>
-                              </ImageView>
-                           </StackPane>
-                           <!-- 상품명 라벨 -->
-                           <Label alignment="CENTER" prefHeight="24.0" prefWidth="176.0" style="-fx-font-size: 12;" text="상품명" />
-                        </VBox>
-                        <VBox alignment="CENTER" prefHeight="254.0" prefWidth="176.0" spacing="10.0" style="-fx-background-color: #e0e0e0;">
-                           <!-- 겹치기 위한 StackPane -->
-                           <StackPane alignment="BOTTOM_RIGHT">
-                              <!-- 상품 이미지 -->
-                              <ImageView fitHeight="220.0" fitWidth="176.0" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/firstImg.png" />
-                                 </image>
-                              </ImageView>
-                              <!-- 하트 아이콘 (오른쪽 위로 정렬됨) -->
-                              <ImageView fitHeight="24.0" fitWidth="24.0" preserveRatio="true">
-                                 <StackPane.margin>
-                                    <Insets bottom="8" right="8" />
-                                 </StackPane.margin>
-                                 <image>
-                                    <Image url="@images/heart.png" />
-                                 </image>
-                              </ImageView>
-                           </StackPane>
-                           <!-- 상품명 라벨 -->
-                           <Label alignment="CENTER" prefHeight="24.0" prefWidth="176.0" style="-fx-font-size: 12;" text="상품명" />
-                        </VBox>
-                        <VBox alignment="CENTER" prefHeight="254.0" prefWidth="176.0" spacing="10.0" style="-fx-background-color: #e0e0e0;">
-                           <!-- 겹치기 위한 StackPane -->
-                           <StackPane alignment="BOTTOM_RIGHT">
-                              <!-- 상품 이미지 -->
-                              <ImageView fitHeight="220.0" fitWidth="176.0" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/firstImg.png" />
-                                 </image>
-                              </ImageView>
-                              <!-- 하트 아이콘 (오른쪽 위로 정렬됨) -->
-                              <ImageView fitHeight="24.0" fitWidth="24.0" preserveRatio="true">
-                                 <StackPane.margin>
-                                    <Insets bottom="8" right="8" />
-                                 </StackPane.margin>
-                                 <image>
-                                    <Image url="@images/heart.png" />
-                                 </image>
-                              </ImageView>
-                           </StackPane>
-                           <!-- 상품명 라벨 -->
-                           <Label alignment="CENTER" prefHeight="24.0" prefWidth="176.0" style="-fx-font-size: 12;" text="상품명" />
-                        </VBox>
-                        <VBox alignment="CENTER" prefHeight="254.0" prefWidth="176.0" spacing="10.0" style="-fx-background-color: #e0e0e0;">
-                           <!-- 겹치기 위한 StackPane -->
-                           <StackPane alignment="BOTTOM_RIGHT">
-                              <!-- 상품 이미지 -->
-                              <ImageView fitHeight="220.0" fitWidth="176.0" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/firstImg.png" />
-                                 </image>
-                              </ImageView>
-                              <!-- 하트 아이콘 (오른쪽 위로 정렬됨) -->
-                              <ImageView fitHeight="24.0" fitWidth="24.0" preserveRatio="true">
-                                 <StackPane.margin>
-                                    <Insets bottom="8" right="8" />
-                                 </StackPane.margin>
-                                 <image>
-                                    <Image url="@images/heart.png" />
-                                 </image>
-                              </ImageView>
-                           </StackPane>
-                           <!-- 상품명 라벨 -->
-                           <Label alignment="CENTER" prefHeight="24.0" prefWidth="176.0" style="-fx-font-size: 12;" text="상품명" />
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <Pagination layoutX="361.0" layoutY="638.0" prefHeight="51.0" prefWidth="305.0" />
+               <!-- 로딩 및 상태 표시 영역 -->
+               <VBox fx:id="statusContainer" alignment="CENTER" layoutX="400.0" layoutY="300.0" prefHeight="100.0" prefWidth="200.0" visible="false">
+                  <children>
+                     <Label fx:id="statusLabel" style="-fx-font-size: 16px; -fx-text-fill: #666;" text="로딩 중..." />
+                  </children>
                </VBox>
+
             </children>
          </AnchorPane>
       </VBox>

@@ -40,7 +40,7 @@ public class WardrobeOracleDAO implements WardrobeDAO {
     public Wardrobe findById(Long id, Long memberId) {
         String sql = """
         select * 
-        FROM wardrobe 
+        FROM clothes 
         WHERE id = ?
         AND member_id = ?
         AND deleted = 'N'
@@ -60,10 +60,10 @@ public class WardrobeOracleDAO implements WardrobeDAO {
                         rs.getLong("category_id"),
                         rs.getString("name"),
                         rs.getString("memo"),
-                        rs.getString("like"),
+                        rs.getString("liked"),
                         rs.getBytes("picture"),
                         rs.getString("keyword"),
-                        rs.getString("size"),
+                        rs.getString("item_size"),
                         rs.getString("color"),
                         rs.getString("brand"),
                         rs.getString("deleted")
@@ -81,7 +81,7 @@ public class WardrobeOracleDAO implements WardrobeDAO {
     public List<Wardrobe> findAll(Long memberId) {
         String sql = """
             SELECT *
-            FROM wardrobe
+            FROM clothes
             WHERE deleted = 'N'
               AND member_id = ?
             """;
@@ -99,10 +99,10 @@ public class WardrobeOracleDAO implements WardrobeDAO {
                                 rs.getLong("category_id"),
                                 rs.getString("name"),
                                 rs.getString("memo"),
-                                rs.getString("like"),
+                                rs.getString("liked"),
                                 rs.getBytes("picture"),
                                 rs.getString("keyword"),
-                                rs.getString("size"),
+                                rs.getString("item_size"),
                                 rs.getString("color"),
                                 rs.getString("brand"),
                                 rs.getString("deleted")
@@ -118,46 +118,49 @@ public class WardrobeOracleDAO implements WardrobeDAO {
     // 옷 저장하기
     public void save(Wardrobe wardrobe) {
         String sql = """
-                INSERT INTO wardrobe 
-                (id, member_id, category_id, name, memo, like, picture, keyword, size, color, brand, deleted)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO clothes 
+                (id, member_id, category_id, name, memo, picture, keyword, item_size, color, brand, deleted)
+                VALUES (clothes_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """;
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setLong(1, wardrobe.getId());
-            pstmt.setLong(2, wardrobe.getMember_id()); // 특정 회원 ID
-            pstmt.setLong(3, wardrobe.getCategory_id());
-            pstmt.setString(4, wardrobe.getName());
-            pstmt.setString(5, wardrobe.getMemo());
-            pstmt.setString(6, wardrobe.getLike());
-            pstmt.setBytes(7, wardrobe.getPicture());
-            pstmt.setString(8, wardrobe.getKeyword());
-            pstmt.setString(9, wardrobe.getSize());
-            pstmt.setString(10, wardrobe.getColor());
-            pstmt.setString(11, wardrobe.getBrand());
-            pstmt.setString(12, wardrobe.getDeleted());
+            pstmt.setLong(1, 999); // 특정 회원 ID
+            pstmt.setLong(2, wardrobe.getCategoryId());
+            pstmt.setString(3, wardrobe.getName());
+            pstmt.setString(4, wardrobe.getMemo());
+
+            if (wardrobe.getPicture() != null) {
+                pstmt.setBytes(5, wardrobe.getPicture());
+            } else {
+                pstmt.setNull(5, Types.BLOB);
+            }
+            pstmt.setString(6, wardrobe.getKeyword());
+            pstmt.setString(7, wardrobe.getSize());
+            pstmt.setString(8, wardrobe.getColor());
+            pstmt.setString(9, wardrobe.getBrand());
+            pstmt.setString(10, wardrobe.getDeleted());
 
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("Failed to save wardrobe");
+            throw new RuntimeException("옷 저장 중 오류");
         }
     }
     // 옷 수정하기
     public void update(Wardrobe wardrobe) {
         String sql = """
-    UPDATE wardrobe SET 
+    UPDATE clothes SET 
         member_id = ?, 
         category_id = ?, 
         name = ?, 
         memo = ?, 
-        like = ?, 
+        liked = ?, 
         picture = ?, 
         keyword = ?, 
-        size = ?, 
+        item_size = ?, 
         color = ?, 
         brand = ?, 
         deleted = ?
@@ -167,8 +170,8 @@ public class WardrobeOracleDAO implements WardrobeDAO {
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setLong(1, wardrobe.getMember_id());
-            pstmt.setLong(2, wardrobe.getCategory_id());
+            pstmt.setLong(1, wardrobe.getMemberId());
+            pstmt.setLong(2, wardrobe.getCategoryId());
             pstmt.setString(3, wardrobe.getName());
             pstmt.setString(4, wardrobe.getMemo());
             pstmt.setString(5, wardrobe.getLike());
@@ -178,8 +181,6 @@ public class WardrobeOracleDAO implements WardrobeDAO {
             pstmt.setString(9, wardrobe.getColor());
             pstmt.setString(10, wardrobe.getBrand());
             pstmt.setString(11, wardrobe.getDeleted());
-            pstmt.setLong(12, wardrobe.getId());
-            pstmt.setLong(13, wardrobe.getMember_id()); // 검증 추가
 
             pstmt.executeUpdate();
 
@@ -192,7 +193,7 @@ public class WardrobeOracleDAO implements WardrobeDAO {
     @Override
     public void delete(Long id, Long memberId) {
         String sql = """
-    UPDATE wardrobe 
+    UPDATE clothes 
     SET deleted = 'Y' 
     WHERE id = ? AND member_id = ?
     """;
