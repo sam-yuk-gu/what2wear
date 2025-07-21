@@ -23,33 +23,23 @@
             <VBox fx:id="center_vbox" alignment="CENTER" prefHeight="668.0" prefWidth="1030.0" spacing="20.0">
                      <HBox alignment="CENTER" prefHeight="59.0" prefWidth="1031.0">
                         <children>
-                       <Label fx:id="titleLabel" prefHeight="23.0" prefWidth="852.0" styleClass="datail_title_text" text="제목">
+                       <Label fx:id="titleLabel" prefHeight="23.0" prefWidth="820.0" styleClass="datail_title_text" text="제목">
                            <font>
                                <Font size="18.0" />
                            </font>
                        </Label>
-
-                      <!-- 수정/삭제 버튼 -->
-                            <HBox fx:id="title_two_button" spacing="10.0">
-                      <Button fx:id="editPostButton" onAction="#handlePostEditClick" styleClass="gray_stroke_button" text="수정하기">
-                          <graphic>
-                              <ImageView fitHeight="24.0" fitWidth="24.0">
-                                  <image>
-                                      <Image url="@/assets/icons/edit.png" />
-                                  </image>
-                              </ImageView>
-                          </graphic>
-                      </Button>
-                      <Button fx:id="deletePostButton" onAction="#handlePostDeleteClick" styleClass="gray_stroke_button" text="삭제하기">
-                          <graphic>
-                              <ImageView fitHeight="24.0" fitWidth="24.0">
-                                  <image>
-                                      <Image url="@/assets/icons/trash.png" />
-                                  </image>
-                              </ImageView>
-                          </graphic>
-                      </Button>
-                            </HBox>
+                         <HBox fx:id="like_pane" alignment="CENTER" prefHeight="41.0" prefWidth="120.0" spacing="5.0">
+                             <Button fx:id="likeButton" onAction="#handleLikeClick" styleClass="arrow_button">
+                                 <graphic>
+                                     <ImageView fx:id="likeIcon" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                         <image>
+                                             <Image url="@/assets/icons/emptyHeart.png" />
+                                         </image>
+                                     </ImageView>
+                                 </graphic>
+                             </Button>
+                             <Label fx:id="likesLabel" prefHeight="14.0" styleClass="like_text" text="0" />
+                         </HBox>
                         </children>
                      </HBox>
 
@@ -88,25 +78,35 @@
                         <HBox alignment="CENTER" prefHeight="318.0" prefWidth="990.0">
                            <children>
                                     <!-- 게시글 내용 및 좋아요 -->
-                                    <Pane fx:id="user_content_pane" prefHeight="295.0" prefWidth="950.0">
-                                        <Label fx:id="contentLabel" layoutX="18.0" layoutY="14.0" prefHeight="14.0" prefWidth="808.0" styleClass="content_text" text="내용" />
-                                        <ImageView fx:id="codi_img" fitHeight="180.0" fitWidth="180.0" layoutX="750.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+                                    <Pane fx:id="user_content_pane" prefHeight="300.0" prefWidth="950.0">
+                                        <Label fx:id="contentLabel" alignment="TOP_LEFT" layoutX="18.0" layoutY="14.0" prefHeight="166.0" prefWidth="730.0" styleClass="content_text" text="내용" />
+                                        <ImageView fx:id="codi_img" fitHeight="180.0" fitWidth="180.0" layoutX="770.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
                                                 <Image url="@/assets/icons/defaultCodi.png" />
                                             </image>
                                         </ImageView>
-                                        <VBox fx:id="like_pane" alignment="CENTER" layoutX="429.0" layoutY="182.0" prefHeight="64.0" prefWidth="93.0" spacing="5.0">
-                                            <Button fx:id="likeButton" onAction="#handleLikeClick" styleClass="arrow_button">
-                                                <graphic>
-                                                    <ImageView fx:id="likeIcon" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                                        <image>
-                                                            <Image url="@/assets/icons/emptyHeart.png" />
-                                                        </image>
-                                                    </ImageView>
-                                                </graphic>
-                                            </Button>
-                                            <Label fx:id="likesLabel" prefHeight="14.0" styleClass="like_text" text="0" />
-                                        </VBox>
+
+                                     <!-- 수정/삭제 버튼 -->
+                                           <HBox fx:id="title_two_button" alignment="CENTER" layoutX="25.0" layoutY="180.0" prefHeight="65.0" prefWidth="900.0" spacing="10.0">
+                                     <Button fx:id="editPostButton" onAction="#handlePostEditClick" styleClass="gray_stroke_button" text="수정하기">
+                                         <graphic>
+                                             <ImageView fitHeight="24.0" fitWidth="24.0">
+                                                 <image>
+                                                     <Image url="@/assets/icons/edit.png" />
+                                                 </image>
+                                             </ImageView>
+                                         </graphic>
+                                     </Button>
+                                     <Button fx:id="deletePostButton" onAction="#handlePostDeleteClick" styleClass="gray_stroke_button" text="삭제하기">
+                                         <graphic>
+                                             <ImageView fitHeight="24.0" fitWidth="24.0">
+                                                 <image>
+                                                     <Image url="@/assets/icons/trash.png" />
+                                                 </image>
+                                             </ImageView>
+                                         </graphic>
+                                     </Button>
+                                           </HBox>
 
                                     </Pane>
                            </children>

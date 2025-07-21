@@ -3,7 +3,9 @@ package com.samyukgu.what2wear.post.controller;
 import com.samyukgu.what2wear.common.controller.CustomModalController;
 import com.samyukgu.what2wear.common.controller.MainLayoutController;
 import com.samyukgu.what2wear.common.controller.PostHeaderController;
+import com.samyukgu.what2wear.post.dao.PostOracleDAO;
 import com.samyukgu.what2wear.post.model.Post;
+import com.samyukgu.what2wear.post.service.PostService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -58,12 +60,6 @@ public class DetailPostController {
     public void setPostData(Post post) {
         this.currentPost = post;
         displayPostContent(post);
-
-
-        // 추가
-        System.out.println("현재 사용자 ID = " + CURRENT_USER_ID);
-        System.out.println("게시글 작성자 ID = " + post.getMember_id());
-
         checkAndShowButtons(post);
     }
 
@@ -78,7 +74,7 @@ public class DetailPostController {
     }
 
     private void checkAndShowButtons(Post post) {
-        if (post.getMember_id() != null && post.getMember_id().equals(CURRENT_USER_ID)) {
+        if (post.getMember_id() != null && post.getMember_id() == CURRENT_USER_ID) {
             showEditDeleteButtons();
         } else {
             hideEditDeleteButtons();
@@ -86,9 +82,6 @@ public class DetailPostController {
     }
 
     private void showEditDeleteButtons() {
-        System.out.println("editPostButton is null? " + (editPostButton == null));
-        System.out.println("deletePostButton is null? " + (deletePostButton == null));
-
         editPostButton.setVisible(true);
         deletePostButton.setVisible(true);
         editPostButton.setManaged(true);
@@ -185,9 +178,13 @@ public class DetailPostController {
                     "확인",
                     () -> root.getChildren().remove(modal),
                     () -> {
+                        // 게시글 삭제 
+                        PostService postService = new PostService(new PostOracleDAO());
+                        postService.deletePost(currentPost.getId());
+                        // 모달창 닫기
                         root.getChildren().remove(modal);
+                        // 화면 전환
                         MainLayoutController.loadView("/com/samyukgu/what2wear/post/ListPost.fxml");
-                        // TODO: 게시글 삭제 로직 구현 필요
                     }
             );
 
