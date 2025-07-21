@@ -1,11 +1,10 @@
 package com.samyukgu.what2wear.post.controller;
 
 import com.samyukgu.what2wear.common.controller.CustomModalController;
-import com.samyukgu.what2wear.common.controller.MainLayoutController;
+import com.samyukgu.what2wear.layout.MainLayoutController;
 import com.samyukgu.what2wear.common.controller.PostHeaderController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;

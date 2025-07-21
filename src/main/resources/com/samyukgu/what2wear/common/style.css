@@ -11,7 +11,7 @@
 
 .header-title-text {
     -fx-font-size: 18;
-    -fx-font-family: "Pretendard Medium";
+    -fx-font-family: "Pretendard SemiBold";
     -fx-text-fill: #333333;
 }
 
@@ -83,3 +83,78 @@
     -fx-cursor: hand;
     -fx-font-family: "Pretendard SemiBold";
 }
+
+/* select outfit modal start */
+
+.close-btn {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.toggle-tab {
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #EAEAEA;
+}
+
+.toggle-button {
+    -fx-pref-width: 200;
+    -fx-background-color: transparent;
+    -fx-border-radius: 0;
+    -fx-font-family: "Pretendard Bold";
+    -fx-font-size: 14;
+    -fx-text-fill: #747474;
+}
+
+.toggle-button:selected,
+.toggle-button:focused:selected {
+    -fx-border-width: 0 0 1.5 0;
+    -fx-border-color: #FA7B7F;
+    -fx-text-fill: #FA7B7F;
+}
+
+.search-bar {
+    -fx-min-height: 40;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-border-color: #CCCCCC;
+    -fx-padding: 15;
+    -fx-font-size: 14;
+    -fx-font-family: "Pretendard Medium";
+}
+
+.search-bar:focused {
+    -fx-border-color: #454545;
+}
+
+.category-box {
+    -fx-padding: 2 0 0 0;
+}
+.category-button {
+    -fx-border-color: #EAEAEA;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-background-color: white;
+    -fx-font-size: 13;
+    -fx-font-family: "Pretendard Medium";
+    -fx-text-fill: #929292;
+}
+
+.category-button:focused {
+    -fx-border-color: FA7B7F;
+    -fx-background-color: FFE8E9;
+    -fx-text-fill: #2F2F2F;
+}
+
+.wardrobe-scroll {
+    -fx-min-height: 235;
+}
+.wardrobe-pane {
+    -fx-border-width: 1;
+    -fx-border-color: red;
+}
+
+.clothing-box {
+    -fx-pref-height: 95;
+    -fx-pref-width: 95;
+}
+/* select outfit modal end */

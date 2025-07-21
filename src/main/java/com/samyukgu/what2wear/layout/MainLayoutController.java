@@ -1,4 +1,4 @@
-package com.samyukgu.what2wear.common.controller;
+package com.samyukgu.what2wear.layout;
 
 import com.samyukgu.what2wear.post.controller.DetailPostController;
 import com.samyukgu.what2wear.post.model.Post;
@@ -10,6 +10,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import lombok.Getter;
 
 import java.io.IOException;
 import java.util.List;
@@ -27,13 +28,10 @@ public class MainLayoutController {
     @FXML private Button mypageButton;
 
 
+    // MainLayoutController.getInstance() 접근을 위한 getInstance() 정의
+    @Getter
     private static MainLayoutController instance;
     private Button currentSelectedButton;
-
-    // MainLayoutController.getInstance() 접근을 위한 getInstance() 정의
-    public static MainLayoutController getInstance() {
-        return instance;
-    }
 
     // 하이라이트 대상 버튼 목록 (logoButton 제외)
     private List<Button> menuButtons;
@@ -43,7 +41,8 @@ public class MainLayoutController {
         instance = this;
 
         menuButtons = List.of(wardrobeButton, friendButton, boardButton, mypageButton);   // 버튼 리스트 초기화 (로고 제외)
-        loadView("/com/samyukgu/what2wear/codi/CodiMainView.fxml");
+//        loadView("/com/samyukgu/what2wear/codi/CodiMainView.fxml");
+        loadView("/com/samyukgu/what2wear/codi/AddCodiView.fxml");
         VBox.setVgrow(spacer, Priority.ALWAYS);     // 최대 여백 설정
     }
 

@@ -1,0 +1,131 @@
+.content-container {
+    -fx-padding: 50;
+    -fx-spacing: 40;
+    -fx-alignment: top-right;
+}
+
+.label {
+    -fx-font-family: "Pretendard Medium";
+    -fx-font-size: 16;
+}
+
+.input-box {
+    -fx-spacing: 35;
+}
+
+.input-text {
+    -fx-border-width: 1;
+    -fx-border-color: #EAEAEA;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-pref-height: 47;
+    -fx-padding: 0 15;
+    -fx-font-size: 14;
+    -fx-font-family: "Pretendard Medium";
+}
+
+/* date picker start */
+
+.date-picker {
+    -fx-border-width: 1;
+    -fx-border-color: #EAEAEA;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-pref-height: 47;
+    -fx-padding: 0 25;
+    -fx-font-family: "Pretendard Medium";
+}
+
+.date-picker .arrow-button {
+    -fx-background-color: transparent; /* 화살표 배경 제거 */
+}
+
+.date-picker .text-field {
+    -fx-background-color: transparent;
+    -fx-padding: 0 10;
+    -fx-font-size: 14;
+    -fx-border-width: 0;
+}
+
+.date-picker-popup {
+    -fx-border-color: #EAEAEA;
+    -fx-border-width: 1;
+}
+
+.date-picker-popup .month-year-pane {
+    -fx-background-color: white; /* 원하는 색으로 변경 */
+}
+
+.date-picker-popup .day-cell:focused {
+    -fx-background-color: #FA7B7F;  /* 배경색 */
+    -fx-text-fill: white;           /* 글자색 */
+}
+
+.date-picker-popup .day-cell:hover {
+    -fx-background-color: #FA7B7F;
+}
+
+/* date picker end */
+
+.toggle-button {
+    -fx-min-width: 100;
+    -fx-min-height: 40;
+    -fx-alignment: center;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-padding: 6 12;
+    -fx-cursor: hand;
+    -fx-font-family: "Pretendard Medium";
+    -fx-font-size: 12;
+}
+
+.btn-label {
+    -fx-font-family: "Pretendard Medium";
+    -fx-font-size: 13;
+}
+
+/* 색상 분기 */
+.scope-public {
+    -fx-border-color: #60C0DB;
+    -fx-background-color: white;
+    -fx-text-fill: #555555;
+}
+
+.scope-friends {
+    -fx-border-color: #FFBB3C;
+    -fx-background-color: white;
+    -fx-text-fill: #555555;
+}
+
+.scope-private {
+    -fx-border-color: #808080;
+    -fx-background-color: white;
+    -fx-text-fill: #555555;
+}
+
+/* 선택 시 배경 강조 */
+.scope-public:selected,
+.scope-public:focused:selected {
+    -fx-background-color: #F6FDFF;
+}
+
+.scope-friends:selected,
+.scope-friends:focused:selected {
+    -fx-background-color: #FFFDF0;
+}
+
+.scope-private:selected,
+.scope-private:focused:selected {
+    -fx-background-color: #F5F5F5;
+}
+
+.add-btn {
+    -fx-pref-width: 150;
+    -fx-min-height: 50;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-background-color: #FA7B7F;
+    -fx-text-fill: white;
+    -fx-font-family: "Pretendard Bold";
+    -fx-font-size: 16;
+}

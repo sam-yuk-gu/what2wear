@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Rectangle?>
+
+<?import javafx.scene.image.Image?>
+<StackPane fx:id="modalOverlay"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.samyukgu.what2wear.common.controller.SelectOutfitModalController"
+           prefWidth="1280" prefHeight="768"
+           maxWidth="-Infinity" maxHeight="-Infinity"
+           stylesheets="/com/samyukgu/what2wear/common/style.css"
+           styleClass="modal_overlay">
+
+    <!-- 회색 반투명 배경 -->
+    <Rectangle fx:id="dimBackground" styleClass="modal-dim-background" />
+
+    <!-- 흰색 모달 박스 -->
+    <VBox fx:id="modalContainer" styleClass="modal_container" alignment="CENTER" spacing="20"
+          maxWidth="635" maxHeight="600">
+
+        <!-- 닫기 버튼 -->
+        <HBox alignment="TOP_RIGHT">
+            <Button fx:id="closeButton" styleClass="close-btn">
+                <graphic>
+                    <ImageView fitHeight="30" fitWidth="30">
+                        <image>
+                            <Image url="@/assets/icons/close.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+        </HBox>
+
+        <!-- 탭 전환 -->
+        <HBox spacing="60" alignment="CENTER" styleClass="toggle-tab">
+            <ToggleButton fx:id="wardrobeTab" text="내 옷장" selected="true" />
+            <ToggleButton fx:id="codiTab" text="내 코디" />
+        </HBox>
+
+        <!-- 옷장 보기 -->
+        <VBox fx:id="wardrobeView" spacing="10" alignment="TOP_CENTER">
+            <HBox alignment="CENTER_LEFT" styleClass="search-bar">
+                <ImageView fitWidth="13.5" fitHeight="13.5">
+                    <Image url="@/assets/icons/search.png"/>
+                </ImageView>
+                <TextField fx:id="wardrobeSearchField" promptText="옷 이름을 검색해보세요." styleClass="search-input"/>
+            </HBox>
+            <HBox fx:id="categoryButtonBox" spacing="8" alignment="CENTER_LEFT" styleClass="category-box" />
+            <ScrollPane fitToWidth="true" fitToHeight="true" styleClass="wardrobe-scroll">
+                <FlowPane fx:id="wardrobeItemPane" hgap="16.5" vgap="15" styleClass="wardrobe-pane" />
+            </ScrollPane>
+        </VBox>
+
+        <!-- 코디 보기 -->
+        <VBox fx:id="codiView" spacing="10" alignment="TOP_CENTER" visible="false">
+            <HBox alignment="CENTER_LEFT" spacing="6" styleClass="search-bar">
+                <ImageView fitWidth="13.5" fitHeight="13.5">
+                    <Image url="@/assets/icons/search.png"/>
+                </ImageView>
+                <TextField fx:id="codiSearchField" promptText="코디 이름을 검색해보세요." styleClass="search-input"/>
+            </HBox>
+            <ScrollPane fitToWidth="true" fitToHeight="true" prefHeight="500">
+                <FlowPane fx:id="codiItemPane" hgap="15" vgap="15" prefHeight="400"/>
+            </ScrollPane>
+        </VBox>
+
+        <!-- 버튼 영역 -->
+        <HBox fx:id="two_button_hbox" styleClass="two_button_hbox" spacing="20" alignment="CENTER">
+            <Button fx:id="cancelButton" text="취소하기" styleClass="cancel_button"/>
+            <Button fx:id="confirmButton" text="저장하기" styleClass="confirm_button"/>
+        </HBox>
+    </VBox>
+</StackPane>

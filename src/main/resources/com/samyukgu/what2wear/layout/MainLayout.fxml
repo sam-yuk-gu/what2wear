@@ -6,7 +6,7 @@
 
 <BorderPane fx:id="mainLayout"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.samyukgu.what2wear.common.controller.MainLayoutController"
+            fx:controller="com.samyukgu.what2wear.layout.MainLayoutController"
             stylesheets="@/com/samyukgu/what2wear/layout/style.css">
     <left>
         <VBox alignment="CENTER"
