@@ -1,20 +1,21 @@
 /* BasicHeader Start */
 
 .basic-header {
-    -fx-padding: 15 30;
-    -fx-background-color: #ffffff;
-    -fx-border-color: red;
-    -fx-border-width: 1;
+    -fx-padding: 15 20;
+    -fx-border-radius: 20 20 0 0;
+    -fx-background-radius: 20 20 0 0;
+    -fx-background-color: #F9FBFC;
+    -fx-border-color: #C0C0C0;
+    -fx-border-width: 0 0 1 0;
 }
 
 .header-title-text {
-    -fx-font-size: 16px;
+    -fx-font-size: 18;
+    -fx-font-family: "Pretendard Medium";
     -fx-text-fill: #333333;
 }
 
 .header-back-button {
-    -fx-border-color: red;
-    -fx-border-width: 1;
     -fx-background-color: transparent;
     -fx-cursor: hand;
 }
