@@ -36,7 +36,15 @@
     src: url("fonts/Pretendard-Black.ttf");
 }
 
-/*전역 css 설정*/
+/* 전역 css 설정 */
 .root {
     -fx-font-family: "Pretendard Regular";
+}
+
+/* 기본 그림자 설정 제거 */
+.text-field, .text-area, .date-picker, .combo-box {
+    -fx-background-color: white;
+    -fx-effect: none;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
 }
