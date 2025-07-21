@@ -1,6 +1,9 @@
 package com.samyukgu.what2wear.member.controller;
 
+import com.samyukgu.what2wear.common.controller.CustomModalController;
 import com.samyukgu.what2wear.di.DIContainer;
+import com.samyukgu.what2wear.member.Session.MemberSession;
+import com.samyukgu.what2wear.member.model.Member;
 import java.io.IOException;
 
 import com.samyukgu.what2wear.member.service.MemberService;
@@ -13,10 +16,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class LoginController {
+    @FXML private StackPane root;
     @FXML private static LoginController instance;
     @FXML private TextField inputIdField;
     @FXML private PasswordField inputPasswordField;
@@ -27,43 +32,55 @@ public class LoginController {
     @FXML ImageView loginBanner;
 
     private MemberService memberService;
+    private MemberSession memberSession;
 
+
+     // 초기화할때 UI 및 DI Container 세팅
     @FXML
     public void initialize(){
         setupUI();
         setupDI();
     }
 
+     // 로그인 버튼 클릭시 회원 검증 후 메인 페이지 이동
     @FXML
     private void handleClickLoginButton(){
-        // 로그인 버튼 클릭시 회원 검증 후 메인 페이지 이동 
-        /*
-        :todo:  회원 검증 로직 추가
-                유저 세션에 유저 정보 담기
-        */
-        switchScene("/com/samyukgu/what2wear/layout/MainLayout.fxml", "내일 뭐 입지?");
+        Member member = memberService.login(inputIdField.getText(), inputPasswordField.getText());
+
+        if(member!=null){
+            memberSession.setMember(member);
+            switchScene("/com/samyukgu/what2wear/layout/MainLayout.fxml", "내일 뭐 입지?");
+        }else{
+            showConfirmationModal();
+        }
     }
 
+    // 회원가입 버튼 클릭시 회원가입 scene 이동
     @FXML
     private void handleClickSignupLabel(){
         switchScene("/com/samyukgu/what2wear/member/SignupStep1View.fxml", "회원가입");
     }
 
+    // id찾기 버튼 클릭시 회원가입 scene 이동
     @FXML
     private void handleClickFindIdLabel(){
         switchScene("/com/samyukgu/what2wear/member/FindAccountIdStep1View.fxml", "아이디 찾기");
     }
 
+    // 비밀번호 찾기 버튼 클릭시 회원가입 scene 이동
     @FXML
     private void handleClickFindPasswordLabel(){
         switchScene("/com/samyukgu/what2wear/member/FindPasswordStep1View.fxml", "아이디 찾기");
     }
 
+    // 컨테이너에 있는 인스턴스 멤버로 할당
     private void setupDI() {
         DIContainer diContainer = DIContainer.getInstance();
         memberService = diContainer.resolve(MemberService.class);
+        memberSession = diContainer.resolve(MemberSession.class);
     }
 
+    // 초기 로그인 배너 크기 및 모서리 처리
     private void setupUI() {
         int arcWidth = 30, arcHeight = 30;
         Rectangle clip = new Rectangle(loginBanner.getFitWidth(), loginBanner.getFitHeight());
@@ -72,6 +89,7 @@ public class LoginController {
         loginBanner.setClip(clip);
     }
 
+    // scene 이동 메서드
     private void switchScene(String fxmlPath, String title){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
@@ -84,6 +102,33 @@ public class LoginController {
             stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // todo: 버튼 하나있는 모달로 바꾸기
+    private void showConfirmationModal() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/CustomModal.fxml"));
+            StackPane modal = loader.load();
+
+            CustomModalController controller = loader.getController();
+            controller.configure(
+                    "로그인 실패",
+                    "아이디와 비밀번호를 다시 확인해주세요.",
+                    "/assets/icons/redCheck.png",
+                    "#FA7B7F",
+                    "취소",
+                    "확인",
+                    () -> root.getChildren().remove(modal),
+                    () -> {
+                        root.getChildren().remove(modal);
+                    }
+            );
+
+            root.getChildren().add(modal);
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
