@@ -1,29 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 <?import javafx.geometry.Insets?>
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
-<?import javafx.scene.control.Button?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.samyukgu.what2wear.codi.controller.CodiMainController"
-      spacing="5"
-      stylesheets="@/com/samyukgu/what2wear/codi/style.css"
+      spacing="50"
+      stylesheets="@/com/samyukgu/what2wear/codi/codi-main.css"
+      styleClass="container"
 >
-
-    <padding>
-        <Insets top="20" left="20" right="20"/>
-    </padding>
-
-    <Text fx:id="welcomeTitle" text="안녕하세요, 코사님" styleClass="welcome-title"/>
-    <Text fx:id="welcomeSubtext" text="오늘 날씨는 외출하기 좋은 기온이에요!" styleClass="welcome-subtext"/>
-    <!--    <ImageView fitWidth="200" fitHeight="200">-->
-    <!--        <image>-->
-    <!--            <Image url="@/assets/images/cute.jpg" preserveRatio="true"/>-->
-    <!--        </image>-->
-    <!--    </ImageView>-->
-    <Button text="스택 테스트" onAction="#handleClickAddCodi"/>
+    <VBox spacing="7">
+        <Label fx:id="welcomeTitle" text="안녕하세요, 코사님" styleClass="welcome-title"/>
+        <Label fx:id="welcomeSubtext" text="오늘 날씨는 외출하기 좋은 기온이에요!" styleClass="welcome-subtext"/>
+    </VBox>
+    <HBox>
+        <!-- 좌측: 캘린더 영역 -->
+        <VBox spacing="20">
+            <HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Button onAction="#handlePrevMonth" style="-fx-background-color: transparent; -fx-cursor: hand;">
+                        <graphic>
+                            <ImageView fitWidth="15" pickOnBounds="true" preserveRatio="true">
+                                <Image url="@/assets/icons/left-arrow.png"/>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                    <Label fx:id="monthLabel" text="2025년 7월" styleClass="month-label" onMouseClicked="#handleMonthLabelClick"/>
+                    <Button onAction="#handleNextMonth" style="-fx-background-color: transparent; -fx-cursor: hand;">
+                        <graphic>
+                            <ImageView fitWidth="15" pickOnBounds="true" preserveRatio="true">
+                                <Image url="@/assets/icons/right-arrow.png"/>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                </HBox>
+                <Region HBox.hgrow="ALWAYS" />
+                <HBox spacing="10">
+                    <Button fx:id="aiButton" styleClass="ai-btn">
+                        <graphic>
+                            <HBox spacing="10" alignment="CENTER">
+                                <ImageView fitWidth="19" pickOnBounds="true" preserveRatio="true">
+                                    <Image url="@/assets/icons/ai.png" />
+                                </ImageView>
+                                <Label text="AI 추천" />
+                            </HBox>
+                        </graphic>
+                    </Button>
+                    <Button fx:id="addButton" styleClass="add-btn" onAction="#handleClickAddCodi">
+                        <graphic>
+                            <HBox spacing="10" alignment="CENTER">
+                                <ImageView fitWidth="16" pickOnBounds="true" preserveRatio="true">
+                                    <Image url="@/assets/icons/plus.png" />
+                                </ImageView>
+                                <Label text="추가" />
+                            </HBox>
+                        </graphic>
+                    </Button>
+                </HBox>
+            </HBox>
+            <GridPane fx:id="calendarGrid" styleClass="calendar"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS" />
+        <!-- 우측: 일정 영역 -->
+        <VBox styleClass="schedule">
+            <ScrollPane fx:id="scheduleScrollPane"
+                        fitToHeight="true" fitToWidth="true"
+                        hbarPolicy="NEVER" vbarPolicy="NEVER" styleClass="scroll-container">
+                <VBox fx:id="scheduleWrapper" styleClass="scroll-content" VBox.vgrow="ALWAYS">
+                    <VBox fx:id="scheduleListContainer"/>
+                    <Label fx:id="emptyLabel" text="코디 일정을 추가하고 옷장을 관리해보세요."
+                           styleClass="empty-message" visible="false" managed="false" />
+                </VBox>
+            </ScrollPane>
+            <Region styleClass="scroll-corner-mask"/>
+        </VBox>
+    </HBox>
 </VBox>

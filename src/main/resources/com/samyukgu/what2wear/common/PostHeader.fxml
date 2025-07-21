@@ -18,7 +18,7 @@
                 </ImageView>
             </graphic>
         </Button>
-        <Label fx:id="header_text" layoutX="463.0" layoutY="25.0" styleClass="header_text" text="게시글 등록">
+        <Label fx:id="header_text" layoutX="463.0" layoutY="25.0" styleClass="header_text">
             <font>
                 <Font size="16.0"/>
             </font>

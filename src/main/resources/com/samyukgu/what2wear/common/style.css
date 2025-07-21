@@ -1,3 +1,26 @@
+/* BasicHeader Start */
+
+.basic-header {
+    -fx-padding: 15 30;
+    -fx-background-color: #ffffff;
+    -fx-border-color: red;
+    -fx-border-width: 1;
+}
+
+.header-title-text {
+    -fx-font-size: 16px;
+    -fx-text-fill: #333333;
+}
+
+.header-back-button {
+    -fx-border-color: red;
+    -fx-border-width: 1;
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+/* BasicHeader End */
+
 .modal_overlay {
     -fx-background-color: transparent;
 }
@@ -59,4 +82,3 @@
     -fx-cursor: hand;
     -fx-font-family: "Pretendard SemiBold";
 }
-
