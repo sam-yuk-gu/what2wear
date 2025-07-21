@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane fx:id="root"
+           xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.samyukgu.what2wear.codi.controller.AddCodiController"
+>
+
+    <!-- 실제 컨텐츠 영역 -->
+    <VBox fx:id="container">
+
+        <!-- 입력 박스 -->
+        <VBox fx:id="inputBox" spacing="20" styleClass="input-box">
+
+            <VBox spacing="4">
+                <Label text="일정명" />
+                <TextField fx:id="scheduleNameField" promptText="예: 햄버거 부수기"/>
+            </VBox>
+
+            <VBox spacing="4">
+                <Label text="날짜" />
+                <DatePicker fx:id="datePicker"/>
+            </VBox>
+
+            <VBox spacing="4">
+                <Label text="코디" />
+                <Pane fx:id="codiDisplayPane" prefHeight="120"
+                      style="-fx-border-color: #ccc; -fx-background-color: #fafafa;"/>
+            </VBox>
+
+            <VBox spacing="4">
+                <Label text="공개 범위" />
+                <HBox spacing="12">
+                    <ToggleButton fx:id="btnAll" text="전체"/>
+                    <ToggleButton fx:id="btnFriend" text="친구"/>
+                    <ToggleButton fx:id="btnPrivate" text="비공개"/>
+                </HBox>
+            </VBox>
+        </VBox>
+
+        <!-- 추가하기 버튼 -->
+        <Button fx:id="submitButton" text="추가하기"/>
+    </VBox>
+</StackPane>

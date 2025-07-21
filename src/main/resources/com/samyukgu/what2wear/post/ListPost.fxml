@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<?import javafx.scene.shape.Line?>
+<HBox fx:id="root" prefHeight="768.0" prefWidth="1280.0"
+      xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.samyukgu.what2wear.post.controller.ListPostController"
+      stylesheets="/com/samyukgu/what2wear/post/style.css">
+   <children>
+
+      <!-- 게시판 화면 -->
+      <VBox fx:id="board_vbox" prefHeight="768.0" prefWidth="1030.0" spacing="40.0" styleClass="board_vbox">
+         <children>
+            <HBox fx:id="board_top_hbox" alignment="CENTER" prefHeight="118.0" prefWidth="1030.0" styleClass="board_top_hbox">
+               <VBox.margin>
+                  <Insets top="40" />
+               </VBox.margin>
+               <children>
+                  <Pane fx:id="title_pane" prefHeight="118.0" prefWidth="910.0" styleClass="title_pane">
+                     <children>
+                        <Label fx:id="title_text" layoutX="-1.0" layoutY="14.0" styleClass="title_text" text="게시글 목록">
+                           <font><Font size="24.0" /></font>
+                        </Label>
+                        <Button fx:id="button_text" onAction="#handlePostClick" layoutX="809.0" layoutY="60.0" prefHeight="45.0" prefWidth="100.0" styleClass="black_background_button" text="글쓰기">
+                           <font><Font size="14.0" /></font>
+                        </Button>
+                        <ComboBox fx:id="select_title" layoutX="-1.0" layoutY="60.0" prefHeight="45.0" prefWidth="126.0" promptText="검색 기준" styleClass="select_title">
+                           <items>
+                              <FXCollections fx:factory="observableArrayList">
+                                 <String fx:value="제목" />
+                                 <String fx:value="내용" />
+                                 <String fx:value="작성자" />
+                              </FXCollections>
+                           </items>
+                        </ComboBox>
+                        <TextField fx:id="search_title" layoutX="132.0" layoutY="60.0" prefHeight="45.0" prefWidth="300.0" promptText="검색어를 입력해주세요." styleClass="search_title" />
+                        <ImageView fx:id="searchIcon" fitHeight="20.0" fitWidth="20.0" layoutX="384.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@/assets/icons/search.png" />
+                           </image>
+                        </ImageView>
+                        <Line fx:id="line" endX="807.0" layoutX="101.0" layoutY="118.0" startX="-101.00001525878906" strokeWidth="1.5" />
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+
+            <!-- 테이블 영역 -->
+            <HBox fx:id="board_bottom_hbox" prefHeight="450.0" prefWidth="908.0" styleClass="board_bottom_hbox">
+               <children>
+                  <HBox alignment="CENTER" prefWidth="1030.0">
+                     <TableView fx:id="table_board" prefHeight="450.0" prefWidth="908.0" styleClass="table_board">
+                        <columns>
+                           <TableColumn fx:id="colNo" prefWidth="90.0" styleClass="colNo" text="No" />
+                           <TableColumn fx:id="colTitle" prefWidth="350.0" styleClass="colTitle" text="제목" />
+                           <TableColumn fx:id="colAuthor" prefWidth="150.0" styleClass="colAuthor" text="작성자" />
+                           <TableColumn fx:id="colDate" prefWidth="220.0" styleClass="colDate" text="작성일" />
+                           <TableColumn fx:id="colLikes" prefWidth="110.0" styleClass="colLikes" text="좋아요" />
+                        </columns>
+                     </TableView>
+                  </HBox>
+               </children>
+            </HBox>
+
+            <!-- 페이지네이션 -->
+            <HBox fx:id="pagination_hbox" alignment="CENTER" prefHeight="50.0" prefWidth="908.0" spacing="5.0" styleClass="pagination_hbox">
+               <children>
+                  <Button fx:id="double_left_button" styleClass="double_button">
+                     <graphic>
+                        <ImageView fitHeight="16" fitWidth="30">
+                           <image>
+                              <Image url="@/assets/icons/doubleLeftArrow.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="left_button" styleClass="arrow_button">
+                     <graphic>
+                        <ImageView fitHeight="16" fitWidth="30">
+                           <image>
+                              <Image url="@/assets/icons/leftArrow.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button styleClass="gray_stroke_button" text="1" />
+                  <Button styleClass="gray_stroke_button" text="2" />
+                  <Button styleClass="gray_stroke_button" text="3" />
+                  <Button styleClass="gray_stroke_button" text="4" />
+                  <Button styleClass="gray_stroke_button" text="5" />
+                  <Button styleClass="gray_stroke_button" text="6" />
+                  <Button styleClass="gray_stroke_button" text="7" />
+                  <Button fx:id="right_button" styleClass="arrow_button">
+                     <graphic>
+                        <ImageView fitHeight="16" fitWidth="30">
+                           <image>
+                              <Image url="@/assets/icons/rightArrow.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="double_right_button" styleClass="double_button">
+                     <graphic>
+                        <ImageView fitHeight="16" fitWidth="30">
+                           <image>
+                              <Image url="@/assets/icons/doubleRightArrow.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</HBox>
