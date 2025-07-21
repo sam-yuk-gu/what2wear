@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<StackPane fx:id="root" prefHeight="768.0" prefWidth="1280.0" stylesheets="/com/samyukgu/what2wear/post/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.post.controller.DetailPostController">
+
+    <HBox>
+        <VBox fx:id="mainVBox" prefWidth="1030.0" spacing="20.0">
+
+            <!-- 게시글 본문 + 댓글 목록 스크롤 -->
+        <ScrollPane fx:id="scrollPane" fitToWidth="true" styleClass="board_scroll_pane" VBox.vgrow="ALWAYS">
+        <content>
+            <VBox fx:id="board_vbox" prefHeight="768.0" spacing="40.0" styleClass="board_detail_vbox">
+            <!-- 헤더 -->
+            <HBox alignment="CENTER" prefHeight="81.0" prefWidth="1030.0">
+                <fx:include source="/com/samyukgu/what2wear/common/PostHeader.fxml" fx:id="header_pane"/>
+            </HBox>
+
+            <!-- 게시글 제목 -->
+            <VBox fx:id="center_vbox" alignment="CENTER" prefHeight="668.0" prefWidth="1030.0" spacing="20.0">
+                     <HBox alignment="CENTER" prefHeight="59.0" prefWidth="1015.0">
+                        <children>
+                       <Label fx:id="titleLabel" prefHeight="23.0" prefWidth="697.0" styleClass="datail_title_text" text="제목">
+                           <font>
+                               <Font size="18.0" />
+                           </font>
+                       </Label>
+
+                      <!-- 수정/삭제 버튼 -->
+                            <HBox fx:id="title_two_button" spacing="10.0">
+                      <Button fx:id="editPostButton" onAction="#handlePostEditClick" styleClass="gray_stroke_button" text="수정하기">
+                          <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0">
+                                  <image>
+                                      <Image url="@/assets/icons/edit.png" />
+                                  </image>
+                              </ImageView>
+                          </graphic>
+                      </Button>
+                      <Button fx:id="deletePostButton" onAction="#handlePostDeleteClick" styleClass="gray_stroke_button" text="삭제하기">
+                          <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0">
+                                  <image>
+                                      <Image url="@/assets/icons/trash.png" />
+                                  </image>
+                              </ImageView>
+                          </graphic>
+                      </Button>
+                            </HBox>
+                        </children>
+                     </HBox>
+
+
+                <!-- 게시글 내용 -->
+                <VBox fx:id="content_hbox" alignment="CENTER" prefHeight="391.0" prefWidth="1015.0" styleClass="content_hbox">
+                    <Pane fx:id="content_pane" prefHeight="377.0" prefWidth="1030.0">
+                        <!-- 사용자 정보 -->
+                        <Pane fx:id="user_info_pane" prefHeight="65.0" prefWidth="950.0">
+                     <HBox alignment="CENTER_LEFT" layoutX="28.0" layoutY="1.0" prefHeight="64.0" prefWidth="936.0">
+                        <children>
+                           <Pane prefHeight="64.0" prefWidth="64.0">
+                              <children>
+                                        <ImageView fitHeight="64" fitWidth="64">
+                                            <image>
+                                                <Image url="@/assets/icons/defaultProfile.png" />
+                                            </image>
+                                        </ImageView>
+                                 <HBox alignment="CENTER" layoutX="60.0" prefHeight="65.0" prefWidth="883.0">
+                                    <children>
+                                       <Pane prefHeight="65.0" prefWidth="880.0">
+                                          <children>
+                                              <Label fx:id="authorLabel" layoutX="14.0" layoutY="14.0" styleClass="author_text" text="작성자" />
+                                              <Label fx:id="dateLabel" layoutX="14.0" layoutY="40.0" styleClass="comment_date" text="작성일" />
+                                          </children>
+                                       </Pane>
+                                    </children>
+                                 </HBox>
+                              </children>
+                           </Pane>
+                        </children>
+                     </HBox>
+                        </Pane>
+                  <HBox alignment="CENTER" layoutY="84.0" prefHeight="300.0" prefWidth="990.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="318.0" prefWidth="990.0">
+                           <children>
+                                    <!-- 게시글 내용 및 좋아요 -->
+                                    <Pane fx:id="user_content_pane" prefHeight="295.0" prefWidth="950.0">
+                                        <Label fx:id="contentLabel" layoutX="18.0" layoutY="14.0" prefHeight="14.0" prefWidth="808.0" styleClass="content_text" text="내용" />
+                                        <ImageView fx:id="codi_img" fitHeight="180.0" fitWidth="180.0" layoutX="750.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@/assets/icons/defaultCodi.png" />
+                                            </image>
+                                        </ImageView>
+                                        <VBox fx:id="like_pane" alignment="CENTER" layoutX="429.0" layoutY="182.0" prefHeight="64.0" prefWidth="93.0" spacing="5.0">
+                                            <Button fx:id="likeButton" onAction="#handleLikeClick" styleClass="arrow_button">
+                                                <graphic>
+                                                    <ImageView fx:id="likeIcon" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                                        <image>
+                                                            <Image url="@/assets/icons/emptyHeart.png" />
+                                                        </image>
+                                                    </ImageView>
+                                                </graphic>
+                                            </Button>
+                                            <Label fx:id="likesLabel" prefHeight="14.0" styleClass="like_text" text="0" />
+                                        </VBox>
+
+                                    </Pane>
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+                    </Pane>
+                </VBox>
+
+                <!-- 댓글 영역 -->
+                <VBox fx:id="comment_vbox" alignment="CENTER" spacing="20.0" styleClass="comment_section">
+                    <Label prefHeight="35.0" prefWidth="950.0" styleClass="comment_title_text" text="댓글" />
+
+                    <!-- 내 댓글 -->
+                    <VBox fx:id="commentBox" alignment="CENTER">
+                    <HBox alignment="TOP_CENTER" prefHeight="29.0" prefWidth="1015.0" spacing="16.0">
+                              <ImageView fitHeight="48.0" fitWidth="48.0">
+                                  <image>
+                                      <Image url="@/assets/icons/defaultProfile.png" />
+                                  </image>
+                              </ImageView>
+                        <VBox fx:id="comment_user_vbox" alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="800.0" spacing="4.0">
+                             <Label styleClass="comment_author" text="서울수경" />
+                             <Label styleClass="comment_date" text="2025-07-18" />
+                            <Label fx:id="commentTextLabel" styleClass="comment_text" text="이 코디 예쁘네요!" />
+                            <TextField fx:id="editTextField" prefWidth="800.0" styleClass="comment_input" visible="false" />
+                        </VBox>
+
+                        <!-- 수정/삭제 버튼 -->
+                        <HBox alignment="CENTER_RIGHT" prefHeight="36.0">
+                        <Pane fx:id="two_button_pane" prefHeight="64.0" prefWidth="76.0">
+                        <children>
+                           <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="84.0">
+                              <children>
+                                  <Button fx:id="editButton" onAction="#handleEditClick" styleClass="arrow_button">
+                                    <graphic>
+                                        <ImageView fitHeight="24.0" fitWidth="24.0">
+                                            <image>
+                                                <Image url="@/assets/icons/edit.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                 </Button>
+                              </children>
+                           </HBox>
+                           <Button layoutX="40.0" onAction="#handleDeleteClick" styleClass="arrow_button">
+                              <graphic>
+                                 <ImageView fitHeight="24.0" fitWidth="24.0">
+                                    <image>
+                                       <Image url="@/assets/icons/trash.png" />
+                                    </image>
+                                 </ImageView>
+                              </graphic>
+                           </Button>
+                        </children>
+                     </Pane>
+                        </HBox>
+                    </HBox>
+                    </VBox>
+
+                    <!-- 다른 사람 댓글 -->
+                    <HBox alignment="TOP_CENTER" prefHeight="70.0" prefWidth="950.0" spacing="16.0">
+                        <ImageView fitHeight="48" fitWidth="48">
+                            <image>
+                                <Image url="@/assets/icons/defaultProfile.png" />
+                            </image>
+                        </ImageView>
+                        <VBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="900.0" spacing="4.0">
+                            <Label styleClass="comment_author" text="재벌집막내아들" />
+                            <Label styleClass="comment_date" text="2025-07-18" />
+                            <Label styleClass="comment_text" text="저도 비슷한 거 하나 있는데 얼마에 구매하셨나요?" />
+                        </VBox>
+                    </HBox>
+                </VBox>
+            </VBox>
+        </VBox>
+        </content>
+        </ScrollPane>
+
+            <!-- 댓글 입력창 -->
+            <HBox alignment="CENTER" prefHeight="139.0" prefWidth="1030.0" spacing="10.0">
+                <TextField fx:id="commentField" prefHeight="50.0" prefWidth="883.0" promptText="댓글을 입력해주세요." styleClass="comment_input" />
+                <Button fx:id="submitCommentButton" styleClass="black_background_button" text="확인" />
+            </HBox>
+        </VBox>
+    </HBox>
+</StackPane>

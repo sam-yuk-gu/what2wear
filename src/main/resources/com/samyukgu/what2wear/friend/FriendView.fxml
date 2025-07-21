@@ -10,7 +10,7 @@
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.samyukgu.what2wear.codi.controller.AddCodiController"
       spacing="5"
-      stylesheets="@/com/samyukgu/what2wear/codi/style.css"
+      stylesheets="@/com/samyukgu/what2wear/codi/codi-main.css"
 >
 
     <padding>
