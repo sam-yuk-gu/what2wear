@@ -14,7 +14,8 @@ public class MailService {
     private static String address;
     private static String password;
     private static String fromName;
-
+    
+    // 초기화시에 application.properties에서 값 읽어오기
     public MailService() {
         Properties props = new Properties();
         try (InputStream is = ClassLoader.getSystemResourceAsStream("application.properties");
@@ -28,7 +29,8 @@ public class MailService {
             throw new RuntimeException("can't read properties data");
         }
     }
-
+    
+    // 인증번호 발송 메서드
     public void sendAuth(String toMail, String authCode){
         String subject = "[ 내일뭐입지 ] 본인 인증을 위한 인증코드 안내메일입니다.";
         StringBuffer contents = new StringBuffer();
@@ -40,6 +42,31 @@ public class MailService {
         sendMail(toMail, subject, contents.toString());
     }
 
+    // 회원이 가입한 (account_id) 발송
+    public void sendId(String toMail, String accountId){
+        String subject = "[ 내일뭐입지 ] 회원님의 아이디 정보입니다.";
+        StringBuffer contents = new StringBuffer();
+        contents.append("회원님이 생성하신 아이디는\n");
+        contents.append("<p><strong>").append(accountId).append("</strong>입니다</p><br>");
+        contents.append("로그인에 문제가 있거나 추가 도움이 필요하시면 언제든지 문의해주세요.");
+
+        sendMail(toMail, subject, contents.toString());
+    }
+
+    // 임시 비밀번호 발송 및 임시 비밀번호 반환
+    public String sendPassword(String toMail, String password){
+        String subject = "[ 내일뭐입지 ] 회원님의 임시 비밀번호입니다.";
+        StringBuffer contents = new StringBuffer();
+        contents.append("회원님이 임시 비밀번호는\n");
+        contents.append("<p><strong>").append(password).append("</strong>입니다</p><br>");
+        contents.append("로그인에 문제가 있거나 추가 도움이 필요하시면 언제든지 문의해주세요.");
+
+        sendMail(toMail, subject, contents.toString());
+
+        return String.valueOf(Math.random());
+    }
+    
+    // 메일 전송 메서드
     private void sendMail(String toMail, String subject, String contents){
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com"); // use Gmail

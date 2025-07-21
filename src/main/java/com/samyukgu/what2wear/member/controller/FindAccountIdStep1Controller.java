@@ -27,25 +27,37 @@ public class FindAccountIdStep1Controller {
     private MemberService memberService;
     private MailService mailService;
 
+    // 리스너 및 DI 컨테이너 초기화
     @FXML
     public void initialize(){
         setupDI();
         setupListener();
     }
 
+    // 이전 버튼 클릭하면 로그인으로 이동
     @FXML
     public void handleClickPrevButton(){
         switchScene("/com/samyukgu/what2wear/member/LoginView.fxml", "로그인");
     }
 
+    /**
+    *   1.다음 버튼 클릭
+     *  2.필드값 유효성 검증
+     *  3.입력한 정보로 아이디를 가입된 정보를 찾으면 메일 전송 및 nextPath 성공 페이지로 지정
+     *  4.nextPath 실패 페이지로 지정
+     *  5.Scene 이동
+    */
     @FXML
     public void handleClickNextButton(){
         String name = inputNameField.getText();
-        String mail = inputMailField.getText();
-        if(!isValidField(name, mail))
+        String email = inputMailField.getText();
+        if(!isValidField(name, email))
             return;
-        String[] nextPath = decidePath(name, mail);
-        // todo: 메일 전송
+        String[] nextPath = decidePath(name, email);
+        if (nextPath[0].contains("FindAccountIdStep2View.fxml")) {
+            String accountId = memberService.getAccountIdByNameAndEmail(name, email);
+            mailService.sendId(email, accountId);
+        }
         switchScene(nextPath[0], nextPath[1]);
     }
 
@@ -61,10 +73,11 @@ public class FindAccountIdStep1Controller {
         });
     }
 
+    // 사용자가 있으면 다음 아이디 찾기 페이지, 없으면 회원조회 실패
     private String[] decidePath(String name, String mail){
         String[] nextPath = new String[2];
 
-        if(!memberService.isExist(name, mail)){
+        if(memberService.existsByNameAndEmail(name, mail)){
             nextPath[0] = "/com/samyukgu/what2wear/member/FindAccountIdStep2View.fxml";
             nextPath[1] = "아이디 찾기";
         }else{
@@ -74,6 +87,7 @@ public class FindAccountIdStep1Controller {
         return nextPath;
     }
 
+    // scene 이동 메서드
     private void switchScene(String fxmlPath, String title){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
@@ -89,7 +103,8 @@ public class FindAccountIdStep1Controller {
             e.printStackTrace();
         }
     }
-
+    
+    // 이름과 이메일 유효성 검사
     private boolean isValidField(String name, String mail){
         boolean flag = true;
 
@@ -105,7 +120,8 @@ public class FindAccountIdStep1Controller {
 
         return flag;
     }
-
+    
+    // 컨테이너에 있는 인스턴스 멤버로 할당
     private void setupDI() {
         DIContainer diContainer = DIContainer.getInstance();
         memberService = diContainer.resolve(MemberService.class);
