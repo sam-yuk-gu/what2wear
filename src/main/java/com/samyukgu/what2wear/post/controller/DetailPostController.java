@@ -40,11 +40,11 @@ public class DetailPostController {
     public void setPost(Post post) {
         titleLabel.setText(post.getTitle());
         contentLabel.setText(post.getContent());
-        authorLabel.setText(post.getAuthor());
-        dateLabel.setText(post.getDate());
+        authorLabel.setText(post.getMember_id().toString());
+        dateLabel.setText(post.getCreate_at().toString());
 
         // 게시글 좋아요 수로 설정
-        likeCount = post.getLikes();
+        likeCount = 0;
         likesLabel.setText(String.valueOf(likeCount));
 
         // 게시글 작성자 이름 확인 후 수정/삭제 버튼 표시 여부 결정

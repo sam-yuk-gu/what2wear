@@ -186,6 +186,12 @@
     -fx-background-color: transparent;
 }
 
+/* TableView 스크롤 제거 */
+.table-board .scroll-bar:vertical {
+    -fx-opacity: 0;
+    -fx-max-width: 0;
+}
+
 /* 스크롤바 제거 */
 .table-view .scroll-bar:vertical,
 .table-view .scroll-bar:horizontal {
@@ -197,6 +203,7 @@
     -fx-min-width: 0px;
     -fx-min-height: 0px;
 }
+
 
 /* =======================
    테이블 컬럼별 스타일
@@ -240,6 +247,15 @@
 /* =======================
    버튼 스타일
    ======================= */
+.page_number_button {
+   -fx-padding: 6 12;
+   -fx-background-color: white;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 4;
+    -fx-font-size: 13px;
+}
+
+
 .gray_stroke_button {
     -fx-padding: 10 20;
     -fx-font-size: 14px;

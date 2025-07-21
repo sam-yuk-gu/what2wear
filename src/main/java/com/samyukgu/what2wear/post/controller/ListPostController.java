@@ -1,7 +1,9 @@
 package com.samyukgu.what2wear.post.controller;
 
 import com.samyukgu.what2wear.common.controller.MainLayoutController;
+import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.post.model.Post;
+import com.samyukgu.what2wear.post.service.PostService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,73 +13,107 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ListPostController implements Initializable {
 
-    @FXML
-    private TableView<Post> table_board;
-    @FXML
-    private TableColumn<Post, Integer> colNo;
-    @FXML
-    private TableColumn<Post, String> colTitle;
-    @FXML
-    private TableColumn<Post, String> colAuthor;
-    @FXML
-    private TableColumn<Post, String> colDate;
-    @FXML
-    private TableColumn<Post, Integer> colLikes;
-    @FXML
-    private Button button_text;
+    @FXML private TableView<Post> table_board;
+    @FXML private TableColumn<Post, Long> colNo;
+    @FXML private TableColumn<Post, String> colTitle;
+    @FXML private TableColumn<Post, String> colAuthor;
+    @FXML private TableColumn<Post, String> colDate;
+    @FXML private TableColumn<Post, Integer> colLikes;
 
+    @FXML private Button button_text;
+    @FXML private Button double_left_button, left_button, right_button, double_right_button;
+    @FXML private HBox page_button_box;
+
+    private PostService postService;
+    private List<Post> allPosts;
+    private static final int ROWS_PER_PAGE = 10;
+    private static final int MAX_PAGE_BUTTONS = 7;
+    private int currentPage = 1;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // 버튼 이벤트 설정
+        this.postService = DIContainer.getInstance().resolve(PostService.class);
+        allPosts = postService.getAllPosts();
+
+        colNo.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        colAuthor.setCellValueFactory(new PropertyValueFactory<>("member_id"));
+        colDate.setCellValueFactory(new PropertyValueFactory<>("create_at"));
+
+        setupPagination();
+        showPage(1);
+
         button_text.setOnAction(event -> handlePostClick());
 
-        // 컬럼 셀 데이터 설정
-        colNo.setCellValueFactory(new PropertyValueFactory<>("no"));
-        colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
-        colAuthor.setCellValueFactory(new PropertyValueFactory<>("author"));
-        colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
-        colLikes.setCellValueFactory(new PropertyValueFactory<>("likes"));
-
-        // 테스트 데이터 삽입
-        ObservableList<Post> listPost = FXCollections.observableArrayList(
-                new Post(1, "오늘의 OOTD", "코사", "오늘의 OOTD 입니다~~", "2025-07-15", 13),
-                new Post(2, "작성글 test title 2", "패션테러리스트", "작성글 test title 2 입니다~~", "2025-07-15", 1004),
-                new Post(3, "작성글 test title 3", "재벌집막내아들", "작성글 test title 3 입니다~~", "2025-07-15", 5),
-                new Post(4, "작성글 test title 4", "서울수경", "작성글 test title 4 입니다~~", "2025-07-15", 325),
-                new Post(5, "작성글 test title 5", "나형돈", "작성글 test title 5 입니다~~", "2025-07-15", 62),
-                new Post(6, "작성글 test title 6", "백호두", "작성글 test title 6 입니다~~", "2025-07-15", 0),
-                new Post(7, "작성글 test title 7", "연홍시", "작성글 test title 7 입니다~~", "2025-07-15", 722)
-        );
-
-        table_board.setItems(listPost);
-
-        // 테이블 클릭 시 이벤트 추가
         table_board.setRowFactory(tv -> {
             TableRow<Post> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getClickCount() == 1) {
-                    Post selectedPost = row.getItem();
-                    openPostDetail(selectedPost);
+                    openPostDetail(row.getItem());
                 }
             });
             return row;
         });
-
     }
 
-    // 글쓰기 버튼 클릭 시 화면 이동하는 메서드
+    private void setupPagination() {
+        int totalPages = (int) Math.ceil((double) allPosts.size() / ROWS_PER_PAGE);
+
+        double_left_button.setOnAction(e -> showPage(1));
+        left_button.setOnAction(e -> showPage(Math.max(1, currentPage - 1)));
+        right_button.setOnAction(e -> showPage(Math.min(totalPages, currentPage + 1)));
+        double_right_button.setOnAction(e -> showPage(totalPages));
+
+        refreshPageButtons();
+    }
+
+    private void refreshPageButtons() {
+        page_button_box.getChildren().clear();
+        int totalPages = (int) Math.ceil((double) allPosts.size() / ROWS_PER_PAGE);
+
+        int startPage = Math.max(1, currentPage - MAX_PAGE_BUTTONS / 2);
+        int endPage = Math.min(totalPages, startPage + MAX_PAGE_BUTTONS - 1);
+
+        if (endPage - startPage + 1 < MAX_PAGE_BUTTONS) {
+            startPage = Math.max(1, endPage - MAX_PAGE_BUTTONS + 1);
+        }
+
+        for (int i = startPage; i <= endPage; i++) {
+            Button btn = new Button(String.valueOf(i));
+            btn.getStyleClass().add("page_number_button");
+            if (i == currentPage) {
+                btn.setStyle("-fx-font-weight: bold; -fx-background-color: #eee;");
+            }
+            int page = i;
+            btn.setOnAction(e -> showPage(page));
+            page_button_box.getChildren().add(btn);
+        }
+    }
+
+    private void showPage(int pageNum) {
+        currentPage = pageNum;
+        int fromIndex = (pageNum - 1) * ROWS_PER_PAGE;
+        int toIndex = Math.min(fromIndex + ROWS_PER_PAGE, allPosts.size());
+        ObservableList<Post> postList = FXCollections.observableArrayList(allPosts.subList(fromIndex, toIndex));
+        table_board.setItems(postList);
+        refreshPageButtons();
+    }
+
     @FXML
     private void handlePostClick() {
         MainLayoutController.loadView("/com/samyukgu/what2wear/post/CreatePost.fxml");
     }
 
-    // 게시글 클릭 후 상세 조회 화면 이동
-    private void openPostDetail(Post selectedPost) { MainLayoutController.loadPostDetailView(selectedPost);}
+    private void openPostDetail(Post selectedPost) {
+        MainLayoutController.loadPostDetailView(selectedPost);
+    }
 }

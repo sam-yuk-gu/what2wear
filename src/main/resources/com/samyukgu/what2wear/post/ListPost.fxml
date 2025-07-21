@@ -70,9 +70,9 @@
             </HBox>
 
             <!-- 페이지네이션 -->
-            <HBox fx:id="pagination_hbox" alignment="CENTER" prefHeight="50.0" prefWidth="908.0" spacing="5.0" styleClass="pagination_hbox">
+            <HBox fx:id="pagination_hbox" alignment="CENTER" prefHeight="50.0" spacing="5.0" styleClass="pagination_hbox">
                <children>
-                  <Button fx:id="double_left_button" styleClass="double_button">
+                  <Button fx:id="double_left_button" alignment="CENTER" styleClass="double_button">
                      <graphic>
                         <ImageView fitHeight="16" fitWidth="30">
                            <image>
@@ -90,13 +90,13 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button styleClass="gray_stroke_button" text="1" />
-                  <Button styleClass="gray_stroke_button" text="2" />
-                  <Button styleClass="gray_stroke_button" text="3" />
-                  <Button styleClass="gray_stroke_button" text="4" />
-                  <Button styleClass="gray_stroke_button" text="5" />
-                  <Button styleClass="gray_stroke_button" text="6" />
-                  <Button styleClass="gray_stroke_button" text="7" />
+
+                  <!-- 숫자 버튼은 동적 생성 자리를 위한 HBox -->
+                  <HBox fx:id="page_button_box"
+                        alignment="CENTER"
+                        spacing="5.0"
+                        style="-fx-alignment: center;" />
+
                   <Button fx:id="right_button" styleClass="arrow_button">
                      <graphic>
                         <ImageView fitHeight="16" fitWidth="30">
