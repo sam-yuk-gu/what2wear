@@ -62,6 +62,8 @@ public class SelectOutfitModalController implements Initializable {
         codiTab.setOnAction(e -> switchToCodi());
         setupCategoryButtons();
 
+        codiView.setManaged(false);
+
         wardrobeSearchField.setOnAction(e -> {
             wardrobeSearchText = wardrobeSearchField.getText().trim();
             renderWardrobeItems();
@@ -81,9 +83,9 @@ public class SelectOutfitModalController implements Initializable {
         });
         codiSearchField.focusedProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal) {
-                codiSearchField.getParent().setStyle("-fx-border-color: #454545; -fx-border-width: 1.5; -fx-background-radius: 10; -fx-padding: 6;");
+                codiSearchField.getParent().setStyle("-fx-border-color: #454545; -fx-border-width: 1.5; -fx-background-radius: 10;");
             } else {
-                codiSearchField.getParent().setStyle("-fx-border-color: #CCCCCC; -fx-border-width: 1; -fx-background-radius: 10; -fx-padding: 6;");
+                codiSearchField.getParent().setStyle("-fx-border-color: #CCCCCC; -fx-border-width: 1; -fx-background-radius: 10;");
             }
         });
     }
@@ -112,6 +114,9 @@ public class SelectOutfitModalController implements Initializable {
         codiView.setVisible(false);
         wardrobeTab.setSelected(true);
         codiTab.setSelected(false);
+
+        wardrobeView.setManaged(true);
+        codiView.setManaged(false);
     }
 
     private void switchToCodi() {
@@ -120,20 +125,23 @@ public class SelectOutfitModalController implements Initializable {
         codiView.setVisible(true);
         wardrobeTab.setSelected(false);
         codiTab.setSelected(true);
+
+        wardrobeView.setManaged(false);
+        codiView.setManaged(true);
     }
 
     private void loadDummyWardrobeItems() {
         allWardrobeItems = Arrays.asList(
                 new Clothing("1", "흰 셔츠", "상의", "/assets/images/dummy-3.png"),
                 new Clothing("2", "청바지", "상의", "/assets/images/dummy-2.png"),
-                new Clothing("3", "운동화", "신발", "/assets/images/dummy-4.png"),
-                new Clothing("4", "운동화", "신발", "/assets/images/dummy-4.png"),
-                new Clothing("5", "운동화", "신발", "/assets/images/dummy-4.png"),
-                new Clothing("6", "운동화", "신발", "/assets/images/dummy-4.png"),
-                new Clothing("7", "운동화", "신발", "/assets/images/dummy-4.png"),
-                new Clothing("8", "운동화", "신발", "/assets/images/dummy-4.png"),
-                new Clothing("9", "운동화", "신발", "/assets/images/dummy-4.png"),
-                new Clothing("10", "운동화", "신발", "/assets/images/dummy-4.png"),
+                new Clothing("3", "운동화", "신발", "/assets/images/dummy-1.png"),
+                new Clothing("4", "운동화", "신발", "/assets/images/dummy-5.png"),
+                new Clothing("5", "운동화", "신발", "/assets/images/dummy-6.png"),
+                new Clothing("6", "운동화", "신발", "/assets/images/dummy-2.png"),
+                new Clothing("7", "운동화", "신발", "/assets/images/dummy-5.png"),
+                new Clothing("8", "운동화", "신발", "/assets/images/dummy-3.png"),
+                new Clothing("9", "운동화", "신발", "/assets/images/dummy-1.png"),
+                new Clothing("10", "운동화", "신발", "/assets/images/dummy-2.png"),
                 new Clothing("11", "운동화", "신발", "/assets/images/dummy-4.png")
         );
 
@@ -146,8 +154,13 @@ public class SelectOutfitModalController implements Initializable {
         codiItemPane.getChildren().clear();
 
         List<Codi> dummy = Arrays.asList(
-                new Codi("C1", "캐주얼룩", "/assets/images/dummy-5.png"),
-                new Codi("C2", "데이트룩", "/assets/images/dummy-6.png")
+                new Codi("C1", "캐주얼룩", "/assets/images/dummy-codi.png"),
+                new Codi("C2", "데이트룩", "/assets/images/dummy-codi.png"),
+                new Codi("C3", "데이트룩", "/assets/images/dummy-codi.png"),
+                new Codi("C4", "데이트룩", "/assets/images/dummy-codi.png"),
+                new Codi("C5", "데이트룩", "/assets/images/dummy-codi.png"),
+                new Codi("C6", "데이트룩", "/assets/images/dummy-codi.png"),
+                new Codi("C7", "데이트룩", "/assets/images/dummy-codi.png")
         );
 
         for (Codi c : dummy) {
@@ -156,8 +169,13 @@ public class SelectOutfitModalController implements Initializable {
         }
 
         allCodiItems = Arrays.asList(
-                new Codi("C1", "캐주얼룩", "/assets/images/dummy-5.png"),
-                new Codi("C2", "데이트룩", "/assets/images/dummy-6.png")
+                new Codi("C1", "캐주얼룩", "/assets/images/dummy-codi.png"),
+                new Codi("C2", "데이트룩", "/assets/images/dummy-codi.png"),
+                new Codi("C3", "데이트룩", "/assets/images/dummy-codi.png"),
+                new Codi("C4", "데이트룩", "/assets/images/dummy-codi.png"),
+                new Codi("C5", "데이트룩", "/assets/images/dummy-codi.png"),
+                new Codi("C6", "데이트룩", "/assets/images/dummy-codi.png"),
+                new Codi("C7", "데이트룩", "/assets/images/dummy-codi.png")
         );
         renderCodiItems(); // 별도 렌더 함수 호출
     }
@@ -180,18 +198,18 @@ public class SelectOutfitModalController implements Initializable {
         itemImage.setPreserveRatio(true);
 
         // 오버레이 및 체크 아이콘 (기본은 숨김)
-        Rectangle overlay = new Rectangle(95, 95, javafx.scene.paint.Color.rgb(0, 0, 0, 0.4));
+        Rectangle overlay = new Rectangle(107, 107, javafx.scene.paint.Color.rgb(0, 0, 0, 0.4));
         overlay.setArcWidth(12);
         overlay.setArcHeight(12);
         overlay.setVisible(false);
 
-        ImageView checkIcon = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/icons/check.png"))));
+        ImageView checkIcon = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/icons/check-white.png"))));
         checkIcon.setFitWidth(40);
         checkIcon.setPreserveRatio(true);
         checkIcon.setVisible(false);
 
         StackPane imageContainer = new StackPane(itemImage, overlay, checkIcon);
-        imageContainer.setPrefSize(80, 80);
+        imageContainer.setPrefSize(107, 107);
 
         box.getChildren().add(imageContainer);
         box.setUserData(item);
@@ -235,6 +253,7 @@ public class SelectOutfitModalController implements Initializable {
 
     private VBox createCodiBox(Codi codi) {
         VBox box = new VBox();
+        box.getStyleClass().add("codi-box");
         box.setSpacing(5);
         box.setAlignment(Pos.CENTER);
         box.setPrefWidth(100);
@@ -248,22 +267,27 @@ public class SelectOutfitModalController implements Initializable {
             codiImage = new ImageView();
             System.out.println("코디 이미지 로딩 실패: " + codi.getImagePath());
         }
-        codiImage.setFitWidth(100);
-        codiImage.setPreserveRatio(true);
+        codiImage.getStyleClass().add("codi-image");
+        codiImage.setPreserveRatio(false);
+
+        Rectangle clip = new Rectangle(130, 180);
+        clip.setArcWidth(20);
+        clip.setArcHeight(20);
+        codiImage.setClip(clip);
 
         // 오버레이 + 체크
-        Rectangle overlay = new Rectangle(100, 100, javafx.scene.paint.Color.rgb(0, 0, 0, 0.4));
-        overlay.setArcWidth(12);
-        overlay.setArcHeight(12);
+        Rectangle overlay = new Rectangle(130, 180, javafx.scene.paint.Color.rgb(0, 0, 0, 0.4));
+        overlay.setArcWidth(20);
+        overlay.setArcHeight(20);
         overlay.setVisible(false);
 
-        ImageView checkIcon = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/icons/check.png"))));
-        checkIcon.setFitWidth(40);
+        ImageView checkIcon = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/icons/check-white.png"))));
+        checkIcon.setFitWidth(45);
         checkIcon.setPreserveRatio(true);
         checkIcon.setVisible(false);
 
         StackPane imageContainer = new StackPane(codiImage, overlay, checkIcon);
-        imageContainer.setPrefSize(100, 100);
+        imageContainer.setPrefSize(130, 180);
 
         box.getChildren().add(imageContainer);
         box.setUserData(codi);
@@ -335,11 +359,30 @@ public class SelectOutfitModalController implements Initializable {
         refreshCodiSelection();
     }
 
+    private Button selectedCategoryButton = null;
+
     private void setupCategoryButtons() {
         for (String category : categories) {
             Button btn = new Button(category);
-            btn.setOnAction(e -> setCategoryFilter(category));
             btn.getStyleClass().add("category-button");
+
+            // 기본 선택: "전체"
+            if (category.equals("전체")) {
+                btn.getStyleClass().add("category-button-selected");
+                selectedCategoryButton = btn;
+            }
+
+            btn.setOnAction(e -> {
+                if (selectedCategoryButton != null) {
+                    selectedCategoryButton.getStyleClass().remove("category-button-selected");
+                }
+
+                btn.getStyleClass().add("category-button-selected");
+                selectedCategoryButton = btn;
+
+                setCategoryFilter(category);
+            });
+
             categoryButtonBox.getChildren().add(btn);
         }
     }

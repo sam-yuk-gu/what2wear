@@ -41,8 +41,7 @@ public class MainLayoutController {
         instance = this;
 
         menuButtons = List.of(wardrobeButton, friendButton, boardButton, mypageButton);   // 버튼 리스트 초기화 (로고 제외)
-//        loadView("/com/samyukgu/what2wear/codi/CodiMainView.fxml");
-        loadView("/com/samyukgu/what2wear/codi/AddCodiView.fxml");
+        loadView("/com/samyukgu/what2wear/codi/CodiMainView.fxml");
         VBox.setVgrow(spacer, Priority.ALWAYS);     // 최대 여백 설정
     }
 
