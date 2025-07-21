@@ -16,7 +16,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -46,8 +45,10 @@ public class ListPostController implements Initializable {
 
         colNo.setCellValueFactory(new PropertyValueFactory<>("id"));
         colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
-        colAuthor.setCellValueFactory(new PropertyValueFactory<>("member_id"));
+        colAuthor.setCellValueFactory(new PropertyValueFactory<>("writer_name"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("create_at"));
+        colLikes.setCellValueFactory(new PropertyValueFactory<>("like_count"));
+
 
         setupPagination();
         showPage(1);

@@ -64,7 +64,7 @@ public class MainLayoutController {
 
             // Controller 가져와서 게시글 데이터 주입
             DetailPostController controller = loader.getController();
-            controller.setPost(post);
+            controller.setPostData(post);
 
             // 메인 화면에 해당 뷰 출력
             instance.contentArea.getChildren().setAll(view);

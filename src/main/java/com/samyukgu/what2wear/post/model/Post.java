@@ -10,6 +10,10 @@ public class Post {
     private String content;
     private Date create_at;
     private Date last_updated;
+    private int like_count;
+
+    // member의 id와 일치하는 작성자 이름
+    private String writer_name;
 
     // getter 메서드
     public Long getId() {
@@ -37,6 +41,14 @@ public class Post {
 
     public Date getLast_updated() {
         return last_updated;
+    }
+
+    public int getLike_count() {
+        return like_count;
+    }
+
+    public String getWriter_name() {
+        return writer_name;
     }
 
     // setter 메서드
@@ -68,8 +80,15 @@ public class Post {
         this.last_updated = last_updated;
     }
 
-    // 생성자
-    public Post(Long id, Long member_id, Long cody_id, String title, String content, Date create_at, Date last_updated) {
+    public void setLike_count(int like_count) {
+        this.like_count = like_count;
+    }
+    public void setWriter_name(String writer_name) {
+        this.writer_name = writer_name;
+    }
+
+    // 생성자 (writer_name 없이)
+    public Post(Long id, Long member_id, Long cody_id, String title, String content, Date create_at, Date last_updated, int like_count) {
         this.id = id;
         this.member_id = member_id;
         this.cody_id = cody_id;
@@ -77,6 +96,14 @@ public class Post {
         this.content = content;
         this.create_at = create_at;
         this.last_updated = last_updated;
+        this.like_count = like_count;
+    }
+
+    // 생성자 (writer_name 포함, 조회용)
+    public Post(Long id, Long member_id, Long cody_id, String title, String content,
+                Date create_at, Date last_updated, int like_count, String writer_name) {
+        this(id, member_id, cody_id, title, content, create_at, last_updated, like_count);
+        this.writer_name = writer_name;
     }
 }
 

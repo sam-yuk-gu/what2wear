@@ -55,8 +55,9 @@ public class PostOracleDAO implements PostDAO {
                         rs.getString("title"),
                         rs.getString("content"),
                         rs.getDate("create_at"),
-                        rs.getDate("last_updated")
-                        );
+                        rs.getDate("last_updated"),
+                        rs.getInt("like_count"),
+                        rs.getString("writer_name"));
             }
             return null;
         } catch (SQLException e) {
@@ -68,10 +69,12 @@ public class PostOracleDAO implements PostDAO {
     @Override
     public List<Post> findAll() {
         String sql = """
-                SELECT *
-                FROM post
-                ORDER BY id DESC
-                """;
+            SELECT p.*, m.name AS writer_name
+            FROM post p
+            LEFT OUTER JOIN member m ON p.member_id = m.id
+            ORDER BY p.id DESC
+        """;
+
         try (Connection conn  = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)
         ) {
@@ -87,7 +90,10 @@ public class PostOracleDAO implements PostDAO {
                         rs.getString("title"),
                         rs.getString("content"),
                         rs.getDate("create_at"),
-                        rs.getDate("last_updated")
+                        rs.getDate("last_updated"),
+                                rs.getInt("like_count"),
+                                rs.getString("writer_name")
+
                         )
                 );
             }
@@ -115,6 +121,7 @@ public class PostOracleDAO implements PostDAO {
             pstmt.setString(5, post.getContent());
             pstmt.setDate(6, new java.sql.Date(post.getCreate_at().getTime()));
             pstmt.setDate(7, new java.sql.Date(post.getLast_updated().getTime()));
+            pstmt.setInt(8, post.getLike_count());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -127,7 +134,7 @@ public class PostOracleDAO implements PostDAO {
     public void update(Post post) {
         String sql = """
                     UPDATE post SET
-                        member_id = ?, cody_id = ?, title = ?, content = ?, create_at = ?, last_updated = ?
+                        member_id = ?, cody_id = ?, title = ?, content = ?, create_at = ?, last_updated = ?, like_count = ?
                     WHERE id = ?
                 """;
 

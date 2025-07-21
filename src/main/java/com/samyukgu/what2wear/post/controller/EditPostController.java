@@ -3,6 +3,8 @@ package com.samyukgu.what2wear.post.controller;
 import com.samyukgu.what2wear.common.controller.CustomModalController;
 import com.samyukgu.what2wear.common.controller.MainLayoutController;
 import com.samyukgu.what2wear.common.controller.PostHeaderController;
+import com.samyukgu.what2wear.di.DIContainer;
+import com.samyukgu.what2wear.post.service.PostService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -16,9 +18,11 @@ public class EditPostController {
     @FXML private VBox mainVBox;
     @FXML private Button cancelButton;
     @FXML private Button confirmButton;
+    private PostService postService;
 
-    @FXML
     public void initialize() {
+        this.postService = DIContainer.getInstance().resolve(PostService.class);
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/PostHeader.fxml"));
             HBox headerNode = loader.load();
