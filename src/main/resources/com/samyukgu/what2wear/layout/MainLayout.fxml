@@ -1,9 +1,9 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.Region?>
+
 <BorderPane fx:id="mainLayout"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.samyukgu.what2wear.common.controller.MainLayoutController"
@@ -23,7 +23,7 @@
                 <VBox spacing="20">
                     <Button fx:id="wardrobeButton" text="내 옷장" onAction="#handleClickWardrobe" styleClass="menu-button" minHeight="53" maxWidth="Infinity"/>
                     <Button fx:id="friendButton" text="친구" onAction="#handleClickFriend" styleClass="menu-button" minHeight="53" maxWidth="Infinity"/>
-                    <Button fx:id="boardButton" text="게시판" styleClass="menu-button" minHeight="53" maxWidth="Infinity"/>
+                    <Button fx:id="boardButton" text="게시판" onAction="#handleClickBoard" styleClass="menu-button" minHeight="53" maxWidth="Infinity"/>
                     <Button fx:id="mypageButton" text="마이페이지" styleClass="menu-button" minHeight="53" maxWidth="Infinity"/>
                 </VBox>
             </VBox>
