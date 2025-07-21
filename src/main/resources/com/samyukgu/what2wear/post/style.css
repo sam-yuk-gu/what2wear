@@ -305,7 +305,7 @@
     -fx-background-color: #f0f0f0;
 }
 
-.arrow_button:hover {
+.arrow_button, .search_icon:hover {
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
     -fx-cursor: hand;

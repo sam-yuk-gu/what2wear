@@ -1,5 +1,6 @@
 package com.samyukgu.what2wear.post.controller;
 
+import com.samyukgu.what2wear.common.controller.CustomModalController;
 import com.samyukgu.what2wear.common.controller.MainLayoutController;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.post.model.Post;
@@ -7,19 +8,20 @@ import com.samyukgu.what2wear.post.service.PostService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class ListPostController implements Initializable {
+    @FXML private StackPane root;
 
     @FXML private TableView<Post> table_board;
     @FXML private TableColumn<Post, Long> colNo;
@@ -32,6 +34,11 @@ public class ListPostController implements Initializable {
     @FXML private Button double_left_button, left_button, right_button, double_right_button;
     @FXML private HBox page_button_box;
 
+    @FXML private ComboBox<String> select_title;
+    @FXML private TextField search_title;
+    @FXML private ImageView search_icon;
+
+
     private PostService postService;
     private List<Post> allPosts;
     private static final int ROWS_PER_PAGE = 10;
@@ -42,6 +49,10 @@ public class ListPostController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         this.postService = DIContainer.getInstance().resolve(PostService.class);
         allPosts = postService.getAllPosts();
+
+        search_icon.setOnMouseClicked(event -> handleSearch());
+        search_title.setOnAction(event -> handleSearch()); // 엔터 키도 가능하게
+
 
         colNo.setCellValueFactory(new PropertyValueFactory<>("id"));
         colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -65,6 +76,56 @@ public class ListPostController implements Initializable {
             return row;
         });
     }
+
+    // 게시글 정보 검색
+    private void handleSearch() {
+        boolean isFilterSelected = checkIfFilterIsSelected(); // 필터 선택 여부 검사
+
+        if (!isFilterSelected) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/CustomModal.fxml"));
+                StackPane modal = loader.load();
+                CustomModalController controller = loader.getController();
+                controller.configure(
+                        "검색조건 미선택",
+                        "최소 하나의 필터를 선택해야 합니다.",
+                        "/assets/icons/redCheck.png",
+                        "#FA7B7F",
+                        "확인",
+                        "취소",
+                        () -> root.getChildren().remove(modal),
+
+                        () -> root.getChildren().remove(modal)
+                );
+
+                // 현재 루트(StackPane)에 모달 추가
+                root.getChildren().add(modal);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return; // 검색 로직 중단
+        }
+
+        String keyword = search_title.getText();
+        String type = select_title.getValue();
+
+        if (keyword == null || keyword.isBlank() || type == null) {
+            allPosts = postService.getAllPosts(); // 전체 조회
+        } else {
+            allPosts = postService.searchPost(keyword, type); // 조건 검색
+        }
+
+        showPage(1); // 검색 결과 표시
+    }
+
+
+    // 필터 선택 여부 검사
+    private boolean checkIfFilterIsSelected() {
+        return select_title.getValue() != null && !select_title.getValue().isBlank();
+    }
+
 
     private void setupPagination() {
         int totalPages = (int) Math.ceil((double) allPosts.size() / ROWS_PER_PAGE);

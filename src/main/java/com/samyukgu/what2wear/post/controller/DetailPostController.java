@@ -86,11 +86,15 @@ public class DetailPostController {
     }
 
     private void showEditDeleteButtons() {
+        System.out.println("editPostButton is null? " + (editPostButton == null));
+        System.out.println("deletePostButton is null? " + (deletePostButton == null));
+
         editPostButton.setVisible(true);
         deletePostButton.setVisible(true);
         editPostButton.setManaged(true);
         deletePostButton.setManaged(true);
     }
+
 
     private void hideEditDeleteButtons() {
         editPostButton.setVisible(false);

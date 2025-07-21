@@ -171,4 +171,53 @@ public class PostOracleDAO implements PostDAO {
             throw new RuntimeException("Error By Delete Post");
         }
     }
+
+    public List<Post> search(String keyword, String type) {
+        String sqlBase = """
+        SELECT p.*, m.name AS writer_name
+        FROM post p
+        LEFT OUTER JOIN member m ON p.member_id = m.id
+        WHERE LOWER(%s) LIKE ?
+        ORDER BY p.id DESC
+    """;
+
+        String column;
+        switch (type) {
+            case "제목" -> column = "p.title";
+            case "내용" -> column = "p.content";
+            case "작성자" -> column = "m.name";
+            default -> throw new IllegalArgumentException("Invalid search type: " + type);
+        }
+
+        String sql = String.format(sqlBase, column);
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, "%" + keyword.toLowerCase() + "%");
+            ResultSet rs = pstmt.executeQuery();
+            List<Post> posts = new ArrayList<>();
+
+            while (rs.next()) {
+                posts.add(new Post(
+                        rs.getLong("id"),
+                        rs.getLong("member_id"),
+                        rs.getLong("cody_id"),
+                        rs.getString("title"),
+                        rs.getString("content"),
+                        rs.getDate("create_at"),
+                        rs.getDate("last_updated"),
+                        rs.getInt("like_count"),
+                        rs.getString("writer_name")
+                ));
+            }
+            return posts;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error during search");
+        }
+    }
+
+
 }

@@ -10,7 +10,7 @@
 <?import java.lang.String?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
-<HBox fx:id="root" prefHeight="768.0" prefWidth="1280.0"
+<StackPane fx:id="root" prefHeight="768.0" prefWidth="1280.0"
       xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.samyukgu.what2wear.post.controller.ListPostController"
       stylesheets="/com/samyukgu/what2wear/post/style.css">
@@ -42,7 +42,7 @@
                            </items>
                         </ComboBox>
                         <TextField fx:id="search_title" layoutX="132.0" layoutY="60.0" prefHeight="45.0" prefWidth="300.0" promptText="검색어를 입력해주세요." styleClass="search_title" />
-                        <ImageView fx:id="searchIcon" fitHeight="20.0" fitWidth="20.0" layoutX="384.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="search_icon" styleClass="search_icon" fitHeight="20.0" fitWidth="20.0" layoutX="384.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@/assets/icons/search.png" />
                            </image>
@@ -125,4 +125,4 @@
          </children>
       </VBox>
    </children>
-</HBox>
+</StackPane>

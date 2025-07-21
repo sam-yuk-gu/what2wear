@@ -4,6 +4,7 @@ import com.samyukgu.what2wear.likePost.dao.LikePostDAO;
 import com.samyukgu.what2wear.likePost.model.LikePost;
 import com.samyukgu.what2wear.post.dao.PostDAO;
 import com.samyukgu.what2wear.post.model.Post;
+import javafx.geometry.Pos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,5 +51,9 @@ public class PostService {
 
     public void deletePost(Long id) {
         dao.delete(id);
+    }
+
+    public List<Post> searchPost(String keyword, String type) {
+        return dao.search(keyword, type);
     }
 }

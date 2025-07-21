@@ -16,14 +16,14 @@
             <VBox fx:id="board_vbox" prefHeight="768.0" spacing="40.0" styleClass="board_detail_vbox">
             <!-- 헤더 -->
             <HBox alignment="CENTER" prefHeight="81.0" prefWidth="1030.0">
-                <fx:include source="/com/samyukgu/what2wear/common/PostHeader.fxml" fx:id="header_pane"/>
+                <fx:include fx:id="header_pane" source="/com/samyukgu/what2wear/common/PostHeader.fxml" />
             </HBox>
 
             <!-- 게시글 제목 -->
             <VBox fx:id="center_vbox" alignment="CENTER" prefHeight="668.0" prefWidth="1030.0" spacing="20.0">
-                     <HBox alignment="CENTER" prefHeight="59.0" prefWidth="1015.0">
+                     <HBox alignment="CENTER" prefHeight="59.0" prefWidth="1031.0">
                         <children>
-                       <Label fx:id="titleLabel" prefHeight="23.0" prefWidth="697.0" styleClass="datail_title_text" text="제목">
+                       <Label fx:id="titleLabel" prefHeight="23.0" prefWidth="852.0" styleClass="datail_title_text" text="제목">
                            <font>
                                <Font size="18.0" />
                            </font>

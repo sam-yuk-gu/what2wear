@@ -13,4 +13,5 @@ public interface PostDAO {
     void update(Post post);   // 게시글 수정
     void delete(Long id);   // 게시글 삭제
 
+    List<Post> search(String keyword, String type);
 }

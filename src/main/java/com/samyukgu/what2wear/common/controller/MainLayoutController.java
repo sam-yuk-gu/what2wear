@@ -51,6 +51,7 @@ public class MainLayoutController {
         try {
             Parent view = FXMLLoader.load(Objects.requireNonNull(MainLayoutController.class.getResource(fxmlPath)));
             instance.contentArea.getChildren().setAll(view);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
