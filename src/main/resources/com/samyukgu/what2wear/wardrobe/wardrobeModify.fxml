@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<HBox prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21.0.8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
 
         <!-- 왼쪽 사이드바 -->
@@ -42,7 +42,6 @@
                 <children>
                     <HBox layoutX="64.0" layoutY="39.0" prefHeight="597.0" prefWidth="901.0" spacing="40">
                         <children>
-
                             <!-- 왼쪽: 이미지 + 버튼 + 키워드 -->
                             <VBox prefHeight="562.0" prefWidth="441.0" spacing="20">
                                 <children>

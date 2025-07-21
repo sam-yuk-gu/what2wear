@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<HBox prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21.0.8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
 
         <!-- 왼쪽 사이드바 -->
@@ -50,24 +50,44 @@
                                     <!-- 이미지 + 버튼 -->
                                     <AnchorPane prefHeight="401.0" prefWidth="441.0">
                                         <children>
-                                            <ImageView fitHeight="330.0" fitWidth="330.0" layoutX="62.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+                                            <ImageView fitHeight="330.0" fitWidth="330.0" layoutX="81.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                                                 <image>
-                                                    <Image url="@images/sample-shirt.png" />
+                                                    <Image url="@images/firstImg.png" />
                                                 </image>
                                             </ImageView>
-                                            <Button layoutX="167.0" layoutY="355.0" prefWidth="120.0" text="사진 등록" />
+                                            <Button layoutX="153.0" layoutY="364.0" prefWidth="120.0" text="사진 등록" />
                                         </children>
                                     </AnchorPane>
 
                                     <!-- Keyword 입력 -->
                                     <VBox alignment="CENTER" spacing="10.0">
                                         <children>
-                                            <Label text="Keyword">
-                                                <font>
-                                                    <Font name="System Bold" size="16.0" />
-                                                </font>
-                                            </Label>
-                                            <TextField alignment="CENTER" prefHeight="22.0" prefWidth="407.0" text="캐주얼" />
+                                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                    <children>
+                                                  <Label layoutX="182.0" layoutY="14.0" text="Keyword">
+                                                      <font>
+                                                          <Font name="System Bold" size="16.0" />
+                                                      </font>
+                                                  </Label>
+                                                  <ComboBox layoutX="165.0" layoutY="48.0" promptText="선택">
+                                                      <items>
+                                                          <FXCollections fx:factory="observableArrayList">
+                                                              <String fx:value="캐주얼" />
+                                                              <String fx:value="스트릿" />
+                                                              <String fx:value="포멀" />
+                                                              <String fx:value="아메카지" />
+                                                              <String fx:value="스포티" />
+                                                              <String fx:value="미니멀" />
+                                                              <String fx:value="빈티지" />
+                                                              <String fx:value="댄디" />
+                                                              <String fx:value="걸리시" />
+                                                              <String fx:value="힙합" />
+                                                              <String fx:value="프레피" />
+                                                          </FXCollections>
+                                                      </items>
+                                                  </ComboBox>
+                                    </children>
+                                 </AnchorPane>
                                         </children>
                                     </VBox>
 
@@ -85,7 +105,7 @@
                                             <Font size="16.0" />
                                         </font>
                                     </Label>
-                                    <TextField prefHeight="22.0" prefWidth="331.0" promptText="예: 캣월드 티셔츠" text="캣월드 티셔츠" />
+                                    <TextField prefHeight="22.0" prefWidth="331.0" promptText="예: 캣월드 티셔츠" text="" />
 
                                     <Label text="Category *">
                                         <font>
@@ -113,14 +133,14 @@
                                             <Font size="16.0" />
                                         </font>
                                     </Label>
-                                    <TextField text="CatWorld" />
+                                    <TextField text="" />
 
                                     <Label text="Size *">
                                         <font>
                                             <Font size="16.0" />
                                         </font>
                                     </Label>
-                                    <TextField text="라지 L" />
+                                    <TextField text="" />
 
                                     <Label text="Color *">
                                         <font>
@@ -150,7 +170,7 @@
                                             <Font size="16.0" />
                                         </font>
                                     </Label>
-                                    <TextField prefHeight="60" text="여자친구가 사준 고양이 티셔츠" />
+                                    <TextField prefHeight="60" text="" />
 
                                     <!-- 저장하기 버튼 -->
                                     <HBox alignment="CENTER_RIGHT" />

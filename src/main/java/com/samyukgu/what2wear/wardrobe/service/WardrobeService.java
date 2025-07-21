@@ -7,30 +7,30 @@ import java.util.List;
 
 public class WardrobeService {
 
-    private final WardrobeDAO dao;
+    private final WardrobeDAO wardrobeDAO;
 
-    public WardrobeService(WardrobeDAO dao) {
-        this.dao = dao;
+    public WardrobeService(WardrobeDAO wardrobeDAO) {
+        this.wardrobeDAO = wardrobeDAO;
     }
     // 특정 옷 검색
     public Wardrobe getWardrobeById(Long id, Long memberId) {
-        return dao.findById(id,  memberId);
+        return wardrobeDAO.findById(id,  memberId);
     }
 
     // 전체 옷 검색
     public List<Wardrobe> getAllWardrobe(Long memberId) {
-        return dao.findAll(memberId);
+        return wardrobeDAO.findAll(memberId);
     }
     // 옷 추가
     public void addWardrobe(Wardrobe wardrobe){
-        dao.save(wardrobe);
+        wardrobeDAO.save(wardrobe);
     }
     // 옷 수정
     public void updateWardrobe(Wardrobe wardrobe){
-        dao.update(wardrobe);
+        wardrobeDAO.update(wardrobe);
     }
     // 옷 삭제
     public void deleteWardrobe(Long id, Long memberId) {
-        dao.delete(id, memberId);
+        wardrobeDAO.delete(id, memberId);
     }
 }

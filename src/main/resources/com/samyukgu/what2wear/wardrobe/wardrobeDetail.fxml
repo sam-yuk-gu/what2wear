@@ -37,7 +37,7 @@
             <!-- 메인 콘텐츠 -->
             <AnchorPane prefHeight="726.0" prefWidth="1030.0">
                 <children>
-                    <HBox layoutX="64.0" layoutY="39.0" prefHeight="597.0" prefWidth="901.0" spacing="40">
+                    <HBox layoutX="64.0" layoutY="39.0" prefHeight="501.0" prefWidth="901.0" spacing="40">
                         <children>
 
                             <!-- 왼쪽: 이미지 + 버튼 + 키워드 -->
@@ -67,7 +67,7 @@
                                     <Insets bottom="20" left="20" right="20" top="20" />
                                 </padding>
                         <children>
-                           <VBox prefHeight="427.0" prefWidth="429.0">
+                           <VBox prefHeight="473.0" prefWidth="429.0">
                               <children>
                                  <AnchorPane prefHeight="76.0" prefWidth="429.0">
                                     <children>
@@ -145,14 +145,14 @@
                                        </AnchorPane>
                                     </children>
                                  </HBox>
-                                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                 <AnchorPane prefHeight="199.0" prefWidth="429.0">
                                     <children>
                                        <Label layoutX="22.0" layoutY="15.0" text="MEMO">
                                           <font>
                                              <Font size="22.0" />
                                           </font>
                                        </Label>
-                                       <Pane layoutX="19.0" layoutY="49.0" prefHeight="111.0" prefWidth="392.0">
+                                       <Pane layoutX="19.0" layoutY="49.0" prefHeight="124.0" prefWidth="392.0">
                                           <children>
                                              <Label layoutX="14.0" layoutY="14.0" text="여자친구가 사준 귀여운 고양이 티셔츠">
                                                 <font>
@@ -165,28 +165,24 @@
                                  </AnchorPane>
                               </children>
                            </VBox>
-                           <VBox prefHeight="127.0" prefWidth="429.0">
-                              <children>
-                                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                                    <children>
-                                       <Button layoutX="86.0" layoutY="42.0" mnemonicParsing="false" text="수정하기" textAlignment="CENTER">
-                                          <font>
-                                             <Font size="20.0" />
-                                          </font>
-                                       </Button>
-                                       <Button layoutX="254.0" layoutY="42.0" mnemonicParsing="false" text="삭제하기" textAlignment="CENTER">
-                                          <font>
-                                             <Font size="20.0" />
-                                          </font>
-                                       </Button>
-                                    </children>
-                                 </AnchorPane>
-                              </children>
-                           </VBox>
                         </children>
                             </VBox>
                         </children>
                     </HBox>
+               <AnchorPane layoutX="334.0" layoutY="550.0" prefHeight="80.0" prefWidth="361.0">
+                  <children>
+                     <Button layoutX="54.0" layoutY="23.0" mnemonicParsing="false" style="-fx-background-color: #E9F9FF;" text="수정하기" textAlignment="CENTER">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Button>
+                     <Button layoutX="215.0" layoutY="23.0" mnemonicParsing="false" style="-fx-background-color: #FA7B7F;" text="삭제하기" textAlignment="CENTER">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Button>
+                  </children>
+               </AnchorPane>
                 </children>
             </AnchorPane>
         </VBox>
