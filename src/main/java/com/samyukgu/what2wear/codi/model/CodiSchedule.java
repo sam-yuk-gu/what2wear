@@ -12,5 +12,5 @@ public class CodiSchedule {
     private String description;
     private LocalDate date;
     private List<CodiItem> codiItems;
-    private ScheduleVisibility visibility;
+    private CodiScope visibility;
 }

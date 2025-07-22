@@ -1,7 +1,7 @@
 package com.samyukgu.what2wear.post.controller;
 
 import com.samyukgu.what2wear.common.controller.CustomModalController;
-import com.samyukgu.what2wear.layout.MainLayoutController;
+import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.common.controller.PostHeaderController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

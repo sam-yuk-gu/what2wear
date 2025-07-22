@@ -2,9 +2,9 @@ package com.samyukgu.what2wear.codi.controller;
 
 import com.samyukgu.what2wear.codi.model.CodiItem;
 import com.samyukgu.what2wear.codi.model.CodiSchedule;
-import com.samyukgu.what2wear.codi.model.ScheduleVisibility;
+import com.samyukgu.what2wear.codi.model.CodiScope;
 import com.samyukgu.what2wear.codi.service.DummyScheduleRepository;
-import com.samyukgu.what2wear.layout.MainLayoutController;
+import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -426,7 +426,7 @@ public class CodiMainController {
         }
     }
 
-    private String getVisibilityLabel(ScheduleVisibility visibility) {
+    private String getVisibilityLabel(CodiScope visibility) {
         return switch (visibility) {
             case PUBLIC -> "전체공개";
             case FRIENDS -> "친구공개";

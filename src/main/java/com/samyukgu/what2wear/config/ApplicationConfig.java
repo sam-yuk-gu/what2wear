@@ -1,5 +1,7 @@
 package com.samyukgu.what2wear.config;
 
+import com.samyukgu.what2wear.codi.dao.CodiDAO;
+import com.samyukgu.what2wear.codi.dao.CodiOracleDAO;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.mail.service.AuthService;
 import com.samyukgu.what2wear.mail.service.MailService;
@@ -24,6 +26,7 @@ public class ApplicationConfig {
         container.registerSingleton(MemberSession.class, new MemberSession());
         // DAO
         container.registerSingleton(MemberDAO.class, new MemberOracleDAO());
+        container.registerSingleton(CodiDAO.class, new CodiOracleDAO());
         // Service
         container.registerSingleton(MemberService.class, new MemberService(container.resolve(MemberDAO.class)));
         container.registerSingleton(MailService.class, new MailService());

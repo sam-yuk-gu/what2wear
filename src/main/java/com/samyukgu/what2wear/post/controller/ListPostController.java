@@ -1,6 +1,6 @@
 package com.samyukgu.what2wear.post.controller;
 
-import com.samyukgu.what2wear.layout.MainLayoutController;
+import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.post.model.Post;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

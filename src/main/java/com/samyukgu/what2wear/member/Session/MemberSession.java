@@ -14,4 +14,6 @@ public class MemberSession {
     public void clearMember(){
         this.member = null;
     }
+
+    public Member getMember() { return member; }
 }

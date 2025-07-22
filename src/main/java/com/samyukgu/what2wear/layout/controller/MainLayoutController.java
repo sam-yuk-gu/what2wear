@@ -1,4 +1,4 @@
-package com.samyukgu.what2wear.layout;
+package com.samyukgu.what2wear.layout.controller;
 
 import com.samyukgu.what2wear.post.controller.DetailPostController;
 import com.samyukgu.what2wear.post.model.Post;

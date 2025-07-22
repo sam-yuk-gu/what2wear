@@ -2,7 +2,7 @@ package com.samyukgu.what2wear.codi.controller;
 
 import com.samyukgu.what2wear.codi.model.Clothing;
 import com.samyukgu.what2wear.codi.model.Codi;
-import com.samyukgu.what2wear.codi.model.ScheduleVisibility;
+import com.samyukgu.what2wear.codi.model.CodiScope;
 import com.samyukgu.what2wear.common.controller.BasicHeaderController;
 import com.samyukgu.what2wear.common.controller.SelectOutfitModalController;
 import com.samyukgu.what2wear.common.util.DateUtils;
@@ -193,10 +193,10 @@ public class AddCodiController {
     }
 
 
-    private ScheduleVisibility getSelectedVisibility() {
-        if (btnAll.isSelected()) return ScheduleVisibility.PUBLIC;
-        if (btnFriend.isSelected()) return ScheduleVisibility.FRIENDS;
-        return ScheduleVisibility.PRIVATE;
+    private CodiScope getSelectedVisibility() {
+        if (btnAll.isSelected()) return CodiScope.PUBLIC;
+        if (btnFriend.isSelected()) return CodiScope.FRIENDS;
+        return CodiScope.PRIVATE;
     }
 
     private void handleSubmit() {

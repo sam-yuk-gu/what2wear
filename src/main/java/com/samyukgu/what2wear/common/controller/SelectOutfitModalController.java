@@ -2,7 +2,7 @@ package com.samyukgu.what2wear.common.controller;
 
 import com.samyukgu.what2wear.codi.model.Clothing;
 import com.samyukgu.what2wear.codi.model.Codi;
-import com.samyukgu.what2wear.codi.model.ScheduleVisibility;
+import com.samyukgu.what2wear.codi.model.CodiScope;
 import com.samyukgu.what2wear.common.model.SelectionResult;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -91,7 +91,7 @@ public class SelectOutfitModalController implements Initializable {
     }
 
     public void configure(List<Clothing> outfits, Codi codi, String scheduleName,
-                          LocalDate date, ScheduleVisibility visibility,
+                          LocalDate date, CodiScope visibility,
                           Consumer<SelectionResult> onConfirm, Runnable onCancel) {
         this.onConfirm = onConfirm;
         this.onCancel = onCancel;
@@ -154,13 +154,13 @@ public class SelectOutfitModalController implements Initializable {
         codiItemPane.getChildren().clear();
 
         List<Codi> dummy = Arrays.asList(
-                new Codi("C1", "캐주얼룩", "/assets/images/dummy-codi.png"),
-                new Codi("C2", "데이트룩", "/assets/images/dummy-codi.png"),
-                new Codi("C3", "데이트룩", "/assets/images/dummy-codi.png"),
-                new Codi("C4", "데이트룩", "/assets/images/dummy-codi.png"),
-                new Codi("C5", "데이트룩", "/assets/images/dummy-codi.png"),
-                new Codi("C6", "데이트룩", "/assets/images/dummy-codi.png"),
-                new Codi("C7", "데이트룩", "/assets/images/dummy-codi.png")
+//                new Codi("C1", "캐주얼룩", "/assets/images/dummy-codi.png"),
+//                new Codi("C2", "데이트룩", "/assets/images/dummy-codi.png"),
+//                new Codi("C3", "데이트룩", "/assets/images/dummy-codi.png"),
+//                new Codi("C4", "데이트룩", "/assets/images/dummy-codi.png"),
+//                new Codi("C5", "데이트룩", "/assets/images/dummy-codi.png"),
+//                new Codi("C6", "데이트룩", "/assets/images/dummy-codi.png"),
+//                new Codi("C7", "데이트룩", "/assets/images/dummy-codi.png")
         );
 
         for (Codi c : dummy) {
@@ -169,13 +169,13 @@ public class SelectOutfitModalController implements Initializable {
         }
 
         allCodiItems = Arrays.asList(
-                new Codi("C1", "캐주얼룩", "/assets/images/dummy-codi.png"),
-                new Codi("C2", "데이트룩", "/assets/images/dummy-codi.png"),
-                new Codi("C3", "데이트룩", "/assets/images/dummy-codi.png"),
-                new Codi("C4", "데이트룩", "/assets/images/dummy-codi.png"),
-                new Codi("C5", "데이트룩", "/assets/images/dummy-codi.png"),
-                new Codi("C6", "데이트룩", "/assets/images/dummy-codi.png"),
-                new Codi("C7", "데이트룩", "/assets/images/dummy-codi.png")
+//                new Codi("C1", "캐주얼룩", "/assets/images/dummy-codi.png"),
+//                new Codi("C2", "데이트룩", "/assets/images/dummy-codi.png"),
+//                new Codi("C3", "데이트룩", "/assets/images/dummy-codi.png"),
+//                new Codi("C4", "데이트룩", "/assets/images/dummy-codi.png"),
+//                new Codi("C5", "데이트룩", "/assets/images/dummy-codi.png"),
+//                new Codi("C6", "데이트룩", "/assets/images/dummy-codi.png"),
+//                new Codi("C7", "데이트룩", "/assets/images/dummy-codi.png")
         );
         renderCodiItems(); // 별도 렌더 함수 호출
     }
@@ -265,7 +265,7 @@ public class SelectOutfitModalController implements Initializable {
             codiImage = new ImageView(image);
         } catch (Exception e) {
             codiImage = new ImageView();
-            System.out.println("코디 이미지 로딩 실패: " + codi.getImagePath());
+//            System.out.println("코디 이미지 로딩 실패: " + codi.getImagePath());
         }
         codiImage.getStyleClass().add("codi-image");
         codiImage.setPreserveRatio(false);
