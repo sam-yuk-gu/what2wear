@@ -97,7 +97,7 @@ public class MainLayoutController {
     @FXML
     private void handleClickFriend() {
         selectMenu(friendButton);
-        loadView("/com/samyukgu/what2wear/friend/FriendView.fxml");
+        loadView("/com/samyukgu/what2wear/friend/FriendMainView.fxml");
     }
 
     @FXML

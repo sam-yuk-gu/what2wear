@@ -1,6 +1,7 @@
 package com.samyukgu.what2wear.member.controller;
 
 import com.samyukgu.what2wear.di.DIContainer;
+import com.samyukgu.what2wear.mail.common.PasswordUtils;
 import com.samyukgu.what2wear.mail.service.MailService;
 import com.samyukgu.what2wear.member.common.MemberConstants;
 import com.samyukgu.what2wear.member.service.MemberService;
@@ -24,28 +25,39 @@ public class FindPasswordStep1Controller {
     private MemberService memberService;
     private MailService mailService;
 
+    // 리스너 및 DI 컨테이너 초기화
     @FXML
     public void initialize(){
         setupDI();
         setupListener();
     }
 
+    // 이전 버튼 클릭하면 로그인으로 이동
+    @FXML
     public void handleClickPrevButton(){
         switchScene("/com/samyukgu/what2wear/member/LoginView.fxml", "로그인");
     }
 
+    // 다음 버튼 클릭하면 메일로 비밀번호 전송
+    @FXML
     public void handleClickNextButton(){
-        if(!isValidField(inputIdField.getText()))
+        String accountId = inputIdField.getText();
+        if(!isValidField(accountId))
             return;
-        String[] nextPath = decidePath(inputIdField.getText());
-        // todo: nextPath가 비밀번호 찾기면 메일 전송해야함
+        String[] nextPath = decidePath(accountId);
+        if(nextPath[0].contains("FindPasswordStep2View.fxml")){
+            String email = memberService.findEmailByAccountId(accountId);
+            String newPassword = memberService.generateAndSaveTempPassword(accountId);
+            mailService.sendPassword(email, newPassword);
+        }
         switchScene(nextPath[0], nextPath[1]);
     }
 
+    // 사용자가 있으면 다음 비밀번호 찾기 페이지, 없으면 회원조회 실패
     private String[] decidePath(String accountId){
         String[] nextPath = new String[2];
 
-        if(!memberService.isExist(accountId)){
+        if(memberService.existsByAccountId(accountId)){
             nextPath[0] = "/com/samyukgu/what2wear/member/FindPasswordStep2View.fxml";
             nextPath[1] = "비밀번호 찾기";
         }else{
@@ -55,6 +67,7 @@ public class FindPasswordStep1Controller {
         return nextPath;
     }
 
+    // account_id 유효성 검사
     private boolean isValidField(String id){
         boolean flag =
                 id.length() >= MemberConstants.ID_MIN_LENGTH &&
@@ -72,6 +85,7 @@ public class FindPasswordStep1Controller {
         });
     }
 
+    // scene 이동 메서드
     private void switchScene(String fxmlPath, String title){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
@@ -88,6 +102,7 @@ public class FindPasswordStep1Controller {
         }
     }
 
+    // 컨테이너에 있는 인스턴스 멤버로 할당
     private void setupDI() {
         DIContainer diContainer = DIContainer.getInstance();
         memberService = diContainer.resolve(MemberService.class);

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
+
+<VBox prefHeight="760.0" prefWidth="1280.0" spacing="50" styleClass="container" stylesheets="@/com/samyukgu/what2wear/friend/friend-main.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.friend.controller.FriendMainController">
+    <VBox prefHeight="113.0" prefWidth="1280.0" spacing="7">
+        <Label fx:id="welcomeTitle" styleClass="welcome-title" text="친구" />
+        <ScrollPane hbarPolicy="AS_NEEDED" vbarPolicy="NEVER" fitToHeight="true"
+                    prefHeight="76.0" prefWidth="1280.0" styleClass="bg-friend-area">
+            <content>
+                <HBox fx:id="friendListArea" prefHeight="76.0" styleClass="bg-friend-area">
+                </HBox>
+            </content>
+        </ScrollPane>
+    </VBox>
+    <HBox prefHeight="500.0" prefWidth="800.0">
+        <!-- 좌측: 캘린더 영역 -->
+        <VBox prefHeight="500.0" prefWidth="569.0" spacing="20">
+            <HBox styleClass="bold-text">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Button onAction="#handlePrevMonth" style="-fx-background-color: transparent; -fx-cursor: hand;">
+                        <graphic>
+                            <ImageView fitWidth="15" pickOnBounds="true" preserveRatio="true">
+                                <Image url="@/assets/icons/left-arrow.png" />
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                    <Label fx:id="monthLabel" onMouseClicked="#handleMonthLabelClick" styleClass="month-label" text="2025년 7월" />
+                    <Button onAction="#handleNextMonth" style="-fx-background-color: transparent; -fx-cursor: hand;">
+                        <graphic>
+                            <ImageView fitWidth="15" pickOnBounds="true" preserveRatio="true">
+                                <Image url="@/assets/icons/right-arrow.png" />
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                </HBox>
+                <Region HBox.hgrow="ALWAYS" />
+            <TextFlow prefHeight="22.0" prefWidth="158.0">
+               <children>
+                  <Label styleClass="bold-text" text="김아무개님의">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="semi-bold-text" text="캘린더">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </TextFlow>
+                <HBox spacing="10">
+                    <Button fx:id="addButton" onAction="#handleClickAddCodi" styleClass="add-btn" text="친구 삭제" />
+                </HBox>
+            </HBox>
+            <GridPane fx:id="calendarGrid" styleClass="calendar" />
+        </VBox>
+        <Region HBox.hgrow="ALWAYS" />
+        <!-- 우측: 일정 영역 -->
+        <VBox styleClass="schedule">
+            <ScrollPane fx:id="scheduleScrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" styleClass="scroll-container" vbarPolicy="NEVER">
+                <VBox fx:id="scheduleWrapper" styleClass="scroll-content" VBox.vgrow="ALWAYS">
+                    <VBox fx:id="scheduleListContainer" />
+                    <Label fx:id="emptyLabel" managed="false" styleClass="empty-message" text="코디 일정을 추가하고 옷장을 관리해보세요." visible="false" />
+                </VBox>
+            </ScrollPane>
+            <Region styleClass="scroll-corner-mask" />
+        </VBox>
+    </HBox>
+</VBox>
