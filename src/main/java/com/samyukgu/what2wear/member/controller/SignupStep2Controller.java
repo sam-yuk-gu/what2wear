@@ -51,7 +51,9 @@ public class SignupStep2Controller {
     private String domain = "";
     private String accountId;
     private String password;
+    private String selectedDomain;
 
+    // 초기화할때 UI/DI Container/필드 요소들 세팅
     @FXML
     public void initialize(){
         setCompleteButtonEnabled(false);
@@ -80,6 +82,10 @@ public class SignupStep2Controller {
         });
     }
 
+    /**
+     *  유효성 검증에 실패 return
+     *  성공하면 메일 전송 / 인증번호 필드 활성화 / 타이머 시작
+     */
     @FXML
     private void handleClickSendMailButton(){
         String id = inputIdField.getText().trim();
@@ -110,10 +116,11 @@ public class SignupStep2Controller {
         }
     }
 
+    // 입력한 인증번호와 저장되어있는 인증번호와 같은지 검증
     @FXML
     private void handleClickCheckAuthButton(){
         String id = inputIdField.getText().trim();
-        String selectedDomain = domainCombobox.getValue();
+        selectedDomain = domainCombobox.getValue();
         String authCode = authMailField.getText().trim();
 
         if (authCode.isEmpty()) {
@@ -141,6 +148,7 @@ public class SignupStep2Controller {
         }
     }
 
+    // 닉네임 중복 체크 메서드
     @FXML
     private void handleClickCheckDuplicateButton() {
         String nickname = inputNicknameField.getText().trim();
@@ -150,8 +158,7 @@ public class SignupStep2Controller {
             return;
         }
 
-        // TODO: 실제 중복 체크 로직 구현 (현재는 임시로 false)
-        boolean nicknameExists = false; // memberService.checkNicknameDuplicate(nickname);
+        boolean nicknameExists = memberService.existsByNickname(nickname);
 
         if (nicknameExists) {
             isNicknameChecked = false;
@@ -164,20 +171,25 @@ public class SignupStep2Controller {
         validateForm();
     }
 
+    // 회원가입 완료 로직
     @FXML
     private void handleClickCompleteButton(){
-        // 회원가입 완료 로직
         String name = inputNameField.getText().trim();
         String nickname = inputNicknameField.getText().trim();
-        String email = inputIdField.getText().trim() + "@" + domainCombobox.getValue();
+        String email = inputIdField.getText().trim() + "@" + selectedDomain;
 
-        // TODO: 실제 회원가입 로직 구현
-        // memberService.createMember(accountId, password, name, nickname, email);
-        // try-catch로 회원가입 메서드 실행 -> 실패할시 회원가입 실패창, 성공할시 회원가입 성공창
-        switchScene("/com/samyukgu/what2wear/member/SignupSuccessView.fxml", "회원가입 성공!");
-//        switchScene("/com/samyukgu/what2wear/member/SignupFailureView.fxml", "회원가입 실패");
+        String[] nextPath = new String[2];
+        if(memberService.signup(accountId, email, nickname, name, password)){
+            nextPath[0] = "/com/samyukgu/what2wear/member/SignupSuccessView.fxml";
+            nextPath[1] = "회원가입 성공!";
+        }else{
+            nextPath[0] = "/com/samyukgu/what2wear/member/SignupFailureView.fxml";
+            nextPath[1] = "회원가입 실패!";
+        }
+        switchScene(nextPath[0], nextPath[1]);
     }
 
+    // 이전버튼 클릭시 로그인 scene으로 이동
     @FXML
     private void handleClickPrevButton(){
         switchScene("/com/samyukgu/what2wear/member/LoginView.fxml", "로그인");
@@ -203,14 +215,16 @@ public class SignupStep2Controller {
         timer.play();
         updateTimerDisplay();
     }
-
+    
+    // 타이머 멈추기
     private void stopTimer() {
         if (timer != null) {
             timer.stop();
         }
         timerLabel.setText("");
     }
-
+    
+    // 타이머 실시간 반영
     private void updateTimerDisplay() {
         int minutes = timeRemaining / 60;
         int seconds = timeRemaining % 60;
@@ -221,7 +235,8 @@ public class SignupStep2Controller {
         timerLabel.getStyleClass().removeAll("text-red", "text-green");
         timerLabel.getStyleClass().add("text-red");
     }
-
+    
+    // 입력폼 검증
     private void validateForm() {
         String name = inputNameField.getText().trim();
         String nickname = inputNicknameField.getText().trim();
@@ -233,24 +248,28 @@ public class SignupStep2Controller {
 
         setCompleteButtonEnabled(isValid);
     }
-
+    
+    // label에 에러 메시지를 출력
     private void showErrorMessage(Label label, String message) {
         label.setText(message);
         label.getStyleClass().removeAll("text-red", "text-green");
         label.getStyleClass().add("text-red");
     }
-
+    
+    // label에 성공 메시지를 출력
     private void showSuccessMessage(Label label, String message) {
         label.setText(message);
         label.getStyleClass().removeAll("text-red", "text-green");
         label.getStyleClass().add("text-green");
     }
 
+    // label값 초기화
     private void clearLabel(Label label) {
         label.setText("");
         label.getStyleClass().removeAll("text-red", "text-green");
     }
 
+    // 유효성 검증이 모두 완료되었을 때 다음 버튼 활성화 혹은 그 반대
     private void setCompleteButtonEnabled(boolean enabled) {
         completeButton.setDisable(!enabled);
         completeButton.getStyleClass().removeAll("btn-gray", "btn-green");
@@ -258,6 +277,7 @@ public class SignupStep2Controller {
         completeButton.setOnAction(enabled ? e -> handleClickCompleteButton() : null);
     }
 
+    // scene 이동 메서드
     private void switchScene(String fxmlPath, String title){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
@@ -273,7 +293,8 @@ public class SignupStep2Controller {
             e.printStackTrace();
         }
     }
-
+    
+    // 초기 회원가입 배너의 사이즈와 모서리 설정
     private void setupUI() {
         int arcWidth = 30, arcHeight = 30;
         Rectangle clip = new Rectangle(signupBanner.getFitWidth(), signupBanner.getFitHeight());
@@ -282,6 +303,7 @@ public class SignupStep2Controller {
         signupBanner.setClip(clip);
     }
 
+    // 이메일 리스트가 가질 수 있는 값
     private void setUpDomainList(){
         domainCombobox.getItems().addAll(
                 "naver.com",
@@ -333,6 +355,7 @@ public class SignupStep2Controller {
         });
     }
 
+    // 컨테이너에 있는 인스턴스 멤버로 할당
     private void setupDI() {
         DIContainer diContainer = DIContainer.getInstance();
         memberService = diContainer.resolve(MemberService.class);
@@ -340,6 +363,10 @@ public class SignupStep2Controller {
         authService = diContainer.resolve(AuthService.class);
     }
 
+    /**
+     *  step1 controller에서 사용하기 위한 method
+     *  step2 필드변수인 accountId와 password를 step1에서 설정한다
+     */
     public void setUserData(String accountId, String password) {
         this.accountId = accountId;
         this.password = password;
