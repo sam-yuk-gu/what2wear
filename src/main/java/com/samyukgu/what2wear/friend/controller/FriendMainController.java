@@ -147,7 +147,7 @@ public class FriendMainController {
         if (friendList == null) {
             friendList = new ArrayList<>();
         }
-//        friendList = friendService.getFriends(member.getId());
+        friendList = friendService.getFriends(member.getId());
 
         renderFriendList();
     }
