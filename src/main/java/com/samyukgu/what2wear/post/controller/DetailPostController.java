@@ -9,10 +9,11 @@ import com.samyukgu.what2wear.member.service.MemberService;
 import com.samyukgu.what2wear.post.dao.PostOracleDAO;
 import com.samyukgu.what2wear.post.model.Post;
 import com.samyukgu.what2wear.post.service.PostService;
+import com.samyukgu.what2wear.postcomment.dao.PostCommentDAO;
+import com.samyukgu.what2wear.postcomment.model.PostComment;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -20,6 +21,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+
+import java.util.Date;
 
 public class DetailPostController {
 
@@ -37,6 +40,7 @@ public class DetailPostController {
     @FXML private VBox commentBox;
     @FXML private Button editPostButton;
     @FXML private Button deletePostButton;
+    @FXML private TextField commentField;
 
     // 회원 세션
     private MemberService memberService;
@@ -206,5 +210,30 @@ public class DetailPostController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    @FXML
+    private void handleRegisterCommentClick() {
+        String commentContent = commentField.getText().trim();
+        if (commentContent.isEmpty()) return;
+
+        Long currentUserId = memberSession.getMember().getId();  // 세션에서 로그인한 사용자 ID
+        Long postId = currentPost.getId();
+
+        PostComment newComment = new PostComment(
+                null,          // id는 DB에서 자동 생성
+                postId,
+                currentUserId,
+                commentContent,
+                new Date()
+        );
+
+        PostCommentDAO commentDAO = DIContainer.getInstance().resolve(PostCommentDAO.class);
+        commentDAO.create(newComment);
+
+        commentField.clear();
+        System.out.println("댓글 버튼 눌림");
+
     }
 }

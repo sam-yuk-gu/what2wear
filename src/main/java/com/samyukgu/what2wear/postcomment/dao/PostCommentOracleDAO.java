@@ -7,11 +7,7 @@ import com.samyukgu.what2wear.postcomment.model.PostComment;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -25,6 +21,18 @@ public class PostCommentOracleDAO implements PostCommentDAO {
 
     // 초기 생성 시 properties 읽어오기
     public PostCommentOracleDAO() {
+        Properties props = new Properties();
+        try (InputStream is = ClassLoader.getSystemResourceAsStream("application.properties");
+             InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8)) {
+            props.load(isr);
+            url = props.getProperty("db.url");
+            dbUser = props.getProperty("db.user");
+            dbPassword = props.getProperty("db.password");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("check your db info");
+        }
     }
 
     @Override
@@ -35,21 +43,18 @@ public class PostCommentOracleDAO implements PostCommentDAO {
     @Override
     public void create(PostComment comment) {
         String sql = """
-                    INSERT INTO post_comment (id, post_id, member_id, content, created_at)
-                    VALUES (SEQ_POST_COMMENT.NEXTVAL, ?, ?, ?, SYSDATE)
+                INSERT INTO post_comment (id, post_id, member_id, content, created_at)
+                VALUES (SEQ_POST_COMMENT.NEXTVAL, ?, ?, ?, ?)
                 """;
-
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
             pstmt.setLong(1, comment.getPostId());
             pstmt.setLong(2, comment.getMemberId());
             pstmt.setString(3, comment.getContent());
+            pstmt.setTimestamp(4, new Timestamp(comment.getCreatedAt().getTime()));
             pstmt.executeUpdate();
-
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("Error By Select Post Comment");
         }
     }
 
