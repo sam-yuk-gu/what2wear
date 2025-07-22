@@ -3,6 +3,9 @@ package com.samyukgu.what2wear.post.controller;
 import com.samyukgu.what2wear.common.controller.CustomModalController;
 import com.samyukgu.what2wear.common.controller.MainLayoutController;
 import com.samyukgu.what2wear.common.controller.PostHeaderController;
+import com.samyukgu.what2wear.di.DIContainer;
+import com.samyukgu.what2wear.member.Session.MemberSession;
+import com.samyukgu.what2wear.member.service.MemberService;
 import com.samyukgu.what2wear.post.dao.PostOracleDAO;
 import com.samyukgu.what2wear.post.model.Post;
 import com.samyukgu.what2wear.post.service.PostService;
@@ -35,13 +38,19 @@ public class DetailPostController {
     @FXML private Button editPostButton;
     @FXML private Button deletePostButton;
 
+    // 회원 세션
+    private MemberService memberService;
+    private MemberSession memberSession;
+
     private int likeCount;
     private boolean isLiked = false;
     private Post currentPost;
-    private final int CURRENT_USER_ID = 101;
 
     @FXML
     private void initialize() {
+        // 회원 정보 불러오기
+        setupDI();
+        
         hideEditDeleteButtons();
 
         header_paneController.setTitle("게시글 조회");
@@ -56,6 +65,13 @@ public class DetailPostController {
 
         likeButton.setOnMouseEntered(e -> likeButton.setStyle("-fx-scale-x: 1.1; -fx-scale-y: 1.1;"));
         likeButton.setOnMouseExited(e -> likeButton.setStyle("-fx-scale-x: 1.0; -fx-scale-y: 1.0;"));
+    }
+
+    // 회원 정보 불러오기
+    private void setupDI() {
+        DIContainer diContainer = DIContainer.getInstance();
+        memberService = diContainer.resolve(MemberService.class);
+        memberSession = diContainer.resolve(MemberSession.class);
     }
 
     public void setPostData(Post post) {
@@ -73,7 +89,7 @@ public class DetailPostController {
     }
 
     private void checkAndShowButtons(Post post) {
-        if (post.getMember_id() != null && post.getMember_id() == CURRENT_USER_ID) {
+        if (post.getMember_id() != null && post.getMember_id() == memberSession.getMember().getId()) {
             showEditDeleteButtons();
         } else {
             hideEditDeleteButtons();
