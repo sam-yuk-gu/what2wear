@@ -53,7 +53,10 @@ public class ListPostController implements Initializable {
         search_icon.setOnMouseClicked(event -> handleSearch());
         search_title.setOnAction(event -> handleSearch()); // 엔터 키도 가능하게
 
-
+        // 검색 조건 기본 설정: 제목
+        select_title.setValue("제목");
+        
+        
         colNo.setCellValueFactory(new PropertyValueFactory<>("id"));
         colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         colAuthor.setCellValueFactory(new PropertyValueFactory<>("writer_name"));
@@ -80,32 +83,6 @@ public class ListPostController implements Initializable {
     // 게시글 정보 검색
     private void handleSearch() {
         boolean isFilterSelected = checkIfFilterIsSelected(); // 필터 선택 여부 검사
-
-        if (!isFilterSelected) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/CustomModal.fxml"));
-                StackPane modal = loader.load();
-                CustomModalController controller = loader.getController();
-                controller.configure(
-                        "검색조건 미선택",
-                        "최소 하나의 필터를 선택해야 합니다.",
-                        "/assets/icons/redCheck.png",
-                        "#FA7B7F",
-                        "취소",
-                        "확인",
-                        () -> root.getChildren().remove(modal),
-                        () -> root.getChildren().remove(modal)
-                );
-
-                // 현재 루트(StackPane)에 모달 추가
-                root.getChildren().add(modal);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return; // 검색 로직 중단
-        }
 
         String keyword = search_title.getText();
         String type = select_title.getValue();

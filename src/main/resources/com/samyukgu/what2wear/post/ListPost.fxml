@@ -32,7 +32,7 @@
                         <Button fx:id="button_text" onAction="#handlePostClick" layoutX="809.0" layoutY="60.0" prefHeight="45.0" prefWidth="100.0" styleClass="black_background_button" text="글쓰기">
                            <font><Font size="14.0" /></font>
                         </Button>
-                        <ComboBox fx:id="select_title" layoutX="-1.0" layoutY="60.0" prefHeight="45.0" prefWidth="126.0" promptText="검색 기준" styleClass="select_title">
+                        <ComboBox fx:id="select_title" layoutX="-1.0" layoutY="60.0" prefHeight="45.0" prefWidth="126.0" styleClass="select_title">
                            <items>
                               <FXCollections fx:factory="observableArrayList">
                                  <String fx:value="제목" />
