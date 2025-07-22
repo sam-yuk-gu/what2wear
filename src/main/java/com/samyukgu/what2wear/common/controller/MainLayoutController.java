@@ -119,9 +119,15 @@ public class MainLayoutController {
         loadView("/com/samyukgu/what2wear/friend/FriendMainView.fxml");
     }
 
+    @FXML
+    private void handleClickWardrobe() {
+        selectMenu(wardrobeButton);
+        loadView("/com/samyukgu/what2wear/wardrobe/wardrobeList.fxml");
+    }
+
     // 게시판 탭 연동
     @FXML
-    private void handleClickBoard() { 
+    private void handleClickBoard() {
         selectMenu(boardButton); // 버튼 하이라이트 처리
         loadView("/com/samyukgu/what2wear/post/ListPost.fxml");
     }

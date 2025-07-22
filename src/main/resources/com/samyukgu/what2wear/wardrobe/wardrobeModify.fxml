@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21.0.8"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.samyukgu.what2wear.wardrobe.controller.EditWardrobeController">
+    <children>
+
+        <!-- 오른쪽 전체 -->
+        <VBox prefHeight="768.0" prefWidth="1030.0">
+            <!-- 상단 바 -->
+            <AnchorPane prefHeight="50.0" prefWidth="1030.0" style="-fx-background-color: #eeeeee;">
+                <children>
+                    <HBox layoutX="14.0" layoutY="10.0" spacing="20.0" alignment="CENTER_LEFT">
+                        <children>
+                            <ImageView fitHeight="30" fitWidth="30" onMouseClicked="#handleBackClick"
+                                       style="-fx-cursor: hand;">
+                                <image>
+                                    <Image preserveRatio="true" url="@images/tabler_arrow-left.png" />
+                                </image>
+                            </ImageView>
+                            <Label text="옷 정보 수정" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: #333;" />
+                        </children>
+                    </HBox>
+                </children>
+            </AnchorPane>
+
+            <!-- 메인 콘텐츠 -->
+            <AnchorPane prefHeight="718.0" prefWidth="1030.0" style="-fx-background-color: #fafafa;">
+                <children>
+                    <HBox layoutX="50.0" layoutY="30.0" prefHeight="650.0" prefWidth="930.0" spacing="50">
+                        <children>
+
+                            <!-- 왼쪽: 이미지 + 키워드 -->
+                            <VBox prefHeight="650.0" prefWidth="420.0" spacing="30" alignment="TOP_CENTER">
+                                <padding>
+                                    <Insets top="20" />
+                                </padding>
+                                <children>
+
+                                    <!-- 이미지 수정 영역 -->
+                                    <VBox alignment="CENTER" spacing="20"
+                                          style="-fx-background-color: white; -fx-background-radius: 15; -fx-border-color: #e0e0e0; -fx-border-width: 2; -fx-border-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
+                                        <padding>
+                                            <Insets top="30" bottom="30" left="30" right="30" />
+                                        </padding>
+                                        <children>
+                                            <ImageView fx:id="pictureView" fitHeight="300.0" fitWidth="300.0"
+                                                       preserveRatio="true" style="-fx-background-radius: 10;">
+                                                <image>
+                                                    <Image url="@images/shoes.png" />
+                                                </image>
+                                            </ImageView>
+                                            <Button fx:id="uploadButton" prefWidth="150.0" prefHeight="40.0"
+                                                    style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 20; -fx-cursor: hand;"
+                                                    text="사진 변경" />
+                                        </children>
+                                    </VBox>
+
+                                    <!-- 키워드 수정 -->
+                                    <VBox alignment="CENTER" spacing="15"
+                                          style="-fx-background-color: white; -fx-background-radius: 15; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 1);">
+                                        <padding>
+                                            <Insets top="25" bottom="25" left="30" right="30" />
+                                        </padding>
+                                        <children>
+                                            <Label text="스타일 키워드" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #333;" />
+                                            <ComboBox fx:id="keywordField" prefWidth="200" prefHeight="35"
+                                                      style="-fx-font-size: 14;">
+                                                <items>
+                                                    <FXCollections fx:factory="observableArrayList">
+                                                        <String fx:value="캐주얼" />
+                                                        <String fx:value="스트릿" />
+                                                        <String fx:value="미니멀" />
+                                                        <String fx:value="걸리시" />
+                                                        <String fx:value="스포티" />
+                                                        <String fx:value="클래식" />
+                                                        <String fx:value="워크웨어" />
+                                                        <String fx:value="로맨틱" />
+                                                        <String fx:value="시크" />
+                                                        <String fx:value="시티보이" />
+                                                        <String fx:value="고프코어" />
+                                                        <String fx:value="레트로" />
+                                                    </FXCollections>
+                                                </items>
+                                                <value>
+                                                    <String fx:value="캐주얼" />
+                                                </value>
+                                            </ComboBox>
+                                        </children>
+                                    </VBox>
+
+                                </children>
+                            </VBox>
+
+                            <!-- 오른쪽: 입력 폼 -->
+                            <VBox prefHeight="650.0" prefWidth="460.0" spacing="25"
+                                  style="-fx-background-color: white; -fx-background-radius: 15; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
+                                <padding>
+                                    <Insets top="40" bottom="40" left="40" right="40" />
+                                </padding>
+                                <children>
+
+                                    <Label text="옷 정보 수정" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: #333;" />
+
+                                    <!-- 이름 -->
+                                    <VBox spacing="8">
+                                        <children>
+                                            <Label text="이름 *" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #555;" />
+                                            <TextField fx:id="nameField" prefHeight="35" text="크록스"
+                                                       style="-fx-font-size: 14; -fx-background-radius: 5; -fx-border-color: #ddd; -fx-border-radius: 5;" />
+                                        </children>
+                                    </VBox>
+
+                                    <!-- 카테고리 -->
+                                    <VBox spacing="8">
+                                        <children>
+                                            <Label text="카테고리 *" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #555;" />
+                                            <ComboBox fx:id="categoryField" prefHeight="35" prefWidth="380"
+                                                      style="-fx-font-size: 14;">
+                                                <items>
+                                                    <FXCollections fx:factory="observableArrayList">
+                                                        <String fx:value="전체" />
+                                                        <String fx:value="상의" />
+                                                        <String fx:value="바지" />
+                                                        <String fx:value="원피스/스커트" />
+                                                        <String fx:value="가방" />
+                                                        <String fx:value="아우터" />
+                                                        <String fx:value="신발" />
+                                                        <String fx:value="악세사리" />
+                                                        <String fx:value="기타" />
+                                                    </FXCollections>
+                                                </items>
+                                                <value>
+                                                    <String fx:value="신발" />
+                                                </value>
+                                            </ComboBox>
+                                        </children>
+                                    </VBox>
+
+                                    <!-- 브랜드 -->
+                                    <VBox spacing="8">
+                                        <children>
+                                            <Label text="브랜드 *" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #555;" />
+                                            <TextField fx:id="brandField" prefHeight="35" text="크록스"
+                                                       style="-fx-font-size: 14; -fx-background-radius: 5; -fx-border-color: #ddd; -fx-border-radius: 5;" />
+                                        </children>
+                                    </VBox>
+
+                                    <!-- 사이즈 -->
+                                    <VBox spacing="8">
+                                        <children>
+                                            <Label text="사이즈 *" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #555;" />
+                                            <TextField fx:id="sizeField" prefHeight="35" text="270"
+                                                       style="-fx-font-size: 14; -fx-background-radius: 5; -fx-border-color: #ddd; -fx-border-radius: 5;" />
+                                        </children>
+                                    </VBox>
+
+                                    <!-- 색상 -->
+                                    <VBox spacing="8">
+                                        <children>
+                                            <Label text="색상 *" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #555;" />
+                                            <ComboBox fx:id="colorField" prefHeight="35" prefWidth="380"
+                                                      style="-fx-font-size: 14;">
+                                                <items>
+                                                    <FXCollections fx:factory="observableArrayList">
+                                                        <String fx:value="화이트" />
+                                                        <String fx:value="블랙" />
+                                                        <String fx:value="그레이" />
+                                                        <String fx:value="레드" />
+                                                        <String fx:value="핑크" />
+                                                        <String fx:value="오렌지" />
+                                                        <String fx:value="엘로우" />
+                                                        <String fx:value="그린" />
+                                                        <String fx:value="블루" />
+                                                        <String fx:value="퍼플" />
+                                                        <String fx:value="브라운" />
+                                                    </FXCollections>
+                                                </items>
+                                                <value>
+                                                    <String fx:value="블랙" />
+                                                </value>
+                                            </ComboBox>
+                                        </children>
+                                    </VBox>
+
+                                    <!-- 메모 -->
+                                    <VBox spacing="8">
+                                        <children>
+                                            <Label text="메모" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #555;" />
+                                            <TextField fx:id="memoField" prefHeight="60" text="비와서 혜화역에 있는 abc 마트에서 구매함"
+                                                       style="-fx-font-size: 14; -fx-background-radius: 5; -fx-border-color: #ddd; -fx-border-radius: 5;" />
+                                        </children>
+                                    </VBox>
+
+                                    <!-- 버튼들 -->
+                                    <HBox spacing="15" alignment="CENTER" prefHeight="50">
+                                        <children>
+                                            <Button onAction="#handleCancel" prefWidth="120" prefHeight="40"
+                                                    style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 20; -fx-cursor: hand;"
+                                                    text="취소" />
+                                            <Button fx:id="updateButton" onAction="#handleUpdate" prefWidth="120" prefHeight="40"
+                                                    style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 20; -fx-cursor: hand;"
+                                                    text="수정완료" />
+                                        </children>
+                                    </HBox>
+                                </children>
+                            </VBox>
+                        </children>
+                    </HBox>
+                </children>
+            </AnchorPane>
+        </VBox>
+    </children>
+</HBox>

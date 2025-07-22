@@ -13,6 +13,7 @@ module com.samyukgu.what2wear {
     opens com.samyukgu.what2wear.codi.controller to javafx.fxml;
     opens com.samyukgu.what2wear.common.controller to javafx.fxml;
     opens com.samyukgu.what2wear.member.controller to javafx.fxml;
+    opens com.samyukgu.what2wear.wardrobe.controller to javafx.fxml;
 
     exports com.samyukgu.what2wear;
 }
