@@ -1,3 +1,7 @@
+.root {
+    -fx-background-color: #F9FBFC;
+}
+
 .welcome-title {
     -fx-font-size: 22px;
     -fx-text-fill: #333333;
@@ -42,6 +46,20 @@
     -fx-border-radius: 10;
     -fx-background-radius: 10;
     -fx-background-color: #F2FBFF;
+    -fx-font-family: "Pretendard Medium";
+    -fx-font-size: 14;
+    -fx-text-fill: #434343;
+    -fx-cursor: hand;
+}
+
+.search-btn {
+    -fx-pref-width: 87;
+    -fx-pref-height: 35;
+    -fx-border-width: 1;
+    -fx-border-color: #D9D9D9;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-background-color: #FFFFFF;
     -fx-font-family: "Pretendard Medium";
     -fx-font-size: 14;
     -fx-text-fill: #434343;
@@ -338,3 +356,119 @@
 .semi-bold-text {
     -fx-font-family: "Pretendard SemiBold";
 }
+
+.sep-content-area{
+    -fx-border-color: #000000;     /* 외곽선 색 */
+    -fx-border-width: 1px;         /* 외곽선 두께 */
+    -fx-border-radius: 10px;       /* 외곽선 모서리 둥글게 */
+    -fx-background-radius: 10px;   /* 배경도 동일하게 라운드 처리 */
+    -fx-padding: 10px;             /* 내부 여백 (옵션) */
+}
+
+.search-user-info-area{
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #E6E6E6;     /* 외곽선 색 */
+    -fx-border-width: 1px;         /* 외곽선 두께 */
+    -fx-border-radius: 10px;       /* 외곽선 모서리 둥글게 */
+    -fx-background-radius: 10px;   /* 배경도 동일하게 라운드 처리 */
+    -fx-padding: 10px;             /* 내부 여백 (옵션) */
+}
+
+.white-bg{
+    -fx-background-color: #FFFFFF;
+}
+
+.btn-green{
+    -fx-background-color: #79C998;
+    -fx-text-fill: "white";
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 20;
+}
+
+.input-field{
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-font-size: 18;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar:vertical {
+    -fx-opacity: 0;
+    -fx-pref-width: 0;
+}
+
+.scroll-pane .scroll-bar:horizontal {
+    -fx-opacity: 0;
+    -fx-pref-height: 0;
+}
+
+.scroll-pane .scroll-bar .track {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
+
+.scroll-pane .scroll-bar .thumb {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+}
+
+.scroll-pane .corner {
+    -fx-background-color: transparent;
+}
+
+/* 검색 결과 사용자 정보 영역 기본 스타일 */
+.search-user-info-area {
+    -fx-background-color: transparent;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.search-user-info-area:hover {
+    -fx-background-color: #f0f0f0;
+}
+
+/* 선택된 검색 사용자 스타일 */
+.selected-search-user {
+    -fx-background-color: #E3F2FD !important;
+    -fx-border-color: #2196F3;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+}
+
+.scroll-pane .content {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+}
+
+.btn-gray{
+    -fx-background-color: #8E8E8E;
+    -fx-text-fill: "white";
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 20;
+}
+
+/*.btn-orange {*/
+/*    -fx-pref-width: 102;*/
+/*    -fx-pref-height: 35;*/
+/*    -fx-border-width: 1;*/
+/*    -fx-border-color: #D9D9D9;*/
+/*    -fx-border-radius: 10;*/
+/*    -fx-background-radius: 10;*/
+/*    -fx-background-color: #FFFDF0;*/
+/*    -fx-font-family: "Pretendard Medium";*/
+/*    -fx-font-size: 14;*/
+/*    -fx-text-fill: #434343;*/
+/*    -fx-cursor: hand;*/
+/*}*/
