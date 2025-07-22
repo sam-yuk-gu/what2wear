@@ -23,7 +23,7 @@
 
         <!-- 닫기 버튼 -->
         <HBox alignment="TOP_RIGHT">
-            <Button fx:id="closeButton" styleClass="close-btn">
+            <Button fx:id="closeButton" styleClass="close-btn" onAction="#handleCancel">
                 <graphic>
                     <ImageView fitHeight="30" fitWidth="30">
                         <image>
@@ -71,8 +71,8 @@
 
         <!-- 버튼 영역 -->
         <HBox fx:id="two_button_hbox" styleClass="two_button_hbox" spacing="20" alignment="CENTER">
-            <Button fx:id="cancelButton" text="취소하기" styleClass="cancel-btn"/>
-            <Button fx:id="confirmButton" text="저장하기" styleClass="confirm-btn"/>
+            <Button fx:id="cancelButton" text="취소하기" styleClass="cancel-btn" onAction="#handleCancel" />
+            <Button fx:id="confirmButton" text="저장하기" styleClass="confirm-btn" onAction="#handleConfirm" />
         </HBox>
     </VBox>
 </StackPane>

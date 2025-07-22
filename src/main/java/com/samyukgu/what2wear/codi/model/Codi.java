@@ -15,19 +15,19 @@ import java.util.List;
 @AllArgsConstructor
 public class Codi {
     Long id;
-    String name;           // 코디 이름
-    String schedule;       // 일정 이름
+    Long memberId;
+    String name;                // 코디 이름
+    String schedule;            // 일정 이름
     LocalDate scheduleDate;
-    CodiScope scope;       // 공개 범위 enum
-    String weather;        // 날씨
-    byte[] picture;          // 사진
-//    List<Clothes> clothes; // 상세 조회용 옷 목록
+    Long scope;                 // 공개 범위 enum
+    String weather;             // 날씨
+    byte[] picture;             // 사진
+    String codiType;
+//    List<Clothes> clothes;    // 상세 조회용 옷 목록
 
     public Codi(Long id, String name, LocalDate scheduleDate) {
         this.id = id;
         this.name = name;
         this.scheduleDate = scheduleDate;
     }
-
-
 }

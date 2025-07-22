@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.SVGPath?>
 
-<StackPane fx:id="root" stylesheets="@add-codi.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.codi.controller.AddCodiController">
+<StackPane fx:id="root" stylesheets="@add-codi.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.codi.controller.CodiAddController">
 
     <!-- 헤더 포함 영역 -->
     <VBox fx:id="container">

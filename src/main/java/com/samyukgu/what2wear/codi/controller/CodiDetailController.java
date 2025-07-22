@@ -3,7 +3,7 @@ package com.samyukgu.what2wear.codi.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class CodiController {
+public class CodiDetailController {
     @FXML
     private Label welcomeText;
 

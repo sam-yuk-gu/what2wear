@@ -4,6 +4,9 @@ import com.samyukgu.what2wear.codi.model.Clothing;
 import com.samyukgu.what2wear.codi.model.Codi;
 import com.samyukgu.what2wear.codi.model.CodiScope;
 import com.samyukgu.what2wear.common.model.SelectionResult;
+import com.samyukgu.what2wear.di.DIContainer;
+import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
+import com.samyukgu.what2wear.wardrobe.service.WardrobeService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -14,10 +17,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public class SelectOutfitModalController implements Initializable {
 
@@ -40,8 +48,36 @@ public class SelectOutfitModalController implements Initializable {
     @FXML private Button cancelButton;
     @FXML private Button confirmButton;
 
+    private final WardrobeService wardrobeService = DIContainer.getInstance().resolve(WardrobeService.class);
+
+    private Long memberId;
+
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
+        loadWardrobeForMember(); // 멤버 ID가 세팅되면 즉시 옷 불러오기
+    }
+
+    private void loadWardrobeForMember() {
+        if (wardrobeService != null && memberId != null) {
+            List<Wardrobe> wardrobeList = wardrobeService.getAllWardrobe(memberId);
+            allWardrobeItems = wardrobeList.stream()
+                    .map(wardrobe -> {
+                        Clothing clothing = new Clothing();
+                        clothing.setId(wardrobe.getId());
+                        clothing.setName(wardrobe.getName());
+                        clothing.setCategory(getCategoryName(wardrobe.getCategoryId()));
+                        clothing.setImagePath(new Image(new ByteArrayInputStream(wardrobe.getPicture())));
+                        return clothing;
+                    })
+                    .collect(Collectors.toList());
+            renderWardrobeItems();
+        } else {
+            System.err.println("wardrobeService 또는 memberId가 null입니다.");
+        }
+    }
+
     private boolean isWardrobeSelected = true;
-    private Map<String, Clothing> selectedClothes = new HashMap<>();
+    private Map<String, Wardrobe> selectedClothes = new HashMap<>();
     private Codi selectedCodi = null;
 
     private String wardrobeSearchText = "";
@@ -55,6 +91,7 @@ public class SelectOutfitModalController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         dimBackground.widthProperty().bind(modalOverlay.widthProperty());
         dimBackground.heightProperty().bind(modalOverlay.heightProperty());
 
@@ -90,23 +127,75 @@ public class SelectOutfitModalController implements Initializable {
         });
     }
 
-    public void configure(List<Clothing> outfits, Codi codi, String scheduleName,
+
+    public void configure(List<Wardrobe> outfits, Codi codi, String scheduleName,
                           LocalDate date, CodiScope visibility,
-                          Consumer<SelectionResult> onConfirm, Runnable onCancel) {
+                          Consumer<SelectionResult> onConfirm, Runnable onCancel,
+                          Long memberId) {
         this.onConfirm = onConfirm;
         this.onCancel = onCancel;
         if (outfits != null) {
-            for (Clothing c : outfits) {
-                selectedClothes.put(c.getCategory(), c);
+            for (Wardrobe c : outfits) {
+                selectedClothes.put(getCategoryName(c.getCategoryId()), c);
             }
         }
+        setMemberId(memberId);
         this.selectedCodi = codi;
 
         // 초기 탭 설정 및 더미 데이터 로드
         switchToWardrobe();
-        loadDummyWardrobeItems();
+        loadWardrobeItemsFromService(memberId);
         loadDummyCodiItems();
     }
+
+    private void loadWardrobeItemsFromService(Long memberId) {
+//        try {
+//            List<Wardrobe> wardrobeList = wardrobeService.getAllWardrobe(memberId);
+//            allWardrobeItems = wardrobeList.stream()
+//                    .map(w -> new Clothing(
+//                            String.valueOf(w.getId()),
+//                            w.getName(),
+//                            getCategoryName(w.getCategoryId()),
+//                            convertImageBytesToPath(w.getPicture())  // 또는 이미지 처리 방식에 맞게 수정
+//                    ))
+//                    .collect(Collectors.toList());
+//            renderWardrobeItems();
+//        } catch (Exception e) {
+//            System.out.println("옷장 불러오기 실패: " + e.getMessage());
+//        }
+    }
+
+    private String getCategoryName(Long categoryId) {
+        if (categoryId == null) return "기타";
+        return switch (categoryId.intValue()) {
+            case 1 -> "상의";
+            case 2 -> "바지";
+            case 3 -> "신발";
+            case 4 -> "가방";
+            case 5 -> "원피스/스커트";
+            case 6 -> "아우터";
+            case 7 -> "악세사리";
+            case 8 -> "기타";
+            default -> "기타";
+        };
+    }
+
+    private String convertImageBytesToPath(byte[] pictureBytes) {
+        if (pictureBytes == null) return "/assets/default-clothes.png"; // 기본 이미지
+
+        try {
+            File tempFile = File.createTempFile("clothes_", ".png");
+            try (FileOutputStream fos = new FileOutputStream(tempFile)) {
+                fos.write(pictureBytes);
+            }
+            return tempFile.toURI().toString(); // JavaFX ImageView에서 사용 가능
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "/assets/default-clothes.png";
+        }
+    }
+
+
 
     private void switchToWardrobe() {
         isWardrobeSelected = true;
@@ -130,20 +219,8 @@ public class SelectOutfitModalController implements Initializable {
         codiView.setManaged(true);
     }
 
-    private void loadDummyWardrobeItems() {
-        allWardrobeItems = Arrays.asList(
-                new Clothing("1", "흰 셔츠", "상의", "/assets/images/dummy-3.png"),
-                new Clothing("2", "청바지", "상의", "/assets/images/dummy-2.png"),
-                new Clothing("3", "운동화", "신발", "/assets/images/dummy-1.png"),
-                new Clothing("4", "운동화", "신발", "/assets/images/dummy-5.png"),
-                new Clothing("5", "운동화", "신발", "/assets/images/dummy-6.png"),
-                new Clothing("6", "운동화", "신발", "/assets/images/dummy-2.png"),
-                new Clothing("7", "운동화", "신발", "/assets/images/dummy-5.png"),
-                new Clothing("8", "운동화", "신발", "/assets/images/dummy-3.png"),
-                new Clothing("9", "운동화", "신발", "/assets/images/dummy-1.png"),
-                new Clothing("10", "운동화", "신발", "/assets/images/dummy-2.png"),
-                new Clothing("11", "운동화", "신발", "/assets/images/dummy-4.png")
-        );
+    private void loadWardrobeItems() {
+
 
         renderWardrobeItems();
     }
@@ -186,8 +263,7 @@ public class SelectOutfitModalController implements Initializable {
 
         ImageView itemImage;
         try {
-            Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(item.getImagePath())));
-            itemImage = new ImageView(image);
+            itemImage = new ImageView(item.getImagePath());
         } catch (Exception e) {
             itemImage = new ImageView();
             System.out.println("이미지 로딩 실패: " + item.getImagePath());
@@ -219,8 +295,13 @@ public class SelectOutfitModalController implements Initializable {
             String category = item.getCategory();
             boolean alreadySelected = selectedClothes.containsKey(category);
 
-            if (!alreadySelected || !selectedClothes.get(category).getId().equals(item.getId())) {
-                selectedClothes.put(category, item);
+            Wardrobe matched = wardrobeService.getAllWardrobe(memberId).stream()
+                    .filter(w -> Objects.equals(w.getId(), item.getId()))
+                    .findFirst()
+                    .orElse(null);
+
+            if (!alreadySelected || !Objects.equals(selectedClothes.get(category).getId(), item.getId())) {
+                if (matched != null) selectedClothes.put(category, matched);
             } else {
                 selectedClothes.remove(category);
             }
@@ -230,6 +311,7 @@ public class SelectOutfitModalController implements Initializable {
         // 선택 시 오버레이/체크 아이콘 표시
         box.setId("clothingBox-" + item.getId()); // 식별자 부여
         imageContainer.setUserData(new Node[] { overlay, checkIcon }); // 토글용 저장
+
 
         return box;
     }
@@ -260,20 +342,20 @@ public class SelectOutfitModalController implements Initializable {
 
         // 이미지 로딩
         ImageView codiImage;
-        try {
-            Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(codi.getImagePath())));
-            codiImage = new ImageView(image);
-        } catch (Exception e) {
-            codiImage = new ImageView();
-//            System.out.println("코디 이미지 로딩 실패: " + codi.getImagePath());
-        }
-        codiImage.getStyleClass().add("codi-image");
-        codiImage.setPreserveRatio(false);
+//        try {
+//            Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(codi.getImagePath())));
+//            codiImage = new ImageView(image);
+//        } catch (Exception e) {
+//            codiImage = new ImageView();
+////            System.out.println("코디 이미지 로딩 실패: " + codi.getImagePath());
+//        }
+//        codiImage.getStyleClass().add("codi-image");
+//        codiImage.setPreserveRatio(false);
 
         Rectangle clip = new Rectangle(130, 180);
         clip.setArcWidth(20);
         clip.setArcHeight(20);
-        codiImage.setClip(clip);
+//        codiImage.setClip(clip);
 
         // 오버레이 + 체크
         Rectangle overlay = new Rectangle(130, 180, javafx.scene.paint.Color.rgb(0, 0, 0, 0.4));
@@ -286,10 +368,10 @@ public class SelectOutfitModalController implements Initializable {
         checkIcon.setPreserveRatio(true);
         checkIcon.setVisible(false);
 
-        StackPane imageContainer = new StackPane(codiImage, overlay, checkIcon);
-        imageContainer.setPrefSize(130, 180);
-
-        box.getChildren().add(imageContainer);
+//        StackPane imageContainer = new StackPane(codiImage, overlay, checkIcon);
+//        imageContainer.setPrefSize(130, 180);
+//
+//        box.getChildren().add(imageContainer);
         box.setUserData(codi);
 
         // 클릭 시 선택 로직
@@ -302,7 +384,7 @@ public class SelectOutfitModalController implements Initializable {
             refreshCodiSelection();
         });
 
-        imageContainer.setUserData(new Node[] { overlay, checkIcon });
+//        imageContainer.setUserData(new Node[] { overlay, checkIcon });
         return box;
     }
 
@@ -396,7 +478,7 @@ public class SelectOutfitModalController implements Initializable {
     @FXML
     private void handleConfirm() {
         if (onConfirm != null) {
-            List<Clothing> outfits = new ArrayList<>(selectedClothes.values());
+            List<Wardrobe> outfits = new ArrayList<>(selectedClothes.values());
             onConfirm.accept(new SelectionResult(outfits, selectedCodi));
         }
         modalOverlay.setVisible(false);

@@ -1,9 +1,12 @@
 package com.samyukgu.what2wear.codi.controller;
 
+import com.samyukgu.what2wear.codi.dto.CodiListDTO;
+import com.samyukgu.what2wear.codi.dto.CodiScheduleDTO;
 import com.samyukgu.what2wear.codi.model.CodiItem;
 import com.samyukgu.what2wear.codi.model.CodiSchedule;
 import com.samyukgu.what2wear.codi.model.CodiScope;
-import com.samyukgu.what2wear.codi.service.DummyScheduleRepository;
+import com.samyukgu.what2wear.codi.service.CodiService;
+import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -20,8 +23,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +37,7 @@ import static com.samyukgu.what2wear.common.util.FxStyleUtil.applyHoverTransitio
 
 public class CodiMainController {
 
+    private CodiService codiService;
     private LocalDate currentDateSelected;
 
     @FXML private Label monthLabel;
@@ -40,9 +49,11 @@ public class CodiMainController {
 
     private LocalDate currentDate;
     private Map<LocalDate, List<CodiSchedule>> scheduleMap; // 날짜별 일정 정보 저장
+    private List<CodiItem> codiItems = new ArrayList<>();
 
     @FXML
     public void initialize() {
+        setupDI();
         currentDate = LocalDate.now();
         currentDateSelected = currentDate;
         loadScheduleForMonth(currentDate);
@@ -53,9 +64,84 @@ public class CodiMainController {
         applyHoverTransition(addButton, Color.web("#F2FBFF"), Color.web("#E0F6FF"));
     }
 
+    private void setupDI() {
+        DIContainer diContainer = DIContainer.getInstance();
+        codiService = diContainer.resolve(CodiService.class);
+    }
+
     private void loadScheduleForMonth(LocalDate month) {
-        // scheduleMap = ScheduleService.getMonthlySchedule(month);
-        scheduleMap = DummyScheduleRepository.getMonthlySchedule(month);
+        Long memberId = 3L; // 로그인 유저의 memberId로 교체 필요
+        List<CodiScheduleDTO> scheduleList = codiService.getMonthlyCodiSchedules(memberId, month);
+
+        scheduleMap = new HashMap<>();
+
+        for (CodiScheduleDTO dto : scheduleList) {
+            LocalDate date = dto.getDate(); // 날짜
+
+            // 날짜별 리스트 초기화
+            scheduleMap.computeIfAbsent(date, d -> new ArrayList<>());
+
+            // 점 표시용 CodiSchedule 객체 생성
+            CodiSchedule schedule = new CodiSchedule();
+            schedule.setDate(date);
+            schedule.setVisibility(dto.getVisibility());
+
+            scheduleMap.get(date).add(schedule);    // 날짜 별 스케쥴 저장
+        }
+    }
+
+    // 날짜 별 상세 일정
+    private void loadScheduleForDay(LocalDate date) {
+        String memberId = "1"; // TODO: 로그인된 사용자 ID로 교체
+        List<CodiListDTO> codiLists = codiService.getCodiList(memberId, date);
+
+        // 날짜 기준으로 변환
+        List<CodiSchedule> detailedSchedules = codiLists.stream()
+            .flatMap(dto -> dto.getCodiList().stream().map(codiDTO -> {
+                CodiSchedule schedule = new CodiSchedule();
+                schedule.setDate(dto.getScheduleDate());
+                schedule.setDescription(codiDTO.getScheduleName());
+                schedule.setVisibility(toCodiScope(codiDTO.getScope()));
+
+                List<CodiItem> items = codiDTO.getCodiClothesList().stream().map(clothes -> {
+                    CodiItem item = new CodiItem();
+                    item.setCategory(clothes.getCategoryName());
+                    item.setName(clothes.getClothesName());
+                    item.setImagePath(convertToImagePath(clothes.getClothesPicture()));
+                    return item;
+                }).toList();
+
+                schedule.setCodiItems(items);
+                return schedule;
+            }))
+            .toList();
+
+        // 기존 점 정보 덮어쓰기
+        scheduleMap.put(date, detailedSchedules);
+    }
+
+    private CodiScope toCodiScope(String scope) {
+        return switch (scope) {
+            case "0" -> CodiScope.PUBLIC;
+            case "1" -> CodiScope.FRIENDS;
+            case "2" -> CodiScope.PRIVATE;
+            default -> CodiScope.PRIVATE;
+        };
+    }
+
+    private String convertToImagePath(byte[] pictureBytes) {
+        // 임시 파일 생성 후 경로 반환
+        if (pictureBytes == null) return "/assets/default-clothes.png";
+        try {
+            File tempFile = File.createTempFile("clothes_", ".png");
+            try (FileOutputStream fos = new FileOutputStream(tempFile)) {
+                fos.write(pictureBytes);
+            }
+            return tempFile.toURI().toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "/assets/default-clothes.png";
+        }
     }
 
     private void renderCalendar(LocalDate baseDate) {
@@ -387,8 +473,11 @@ public class CodiMainController {
                 dateAndDescBox.getChildren().addAll(dateLabel, descWithBadge);
                 scheduleBox.getChildren().add(dateAndDescBox);
 
-                for (CodiItem item : schedule.getCodiItems()) {
-                    scheduleBox.getChildren().add(buildCodiItemBox(item));
+                List<CodiItem> codiItems = schedule.getCodiItems();
+                if (codiItems != null) {
+                    for (CodiItem item : codiItems) {
+                        scheduleBox.getChildren().add(buildCodiItemBox(item));
+                    }
                 }
 
                 scheduleListContainer.getChildren().add(scheduleBox);
@@ -416,9 +505,16 @@ public class CodiMainController {
                 HBox.setHgrow(badgeLabel, Priority.NEVER);
 
                 otherScheduleBox.getChildren().add(descWithBadge);
+//
+//                for (CodiItem item : schedule.getCodiItems()) {
+//                    otherScheduleBox.getChildren().add(buildCodiItemBox(item));
+//                }
 
-                for (CodiItem item : schedule.getCodiItems()) {
-                    otherScheduleBox.getChildren().add(buildCodiItemBox(item));
+                List<CodiItem> items = schedule.getCodiItems();
+                if (items != null) {
+                    for (CodiItem item : items) {
+                        otherScheduleBox.getChildren().add(buildCodiItemBox(item));
+                    }
                 }
 
                 scheduleListContainer.getChildren().add(otherScheduleBox);

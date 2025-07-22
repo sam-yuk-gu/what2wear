@@ -1,16 +1,17 @@
 package com.samyukgu.what2wear.codi.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Setter
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
 public class CodiSchedule {
-    private String description;
     private LocalDate date;
-    private List<CodiItem> codiItems;
+    private String description;
     private CodiScope visibility;
+    private List<CodiItem> codiItems;
 }

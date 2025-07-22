@@ -5,7 +5,6 @@ import static com.samyukgu.what2wear.common.util.FxStyleUtil.applyHoverTransitio
 import com.samyukgu.what2wear.codi.model.CodiItem;
 import com.samyukgu.what2wear.codi.model.CodiSchedule;
 import com.samyukgu.what2wear.codi.model.CodiScope;
-import com.samyukgu.what2wear.codi.service.DummyScheduleRepository;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.friend.service.FriendService;
@@ -378,7 +377,7 @@ public class FriendMainController {
 
     private void loadScheduleForMonth(LocalDate month) {
         // scheduleMap = ScheduleService.getMonthlySchedule(month);
-        scheduleMap = DummyScheduleRepository.getMonthlySchedule(month);
+//        scheduleMap = DummyScheduleRepository.getMonthlySchedule(month);
     }
 
     private void renderCalendar(LocalDate baseDate) {

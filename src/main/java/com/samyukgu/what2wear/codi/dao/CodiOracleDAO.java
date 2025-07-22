@@ -1,8 +1,14 @@
 package com.samyukgu.what2wear.codi.dao;
 
+import com.samyukgu.what2wear.codi.dto.CodiClothesDTO;
+import com.samyukgu.what2wear.codi.dto.CodiDTO;
+import com.samyukgu.what2wear.codi.dto.CodiListDTO;
+import com.samyukgu.what2wear.codi.dto.CodiScheduleDTO;
 import com.samyukgu.what2wear.codi.model.Codi;
+import com.samyukgu.what2wear.codi.model.CodiSchedule;
 import com.samyukgu.what2wear.codi.model.CodiScope;
-import com.samyukgu.what2wear.member.model.Member;
+import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
+
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -12,9 +18,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class CodiOracleDAO implements CodiDAO {
     private static String url;
@@ -43,312 +48,256 @@ public class CodiOracleDAO implements CodiDAO {
     }
 
     @Override
-    public List<Codi> findMonthlyCodiSchedules(String memberId, LocalDate date) {
+    public List<CodiScheduleDTO> findMonthlyCodiSchedules(Long memberId, LocalDate date) {
+        String curYear = date.format(DateTimeFormatter.ofPattern("yyyy-MM"));
+        String nextMonth = date.plusMonths(1).format(DateTimeFormatter.ofPattern("yyyy-MM"));
+
         String sql = """
-        SELECT *
-        FROM codi
-        WHERE member_id = ?
-        AND TO_CHAR(schedule_date, 'YYYYMM') = ?
-        AND deleted = 'N'
-        ORDER BY schedule_date
+            SELECT *
+            FROM codi
+            WHERE member_id = ?
+              AND schedule_date >= TO_DATE(?, 'YYYY-MM')
+              AND schedule_date <  TO_DATE(?, 'YYYY-MM')
+            ORDER BY schedule_date, created_at
         """;
 
-        List<Codi> codis = new ArrayList<>();
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)
         ) {
-            pstmt.setLong(1, Long.parseLong(memberId));
-            pstmt.setString(2, date.format(java.time.format.DateTimeFormatter.ofPattern("yyyyMM")));
+            pstmt.setLong(1, memberId);
+            pstmt.setString(2, curYear);
+            pstmt.setString(3, nextMonth);
 
-            ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                codis.add(mapResultSetToCodi(rs));
+            List<CodiScheduleDTO> codiSchedules = new ArrayList<>();
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    CodiScope visibility = CodiScope.fromInt(rs.getInt("scope")); // 또는 rs.getInt("visibility") 등
+
+                    codiSchedules.add(new CodiScheduleDTO(
+                            rs.getLong("id"),
+                            rs.getDate("schedule_date").toLocalDate(),
+                            visibility
+                    ));
+                }
             }
+            return codiSchedules;
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Error in findMonthlyCodiSchedules", e);
         }
-        return codis;
     }
 
-//    private Clothes mapToClothes(ResultSet rs) throws SQLException {
-//        return new Clothes(
-//                rs.getString("category_name"),
-//                rs.getString("name"),
-//                rs.getBytes("picture")
-//        );
-//    }
-
     @Override
-    public Codi findCodiScheduleDetail(String memberId, String codiId) {
+    public List<CodiListDTO> findCodiList(String memberId, LocalDate date) {
+        String fromDate = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String toDate = date.plusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
         String sql = """
-        SELECT *
-        FROM codi
-        WHERE id = ?
-          AND member_id = ?
-          AND deleted = 'N'
-        """;
+        SELECT
+             c.id,
+             c.schedule_date,
+             c.scope,
+             c.schedule AS schedule_name,
+             cat.name AS category_name,
+             cl.name AS clothes_name,
+             cl.picture AS clothes_picture
+        FROM codi c
+        JOIN codi_detail cd ON c.id = cd.codi_id
+        JOIN clothes cl ON cd.clothes_id = cl.id
+        JOIN category cat ON cl.category_id = cat.id
+        WHERE c.member_id = ?
+            AND c.schedule_date >= TO_DATE(?, 'YYYY-MM-DD')
+            AND c.schedule_date < TO_DATE(?, 'YYYY-MM-DD')
+            AND c.deleted IS NULL
+            AND cl.deleted = 'N'
+        ORDER BY c.schedule_date, c.id
+    """;
+
+        Map<LocalDate, List<CodiDTO>> groupedByDate = new LinkedHashMap<>();
+        Map<Long, CodiDTO> codiMap = new LinkedHashMap<>();
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)
         ) {
-            pstmt.setLong(1, Long.parseLong(codiId));
-            pstmt.setLong(2, Long.parseLong(memberId));
-            ResultSet rs = pstmt.executeQuery();
+            pstmt.setString(1, memberId);
+            pstmt.setString(2, fromDate);
+            pstmt.setString(3, toDate);
 
-            if (rs.next()) {
-                Codi codi = mapResultSetToCodi(rs);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    Long codiId = rs.getLong("id");
+                    LocalDate scheduleDate = rs.getDate("schedule_date").toLocalDate();
 
-                String clothesSql = """
-                    SELECT c.name, c.picture, cat.name AS category_name
-                    FROM clothes c
-                    JOIN category cat ON c.category_id = cat.id
-                    JOIN codi_detail cd ON cd.clothes_id = c.id
-                    WHERE cd.codi_id = ?
-                """;
+                    CodiDTO codi = codiMap.get(codiId);
+                    if (codi == null) {
+                        codi = new CodiDTO();
+                        codi.setScope(String.valueOf(rs.getInt("scope")));
+                        codi.setScheduleName(rs.getString("schedule_name"));
+                        codi.setCodiClothesList(new ArrayList<>());
+                        codiMap.put(codiId, codi);
 
-//                try (PreparedStatement clothesStmt = conn.prepareStatement(clothesSql)) {
-//                    clothesStmt.setLong(1, codi.getId());
-//                    ResultSet clothesRs = clothesStmt.executeQuery();
-//                    List<Clothes> clothesList = new ArrayList<>();
-//                    while (clothesRs.next()) {
-//                        clothesList.add(mapToClothes(clothesRs));
-//                    }
-//                    codi.setClothes(clothesList);
-//                }
-
-                // 코디에 연결된 옷 ID들 추가 조회
-                String detailSql = "SELECT clothes_id FROM codi_detail WHERE codi_id = ?";
-                try (PreparedStatement detailStmt = conn.prepareStatement(detailSql)) {
-                    detailStmt.setLong(1, codi.getId());
-                    ResultSet detailRs = detailStmt.executeQuery();
-
-                    List<Long> clothingIds = new ArrayList<>();
-                    while (detailRs.next()) {
-                        clothingIds.add(detailRs.getLong("clothes_id"));
+                        groupedByDate.computeIfAbsent(scheduleDate, d -> new ArrayList<>()).add(codi);
                     }
-//                    codi.setClothingIds(clothingIds);
-                }
 
-                return codi;
+                    CodiClothesDTO clothes = new CodiClothesDTO();
+                    clothes.setCategoryName(rs.getString("category_name"));
+                    clothes.setClothesName(rs.getString("clothes_name"));
+                    clothes.setClothesPicture(rs.getBytes("clothes_picture"));
+
+                    codi.getCodiClothesList().add(clothes);
+                }
             }
 
-            return null;
+            List<CodiListDTO> result = new ArrayList<>();
+            for (Map.Entry<LocalDate, List<CodiDTO>> entry : groupedByDate.entrySet()) {
+                CodiListDTO dto = new CodiListDTO();
+                dto.setScheduleDate(entry.getKey());
+                dto.setCodiList(entry.getValue());
+                result.add(dto);
+            }
+
+            return result;
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("Error in findCodiScheduleDetail", e);
+            throw new RuntimeException("Error in findCodiList", e);
         }
     }
 
+    @Override
+    public Codi findCodiScheduleDetail(String memberId, String codiId) {
+        return null;
+    }
 
     @Override
-    public void createCodiSchedule(String memberId, String scheduleName, LocalDate date,
-                                   List<Number> clothingIds, CodiScope scope) {
-        String insertCodiSql = """
-        INSERT INTO codi(id, member_id, schedule, schedule_date, scope, codi_type, deleted)
-        VALUES (SEQ_CODI.NEXTVAL, ?, ?, ?, ?, 'S', 'N')
-        """;
+    public void create(Codi codi, Collection<Wardrobe> selectedOutfits) {
+        System.out.println("===== 디버깅 시작 =====");
 
-        String insertDetailSql = """
-        INSERT INTO codi_detail(codi_id, clothes_id) VALUES (?, ?)
+        // Codi 객체 출력
+        if (codi == null) {
+            System.out.println("Codi 객체가 null입니다.");
+        } else {
+            System.out.println("Codi 정보:");
+            System.out.println("ID: " + codi.getId());
+            System.out.println("이름: " + codi.getName());
+            System.out.println("일정: " + codi.getSchedule());
+            System.out.println("날짜: " + codi.getScheduleDate());
+            System.out.println("공개범위: " + codi.getScope());
+        }
+
+        // Wardrobe 리스트 출력
+        if (selectedOutfits == null || selectedOutfits.isEmpty()) {
+            System.out.println("선택된 옷이 없습니다.");
+        } else {
+            System.out.println("선택된 옷 목록 (" + selectedOutfits.size() + "개):");
+            for (Wardrobe w : selectedOutfits) {
+                System.out.println(" - ID: " + w.getId());
+                System.out.println("   이름: " + w.getName());
+            }
+        }
+
+        System.out.println("===== 디버깅 끝 =====");
+        String insertCodiSql  = """
+            INSERT INTO codi (
+                id, member_id, schedule, schedule_date, scope, codi_type, deleted
+            ) VALUES (
+                codi_seq.NEXTVAL, ?, ?, ?, ?, ?, 'N'
+            )
         """;
+        String getIdSql = "SELECT codi_seq.CURRVAL FROM dual";
+        String insertDetailSql = "INSERT INTO codi_detail (codi_id, clothes_id) VALUES (?, ?)";
 
         try (Connection conn = getConnection()) {
             conn.setAutoCommit(false); // 트랜잭션 시작
 
-            Long generatedCodiId = null;
+            Long codiId;
 
-            // 코디 메인 삽입
-            try (PreparedStatement pstmt = conn.prepareStatement(insertCodiSql, new String[] {"id"})) {
-                pstmt.setLong(1, Long.parseLong(memberId));
-                pstmt.setString(2, scheduleName);
-                pstmt.setDate(3, java.sql.Date.valueOf(date));
-                pstmt.setInt(4, scope.getValue());
+            // 1. 코디 INSERT
+            try (PreparedStatement pstmt = conn.prepareStatement(insertCodiSql)) {
+                pstmt.setLong(1, codi.getMemberId());
+                pstmt.setString(2, codi.getSchedule());
+                pstmt.setDate(3, java.sql.Date.valueOf(codi.getScheduleDate()));
+                pstmt.setLong(4, codi.getScope());
+                pstmt.setString(5, codi.getCodiType());
 
-                pstmt.executeUpdate();
-
-                // 생성된 코디 ID 가져오기
-                try (ResultSet rs = pstmt.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        generatedCodiId = rs.getLong(1);
-                    } else {
-                        throw new SQLException("Codi ID 생성 실패");
-                    }
+                int result = pstmt.executeUpdate();
+                if (result == 0) {
+                    conn.rollback();
+                    throw new SQLException("코디 일정 등록 실패");
                 }
             }
 
-            // 코디에 연결된 옷들 삽입
-            try (PreparedStatement pstmt = conn.prepareStatement(insertDetailSql)) {
-                for (Number clothesId : clothingIds) {
-                    pstmt.setLong(1, generatedCodiId);
-                    pstmt.setLong(2, clothesId.longValue());
-                    pstmt.addBatch();
+            // 2. 코디 ID 조회
+            try (PreparedStatement idStmt = conn.prepareStatement(getIdSql);
+                 ResultSet rs = idStmt.executeQuery()) {
+                if (rs.next()) {
+                    codiId = rs.getLong(1);
+                    codi.setId(codiId); // 객체에 설정해두면 이후에도 쓸 수 있음
+                } else {
+                    conn.rollback();
+                    throw new SQLException("코디 ID 조회 실패");
                 }
-                pstmt.executeBatch();
             }
 
-            conn.commit(); // 성공 시 커밋
+            // 3. codi_detail INSERT
+            try (PreparedStatement detailStmt = conn.prepareStatement(insertDetailSql)) {
+                for (Wardrobe outfit : selectedOutfits) {
+                    detailStmt.setLong(1, codiId);
+                    detailStmt.setLong(2, outfit.getId());
+                    detailStmt.addBatch();
+                }
+                detailStmt.executeBatch();
+            }
 
+            conn.commit(); // 전체 성공 시 커밋
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("Error in createCodiSchedule", e);
+            throw new RuntimeException("코디 생성 중 오류 발생", e);
         }
     }
 
+    public void insertCodiDetail(Long codiId, Long clothesId)  {
+        String sql = "INSERT INTO codi_detail (codi_id, clothes_id) VALUES (?, ?)";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setLong(1, codiId);
+            pstmt.setLong(2, clothesId);
+
+            pstmt.executeUpdate();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error By Insert Codi Detail", e);
+        }
+    }
 
     @Override
-    public void updateSchedule(String memberId, String codiId, String scheduleName,
-                               LocalDate date, List<Number> clothingIds, CodiScope scope) {
-
-        String updateCodiSql = """
-        UPDATE codi
-        SET schedule = ?, schedule_date = ?, scope = ?
-        WHERE id = ? AND member_id = ? AND deleted = 'N'
-        """;
-
-        String deleteDetailSql = """
-        DELETE FROM codi_detail WHERE codi_id = ?
-        """;
-
-        String insertDetailSql = """
-        INSERT INTO codi_detail(codi_id, clothes_id) VALUES (?, ?)
-        """;
-
-        try (Connection conn = getConnection()) {
-            conn.setAutoCommit(false);
-
-            // 1. 일정 정보 업데이트
-            try (PreparedStatement pstmt = conn.prepareStatement(updateCodiSql)) {
-                pstmt.setString(1, scheduleName);
-                pstmt.setDate(2, java.sql.Date.valueOf(date));
-                pstmt.setInt(3, scope.getValue());
-                pstmt.setLong(4, Long.parseLong(codiId));
-                pstmt.setLong(5, Long.parseLong(memberId));
-                pstmt.executeUpdate();
-            }
-
-            // 2. 기존 옷 연결 정보 삭제
-            try (PreparedStatement pstmt = conn.prepareStatement(deleteDetailSql)) {
-                pstmt.setLong(1, Long.parseLong(codiId));
-                pstmt.executeUpdate();
-            }
-
-            // 3. 새로운 옷 목록 삽입
-            try (PreparedStatement pstmt = conn.prepareStatement(insertDetailSql)) {
-                for (Number clothesId : clothingIds) {
-                    pstmt.setLong(1, Long.parseLong(codiId));
-                    pstmt.setLong(2, clothesId.longValue());
-                    pstmt.addBatch();
-                }
-                pstmt.executeBatch();
-            }
-
-            conn.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error in updateSchedule", e);
-        }
+    public void createCodiSchedule(String memberId, String scheduleName, LocalDate date, List<Number> clothingIds, CodiScope scope) {
+        CodiSchedule codiSchedule = new CodiSchedule();
     }
 
+    @Override
+    public void updateSchedule(String memberId, String codiId, String scheduleName, LocalDate date, List<Number> clothingIds, CodiScope scope) {
+
+    }
 
     @Override
     public void deleteSchedule(String memberId, String codiId) {
-        String sql = """
-        UPDATE codi
-        SET deleted = 'Y'
-        WHERE id = ? AND member_id = ?
-        """;
 
-        try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)
-        ) {
-            pstmt.setLong(1, Long.parseLong(codiId));
-            pstmt.setLong(2, Long.parseLong(memberId));
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error in deleteSchedule", e);
-        }
     }
-
 
     @Override
     public List<Codi> findAll(String memberId) {
-        String sql = """
-        SELECT *
-        FROM codi
-        WHERE member_id = ? AND deleted = 'N'
-        ORDER BY schedule_date DESC
-        """;
-
-        List<Codi> codis = new ArrayList<>();
-
-        try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)
-        ) {
-            pstmt.setLong(1, Long.parseLong(memberId));
-            ResultSet rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                codis.add(mapResultSetToCodi(rs));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error in findAll", e);
-        }
-
-        return codis;
+        return List.of();
     }
-
 
     @Override
     public List<Codi> findByName(String memberId, String keyword) {
-        String sql = """
-        SELECT *
-        FROM codi
-        WHERE member_id = ?
-          AND deleted = 'N'
-          AND (LOWER(name) LIKE ? OR LOWER(schedule) LIKE ?)
-        ORDER BY schedule_date DESC
-        """;
-
-        List<Codi> codis = new ArrayList<>();
-
-        try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)
-        ) {
-            pstmt.setLong(1, Long.parseLong(memberId));
-            String likeKeyword = "%" + keyword.toLowerCase() + "%";
-            pstmt.setString(2, likeKeyword);
-            pstmt.setString(3, likeKeyword);
-
-            ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                codis.add(mapResultSetToCodi(rs));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error in findByName", e);
-        }
-
-        return codis;
+        return List.of();
     }
 
-
-    // --------------------------------------------------
-
-    private Codi mapResultSetToCodi(ResultSet rs) throws SQLException {
-        Codi codi = new Codi();
-        codi.setId(rs.getLong("id"));
-        codi.setName(rs.getString("name"));
-        codi.setSchedule(rs.getString("schedule"));
-        codi.setScheduleDate(rs.getDate("schedule_date").toLocalDate());
-        codi.setScope(CodiScope.fromInt(rs.getInt("scope"))); // enum 변환 필요
-        codi.setWeather(rs.getString("weather"));
-        codi.setPicture(rs.getBytes("picture"));
-        return codi;
-    }
 }

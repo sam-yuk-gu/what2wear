@@ -1,6 +1,6 @@
 package com.samyukgu.what2wear.myCodi.controller;
 
-import com.samyukgu.what2wear.common.controller.MainLayoutController;
+import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.myCodi.service.MyCodiService;
 import javafx.fxml.FXML;
