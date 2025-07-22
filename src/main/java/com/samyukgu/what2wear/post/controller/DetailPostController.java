@@ -12,9 +12,9 @@ import com.samyukgu.what2wear.post.service.PostService;
 import com.samyukgu.what2wear.postcomment.controller.CommentItemController;
 import com.samyukgu.what2wear.postcomment.dao.PostCommentDAO;
 import com.samyukgu.what2wear.postcomment.model.PostComment;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -56,7 +56,7 @@ public class DetailPostController {
     private void initialize() {
         // 회원 정보 불러오기
         setupDI();
-        
+
         hideEditDeleteButtons();
 
         header_paneController.setTitle("게시글 조회");
@@ -90,17 +90,18 @@ public class DetailPostController {
         PostCommentDAO commentDAO = DIContainer.getInstance().resolve(PostCommentDAO.class);
         List<PostComment> comments = commentDAO.findByPostId(currentPost.getId());
 
-        comment_vbox.getChildren().removeIf(node -> node instanceof HBox);  // Label "댓글"은 유지하고 댓글만 제거
+        comment_vbox.getChildren().removeIf(node -> node instanceof HBox);
 
         Long currentUserId = memberSession.getMember().getId();
 
         for (PostComment comment : comments) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/post/CommentItem.fxml"));
-                HBox commentItem = loader.load();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/postcomment/CommentItem.fxml"));
+                Parent commentItem = loader.load();
 
                 CommentItemController controller = loader.getController();
                 controller.setComment(
+                        comment.getId(),
                         "사용자" + comment.getMemberId(),
                         comment.getCreatedAt().toString(),
                         comment.getContent()
@@ -205,18 +206,18 @@ public class DetailPostController {
             e.printStackTrace();
         }
     }
-    
+
     // 게시글 등록하기 모달창에서 확인 버튼 클릭 시
     @FXML
     private void handleRegisterCommentClick() {
         String commentContent = commentField.getText().trim();
         if (commentContent.isEmpty()) return;
 
-        Long currentUserId = memberSession.getMember().getId();  // 세션에서 로그인한 사용자 ID
+        Long currentUserId = memberSession.getMember().getId();
         Long postId = currentPost.getId();
 
         PostComment newComment = new PostComment(
-                null,          // id는 DB에서 자동 생성
+                null,
                 postId,
                 currentUserId,
                 commentContent,
@@ -225,8 +226,31 @@ public class DetailPostController {
 
         PostCommentDAO commentDAO = DIContainer.getInstance().resolve(PostCommentDAO.class);
         commentDAO.create(newComment);
-
         commentField.clear();
-
+        addCommentToUI(newComment);
     }
+
+    private void addCommentToUI(PostComment comment) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/postcomment/CommentItem.fxml"));
+            Parent commentItem = loader.load(); // 변경: 안전하게 Parent 사용
+
+            CommentItemController controller = loader.getController();
+            controller.setComment(
+                    comment.getId(),
+                    "사용자" + comment.getMemberId(),
+                    comment.getCreatedAt().toString(),
+                    comment.getContent()
+            );
+
+            if (commentItem instanceof HBox) {
+                controller.setComment(comment);
+            }
+
+            comment_vbox.getChildren().add(commentItem);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

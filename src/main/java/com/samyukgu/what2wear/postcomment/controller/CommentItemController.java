@@ -10,18 +10,24 @@ import com.samyukgu.what2wear.postcomment.model.PostComment;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import lombok.Setter;
+
 import java.io.IOException;
 import java.util.List;
 
 public class CommentItemController {
-    @FXML private StackPane root;
+    @FXML
+    private StackPane root;
     @FXML private Label comment_author;
     @FXML private Label comment_date;
     @FXML private Label commentTextLabel;
+    @Setter
     @FXML private VBox commentBox;
 
     @FXML private javafx.scene.control.TextField editTextField;
@@ -31,14 +37,19 @@ public class CommentItemController {
     private MemberSession memberSession;
 
     private Post currentPost;
+    private Long comment_id;
 
 
-    public void setComment(String author, String date, String content) {
+
+    public void setComment(Long id, String author, String date, String content) {
+        this.comment_id = id;
         comment_author.setText(author);
         comment_date.setText(date);
         commentTextLabel.setText(content);
     }
 
+    @Setter
+    private Long commentId;
 
     @FXML
     private void initialize() {
@@ -70,6 +81,7 @@ public class CommentItemController {
 
                 CommentItemController controller = loader.getController();
                 controller.setComment(
+                        comment.getId(),
                         "사용자" + comment.getMemberId(), // 실제 구현 시 memberService로 이름 매핑 가능
                         comment.getCreatedAt().toString(),
                         comment.getContent()
@@ -119,14 +131,35 @@ public class CommentItemController {
                     "확인",
                     () -> root.getChildren().remove(modal),
                     () -> {
+                        // DB 삭제
+                        PostCommentDAO commentDAO = DIContainer.getInstance().resolve(PostCommentDAO.class);
+                        commentDAO.delete(comment_id);
+
+                        // 모달 제거
                         root.getChildren().remove(modal);
-                        ((VBox) commentBox.getParent()).getChildren().remove(commentBox);
+
+                        // 화면에서 댓글 제거
+                        // 3. 댓글 UI 제거
+                        if (commentBox != null) {
+                            ((Pane) commentBox.getParent()).getChildren().remove(commentBox);
+                        }
                     }
             );
 
             root.getChildren().add(modal);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    public void setComment(PostComment comment) {
+        setComment(
+                comment.getId(),
+                "사용자" + comment.getMemberId(),
+                comment.getCreatedAt().toString(),
+                comment.getContent()
+        );
+    }
+
 }

@@ -91,6 +91,18 @@ public class PostCommentOracleDAO implements PostCommentDAO {
 
     @Override
     public void delete(Long id) {
+        String sql = """
+                DELETE FROM post_comment WHERE id = ?
+            """;
 
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setLong(1, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error By Delete Post Comment");
+        }
     }
 }
