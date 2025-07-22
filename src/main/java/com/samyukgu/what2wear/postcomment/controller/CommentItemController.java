@@ -85,8 +85,6 @@ public class CommentItemController {
                         comment.getCreatedAt().toString(),
                         comment.getContent()
                 );
-
-                //                commentBox.getChildren().add(commentItem);
             } catch (IOException e) {
                 e.printStackTrace();
             }
