@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<HBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.samyukgu.what2wear.postcomment.controller.CommentItemController"
+      stylesheets="/com/samyukgu/what2wear/post/style.css"
+      alignment="CENTER"
+      prefWidth="950.0"
+      spacing="8.0">
+
+    <HBox alignment="TOP_CENTER" prefHeight="70.0" prefWidth="950.0" spacing="16.0">
+        <!-- 프로필 이미지 -->
+        <ImageView fitHeight="48.0" fitWidth="48.0">
+            <image>
+                <Image url="@/assets/icons/defaultProfile.png"/>
+            </image>
+        </ImageView>
+
+        <!-- 작성자 정보 및 댓글 내용 -->
+        <VBox fx:id="comment_user_vbox" alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="800.0" spacing="4.0">
+            <Label fx:id="comment_author" styleClass="comment_author"/>
+            <Label fx:id="comment_date" styleClass="comment_date"/>
+            <Label fx:id="commentTextLabel" styleClass="comment_text"/>
+            <TextField fx:id="editTextField" prefWidth="800.0" styleClass="comment_input" visible="false"/>
+        </VBox>
+
+        <!-- 수정/삭제 버튼 -->
+        <HBox alignment="CENTER_RIGHT" prefHeight="36.0">
+            <Pane fx:id="two_button_pane" prefHeight="64.0" prefWidth="76.0">
+                <children>
+                    <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="84.0">
+                        <children>
+                            <Button fx:id="editButton" onAction="#handleEditClick" styleClass="arrow_button">
+                                <graphic>
+                                    <ImageView fitHeight="24.0" fitWidth="24.0">
+                                        <image>
+                                            <Image url="@/assets/icons/edit.png"/>
+                                        </image>
+                                    </ImageView>
+                                </graphic>
+                            </Button>
+                        </children>
+                    </HBox>
+                    <Button layoutX="40.0" onAction="#handleDeleteClick" styleClass="arrow_button">
+                        <graphic>
+                            <ImageView fitHeight="24.0" fitWidth="24.0">
+                                <image>
+                                    <Image url="@/assets/icons/trash.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                </children>
+            </Pane>
+        </HBox>
+    </HBox>
+
+</HBox>

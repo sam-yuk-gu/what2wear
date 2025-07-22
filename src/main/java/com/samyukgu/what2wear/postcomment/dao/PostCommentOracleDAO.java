@@ -36,8 +36,30 @@ public class PostCommentOracleDAO implements PostCommentDAO {
     }
 
     @Override
-    public List<Post> findAll() {
-        return List.of();
+    public List<PostComment> findByPostId(Long postId) {
+        String sql = "SELECT * FROM post_comment WHERE post_id = ? ORDER BY created_at ASC";
+        List<PostComment> comments = new ArrayList<>();
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setLong(1, postId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    PostComment comment = new PostComment(
+                            rs.getLong("id"),
+                            rs.getLong("post_id"),
+                            rs.getLong("member_id"),
+                            rs.getString("content"),
+                            rs.getTimestamp("created_at")
+                    );
+                    comments.add(comment);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return comments;
     }
 
     @Override

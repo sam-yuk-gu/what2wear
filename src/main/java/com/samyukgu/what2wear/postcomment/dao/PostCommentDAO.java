@@ -6,7 +6,7 @@ import com.samyukgu.what2wear.postcomment.model.PostComment;
 import java.util.List;
 
 public interface PostCommentDAO {
-    List<Post> findAll();   // 게시글 댓글 전체 조회
+    List<PostComment> findByPostId(Long postId);   // 각각의 게시글 댓글 전체 조회
 
     void create(PostComment postComment);   // 게시글 댓글 등록
     void update(PostComment postComment);   // 게시글 댓글 수정

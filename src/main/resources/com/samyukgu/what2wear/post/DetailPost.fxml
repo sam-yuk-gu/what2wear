@@ -119,70 +119,9 @@
                 <!-- 댓글 영역 -->
                 <VBox fx:id="comment_vbox" alignment="CENTER" spacing="20.0" styleClass="comment_section">
                     <Label prefHeight="35.0" prefWidth="950.0" styleClass="comment_title_text" text="댓글" />
-
-                    <!-- 내 댓글 -->
-                    <VBox fx:id="commentBox" alignment="CENTER">
-                    <HBox alignment="TOP_CENTER" prefHeight="29.0" prefWidth="1015.0" spacing="16.0">
-                              <ImageView fitHeight="48.0" fitWidth="48.0">
-                                  <image>
-                                      <Image url="@/assets/icons/defaultProfile.png" />
-                                  </image>
-                              </ImageView>
-                        <VBox fx:id="comment_user_vbox" alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="800.0" spacing="4.0">
-                             <Label styleClass="comment_author" text="서울수경" />
-                             <Label styleClass="comment_date" text="2025-07-18" />
-                            <Label fx:id="commentTextLabel" styleClass="comment_text" text="이 코디 예쁘네요!" />
-                            <TextField fx:id="editTextField" prefWidth="800.0" styleClass="comment_input" visible="false" />
-                        </VBox>
-
-                        <!-- 수정/삭제 버튼 -->
-                        <HBox alignment="CENTER_RIGHT" prefHeight="36.0">
-                        <Pane fx:id="two_button_pane" prefHeight="64.0" prefWidth="76.0">
-                        <children>
-                           <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="84.0">
-                              <children>
-                                  <Button fx:id="editButton" onAction="#handleEditClick" styleClass="arrow_button">
-                                    <graphic>
-                                        <ImageView fitHeight="24.0" fitWidth="24.0">
-                                            <image>
-                                                <Image url="@/assets/icons/edit.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                 </Button>
-                              </children>
-                           </HBox>
-                           <Button layoutX="40.0" onAction="#handleDeleteClick" styleClass="arrow_button">
-                              <graphic>
-                                 <ImageView fitHeight="24.0" fitWidth="24.0">
-                                    <image>
-                                       <Image url="@/assets/icons/trash.png" />
-                                    </image>
-                                 </ImageView>
-                              </graphic>
-                           </Button>
-                        </children>
-                     </Pane>
-                        </HBox>
-                    </HBox>
-                    </VBox>
-
-                    <!-- 다른 사람 댓글 -->
-                    <HBox alignment="TOP_CENTER" prefHeight="70.0" prefWidth="950.0" spacing="16.0">
-                        <ImageView fitHeight="48" fitWidth="48">
-                            <image>
-                                <Image url="@/assets/icons/defaultProfile.png" />
-                            </image>
-                        </ImageView>
-                        <VBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="900.0" spacing="4.0">
-                            <Label styleClass="comment_author" text="재벌집막내아들" />
-                            <Label styleClass="comment_date" text="2025-07-18" />
-                            <Label styleClass="comment_text" text="저도 비슷한 거 하나 있는데 얼마에 구매하셨나요?" />
-                        </VBox>
-                    </HBox>
                 </VBox>
-            </VBox>
         </VBox>
+            </VBox>
         </content>
         </ScrollPane>
 

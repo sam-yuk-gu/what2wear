@@ -9,6 +9,7 @@ import com.samyukgu.what2wear.member.service.MemberService;
 import com.samyukgu.what2wear.post.dao.PostOracleDAO;
 import com.samyukgu.what2wear.post.model.Post;
 import com.samyukgu.what2wear.post.service.PostService;
+import com.samyukgu.what2wear.postcomment.controller.CommentItemController;
 import com.samyukgu.what2wear.postcomment.dao.PostCommentDAO;
 import com.samyukgu.what2wear.postcomment.model.PostComment;
 import javafx.event.ActionEvent;
@@ -19,10 +20,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 public class DetailPostController {
 
@@ -35,9 +39,7 @@ public class DetailPostController {
     @FXML private Button likeButton;
     @FXML private ImageView likeIcon;
     @FXML private Label likesLabel;
-    @FXML private Label commentTextLabel;
-    @FXML private TextField editTextField;
-    @FXML private VBox commentBox;
+    @FXML private VBox comment_vbox;
     @FXML private Button editPostButton;
     @FXML private Button deletePostButton;
     @FXML private TextField commentField;
@@ -62,8 +64,6 @@ public class DetailPostController {
                 MainLayoutController.loadView("/com/samyukgu/what2wear/post/ListPost.fxml")
         );
 
-        editTextField.setVisible(false);
-
         editPostButton.setOnAction(event -> handlePostEditClick());
         deletePostButton.setOnAction(event -> handlePostDeleteClick());
 
@@ -82,7 +82,37 @@ public class DetailPostController {
         this.currentPost = post;
         displayPostContent(post);
         checkAndShowButtons(post);
+        loadComments();
     }
+
+    // 댓글 조회하기
+    private void loadComments() {
+        PostCommentDAO commentDAO = DIContainer.getInstance().resolve(PostCommentDAO.class);
+        List<PostComment> comments = commentDAO.findByPostId(currentPost.getId());
+
+        comment_vbox.getChildren().removeIf(node -> node instanceof HBox);  // Label "댓글"은 유지하고 댓글만 제거
+
+        Long currentUserId = memberSession.getMember().getId();
+
+        for (PostComment comment : comments) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/post/CommentItem.fxml"));
+                HBox commentItem = loader.load();
+
+                CommentItemController controller = loader.getController();
+                controller.setComment(
+                        "사용자" + comment.getMemberId(),
+                        comment.getCreatedAt().toString(),
+                        comment.getContent()
+                );
+
+                comment_vbox.getChildren().add(commentItem);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     private void displayPostContent(Post post) {
         titleLabel.setText(post.getTitle());
@@ -92,6 +122,10 @@ public class DetailPostController {
         likesLabel.setText(String.valueOf(post.getLike_count()));
     }
 
+    /*
+    * 게시글 수정하기/삭제하기 버튼 유무 확인
+    * 작성자와 로그인한 유저의 아이디가 동일할 경우 보임
+    */
     private void checkAndShowButtons(Post post) {
         if (post.getMember_id() != null && post.getMember_id() == memberSession.getMember().getId()) {
             showEditDeleteButtons();
@@ -100,6 +134,7 @@ public class DetailPostController {
         }
     }
 
+    // 게시글 수정하기/삭제하기 버튼 안 숨김 처리
     private void showEditDeleteButtons() {
         editPostButton.setVisible(true);
         deletePostButton.setVisible(true);
@@ -107,6 +142,7 @@ public class DetailPostController {
         deletePostButton.setManaged(true);
     }
 
+    // 게시글 수정하기/삭제하기 버튼 숨김 처리
     private void hideEditDeleteButtons() {
         editPostButton.setVisible(false);
         deletePostButton.setVisible(false);
@@ -114,6 +150,7 @@ public class DetailPostController {
         deletePostButton.setManaged(false);
     }
 
+    // 좋아요 클릭 시 색상 및 숫자 변화
     @FXML
     private void handleLikeClick() {
         isLiked = !isLiked;
@@ -127,54 +164,10 @@ public class DetailPostController {
         likesLabel.setText(String.valueOf(likeCount));
     }
 
+    // 뒤로가기
     @FXML
     private void handleBack() {
         MainLayoutController.loadView("/com/samyukgu/what2wear/post/ListPost.fxml");
-    }
-
-    public void handleDeleteClick(ActionEvent actionEvent) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/CustomModal.fxml"));
-            StackPane modal = loader.load();
-
-            CustomModalController controller = loader.getController();
-            controller.configure(
-                    "댓글을 삭제하시겠습니까?",
-                    "삭제된 댓글 정보는 저장되지 않습니다.",
-                    "/assets/icons/redCheck.png",
-                    "#FA7B7F",
-                    "취소",
-                    "확인",
-                    () -> root.getChildren().remove(modal),
-                    () -> {
-                        root.getChildren().remove(modal);
-                        ((VBox) commentBox.getParent()).getChildren().remove(commentBox);
-                    }
-            );
-
-            root.getChildren().add(modal);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void handleEditClick() {
-        editTextField.setText(commentTextLabel.getText());
-        commentTextLabel.setVisible(false);
-        editTextField.setVisible(true);
-        editTextField.requestFocus();
-        editTextField.positionCaret(editTextField.getText().length());
-        editTextField.setOnAction(event -> applyEdit());
-    }
-
-    private void applyEdit() {
-        String newText = editTextField.getText();
-        if (newText != null && !newText.isEmpty()) {
-            commentTextLabel.setText(newText);
-        }
-        editTextField.setVisible(false);
-        commentTextLabel.setVisible(true);
     }
 
     // 내가 쓴 게시글 수정하기 버튼 클릭 시
@@ -184,6 +177,7 @@ public class DetailPostController {
     }
 
 
+    // 내가 쓴 게시글 삭제하기 버튼 클릭 시
     public void handlePostDeleteClick() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/CustomModal.fxml"));
@@ -211,8 +205,8 @@ public class DetailPostController {
             e.printStackTrace();
         }
     }
-
-
+    
+    // 게시글 등록하기 모달창에서 확인 버튼 클릭 시
     @FXML
     private void handleRegisterCommentClick() {
         String commentContent = commentField.getText().trim();
@@ -233,7 +227,6 @@ public class DetailPostController {
         commentDAO.create(newComment);
 
         commentField.clear();
-        System.out.println("댓글 버튼 눌림");
 
     }
 }
