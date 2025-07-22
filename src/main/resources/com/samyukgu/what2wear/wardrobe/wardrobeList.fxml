@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.wardrobe.controller.ListWardrobeController">
+<HBox prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.wardrobe.controller.ListWardrobeController">
    <children>
       <!-- 왼쪽 사이드바 -->
       <VBox prefHeight="768.0" prefWidth="250.0" style="-fx-background-color: #f5f5f5;" />
@@ -86,16 +86,19 @@
                                  <Image preserveRatio="true" url="@images/myCodiImg.png" />
                               </image>
                            </ImageView>
-                           <Label style="-fx-text-fill: black; -fx-font-size: 12;" text="나만의 옷장" />
+                           <Label style="-fx-text-fill: black; -fx-font-size: 12;" text="나만의 코디" />
                         </children>
                      </VBox>
                   </children>
                </HBox>
 
                <!-- 콘텐츠 목록 - 스크롤 가능한 영역 -->
-               <ScrollPane fitToWidth="true" layoutX="21.0" layoutY="93.0" prefHeight="480.0" prefWidth="988.0" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+               <ScrollPane fitToWidth="true" layoutX="21.0" layoutY="93.0" prefHeight="480.0" prefWidth="988.0"
+                           style="-fx-background-color: transparent; -fx-border-color: transparent;"
+                           hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
                   <content>
-                     <VBox fx:id="contentContainer" prefWidth="990.0" spacing="1.0">
+                     <VBox fx:id="contentContainer" prefWidth="988.0" maxWidth="988.0" spacing="1.0"
+                           style="-fx-padding: 10; -fx-fill-width: true;">
                         <!-- 동적으로 생성될 아이템들이 들어갈 공간 -->
                      </VBox>
                   </content>

@@ -192,7 +192,7 @@ public class CreateWardrobeController implements Initializable {
         Wardrobe wardrobe = new Wardrobe();
 
         Category selectedCategory = categoryField.getValue();
-//        wardrobe.setMemberId(ImsiSession.getMemberId());
+        wardrobe.setMemberId(ImsiSession.getMemberId());
         wardrobe.setCategoryId(selectedCategory.getId());
         wardrobe.setName(nameField.getText().trim());
         wardrobe.setLike("N"); // 기본값은 즐겨찾기 아님

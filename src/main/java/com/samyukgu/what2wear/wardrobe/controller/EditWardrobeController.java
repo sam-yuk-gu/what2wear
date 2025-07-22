@@ -280,7 +280,8 @@ public class EditWardrobeController implements Initializable {
 
         // 기본 정보는 유지
         updatedWardrobe.setId(currentWardrobe.getId());
-        updatedWardrobe.setMemberId(currentWardrobe.getMemberId());
+        updatedWardrobe.setMemberId(ImsiSession.getMemberId());
+//        updatedWardrobe.setMemberId(currentWardrobe.getMemberId());
         updatedWardrobe.setDeleted(currentWardrobe.getDeleted());
         updatedWardrobe.setLike(currentWardrobe.getLike()); // 즐겨찾기 상태 유지
 

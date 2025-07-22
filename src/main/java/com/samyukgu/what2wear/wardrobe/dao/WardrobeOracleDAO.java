@@ -126,7 +126,7 @@ public class WardrobeOracleDAO implements WardrobeDAO {
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setLong(1, 999); // 특정 회원 ID
+            pstmt.setLong(1, wardrobe.getMemberId()); // 특정 회원 ID
             pstmt.setLong(2, wardrobe.getCategoryId());
             pstmt.setString(3, wardrobe.getName());
             pstmt.setString(4, wardrobe.getMemo());
