@@ -38,6 +38,7 @@ public class MemberService {
             dao.save(member);
             return true;
         }catch (RuntimeException e){
+            e.printStackTrace();
             return false;
         }
     }
