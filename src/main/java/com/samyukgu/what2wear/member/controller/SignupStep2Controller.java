@@ -178,6 +178,8 @@ public class SignupStep2Controller {
         String nickname = inputNicknameField.getText().trim();
         String email = inputIdField.getText().trim() + "@" + selectedDomain;
 
+        System.out.println("가입 요청: " + accountId + ", " + password);  // null이면 문제
+
         String[] nextPath = new String[2];
         if(memberService.signup(accountId, email, nickname, name, password)){
             nextPath[0] = "/com/samyukgu/what2wear/member/SignupSuccessView.fxml";

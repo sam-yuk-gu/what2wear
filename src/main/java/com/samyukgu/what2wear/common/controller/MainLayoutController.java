@@ -1,6 +1,7 @@
 package com.samyukgu.what2wear.common.controller;
 
 import com.samyukgu.what2wear.post.controller.DetailPostController;
+import com.samyukgu.what2wear.post.controller.EditPostController;
 import com.samyukgu.what2wear.post.model.Post;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -51,6 +52,7 @@ public class MainLayoutController {
         try {
             Parent view = FXMLLoader.load(Objects.requireNonNull(MainLayoutController.class.getResource(fxmlPath)));
             instance.contentArea.getChildren().setAll(view);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -64,7 +66,7 @@ public class MainLayoutController {
 
             // Controller 가져와서 게시글 데이터 주입
             DetailPostController controller = loader.getController();
-            controller.setPost(post);
+            controller.setPostData(post);
 
             // 메인 화면에 해당 뷰 출력
             instance.contentArea.getChildren().setAll(view);
@@ -73,6 +75,23 @@ public class MainLayoutController {
             e.printStackTrace();
         }
     }
+
+    // PostEditController에 저장한 게시글 데이터 설정
+    public static void loadEditPostView(Post post) {
+        try {
+            FXMLLoader loader = new FXMLLoader(MainLayoutController.class.getResource("/com/samyukgu/what2wear/post/EditPost.fxml"));
+            Parent view = loader.load();
+
+            EditPostController controller = loader.getController();
+            controller.setPostData(post); // post 데이터 넘겨줌
+
+            instance.contentArea.getChildren().setAll(view);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     // 로고 버튼은 하이라이트 제외, 나머지는 선택 상태 갱신
     private void selectMenu(Button selectedButton) {
