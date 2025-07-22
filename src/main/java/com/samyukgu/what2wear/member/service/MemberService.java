@@ -6,7 +6,6 @@ import com.samyukgu.what2wear.member.model.Member;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 import java.util.List;
 
 public class MemberService {
@@ -80,6 +79,10 @@ public class MemberService {
         dao.updatePasswordByAccountId(account_id, securedPassword);
 
         return newPassword;
+    }
+    
+    public List<Member> searchMember(Long memberId,String keyword){
+        return dao.findByNicknameContaining(memberId, keyword);
     }
     
     // md5 암호화 메서드
