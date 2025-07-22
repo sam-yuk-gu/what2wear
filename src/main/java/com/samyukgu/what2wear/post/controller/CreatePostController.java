@@ -4,6 +4,8 @@ import com.samyukgu.what2wear.common.controller.CustomModalController;
 import com.samyukgu.what2wear.common.controller.MainLayoutController;
 import com.samyukgu.what2wear.common.controller.PostHeaderController;
 import com.samyukgu.what2wear.di.DIContainer;
+import com.samyukgu.what2wear.member.Session.MemberSession;
+import com.samyukgu.what2wear.member.service.MemberService;
 import com.samyukgu.what2wear.post.model.Post;
 import com.samyukgu.what2wear.post.service.PostService;
 import javafx.fxml.FXML;
@@ -23,6 +25,11 @@ public class CreatePostController {
     @FXML private Button registerButton;
     @FXML private TextField input_title;
     @FXML private TextArea content_title;
+
+
+    // 회원 세션
+    private MemberService memberService;
+    private MemberSession memberSession;
 
     private final PostService postService = DIContainer.getInstance().resolve(PostService.class);
 
@@ -62,6 +69,13 @@ public class CreatePostController {
 
     private void showConfirmationModal() {
         try {
+            // 로그인 세션 가져오기
+            if (memberSession == null || postService == null) {
+                DIContainer diContainer = DIContainer.getInstance();
+                memberService = diContainer.resolve(MemberService.class);
+                memberSession = diContainer.resolve(MemberSession.class);
+            }
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/CustomModal.fxml"));
             StackPane modal = loader.load();
 
@@ -81,22 +95,29 @@ public class CreatePostController {
                         String title = input_title.getText();
                         String content = content_title.getText();
 
-                        // Post 객체 생성 (ID는 임시로 currentTimeMillis 사용)
+                        // 로그인한 사용자 ID 가져오기
+                        Long memberId = memberSession.getMember().getId();
+                        System.out.println("현재 로그인한 사용자 ID: " + memberId);
+
+                        // 코디 ID는 추후 수정 예정
+                        Long codyId = 0L;
+
+                        // Post 객체 생성 (id는 DB에서 시퀀스로 생성됨)
                         Post newPost = new Post(
-                                System.currentTimeMillis(),
-                                200+1L, // member_id - 추후 로그인 세션과 연동 가능
-                                300+1L, // cody_id - 코디 연동 구현 시 수정
+                                0L,              // ID → 무시됨
+                                memberId,        // 로그인된 유저 ID
+                                codyId,          // 추후 실제 코디 ID로 대체
                                 title,
                                 content,
                                 new Date(),
                                 new Date(),
                                 0
-                                );
+                        );
 
-                        // 게시글 저장 (DI 사용)
+                        // 게시글 저장
                         postService.createPost(newPost);
 
-                        // 목록으로 이동 (자동 새로고침됨)
+                        // 게시글 목록으로 이동
                         MainLayoutController.loadView("/com/samyukgu/what2wear/post/ListPost.fxml");
                     }
             );
@@ -107,4 +128,5 @@ public class CreatePostController {
             e.printStackTrace();
         }
     }
+
 }

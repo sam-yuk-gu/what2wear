@@ -104,31 +104,33 @@ public class PostOracleDAO implements PostDAO {
         }
     }
 
-    @Override
+@Override
     public void create(Post post) {
         String sql = """
-                    INSERT INTO post (id, member_id, cody_id, title, content, create_at, last_updated, like_count)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-                """;
+            INSERT INTO post (id, member_id, cody_id, title, content, create_at, last_updated, like_count)
+            VALUES (SEQ_POST.NEXTVAL, ?, ?, ?, ?, ?, ?, ?)
+        """;
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setLong(1, post.getId());
-            pstmt.setLong(2, post.getMember_id());
-            pstmt.setLong(3, post.getCody_id());
-            pstmt.setString(4, post.getTitle());
-            pstmt.setString(5, post.getContent());
-            pstmt.setDate(6, new java.sql.Date(post.getCreate_at().getTime()));
-            pstmt.setDate(7, new java.sql.Date(post.getLast_updated().getTime()));
-            pstmt.setInt(8, post.getLike_count());
+            pstmt.setLong(1, post.getMember_id());
+            pstmt.setLong(2, post.getCody_id());
+            pstmt.setString(3, post.getTitle());
+            pstmt.setString(4, post.getContent());
+            pstmt.setDate(5, post.getCreate_at() != null ? new java.sql.Date(post.getCreate_at().getTime()) : null);
+            pstmt.setDate(6, post.getLast_updated() != null ? new java.sql.Date(post.getLast_updated().getTime()) : null);
+            pstmt.setInt(7, post.getLike_count());
+
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("Error By Save Post");
+            throw new RuntimeException("Error By Save Post", e);
         }
     }
+
+
 
     @Override
     public void update(Post post) {
