@@ -1,6 +1,8 @@
 package com.samyukgu.what2wear.wardrobe.controller;
 
 import com.samyukgu.what2wear.common.controller.MainLayoutController;
+import com.samyukgu.what2wear.member.Session.MemberSession;
+import com.samyukgu.what2wear.member.model.Member;
 import com.samyukgu.what2wear.wardrobe.dao.WardrobeOracleDAO;
 import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
 import com.samyukgu.what2wear.wardrobe.service.WardrobeService;
@@ -27,7 +29,7 @@ public class ListWardrobeController {
     // 데이터 저장
     private List<Wardrobe> originalWardrobes = new ArrayList<>();
     private List<Wardrobe> filteredWardrobes = new ArrayList<>();
-    private String currentCategory = "ALL";
+    private String currentCategory = "전체";
     private boolean showFavoritesOnly = false;
 
     // 페이지네이션 설정
@@ -57,10 +59,6 @@ public class ListWardrobeController {
             contentContainer.setMaxWidth(988);
             contentContainer.setFillWidth(true);
 
-            // 테스트용: 간단한 라벨 추가해서 contentContainer가 작동하는지 확인
-            Label testLabel = new Label("테스트 라벨 - contentContainer 작동 확인");
-            testLabel.setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-padding: 10;");
-            contentContainer.getChildren().add(testLabel);
         }
         loadWardrobes();
     }
@@ -74,7 +72,6 @@ public class ListWardrobeController {
 
         // 기존 내용 모두 제거
         contentContainer.getChildren().clear();
-
         if (filteredWardrobes.isEmpty()) {
             showEmptyState(contentContainer);
             return;
@@ -83,22 +80,17 @@ public class ListWardrobeController {
         // 페이지네이션 없이 모든 아이템 표시 (또는 첫 페이지만)
         int endIndex = Math.min(ITEMS_PER_PAGE, filteredWardrobes.size());
         List<Wardrobe> itemsToShow = filteredWardrobes.subList(0, endIndex);
-
         displayWardrobesOnPage(contentContainer, itemsToShow);
-
         System.out.println("Displayed " + itemsToShow.size() + " items directly in contentContainer");
     }
 
     private void setupUI() {
         // 검색 기능 설정
         setupSearchFunctionality();
-
         // 정렬 기능 설정
         setupSortFunctionality();
-
         // 카테고리 버튼 스타일 설정
         setupCategoryButtons();
-
         // 페이지네이션 설정
         setupPagination();
     }
@@ -147,10 +139,8 @@ public class ListWardrobeController {
                 showEmptyState(contentContainer);
                 return;
             }
-
             int startIndex = pageIndex * ITEMS_PER_PAGE;
             int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, filteredWardrobes.size());
-
             if (startIndex < filteredWardrobes.size()) {
                 List<Wardrobe> pageItems = filteredWardrobes.subList(startIndex, endIndex);
                 displayWardrobesOnPage(contentContainer, pageItems);
@@ -169,8 +159,12 @@ public class ListWardrobeController {
         Task<List<Wardrobe>> loadTask = new Task<List<Wardrobe>>() {
             @Override
             protected List<Wardrobe> call() throws Exception {
-//                long memberId = .getMemberId();
-//                return wardrobeService.getAllWardrobe(memberId);
+                Member member = MemberSession.getLoginMember();
+                if (member == null) {
+                    throw new IllegalStateException("로그인된 사용자가 없습니다.");
+                }
+                long memberId = member.getId();
+                return wardrobeService.getAllWardrobe(memberId);
             }
 
             @Override
@@ -195,10 +189,8 @@ public class ListWardrobeController {
     }
 
     private void filterAndDisplayWardrobes() {
-        // 기존 필터링 로직...
         Stream<Wardrobe> stream = originalWardrobes.stream();
-
-        if (!"ALL".equals(currentCategory)) {
+        if (!"전체".equals(currentCategory)) {
             stream = stream.filter(w -> {
                 String category = getCategoryFromId(w.getCategoryId());
                 return currentCategory.equals(category);
@@ -220,16 +212,12 @@ public class ListWardrobeController {
 
         filteredWardrobes = stream.collect(Collectors.toList());
         sortWardrobes();
-
-        // 페이지네이션 업데이트는 유지하되, 직접 표시
         updatePagination();
-
-        // 직접 contentContainer에 표시
         Platform.runLater(() -> displayAllItems());
     }
 
     private String getCategoryFromId(Long categoryId) {
-        if (categoryId == null) return "ETC";
+        if (categoryId == null) return "기타";
 
         switch (categoryId.intValue()) {
             case 1: return "상의";
@@ -250,7 +238,7 @@ public class ListWardrobeController {
 
         switch (selectedSort) {
             case "등록일 순":
-                // ID 기준으로 정렬 (등록 순서)
+                // 옷 ID 기준으로 정렬 (등록 순서)
                 filteredWardrobes.sort(Comparator.comparing(Wardrobe::getId).reversed());
                 break;
             case "이름순":
@@ -258,7 +246,7 @@ public class ListWardrobeController {
                         w.getName() != null ? w.getName() : ""));
                 break;
             case "최근 착용순":
-                // 기존 구조에서는 착용 날짜 필드가 없으므로 ID로 대체
+                // 이부분 아직 더 고민이 필요..
                 filteredWardrobes.sort(Comparator.comparing(Wardrobe::getId).reversed());
                 break;
         }
@@ -300,15 +288,14 @@ public class ListWardrobeController {
     private void displayWardrobesOnPage(VBox pageContent, List<Wardrobe> wardrobes) {
         HBox currentRow = null;
 
-        // 한 행에 들어갈 아이템 수를 동적으로 계산
         double containerWidth = 988.0; // ScrollPane 너비
-        double itemWidth = 190.0; // 아이템 너비 + 여백
+        double itemWidth = 190.0; // 옷 너비 + 여백
         int itemsPerRow = Math.max(1, (int)(containerWidth / itemWidth));
 
         for (int i = 0; i < wardrobes.size(); i++) {
             if (i % itemsPerRow == 0) {
                 currentRow = new HBox();
-                currentRow.setSpacing(15); // 아이템 간 간격
+                currentRow.setSpacing(15); // 옷 간 간격
                 currentRow.setAlignment(Pos.TOP_LEFT);
                 currentRow.setPrefWidth(988);
                 currentRow.setMaxWidth(988);
@@ -482,7 +469,6 @@ public class ListWardrobeController {
     private void createDefaultHeartIcon(ImageView heartIcon, boolean isFavorite) {
         // 간단한 텍스트 기반 하트 이미지 생성하거나 숨김
         heartIcon.setVisible(true);
-        // 임시로 투명하게 만들거나 다른 기본 이미지 설정 가능
     }
 
     private void updateHeartIcon(ImageView heartIcon, boolean isFavorite) {
@@ -493,16 +479,12 @@ public class ListWardrobeController {
         try {
             boolean currentFavorite = "Y".equals(wardrobe.getLike());
             String newFavoriteStatus = currentFavorite ? "N" : "Y";
-
             // 모델 업데이트
             wardrobe.setLike(newFavoriteStatus);
-
             // DB 업데이트
             wardrobeService.updateWardrobe(wardrobe);
-
             // 아이콘 업데이트
             updateHeartIcon(heartIcon, "Y".equals(newFavoriteStatus));
-
             // 즐겨찾기 필터가 활성화된 경우 새로고침
             if (showFavoritesOnly) {
                 filterAndDisplayWardrobes();
@@ -553,7 +535,7 @@ public class ListWardrobeController {
     // 카테고리 필터 메서드들
     @FXML
     private void filterAll() {
-        updateCategoryFilter("ALL", allButton);
+        updateCategoryFilter("전체", allButton);
     }
 
     @FXML
@@ -606,10 +588,8 @@ public class ListWardrobeController {
     private void updateCategoryFilter(String category, Button selectedButton) {
         // 이전 버튼 스타일 리셋
         resetAllCategoryButtons();
-
         // 새 버튼 스타일 적용
         updateCategoryButtonStyle(selectedButton, true);
-
         currentCategory = category;
         filterAndDisplayWardrobes();
     }
@@ -650,10 +630,9 @@ public class ListWardrobeController {
         sortWardrobes();
     }
 
-    // 아이템 클릭 시 상세 페이지로 이동 (기존 DetailWardrobeController 사용)
+    // 아이템 클릭 시 상세 페이지로 이동
     private void handleItemClick(Wardrobe wardrobe) {
         try {
-            // DetailWardrobeController에서 사용할 수 있도록 데이터 저장
             WardrobeDetailData.setSelectedWardrobe(wardrobe);
             MainLayoutController.loadView("/com/samyukgu/what2wear/wardrobe/wardrobeDetail.fxml");
         } catch (Exception e) {

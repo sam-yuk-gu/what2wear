@@ -1,7 +1,8 @@
 package com.samyukgu.what2wear.wardrobe.controller;
 
 import com.samyukgu.what2wear.common.controller.MainLayoutController;
-import com.samyukgu.what2wear.wardrobe.dao.CategoryDAO;
+import com.samyukgu.what2wear.member.Session.MemberSession;
+import com.samyukgu.what2wear.member.model.Member;
 import com.samyukgu.what2wear.wardrobe.dao.CategoryOracleDAO;
 import com.samyukgu.what2wear.wardrobe.dao.WardrobeOracleDAO;
 import com.samyukgu.what2wear.wardrobe.model.Category;
@@ -20,15 +21,11 @@ import javafx.stage.FileChooser;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.ResourceBundle;
 
-/**
- * 옷장 아이템 수정 컨트롤러
- */
 public class EditWardrobeController implements Initializable {
 
     @FXML private TextField nameField;
@@ -58,19 +55,16 @@ public class EditWardrobeController implements Initializable {
     private void setupUI() {
         // 업로드 버튼 연결
         uploadButton.setOnAction(e -> handleUploadImage());
-
         // 키워드 콤보박스 설정
         keywordField.setItems(FXCollections.observableArrayList(
-                "캐주얼", "스트릿", "포멀", "아메카지", "스포티",
-                "미니멀", "빈티지", "댄디", "걸리시", "힙합", "프레피"
+                "캐주얼", "스트릿", "미니멀", "걸리시", "스포티", "클래식",
+                "워크웨어", "로맨틱", "시크", "시티보이", "고프코어", "레트로"
         ));
-
         // 색상 콤보박스 설정
         colorField.setItems(FXCollections.observableArrayList(
                 "화이트", "블랙", "그레이", "레드", "핑크", "오렌지", "엘로우",
                 "그린", "블루", "퍼플", "브라운"
         ));
-
         // 폼 검증 설정
         setupFormValidation();
     }
@@ -103,7 +97,7 @@ public class EditWardrobeController implements Initializable {
     }
 
     private void loadCurrentWardrobeData() {
-        // DetailWardrobeController에서 전달된 데이터 가져오기
+        // DetailWardrobeController에서 전달된 데이터 가져옴
         currentWardrobe = WardrobeEditData.getSelectedWardrobe();
 
         if (currentWardrobe != null) {
@@ -121,20 +115,16 @@ public class EditWardrobeController implements Initializable {
             sizeField.setText(wardrobe.getSize() != null ? wardrobe.getSize() : "");
             brandField.setText(wardrobe.getBrand() != null ? wardrobe.getBrand() : "");
             memoField.setText(wardrobe.getMemo() != null ? wardrobe.getMemo() : "");
-
             // 키워드 설정
             if (wardrobe.getKeyword() != null) {
                 keywordField.setValue(wardrobe.getKeyword());
             }
-
             // 색상 설정
             if (wardrobe.getColor() != null) {
                 colorField.setValue(wardrobe.getColor());
             }
-
             // 이미지 설정
             setWardrobeImage(wardrobe);
-
             // 기존 이미지 데이터 보관
             pictureData = wardrobe.getPicture();
 
@@ -156,7 +146,6 @@ public class EditWardrobeController implements Initializable {
         } catch (Exception e) {
             System.err.println("이미지 로딩 실패: " + e.getMessage());
         }
-
         // 기본 이미지 설정
         try {
             Image defaultImage = new Image(getClass().getResourceAsStream("/images/shoes.png"));
@@ -205,10 +194,8 @@ public class EditWardrobeController implements Initializable {
         if (!validateForm()) {
             return;
         }
-
         // 수정 버튼 비활성화 (중복 클릭 방지) - setDisable() 사용
         updateButton.setDisable(true);
-
         Task<Void> updateTask = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
@@ -231,7 +218,6 @@ public class EditWardrobeController implements Initializable {
                 showError("수정 중 오류가 발생했습니다: " + getException().getMessage());
             }
         };
-
         new Thread(updateTask).start();
     }
 
@@ -242,31 +228,26 @@ public class EditWardrobeController implements Initializable {
             nameField.requestFocus();
             return false;
         }
-
         if (categoryField.getValue() == null) {
             showError("카테고리를 선택해주세요.");
             categoryField.requestFocus();
             return false;
         }
-
         if (brandField.getText() == null || brandField.getText().trim().isEmpty()) {
             showError("브랜드를 입력해주세요.");
             brandField.requestFocus();
             return false;
         }
-
         if (sizeField.getText() == null || sizeField.getText().trim().isEmpty()) {
             showError("사이즈를 입력해주세요.");
             sizeField.requestFocus();
             return false;
         }
-
         if (colorField.getValue() == null) {
             showError("색상을 선택해주세요.");
             colorField.requestFocus();
             return false;
         }
-
         return true;
     }
 
@@ -277,11 +258,10 @@ public class EditWardrobeController implements Initializable {
 
         // 기존 옷 정보를 복사하고 수정된 내용 적용
         Wardrobe updatedWardrobe = new Wardrobe();
-
+        Member member = MemberSession.getLoginMember();
+        updatedWardrobe.setMemberId(member.getId());
         // 기본 정보는 유지
         updatedWardrobe.setId(currentWardrobe.getId());
-        updatedWardrobe.setMemberId(ImsiSession.getMemberId());
-//        updatedWardrobe.setMemberId(currentWardrobe.getMemberId());
         updatedWardrobe.setDeleted(currentWardrobe.getDeleted());
         updatedWardrobe.setLike(currentWardrobe.getLike()); // 즐겨찾기 상태 유지
 
@@ -327,7 +307,6 @@ public class EditWardrobeController implements Initializable {
                 if (fileSizeInMB > 5) {
                     throw new IllegalArgumentException("이미지 파일 크기는 5MB 이하여야 합니다.");
                 }
-
                 // 이미지 데이터 읽기
                 pictureData = Files.readAllBytes(selectedFile.toPath());
                 return null;
@@ -355,7 +334,6 @@ public class EditWardrobeController implements Initializable {
                 showError("이미지 업로드 실패: " + getException().getMessage());
             }
         };
-
         new Thread(imageTask).start();
     }
 
@@ -368,7 +346,6 @@ public class EditWardrobeController implements Initializable {
                     ButtonType.YES, ButtonType.NO);
             alert.setTitle("확인");
             alert.setHeaderText(null);
-
             alert.showAndWait().ifPresent(result -> {
                 if (result == ButtonType.YES) {
                     handleBackClick();
@@ -419,7 +396,6 @@ public class EditWardrobeController implements Initializable {
             categoryChanged = !categoryField.getValue().getId().equals(currentWardrobe.getCategoryId());
         }
 
-        // 이미지 변경 확인은 복잡하므로 간단히 처리
         boolean imageChanged = (pictureData != currentWardrobe.getPicture());
 
         return nameChanged || brandChanged || sizeChanged || memoChanged ||

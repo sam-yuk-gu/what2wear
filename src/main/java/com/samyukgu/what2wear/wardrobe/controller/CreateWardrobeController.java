@@ -1,7 +1,8 @@
 package com.samyukgu.what2wear.wardrobe.controller;
 
 import com.samyukgu.what2wear.common.controller.MainLayoutController;
-import com.samyukgu.what2wear.wardrobe.dao.CategoryDAO;
+import com.samyukgu.what2wear.member.Session.MemberSession;
+import com.samyukgu.what2wear.member.model.Member;
 import com.samyukgu.what2wear.wardrobe.dao.CategoryOracleDAO;
 import com.samyukgu.what2wear.wardrobe.dao.WardrobeOracleDAO;
 import com.samyukgu.what2wear.wardrobe.model.Category;
@@ -20,7 +21,6 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.List;
@@ -52,22 +52,18 @@ public class CreateWardrobeController implements Initializable {
     private void setupUI() {
         // 저장 버튼 연결
         saveButton.setOnAction(this::handleSave);
-
         // 업로드 버튼 연결
         uploadButton.setOnAction(this::handleUploadImage);
-
         // 키워드 콤보박스 설정
         keywordField.setItems(FXCollections.observableArrayList(
-                "캐주얼", "스트릿", "포멀", "아메카지", "스포티",
-                "미니멀", "빈티지", "댄디", "걸리시", "힙합", "프레피"
+                "캐주얼", "스트릿", "미니멀", "걸리시", "스포티", "클래식",
+                "워크웨어", "로맨틱", "시크", "시티보이", "고프코어", "레트로"
         ));
-
         // 색상 콤보박스 설정
         colorField.setItems(FXCollections.observableArrayList(
                 "화이트", "블랙", "그레이", "레드", "핑크", "오렌지", "엘로우",
                 "그린", "블루", "퍼플", "브라운"
         ));
-
         // 폼 검증 추가
         setupFormValidation();
     }
@@ -79,19 +75,16 @@ public class CreateWardrobeController implements Initializable {
                 nameField.setText(oldValue); // 50자 제한
             }
         });
-
         sizeField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null && newValue.length() > 10) {
                 sizeField.setText(oldValue); // 10자 제한
             }
         });
-
         brandField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null && newValue.length() > 30) {
                 brandField.setText(oldValue); // 30자 제한
             }
         });
-
         memoField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null && newValue.length() > 200) {
                 memoField.setText(oldValue); // 200자 제한
@@ -136,7 +129,7 @@ public class CreateWardrobeController implements Initializable {
                 wardrobeService.addWardrobe(wardrobe);
                 return null;
             }
-
+            // 옷 저장시 옷장 전체 조회 페이지로 이동
             @Override
             protected void succeeded() {
                 showAlert("옷이 저장되었습니다.");
@@ -192,16 +185,17 @@ public class CreateWardrobeController implements Initializable {
         Wardrobe wardrobe = new Wardrobe();
 
         Category selectedCategory = categoryField.getValue();
-        wardrobe.setMemberId(ImsiSession.getMemberId());
+        Member member = MemberSession.getLoginMember();
+        wardrobe.setMemberId(member.getId());
         wardrobe.setCategoryId(selectedCategory.getId());
         wardrobe.setName(nameField.getText().trim());
-        wardrobe.setLike("N"); // 기본값은 즐겨찾기 아님
+        wardrobe.setLike("N"); // 기본값은 즐겨찾기 없음
         wardrobe.setKeyword(keywordField.getValue());
         wardrobe.setColor(colorField.getValue());
         wardrobe.setSize(sizeField.getText().trim());
         wardrobe.setBrand(brandField.getText().trim());
         wardrobe.setMemo(memoField.getText() != null ? memoField.getText().trim() : "");
-        wardrobe.setDeleted("N");
+        wardrobe.setDeleted("N"); // 옷 삭제시 "Y"로 변경
         wardrobe.setPicture(pictureData);
 
         return wardrobe;
@@ -210,7 +204,6 @@ public class CreateWardrobeController implements Initializable {
     private void handleUploadImage(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("이미지 선택");
-
         // 이미지 파일 필터 추가
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("이미지 파일", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp"),

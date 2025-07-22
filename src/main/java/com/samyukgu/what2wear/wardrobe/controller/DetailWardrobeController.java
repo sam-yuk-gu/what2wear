@@ -1,13 +1,14 @@
 package com.samyukgu.what2wear.wardrobe.controller;
 
 import com.samyukgu.what2wear.common.controller.MainLayoutController;
+import com.samyukgu.what2wear.member.Session.MemberSession;
+import com.samyukgu.what2wear.member.model.Member;
 import com.samyukgu.what2wear.wardrobe.dao.WardrobeOracleDAO;
 import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
 import com.samyukgu.what2wear.wardrobe.service.WardrobeService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -26,8 +27,6 @@ public class DetailWardrobeController implements Initializable {
     @FXML private Label colorLabel;
     @FXML private Label keywordLabel;
     @FXML private Label memoLabel;
-    @FXML private Button editButton;
-    @FXML private Button deleteButton;
 
     private final WardrobeService wardrobeService = new WardrobeService(new WardrobeOracleDAO());
     private Wardrobe currentWardrobe;
@@ -40,7 +39,6 @@ public class DetailWardrobeController implements Initializable {
     private void loadWardrobeDetail() {
         // ListWardrobeController에서 전달된 데이터 가져오기
         currentWardrobe = WardrobeDetailData.getSelectedWardrobe();
-
         if (currentWardrobe != null) {
             displayWardrobeInfo(currentWardrobe);
         } else {
@@ -52,25 +50,19 @@ public class DetailWardrobeController implements Initializable {
         try {
             // 이름 설정
             nameLabel.setText(wardrobe.getName() != null ? wardrobe.getName() : "이름 없음");
-
             // 카테고리 설정 (ID를 한글로 변환)
+            // 옷 db에는 카테고리 id만 있기 때문에 변환을 해줘야함
             categoryLabel.setText(getCategoryNameFromId(wardrobe.getCategoryId()));
-
             // 사이즈 설정
             sizeLabel.setText(wardrobe.getSize() != null ? wardrobe.getSize() : "-");
-
             // 브랜드 설정
             brandLabel.setText(wardrobe.getBrand() != null ? wardrobe.getBrand() : "-");
-
             // 색상 설정
             colorLabel.setText(wardrobe.getColor() != null ? wardrobe.getColor() : "-");
-
             // 키워드 설정
             keywordLabel.setText(wardrobe.getKeyword() != null ? wardrobe.getKeyword() : "-");
-
             // 메모 설정
             memoLabel.setText(wardrobe.getMemo() != null ? wardrobe.getMemo() : "메모 없음");
-
             // 이미지 설정
             setWardrobeImage(wardrobe);
 
@@ -78,7 +70,7 @@ public class DetailWardrobeController implements Initializable {
             showError("옷 정보 표시 중 오류가 발생했습니다: " + e.getMessage());
         }
     }
-
+    // 카테고리 변환 하는 코드
     private String getCategoryNameFromId(Long categoryId) {
         if (categoryId == null) return "기타";
 
@@ -119,11 +111,10 @@ public class DetailWardrobeController implements Initializable {
         }
     }
 
-    // 수정 버튼 - 현재는 수정 페이지로 이동만 구현
+    // 수정 버튼
     @FXML
     private void handleEdit() {
         try {
-            // 수정할 데이터를 EditWardrobeController로 전달 (추후 구현)
             WardrobeEditData.setSelectedWardrobe(currentWardrobe);
             MainLayoutController.loadView("/com/samyukgu/what2wear/wardrobe/wardrobeModify.fxml");
         } catch (Exception e) {
@@ -139,6 +130,15 @@ public class DetailWardrobeController implements Initializable {
             return;
         }
 
+        // 로그인 정보가 필요할지 고민... sql은 해당 멤머만 삭제 가능하도록 코딩을 했는데
+        // 옷 삭제하기 위해서는 조회 -> 상세 -> 삭제 흐름으로 가야함
+        // 일단 회원 정보 있을때만 삭제 가능하도록 함
+        Member loginMember = MemberSession.getLoginMember();
+        if (loginMember == null) {
+            showError("로그인이 필요합니다.");
+            return;
+        }
+
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
                 "정말 삭제하시겠습니까?", ButtonType.OK, ButtonType.CANCEL);
         alert.setTitle("삭제 확인");
@@ -149,10 +149,8 @@ public class DetailWardrobeController implements Initializable {
                 try {
                     wardrobeService.deleteWardrobe(currentWardrobe.getId(), currentWardrobe.getMemberId());
                     showAlert("삭제되었습니다.");
-
                     // 데이터 정리
                     WardrobeDetailData.clearSelectedWardrobe();
-
                     // 목록 페이지로 돌아가기
                     MainLayoutController.loadView("/com/samyukgu/what2wear/wardrobe/wardrobeList.fxml");
 

@@ -12,15 +12,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <HBox prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21.0.8"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.samyukgu.what2wear.wardrobe.controller.CreateWardrobeController">
     <children>
 
-        <!-- 왼쪽 사이드바 -->
-        <VBox prefHeight="768.0" prefWidth="250.0" style="-fx-background-color: #f5f5f5;" />
 
         <!-- 오른쪽 전체 -->
         <VBox prefHeight="768.0" prefWidth="1030.0">
@@ -88,15 +85,16 @@
                                                     <FXCollections fx:factory="observableArrayList">
                                                         <String fx:value="캐주얼" />
                                                         <String fx:value="스트릿" />
-                                                        <String fx:value="포멀" />
-                                                        <String fx:value="아메카지" />
-                                                        <String fx:value="스포티" />
                                                         <String fx:value="미니멀" />
-                                                        <String fx:value="빈티지" />
-                                                        <String fx:value="댄디" />
                                                         <String fx:value="걸리시" />
-                                                        <String fx:value="힙합" />
-                                                        <String fx:value="프레피" />
+                                                        <String fx:value="스포티" />
+                                                        <String fx:value="클래식" />
+                                                        <String fx:value="워크웨어" />
+                                                        <String fx:value="로맨틱" />
+                                                        <String fx:value="시크" />
+                                                        <String fx:value="시티보이" />
+                                                        <String fx:value="고프코어" />
+                                                        <String fx:value="레트로" />
                                                     </FXCollections>
                                                 </items>
                                             </ComboBox>

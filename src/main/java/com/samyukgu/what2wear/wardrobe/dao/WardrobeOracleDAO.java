@@ -181,6 +181,8 @@ public class WardrobeOracleDAO implements WardrobeDAO {
             pstmt.setString(9, wardrobe.getColor());
             pstmt.setString(10, wardrobe.getBrand());
             pstmt.setString(11, wardrobe.getDeleted());
+            pstmt.setLong(12, wardrobe.getId());
+            pstmt.setLong(13, wardrobe.getMemberId());
 
             pstmt.executeUpdate();
 
