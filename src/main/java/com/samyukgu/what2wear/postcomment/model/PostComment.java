@@ -21,4 +21,9 @@ public class PostComment {
         this.content = content;
         this.createdAt = createdAt;
     }
+
+    public PostComment() {
+
+    }
 }
+

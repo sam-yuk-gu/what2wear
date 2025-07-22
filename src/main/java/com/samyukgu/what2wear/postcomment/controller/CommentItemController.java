@@ -10,7 +10,6 @@ import com.samyukgu.what2wear.postcomment.model.PostComment;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -72,7 +71,7 @@ public class CommentItemController {
         PostCommentDAO commentDAO = DIContainer.getInstance().resolve(PostCommentDAO.class);
         List<PostComment> comments = commentDAO.findByPostId(currentPost.getId());
 
-//        commentBox.getChildren().clear();
+        commentBox.getChildren().clear();
 
         for (PostComment comment : comments) {
             try {
@@ -99,10 +98,19 @@ public class CommentItemController {
         String newText = editTextField.getText();
         if (newText != null && !newText.isEmpty()) {
             commentTextLabel.setText(newText);
+
+            // DB 반영
+            PostCommentDAO commentDAO = DIContainer.getInstance().resolve(PostCommentDAO.class);
+            PostComment updatedComment = new PostComment();
+            updatedComment.setId(comment_id);
+            updatedComment.setContent(newText);
+            commentDAO.update(updatedComment);
         }
+
         editTextField.setVisible(false);
         commentTextLabel.setVisible(true);
     }
+
 
     // 댓글 수정하기
     @FXML
@@ -115,36 +123,22 @@ public class CommentItemController {
         editTextField.setOnAction(event -> applyEdit());
     }
 
-    // 댓글 삭제 클릭 시 모달창 띄우기
+    // 댓글 삭제 클릭
     public void handleDeleteClick(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/CustomModal.fxml"));
             StackPane modal = loader.load();
 
-            CustomModalController controller = loader.getController();
-            controller.configure(
-                    "댓글을 삭제하시겠습니까?",
-                    "삭제된 댓글 정보는 저장되지 않습니다.",
-                    "/assets/icons/redCheck.png",
-                    "#FA7B7F",
-                    "취소",
-                    "확인",
-                    () -> root.getChildren().remove(modal),
-                    () -> {
-                        // DB 삭제
-                        PostCommentDAO commentDAO = DIContainer.getInstance().resolve(PostCommentDAO.class);
-                        commentDAO.delete(comment_id);
+            // DB 삭제
+            PostCommentDAO commentDAO = DIContainer.getInstance().resolve(PostCommentDAO.class);
+            commentDAO.delete(comment_id);
+            // 모달 제거
+            root.getChildren().remove(modal);
+            // 화면에서 댓글 제거
+            if (root.getParent() instanceof Pane parentPane) {
+                parentPane.getChildren().remove(root);
+            }
 
-                        // 모달 제거
-                        root.getChildren().remove(modal);
-
-                        // 화면에서 댓글 제거
-                        // 3. 댓글 UI 제거
-                        if (commentBox != null) {
-                            ((Pane) commentBox.getParent()).getChildren().remove(commentBox);
-                        }
-                    }
-            );
 
             root.getChildren().add(modal);
 

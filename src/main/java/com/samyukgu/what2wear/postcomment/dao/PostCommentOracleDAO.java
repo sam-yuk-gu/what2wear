@@ -19,6 +19,10 @@ public class PostCommentOracleDAO implements PostCommentDAO {
     private static String dbUser;
     private static String dbPassword;
 
+    private Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(url, dbUser, dbPassword);
+    }
+
     // 초기 생성 시 properties 읽어오기
     public PostCommentOracleDAO() {
         Properties props = new Properties();
@@ -80,14 +84,22 @@ public class PostCommentOracleDAO implements PostCommentDAO {
         }
     }
 
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(url, dbUser, dbPassword);
-    }
-
     @Override
     public void update(PostComment postComment) {
+        String sql = "UPDATE post_comment SET content = ? WHERE id = ?";
 
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, postComment.getContent());
+            pstmt.setLong(2, postComment.getId());
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
+
 
     @Override
     public void delete(Long id) {

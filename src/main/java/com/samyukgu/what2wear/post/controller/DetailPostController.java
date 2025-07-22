@@ -233,7 +233,7 @@ public class DetailPostController {
     private void addCommentToUI(PostComment comment) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/postcomment/CommentItem.fxml"));
-            Parent commentItem = loader.load(); // 변경: 안전하게 Parent 사용
+            Parent commentItem = loader.load();
 
             CommentItemController controller = loader.getController();
             controller.setComment(
@@ -242,11 +242,6 @@ public class DetailPostController {
                     comment.getCreatedAt().toString(),
                     comment.getContent()
             );
-
-            if (commentItem instanceof HBox) {
-                controller.setComment(comment);
-            }
-
             comment_vbox.getChildren().add(commentItem);
         } catch (IOException e) {
             e.printStackTrace();
