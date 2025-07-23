@@ -14,7 +14,8 @@
         <ScrollPane fx:id="scrollPane" fitToWidth="true" styleClass="board_scroll_pane" VBox.vgrow="ALWAYS">
         <content>
             <VBox fx:id="board_vbox" prefHeight="768.0" spacing="40.0" styleClass="board_detail_vbox">
-            <!-- 헤더 -->
+
+                <!-- 헤더 -->
             <HBox alignment="CENTER" prefHeight="81.0" prefWidth="1030.0">
                 <fx:include fx:id="header_pane" source="/com/samyukgu/what2wear/common/PostHeader.fxml" />
             </HBox>
@@ -42,7 +43,6 @@
                          </HBox>
                         </children>
                      </HBox>
-
 
                 <!-- 게시글 내용 -->
                 <VBox fx:id="content_hbox" alignment="CENTER" prefHeight="391.0" prefWidth="1015.0" styleClass="content_hbox">
@@ -73,6 +73,7 @@
                         </children>
                      </HBox>
                         </Pane>
+
                   <HBox alignment="CENTER" layoutY="84.0" prefHeight="300.0" prefWidth="990.0">
                      <children>
                         <HBox alignment="CENTER" prefHeight="318.0" prefWidth="990.0">

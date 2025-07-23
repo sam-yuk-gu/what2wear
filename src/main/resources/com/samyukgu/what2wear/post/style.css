@@ -290,14 +290,6 @@
     -fx-cursor: hand;
 }
 
-/* =======================
-   Modal Button 관련
-   ======================= */
-.close_button {
-    -fx-background-color: white;
-    -fx-cursor: hand;
-}
-
 /* hover 관련 */
 .gray_stroke_button:hover,
 .double_button:hover,

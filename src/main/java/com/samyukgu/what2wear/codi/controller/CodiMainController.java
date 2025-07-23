@@ -3,6 +3,10 @@ package com.samyukgu.what2wear.codi.controller;
 import com.samyukgu.what2wear.codi.dto.CodiListDTO;
 import com.samyukgu.what2wear.codi.model.CodiItem;
 import com.samyukgu.what2wear.codi.model.CodiSchedule;
+//import com.samyukgu.what2wear.codi.model.ScheduleVisibility;
+import com.samyukgu.what2wear.codi.service.DummyScheduleRepository;
+import com.samyukgu.what2wear.layout.controller.MainLayoutController;
+import javafx.event.ActionEvent;
 import com.samyukgu.what2wear.codi.service.CodiService;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
@@ -520,5 +524,10 @@ public class CodiMainController {
 
         yearCombo.setValue(currentDate.getYear());
         monthCombo.setValue(currentDate.getMonthValue());
+    }
+
+    // ai 추천 안내 화면으로 전환
+    public void handleAiButtonClick(ActionEvent actionEvent) {
+        MainLayoutController.loadView("/com/samyukgu/what2wear/ai/IntroduceAi.fxml");
     }
 }
