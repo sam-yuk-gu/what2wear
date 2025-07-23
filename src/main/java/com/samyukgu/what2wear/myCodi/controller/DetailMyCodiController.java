@@ -1,7 +1,7 @@
 package com.samyukgu.what2wear.myCodi.controller;
 
-import com.samyukgu.what2wear.common.controller.MainLayoutController;
 import com.samyukgu.what2wear.di.DIContainer;
+import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.member.Session.MemberSession;
 import com.samyukgu.what2wear.member.model.Member;
 import com.samyukgu.what2wear.myCodi.dao.CodiDetailOracleDAO;
