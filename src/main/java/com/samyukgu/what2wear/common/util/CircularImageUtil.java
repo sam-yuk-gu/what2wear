@@ -155,4 +155,32 @@ public class CircularImageUtil {
             imageView.setStyle("-fx-background-color: #cccccc;");
         }
     }
+
+    // CircularImageUtil에 추가
+    public static void applyCircularImageToExistingImageView(ImageView imageView, double size, byte[] imageBytes) {
+        if (imageBytes != null && imageBytes.length > 0) {
+            try {
+                // 바이트 배열을 Image로 변환
+                ByteArrayInputStream bis = new ByteArrayInputStream(imageBytes);
+                Image image = new Image(bis);
+
+                // ImageView 크기 설정
+                imageView.setFitWidth(size);
+                imageView.setFitHeight(size);
+                imageView.setPreserveRatio(false);
+
+                // 원형 클립 적용
+                Circle clip = new Circle(size / 2);
+                clip.setCenterX(size / 2);
+                clip.setCenterY(size / 2);
+                imageView.setClip(clip);
+
+                // 이미지 설정
+                imageView.setImage(image);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
