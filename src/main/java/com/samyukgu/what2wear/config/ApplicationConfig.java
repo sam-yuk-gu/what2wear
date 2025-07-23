@@ -1,8 +1,5 @@
 package com.samyukgu.what2wear.config;
 
-import com.samyukgu.what2wear.codi.dao.CodiDAO;
-import com.samyukgu.what2wear.codi.dao.CodiOracleDAO;
-import com.samyukgu.what2wear.codi.service.CodiService;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.friend.dao.FriendDAO;
 import com.samyukgu.what2wear.friend.dao.FriendOracleDAO;
@@ -13,11 +10,8 @@ import com.samyukgu.what2wear.member.Session.MemberSession;
 import com.samyukgu.what2wear.member.dao.MemberDAO;
 import com.samyukgu.what2wear.member.dao.MemberOracleDAO;
 import com.samyukgu.what2wear.member.service.MemberService;
-import com.samyukgu.what2wear.myCodi.dao.CodiDAO;
 import com.samyukgu.what2wear.myCodi.dao.CodiDetailDAO;
 import com.samyukgu.what2wear.myCodi.dao.CodiDetailOracleDAO;
-import com.samyukgu.what2wear.myCodi.dao.CodiOracleDAO;
-import com.samyukgu.what2wear.myCodi.service.CodiService;
 import com.samyukgu.what2wear.wardrobe.dao.CategoryDAO;
 import com.samyukgu.what2wear.wardrobe.dao.CategoryOracleDAO;
 import com.samyukgu.what2wear.wardrobe.dao.WardrobeDAO;
@@ -51,23 +45,32 @@ public class ApplicationConfig {
         // DAO
         container.registerSingleton(MemberDAO.class, new MemberOracleDAO());
         container.registerSingleton(FriendDAO.class, new FriendOracleDAO());
-        container.registerSingleton(CodiDAO.class, new CodiOracleDAO());
+        container.registerSingleton(com.samyukgu.what2wear.codi.dao.CodiDAO.class,
+                new com.samyukgu.what2wear.codi.dao.CodiOracleDAO());
         container.registerSingleton(PostDAO.class, new PostOracleDAO());
         container.registerSingleton(PostCommentDAO.class, new PostCommentOracleDAO());
 
         // Service
         container.registerSingleton(MemberService.class, new MemberService(container.resolve(MemberDAO.class)));
         container.registerSingleton(PostService.class, new PostService(container.resolve(PostDAO.class)));
-        container.registerSingleton(CodiService.class, new CodiService(container.resolve(CodiDAO.class)));
+        container.registerSingleton(com.samyukgu.what2wear.codi.service.CodiService.class,
+                new com.samyukgu.what2wear.codi.service.CodiService(
+                        container.resolve(com.samyukgu.what2wear.codi.dao.CodiDAO.class)
+                ));
 
         // wardrobe
         container.registerSingleton(WardrobeDAO.class, new WardrobeOracleDAO());
         container.registerSingleton(WardrobeService.class, new WardrobeService(container.resolve(WardrobeDAO.class)));
 
         // myCodi
-        container.registerSingleton(CodiDAO.class, new CodiOracleDAO());
+        container.registerSingleton(com.samyukgu.what2wear.myCodi.dao.CodiDAO.class,
+                new com.samyukgu.what2wear.myCodi.dao.CodiOracleDAO());
         container.registerSingleton(CodiDetailDAO.class, new CodiDetailOracleDAO());
-        container.registerSingleton(CodiService.class, new CodiService(container.resolve(CodiDAO.class), container.resolve(CodiDetailDAO.class)));
+        container.registerSingleton(com.samyukgu.what2wear.myCodi.service.CodiService.class,
+                new com.samyukgu.what2wear.myCodi.service.CodiService(
+                        container.resolve(com.samyukgu.what2wear.myCodi.dao.CodiDAO.class),
+                        container.resolve(com.samyukgu.what2wear.myCodi.dao.CodiDetailDAO.class)
+                ));
 
         // Category
         container.registerSingleton(CategoryDAO.class, new CategoryOracleDAO());
