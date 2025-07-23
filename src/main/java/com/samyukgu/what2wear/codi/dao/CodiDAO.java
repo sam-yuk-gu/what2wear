@@ -1,8 +1,8 @@
 package com.samyukgu.what2wear.codi.dao;
 
 import com.samyukgu.what2wear.codi.dto.CodiListDTO;
-import com.samyukgu.what2wear.codi.dto.CodiScheduleDTO;
 import com.samyukgu.what2wear.codi.model.Codi;
+import com.samyukgu.what2wear.codi.model.CodiSchedule;
 import com.samyukgu.what2wear.codi.model.CodiScope;
 import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
 
@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface CodiDAO {
     // 1. 월별 일정 조회 (코디 요약 정보 리스트)
-    List<CodiScheduleDTO> findMonthlyCodiSchedules(Long memberId, LocalDate date);
+    List<CodiSchedule> findMonthlyCodiSchedules(Long memberId, LocalDate date);
     // date: 2025-07-01처럼 전달하면, 7월 전체로 처리
     // response: year-month-day, List<Codi : id, name, >
     List<CodiListDTO> findCodiList(String memberId, LocalDate date);

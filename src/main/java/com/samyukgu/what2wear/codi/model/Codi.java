@@ -23,7 +23,6 @@ public class Codi {
     String weather;             // 날씨
     byte[] picture;             // 사진
     String codiType;
-//    List<Clothes> clothes;    // 상세 조회용 옷 목록
 
     public Codi(Long id, String name, LocalDate scheduleDate) {
         this.id = id;

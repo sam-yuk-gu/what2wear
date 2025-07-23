@@ -13,4 +13,11 @@ public class CodiItem {
     private String category;
     private String name;
     private String imagePath;
+    private Long id;
+
+    public CodiItem (String category, String name, String imagePath) {
+        this.category = category;
+        this.name = name;
+        this.imagePath = imagePath;
+    }
 }

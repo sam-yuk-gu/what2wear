@@ -15,9 +15,14 @@
 
 <VBox prefHeight="760.0" prefWidth="1280.0" spacing="50" styleClass="container" stylesheets="@/com/samyukgu/what2wear/friend/friend-main.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.friend.controller.FriendMainController">
     <VBox prefHeight="113.0" prefWidth="1280.0" spacing="7">
-        <Label fx:id="welcomeTitle" styleClass="welcome-title" text="친구" />
-        <ScrollPane hbarPolicy="AS_NEEDED" vbarPolicy="NEVER" fitToHeight="true"
-                    prefHeight="76.0" prefWidth="1280.0" styleClass="bg-friend-area">
+      <HBox prefHeight="20.0" prefWidth="1280.0">
+         <children>
+              <Label fx:id="welcomeTitle" styleClass="welcome-title" text="친구" />
+            <Region prefHeight="22.0" prefWidth="772.0" />
+            <Button fx:id="searchButton" onAction="#handleClickSearchButton" mnemonicParsing="false" styleClass="search-btn" text="사용자 검색" />
+         </children>
+      </HBox>
+        <ScrollPane fitToHeight="true" hbarPolicy="AS_NEEDED" prefHeight="76.0" prefWidth="1280.0" styleClass="bg-friend-area" vbarPolicy="NEVER">
             <content>
                 <HBox fx:id="friendListArea" prefHeight="76.0" styleClass="bg-friend-area">
                 </HBox>

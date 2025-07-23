@@ -267,6 +267,33 @@ public class MemberOracleDAO implements MemberDAO {
         }
     }
 
+    @Override
+    public List<Member> findByNicknameContaining(Long memberId, String keyword) {
+        String sql = """
+            SELECT *
+            FROM member
+            WHERE id != ? AND nickname LIKE ?
+            """;
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)
+        ) {
+            pstmt.setLong(1, memberId);
+            pstmt.setString(2, "%" + keyword + "%");
+            ResultSet rs = pstmt.executeQuery();
+            List<Member> members = new ArrayList<>();
+            while (rs.next()) {
+                members.add(
+                        mapResultSetToMember(rs)
+                );
+            }
+            return members;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error By Search User");
+        }
+    }
+
     // 반복되는 rs to Member 메서드 모듈화 -> (ResultSet 객체 -> Member 반환)
     private Member mapResultSetToMember(ResultSet rs) throws SQLException {
         return new Member(

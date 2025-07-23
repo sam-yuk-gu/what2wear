@@ -1,10 +1,8 @@
 package com.samyukgu.what2wear.codi.controller;
 
 import com.samyukgu.what2wear.codi.dto.CodiListDTO;
-import com.samyukgu.what2wear.codi.dto.CodiScheduleDTO;
 import com.samyukgu.what2wear.codi.model.CodiItem;
 import com.samyukgu.what2wear.codi.model.CodiSchedule;
-import com.samyukgu.what2wear.codi.model.CodiScope;
 import com.samyukgu.what2wear.codi.service.CodiService;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
@@ -23,17 +21,16 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.samyukgu.what2wear.codi.model.CodiScope.fromString;
+import static com.samyukgu.what2wear.common.util.DateUtils.formatKoreanDate;
 import static com.samyukgu.what2wear.common.util.FxStyleUtil.applyHoverTransition;
+import static com.samyukgu.what2wear.common.util.ImageUtil.convertToImagePath;
 
 public class CodiMainController {
 
@@ -49,7 +46,6 @@ public class CodiMainController {
 
     private LocalDate currentDate;
     private Map<LocalDate, List<CodiSchedule>> scheduleMap; // 날짜별 일정 정보 저장
-    private List<CodiItem> codiItems = new ArrayList<>();
 
     @FXML
     public void initialize() {
@@ -71,12 +67,12 @@ public class CodiMainController {
 
     private void loadScheduleForMonth(LocalDate month) {
         Long memberId = 3L; // 로그인 유저의 memberId로 교체 필요
-        List<CodiScheduleDTO> scheduleList = codiService.getMonthlyCodiSchedules(memberId, month);
+        List<CodiSchedule> scheduleList = codiService.getMonthlyCodiSchedules(memberId, month);
 
         scheduleMap = new HashMap<>();
 
-        for (CodiScheduleDTO dto : scheduleList) {
-            LocalDate date = dto.getDate(); // 날짜
+        for (CodiSchedule cs : scheduleList) {
+            LocalDate date = cs.getDate(); // 날짜
 
             // 날짜별 리스트 초기화
             scheduleMap.computeIfAbsent(date, d -> new ArrayList<>());
@@ -84,7 +80,7 @@ public class CodiMainController {
             // 점 표시용 CodiSchedule 객체 생성
             CodiSchedule schedule = new CodiSchedule();
             schedule.setDate(date);
-            schedule.setVisibility(dto.getVisibility());
+            schedule.setVisibility(cs.getVisibility());
 
             scheduleMap.get(date).add(schedule);    // 날짜 별 스케쥴 저장
         }
@@ -101,7 +97,7 @@ public class CodiMainController {
                 CodiSchedule schedule = new CodiSchedule();
                 schedule.setDate(dto.getScheduleDate());
                 schedule.setDescription(codiDTO.getScheduleName());
-                schedule.setVisibility(toCodiScope(codiDTO.getScope()));
+                schedule.setVisibility(fromString(codiDTO.getScope()));
 
                 List<CodiItem> items = codiDTO.getCodiClothesList().stream().map(clothes -> {
                     CodiItem item = new CodiItem();
@@ -118,30 +114,6 @@ public class CodiMainController {
 
         // 기존 점 정보 덮어쓰기
         scheduleMap.put(date, detailedSchedules);
-    }
-
-    private CodiScope toCodiScope(String scope) {
-        return switch (scope) {
-            case "0" -> CodiScope.PUBLIC;
-            case "1" -> CodiScope.FRIENDS;
-            case "2" -> CodiScope.PRIVATE;
-            default -> CodiScope.PRIVATE;
-        };
-    }
-
-    private String convertToImagePath(byte[] pictureBytes) {
-        // 임시 파일 생성 후 경로 반환
-        if (pictureBytes == null) return "/assets/default-clothes.png";
-        try {
-            File tempFile = File.createTempFile("clothes_", ".png");
-            try (FileOutputStream fos = new FileOutputStream(tempFile)) {
-                fos.write(pictureBytes);
-            }
-            return tempFile.toURI().toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "/assets/default-clothes.png";
-        }
     }
 
     private void renderCalendar(LocalDate baseDate) {
@@ -305,98 +277,6 @@ public class CodiMainController {
         showScheduleDetail(currentDateSelected);
     }
 
-    // 팝업 css 연결 불가능: 메서드 내부에서 처리
-    @FXML
-    private void handleMonthLabelClick() {
-        Stage popupStage = new Stage(StageStyle.UNDECORATED);
-        popupStage.initModality(Modality.NONE); // 창 밖 클릭 허용
-        popupStage.initOwner(monthLabel.getScene().getWindow());
-        popupStage.setAlwaysOnTop(true);
-
-        VBox popupContent = new VBox(30);
-        popupContent.setPadding(new Insets(18));
-        popupContent.setStyle(
-            "-fx-background-color: white;" +
-            "-fx-background-radius: 20;" +
-            "-fx-border-color: #ECEAF3;" +
-            "-fx-border-radius: 20;" +
-            "-fx-pref-width: 140;" +
-            "-fx-alignment: center-right"
-        );
-
-        Label yearLabel = new Label("연도");
-        yearLabel.setStyle(
-            "-fx-font-size: 13;" +
-            "-fx-font-family: 'Pretendard SemiBold';" +
-            "-fx-text-fill: #323232;"
-        );
-        ComboBox<Integer> yearCombo = new ComboBox<>();
-        yearCombo.setMaxWidth(Double.MAX_VALUE);
-        yearCombo.setStyle(
-            "-fx-pref-height: 30;" +
-            "-fx-background-color: white;" +
-            "-fx-border-color: #C4C4C4;" +
-            "-fx-border-radius: 8;" +
-            "-fx-background-radius: 8;" +
-            "-fx-font-size: 13;" +
-            "-fx-font-family: 'Pretendard Medium';" +
-            "-fx-text-fill: #323232;"
-        );
-        VBox yearBox = new VBox(10);
-        yearBox.getChildren().addAll(yearLabel, yearCombo);
-
-        Label monthLabel = new Label("월");
-        monthLabel.setStyle(
-            "-fx-font-size: 13;" +
-            "-fx-font-family: 'Pretendard SemiBold';" +
-            "-fx-text-fill: #323232;"
-        );
-        ComboBox<Integer> monthCombo = new ComboBox<>();
-        monthCombo.setMaxWidth(Double.MAX_VALUE);
-        monthCombo.setStyle(
-            "-fx-pref-height: 30;" +
-            "-fx-background-color: white;" +
-            "-fx-border-color: #C4C4C4;" +
-            "-fx-border-radius: 8;" +
-            "-fx-background-radius: 8;" +
-            "-fx-font-size: 13;" +
-            "-fx-font-family: 'Pretendard Medium';" +
-            "-fx-text-fill: #323232;"
-        );
-        VBox monthBox = new VBox(10);
-        monthBox.getChildren().addAll(monthLabel, monthCombo);
-
-        VBox selectionBox = new VBox(15);
-        selectionBox.getChildren().addAll(yearBox, monthBox);
-
-        Button confirmBtn = getButton(yearCombo, monthCombo, popupStage);
-
-        popupContent.getChildren().addAll(selectionBox, confirmBtn);
-
-        // 드롭다운용 Scene
-        Scene scene = new Scene(popupContent);
-        popupStage.setScene(scene);
-
-        double x = this.monthLabel.localToScreen(0, 0).getX() - 25;
-        double y = this.monthLabel.localToScreen(0, this.monthLabel.getHeight()).getY() + 10;
-        popupStage.setX(x);
-        popupStage.setY(y);
-
-        popupStage.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
-            if (!isNowFocused) popupStage.close();
-        }); // 포커스 잃으면 자동으로 닫기
-
-        popupStage.show();
-
-        // 현재 연/월 설정
-        int currentYear = LocalDate.now().getYear();
-        for (int i = currentYear - 15; i <= currentYear + 10; i++) yearCombo.getItems().add(i);
-        for (int i = 1; i <= 12; i++) monthCombo.getItems().add(i);
-
-        yearCombo.setValue(currentDate.getYear());
-        monthCombo.setValue(currentDate.getMonthValue());
-    }
-
     private Button getButton(ComboBox<Integer> yearCombo, ComboBox<Integer> monthCombo, Stage popupStage) {
         Button confirmBtn = new Button("확인");
         confirmBtn.setStyle(
@@ -459,7 +339,7 @@ public class CodiMainController {
                 Label dateLabel = new Label(formatKoreanDate(date));
                 dateLabel.getStyleClass().add("date-box");
 
-                Label badgeLabel = new Label(getVisibilityLabel(schedule.getVisibility()));
+                Label badgeLabel = new Label(schedule.getVisibility().toLabel());
                 badgeLabel.getStyleClass().add("badge-" + schedule.getVisibility().name().toLowerCase());
 
                 HBox descWithBadge = new HBox();
@@ -488,7 +368,7 @@ public class CodiMainController {
 
                 descLabel.getStyleClass().add("other-desc-label");
 
-                Label badgeLabel = new Label(getVisibilityLabel(schedule.getVisibility()));
+                Label badgeLabel = new Label((schedule.getVisibility().toLabel()));
                 badgeLabel.getStyleClass().add("badge-" + schedule.getVisibility().name().toLowerCase());
 
                 Region spacer = new Region();
@@ -522,14 +402,6 @@ public class CodiMainController {
         }
     }
 
-    private String getVisibilityLabel(CodiScope visibility) {
-        return switch (visibility) {
-            case PUBLIC -> "전체공개";
-            case FRIENDS -> "친구공개";
-            case PRIVATE -> "비공개";
-        };
-    }
-
     private HBox buildCodiItemBox(CodiItem item) {
         ImageView imageView = new ImageView(new Image(item.getImagePath()));
         imageView.getStyleClass().add("item-image");
@@ -553,14 +425,100 @@ public class CodiMainController {
         return box;
     }
 
-    private String formatKoreanDate(LocalDate date) {
-        DayOfWeek dayOfWeek = date.getDayOfWeek();
-        String[] koreanDays = {"월", "화", "수", "목", "금", "토", "일"};
-        return date.getMonthValue() + "월 " + date.getDayOfMonth() + "일 " + koreanDays[dayOfWeek.getValue() - 1] + "요일";
-    }
-
     @FXML
     private void handleClickAddCodi() {
         MainLayoutController.loadView("/com/samyukgu/what2wear/codi/AddCodiView.fxml");
+    }
+
+    // 팝업 css 연결 불가능: 메서드 내부에서 처리
+    @FXML
+    private void handleMonthLabelClick() {
+        Stage popupStage = new Stage(StageStyle.UNDECORATED);
+        popupStage.initModality(Modality.NONE); // 창 밖 클릭 허용
+        popupStage.initOwner(monthLabel.getScene().getWindow());
+        popupStage.setAlwaysOnTop(true);
+
+        VBox popupContent = new VBox(30);
+        popupContent.setPadding(new Insets(18));
+        popupContent.setStyle(
+                "-fx-background-color: white;" +
+                        "-fx-background-radius: 20;" +
+                        "-fx-border-color: #ECEAF3;" +
+                        "-fx-border-radius: 20;" +
+                        "-fx-pref-width: 140;" +
+                        "-fx-alignment: center-right"
+        );
+
+        Label yearLabel = new Label("연도");
+        yearLabel.setStyle(
+                "-fx-font-size: 13;" +
+                        "-fx-font-family: 'Pretendard SemiBold';" +
+                        "-fx-text-fill: #323232;"
+        );
+        ComboBox<Integer> yearCombo = new ComboBox<>();
+        yearCombo.setMaxWidth(Double.MAX_VALUE);
+        yearCombo.setStyle(
+                "-fx-pref-height: 30;" +
+                        "-fx-background-color: white;" +
+                        "-fx-border-color: #C4C4C4;" +
+                        "-fx-border-radius: 8;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-font-size: 13;" +
+                        "-fx-font-family: 'Pretendard Medium';" +
+                        "-fx-text-fill: #323232;"
+        );
+        VBox yearBox = new VBox(10);
+        yearBox.getChildren().addAll(yearLabel, yearCombo);
+
+        Label monthLabel = new Label("월");
+        monthLabel.setStyle(
+                "-fx-font-size: 13;" +
+                        "-fx-font-family: 'Pretendard SemiBold';" +
+                        "-fx-text-fill: #323232;"
+        );
+        ComboBox<Integer> monthCombo = new ComboBox<>();
+        monthCombo.setMaxWidth(Double.MAX_VALUE);
+        monthCombo.setStyle(
+                "-fx-pref-height: 30;" +
+                        "-fx-background-color: white;" +
+                        "-fx-border-color: #C4C4C4;" +
+                        "-fx-border-radius: 8;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-font-size: 13;" +
+                        "-fx-font-family: 'Pretendard Medium';" +
+                        "-fx-text-fill: #323232;"
+        );
+        VBox monthBox = new VBox(10);
+        monthBox.getChildren().addAll(monthLabel, monthCombo);
+
+        VBox selectionBox = new VBox(15);
+        selectionBox.getChildren().addAll(yearBox, monthBox);
+
+        Button confirmBtn = getButton(yearCombo, monthCombo, popupStage);
+
+        popupContent.getChildren().addAll(selectionBox, confirmBtn);
+
+        // 드롭다운용 Scene
+        Scene scene = new Scene(popupContent);
+        popupStage.setScene(scene);
+
+        double x = this.monthLabel.localToScreen(0, 0).getX() - 25;
+        double y = this.monthLabel.localToScreen(0, this.monthLabel.getHeight()).getY() + 10;
+        popupStage.setX(x);
+        popupStage.setY(y);
+
+        popupStage.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
+            if (!isNowFocused) popupStage.close();
+        }); // 포커스 잃으면 자동으로 닫기
+
+        popupStage.show();
+
+        // 현재 연/월 설정
+        int currentYear = LocalDate.now().getYear();
+        for (int i = currentYear - 15; i <= currentYear + 10; i++) yearCombo.getItems().add(i);
+        for (int i = 1; i <= 12; i++) monthCombo.getItems().add(i);
+
+        yearCombo.setValue(currentDate.getYear());
+        monthCombo.setValue(currentDate.getMonthValue());
     }
 }

@@ -3,7 +3,6 @@ package com.samyukgu.what2wear.codi.dao;
 import com.samyukgu.what2wear.codi.dto.CodiClothesDTO;
 import com.samyukgu.what2wear.codi.dto.CodiDTO;
 import com.samyukgu.what2wear.codi.dto.CodiListDTO;
-import com.samyukgu.what2wear.codi.dto.CodiScheduleDTO;
 import com.samyukgu.what2wear.codi.model.Codi;
 import com.samyukgu.what2wear.codi.model.CodiSchedule;
 import com.samyukgu.what2wear.codi.model.CodiScope;
@@ -48,7 +47,7 @@ public class CodiOracleDAO implements CodiDAO {
     }
 
     @Override
-    public List<CodiScheduleDTO> findMonthlyCodiSchedules(Long memberId, LocalDate date) {
+    public List<CodiSchedule> findMonthlyCodiSchedules(Long memberId, LocalDate date) {
         String curYear = date.format(DateTimeFormatter.ofPattern("yyyy-MM"));
         String nextMonth = date.plusMonths(1).format(DateTimeFormatter.ofPattern("yyyy-MM"));
 
@@ -68,13 +67,13 @@ public class CodiOracleDAO implements CodiDAO {
             pstmt.setString(2, curYear);
             pstmt.setString(3, nextMonth);
 
-            List<CodiScheduleDTO> codiSchedules = new ArrayList<>();
+            List<CodiSchedule> codiSchedules = new ArrayList<>();
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     CodiScope visibility = CodiScope.fromInt(rs.getInt("scope")); // 또는 rs.getInt("visibility") 등
 
-                    codiSchedules.add(new CodiScheduleDTO(
+                    codiSchedules.add(new CodiSchedule(
                             rs.getLong("id"),
                             rs.getDate("schedule_date").toLocalDate(),
                             visibility
@@ -172,32 +171,6 @@ public class CodiOracleDAO implements CodiDAO {
 
     @Override
     public void create(Codi codi, Collection<Wardrobe> selectedOutfits) {
-        System.out.println("===== 디버깅 시작 =====");
-
-        // Codi 객체 출력
-        if (codi == null) {
-            System.out.println("Codi 객체가 null입니다.");
-        } else {
-            System.out.println("Codi 정보:");
-            System.out.println("ID: " + codi.getId());
-            System.out.println("이름: " + codi.getName());
-            System.out.println("일정: " + codi.getSchedule());
-            System.out.println("날짜: " + codi.getScheduleDate());
-            System.out.println("공개범위: " + codi.getScope());
-        }
-
-        // Wardrobe 리스트 출력
-        if (selectedOutfits == null || selectedOutfits.isEmpty()) {
-            System.out.println("선택된 옷이 없습니다.");
-        } else {
-            System.out.println("선택된 옷 목록 (" + selectedOutfits.size() + "개):");
-            for (Wardrobe w : selectedOutfits) {
-                System.out.println(" - ID: " + w.getId());
-                System.out.println("   이름: " + w.getName());
-            }
-        }
-
-        System.out.println("===== 디버깅 끝 =====");
         String insertCodiSql  = """
             INSERT INTO codi (
                 id, member_id, schedule, schedule_date, scope, codi_type, deleted
@@ -212,7 +185,7 @@ public class CodiOracleDAO implements CodiDAO {
             conn.setAutoCommit(false); // 트랜잭션 시작
 
             Long codiId;
-
+            // 코디 저장 > 코디 옷상세정보 순서대로 처리
             // 1. 코디 INSERT
             try (PreparedStatement pstmt = conn.prepareStatement(insertCodiSql)) {
                 pstmt.setLong(1, codi.getMemberId());
@@ -233,14 +206,14 @@ public class CodiOracleDAO implements CodiDAO {
                  ResultSet rs = idStmt.executeQuery()) {
                 if (rs.next()) {
                     codiId = rs.getLong(1);
-                    codi.setId(codiId); // 객체에 설정해두면 이후에도 쓸 수 있음
+                    codi.setId(codiId);
                 } else {
                     conn.rollback();
                     throw new SQLException("코디 ID 조회 실패");
                 }
             }
 
-            // 3. codi_detail INSERT
+            // 3. 코디옷상세정보 INSERT
             try (PreparedStatement detailStmt = conn.prepareStatement(insertDetailSql)) {
                 for (Wardrobe outfit : selectedOutfits) {
                     detailStmt.setLong(1, codiId);
@@ -267,7 +240,6 @@ public class CodiOracleDAO implements CodiDAO {
             pstmt.setLong(2, clothesId);
 
             pstmt.executeUpdate();
-
 
         } catch (SQLException e) {
             e.printStackTrace();

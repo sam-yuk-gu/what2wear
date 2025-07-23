@@ -1,5 +1,6 @@
 package com.samyukgu.what2wear.common.util;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -19,5 +20,11 @@ public class DateUtils {
 
     public static DateTimeFormatter getKoreanDayFormatter() {
         return KOREAN_DAY_FORMATTER;
+    }
+
+    public static String formatKoreanDate(LocalDate date) {
+        DayOfWeek dayOfWeek = date.getDayOfWeek();
+        String[] koreanDays = {"월", "화", "수", "목", "금", "토", "일"};
+        return date.getMonthValue() + "월 " + date.getDayOfMonth() + "일 " + koreanDays[dayOfWeek.getValue() - 1] + "요일";
     }
 }

@@ -1,6 +1,5 @@
 package com.samyukgu.what2wear.common.model;
 
-import com.samyukgu.what2wear.codi.model.Clothing;
 import com.samyukgu.what2wear.codi.model.Codi;
 import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
 import lombok.Getter;
