@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane fx:id="root" prefHeight="768.0" prefWidth="1280.0" stylesheets="/com/samyukgu/what2wear/ai/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.ai.controller.IntroduceAiController">
+
+    <!-- 헤더 -->
+
+
+    <!-- 내용 -->
+    <VBox alignment="CENTER" prefHeight="660.0" prefWidth="1030.0">
+    <!-- 텍스트 -->
+    <VBox alignment="CENTER" prefHeight="475.0" prefWidth="1280.0" spacing="20">
+        <!-- 인사말 -->
+        <VBox fx:id="top_title_vbox" alignment="CENTER_LEFT" prefHeight="92.0" prefWidth="1280.0">
+            <HBox spacing="4">
+                <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="안녕하세요," />
+                <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="OOO님! 😊" />
+            </HBox>
+            <Label text="오늘도 어떤 옷을 입을지 고민되시죠?" wrapText="true" />
+        </VBox>
+        <!-- 선택란 -->
+      <HBox fx:id="closet_check_hbox" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+         <children>
+
+             <!-- 옷장 범위 -->
+             <HBox spacing="4">
+                 <Label text="옷장 범위" />
+                 <Label text="*" />
+             </HBox>
+             <HBox alignment="CENTER_LEFT" prefHeight="84.0" prefWidth="364.0" spacing="16">
+                 <RadioButton fx:id="myClosetRadio" text="나의 옷장" />
+                 <RadioButton fx:id="otherClosetRadio" text="다른 사람 옷장" />
+             </HBox>
+            <VBox alignment="CENTER_LEFT" prefHeight="84.0" prefWidth="465.0">
+               <children>
+
+                      <!-- 위치 동의 -->
+                   <HBox prefHeight="9.0" prefWidth="79.0" spacing="4">
+                       <Label text="위치 동의" />
+                       <Label text="*" />
+                   </HBox>
+                   <HBox prefHeight="100.0" prefWidth="226.0" spacing="16">
+                       <RadioButton fx:id="agreeLocationRadio" text="동의" />
+                       <RadioButton fx:id="disagreeLocationRadio" text="비동의" />
+                   </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+
+        <!-- 기능 소개 -->
+        <VBox alignment="CENTER_LEFT" prefHeight="232.0" prefWidth="1280.0" spacing="20">
+            <Label text="AI 코디 추천에서는 회원님의 옷장 속 아이템들을 분석해, 오늘 날씨와 어울리는 스타일을 제안해드려요." wrapText="true" />
+                <Label text="상의부터 하의, 신발까지, 실용성과 스타일을 모두 고려한 코디를 준비했답니다 :)" wrapText="true" />
+
+                <Label text="또 하나! 친구 코디 추천 기능도 있어요." wrapText="true" />
+                <Label text="친구들의 옷장에서 마음에 드는 아이템을 하나씩 골라, 서로 다른 친구들의 스타일을 조합해보는 재미도 느껴보세요." wrapText="true" />
+
+                <Label text="참고로, 코디 추천 기능은 하루 최대 3회까지 이용하실 수 있어요." wrapText="true" />
+                <Label text="오늘 하루, 멋지고 특별한 스타일링으로 시작해볼까요?" wrapText="true" />
+            </VBox>
+   
+       <!-- 추천 버튼 -->
+       <HBox alignment="CENTER_RIGHT" prefHeight="56.0" prefWidth="1280.0">
+           <Button fx:id="recommendBtn" onAction="#handleRecommendClick" style="-fx-background-color: black; -fx-text-fill: white; -fx-pref-width: 120px;" text="추천받기" />
+       </HBox>
+    </VBox>
+
+    </VBox>
+</StackPane>

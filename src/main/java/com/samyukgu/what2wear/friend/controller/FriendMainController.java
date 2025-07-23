@@ -2,11 +2,11 @@ package com.samyukgu.what2wear.friend.controller;
 
 import static com.samyukgu.what2wear.common.util.FxStyleUtil.applyHoverTransition;
 
+import com.samyukgu.what2wear.codi.dto.DummyCodiDTO;
 import com.samyukgu.what2wear.codi.model.CodiItem;
-import com.samyukgu.what2wear.codi.model.CodiSchedule;
-import com.samyukgu.what2wear.codi.model.ScheduleVisibility;
+import com.samyukgu.what2wear.codi.model.CodiScope;
 import com.samyukgu.what2wear.codi.service.DummyScheduleRepository;
-import com.samyukgu.what2wear.common.controller.MainLayoutController;
+import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.common.util.CircularImageUtil;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.friend.service.FriendService;
@@ -56,7 +56,7 @@ public class FriendMainController {
     @FXML private HBox friendListArea;
 
     private LocalDate currentDate;
-    private Map<LocalDate, List<CodiSchedule>> scheduleMap; // 날짜별 일정 정보 저장
+    private Map<LocalDate, List<DummyCodiDTO>> scheduleMap; // 날짜별 일정 정보 저장
     private List<Member> friendList;
     private MemberSession memberSession;
     private FriendService friendService;
@@ -387,11 +387,11 @@ public class FriendMainController {
 
             // 일정 점 렌더링
             if (scheduleMap.containsKey(currentDrawingDate)) {
-                List<CodiSchedule> schedules = scheduleMap.get(currentDrawingDate);
+                List<DummyCodiDTO> schedules = scheduleMap.get(currentDrawingDate);
                 HBox dotsBox = new HBox();
                 dotsBox.getStyleClass().add("dots-box");
 
-                for (CodiSchedule schedule : schedules) {
+                for (DummyCodiDTO schedule : schedules) {
                     Label dot = new Label("●");
                     dot.setStyle("-fx-font-size: 11;");
 
@@ -595,7 +595,7 @@ public class FriendMainController {
     }
 
     private void showScheduleDetail(LocalDate date) {
-        List<CodiSchedule> schedules = scheduleMap.get(date);
+        List<DummyCodiDTO> schedules = scheduleMap.get(date);
         scheduleListContainer.getChildren().clear();
         emptyLabel.setVisible(false);
         emptyLabel.setManaged(false);
@@ -612,7 +612,7 @@ public class FriendMainController {
         }
 
         for (int i = 0; i < schedules.size(); i++) {
-            CodiSchedule schedule = schedules.get(i);
+            DummyCodiDTO schedule = schedules.get(i);
 
             Label descLabel = new Label("│ " + schedule.getDescription());
             descLabel.getStyleClass().add("desc-label");
@@ -682,7 +682,7 @@ public class FriendMainController {
         }
     }
 
-    private String getVisibilityLabel(ScheduleVisibility visibility) {
+    private String getVisibilityLabel(CodiScope visibility) {
         return switch (visibility) {
             case PUBLIC -> "전체공개";
             case FRIENDS -> "친구공개";
