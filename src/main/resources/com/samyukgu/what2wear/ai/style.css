@@ -1,0 +1,36 @@
+/* =======================
+   공통 배경
+   ======================= */
+.root {
+    -fx-background-color: #F9FBFC;
+}
+
+/* =======================
+   버튼 스타일
+   ======================= */
+.gray_stroke_button {
+    -fx-padding: 10 20;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-border-color: lightgray;
+}
+
+.black_background_button {
+    -fx-padding: 10 20;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+
+    -fx-background-color: black;
+    -fx-text-fill: white;
+    -fx-border-color: black;
+}
+

@@ -37,6 +37,11 @@ public class CustomModalController implements Initializable {
         }
     }
 
+    public void configure(String title, String desc, String iconPath, String themeColor,
+                          String actionText, Runnable onAction) {
+        configure(title, desc, iconPath, themeColor, null, actionText, null, onAction);
+    }
+
     /* 모달 초기 설정 메서드 */
     public void configure(String title, String desc, String iconPath, String themeColor,
                           String cancelText, String actionText,
@@ -53,11 +58,17 @@ public class CustomModalController implements Initializable {
             }
         }
 
-        if (cancelText != null) cancelButton.setText(cancelText);
-        cancelButton.setOnAction(e -> {
-            if (onCancel != null) onCancel.run();
-            modalOverlay.setVisible(false);
-        });
+        // 취소 버튼 처리 - null이면 숨김
+        if (cancelText != null) {
+            cancelButton.setText(cancelText);
+            cancelButton.setVisible(true);
+            cancelButton.setOnAction(e -> {
+                if (onCancel != null) onCancel.run();
+                modalOverlay.setVisible(false);
+            });
+        } else {
+            cancelButton.setVisible(false);  // 버튼 숨김
+        }
 
         if (actionText != null) confirmButton.setText(actionText);
         confirmButton.setOnAction(e -> {

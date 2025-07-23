@@ -107,7 +107,7 @@
             <children>
                <ImageView fx:id="loginBanner" fitHeight="663.0" fitWidth="661.0" layoutY="53.0" pickOnBounds="true">
                   <image>
-                     <Image url="@../../../../assets/imgs/raccoon.jpg" />
+                     <Image url="@../../../../assets/images/raccoon.jpg" />
                   </image>
                </ImageView>
             </children>

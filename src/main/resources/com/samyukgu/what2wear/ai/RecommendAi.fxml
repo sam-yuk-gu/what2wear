@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane fx:id="root" prefHeight="768" prefWidth="1280" stylesheets="/com/samyukgu/what2wear/ai/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.ai.controller.RecommendAiController">
+
+    <!-- 상단 헤더 -->
+        <HBox fx:id="top_hbox" alignment="CENTER" prefHeight="68.0">
+            <fx:include source="/com/samyukgu/what2wear/common/PostHeader.fxml" />
+        </HBox>
+
+        <HBox fx:id="bottom_hbox" alignment="CENTER" prefHeight="700.0" prefWidth="1030.0" spacing="20">
+
+            <!-- 왼쪽: 옷 이미지 리스트 -->
+            <VBox fx:id="left_vbox" alignment="CENTER" prefHeight="700.0" prefWidth="100.0" spacing="10">
+                <ImageView fitHeight="60" fitWidth="60" preserveRatio="true">
+                    <image>
+                        <Image url="@/assets/images/dummy_cody.png" />
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="60" fitWidth="60" preserveRatio="true">
+                    <image>
+                        <Image url="@/assets/images/dummy_top.png" />
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="60" fitWidth="60" preserveRatio="true">
+                    <image>
+                        <Image url="@/assets/images/dummy_bottom.png" />
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="60" fitWidth="60" preserveRatio="true">
+                    <image>
+                        <Image url="@/assets/images/dummy_shoes.png" />
+                    </image>
+                </ImageView>
+            </VBox>
+
+            <!-- 오른쪽: 추천 설명 -->
+            <VBox fx:id="right_vbox" alignment="CENTER" prefHeight="700.0" prefWidth="630.0" spacing="10">
+                <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="안녕하세요!" />
+                <Label text="오늘은 코디로 선택된 날씨예요. 날씨 흐름대로 추천드릴게요. 어떤 스타일이 잘 어울릴 수 있을까요?" wrapText="true" />
+                <Label style="-fx-font-weight: bold;" text="의상들이 가지고 계신 옷 중에서 어떤 조합으로 연결되었을까요?" />
+                <Label text="· 상의: OOO" />
+                <Label text="· 하의: OOO" />
+                <Label text="· 신발: OOO" />
+                <Label text="· 악세사리: OOO" />
+                <Label text="여러분께 AI가 고른 이 코디에서, 기분 좋은 하루를 보낼 수 있도록 날씨와 스타일에 맞췄어요! 오늘도 좋은 하루 되세요!" wrapText="true" />
+
+                <!-- 버튼 영역 -->
+                <HBox alignment="CENTER_RIGHT" spacing="8">
+                    <Button onAction="#handleRetryClick" styleClass=".gray_stroke_button" text="다시하기 (남은 횟수: n)" />
+                    <Button onAction="#handleSaveClick" styleClass=".black_background_button" text="저장하기" />
+                </HBox>
+            </VBox>
+        </HBox>
+
+</StackPane>
