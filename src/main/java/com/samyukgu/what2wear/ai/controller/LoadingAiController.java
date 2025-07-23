@@ -1,5 +1,6 @@
 package com.samyukgu.what2wear.ai.controller;
 
+import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,15 +32,7 @@ public class LoadingAiController {
     }
 
     private void switchToRecommendAi() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/ai/RecommendAi.fxml"));
-            Parent recommentRoot = loader.load();
-
-            Stage stage = (Stage) root.getScene().getWindow();
-            stage.setScene(new Scene(recommentRoot));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        MainLayoutController.loadView("/com/samyukgu/what2wear/ai/RecommendAi.fxml");
     }
 
     private void playScaleAnimation(Circle circle, int delayMillis) {
