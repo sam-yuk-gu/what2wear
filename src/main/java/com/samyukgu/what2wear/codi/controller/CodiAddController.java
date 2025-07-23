@@ -7,9 +7,9 @@ import com.samyukgu.what2wear.common.controller.BasicHeaderController;
 import com.samyukgu.what2wear.common.controller.SelectOutfitModalController;
 import com.samyukgu.what2wear.common.util.DateUtils;
 import com.samyukgu.what2wear.di.DIContainer;
+import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.member.Session.MemberSession;
 import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
-import com.samyukgu.what2wear.wardrobe.service.WardrobeService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -45,9 +45,8 @@ public class CodiAddController {
     private Long memberId;
     private MemberSession memberSession;
     private CodiService codiService;
-    private ToggleGroup scopeGroup;
-    private final WardrobeService wardrobeService = DIContainer.getInstance().resolve(WardrobeService.class);
 
+    private ToggleGroup scopeGroup;
     private List<Wardrobe> selectedOutfits;
     private Codi selectedCodi;
 
@@ -106,8 +105,8 @@ public class CodiAddController {
 
     private void setupDI() {
         DIContainer diContainer = DIContainer.getInstance();
-        codiService = diContainer.resolve(CodiService.class);
         memberSession = diContainer.resolve(MemberSession.class);
+        codiService = diContainer.resolve(CodiService.class);
     }
 
     private void setupUser() {
@@ -242,31 +241,15 @@ public class CodiAddController {
         Toggle selected = scopeGroup.getSelectedToggle();
 
         if ((title == null || title.trim().isEmpty()) && selectedOutfits.isEmpty()) {
-            // 타이틀도 없고 선택된 옷도 없을 때 실행할 코드
-            System.out.println("타이틀과 선택된 옷이 모두 없습니다.");
+            // TODO: 모달창 출력으로 변경
+            System.out.println("타이틀과 선택된 옷이 모두 입력되지 않았습니다.");
         } else {
+            // TODO: 저장 확인 모달 넣을지말지?
             LocalDate selectedDate = datePicker.getValue();
             CodiScope visibility = getSelectedVisibility();
             int scopeValue = getScopeValue(visibility);
             codiService.createCodiSchedule(memberId, title, selectedDate, scopeValue, selectedOutfits);
-        }
-
-        System.out.println("=== 코디 일정 제출 테스트 ===");
-        System.out.println("일정명: " + title);
-        System.out.println("날짜: " + date);
-        System.out.println("공개범위: " + ((ToggleButton) selected).getText());
-
-        if (selectedOutfits != null && !selectedOutfits.isEmpty()) {
-            System.out.println("선택된 옷 목록 (" + selectedOutfits.size() + "개):");
-            for (Wardrobe w : selectedOutfits) {
-                System.out.println("- 옷 ID: " + w.getId());
-                System.out.println("  카테고리 ID: " + w.getCategoryId());
-                System.out.println("  이름: " + w.getName());
-                System.out.println("  메모: " + w.getMemo());
-                System.out.println("  이미지 유무: " + (w.getPicture() != null ? "있음" : "없음"));
-            }
-        } else {
-            System.out.println("선택된 옷 없음");
+            MainLayoutController.loadView("/com/samyukgu/what2wear/codi/CodiMainView.fxml");
         }
     }
 }
