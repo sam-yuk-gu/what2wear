@@ -61,11 +61,10 @@ public class RecommendAiController {
 
         recommendLabel.setText("AI가 코디를 준비 중이에요...");
 
-        // AI 요청 보내기 (비동기)
+        // AI 요청 보내기
         String prompt = String.format(
-                "내일 %s에서 %s할 예정입니다. 날씨에 어울리는 옷을 다음 형식에 맞춰 추천해줘.\n" +
-                        "형식은 반드시 아래와 같이 해줘:\n" +
-                        "상의: \n하의: \n신발: \n악세사리:",
+                "내일 %s에서 %s할 예정입니다. 날씨에 어울리는 옷을 아래와 같은 정확한 형식으로 추천해줘. 절대 다른 말 하지 말고 형식을 꼭 지켜줘.\n" +
+                        "형식:\n상의: (여기에 상의 옷)\n하의: (여기에 하의 옷)\n신발: (여기에 신발)\n악세사리: (여기에 악세사리)\n",
                 location, purpose
         );
 
@@ -76,6 +75,7 @@ public class RecommendAiController {
                 String aiResponse = aiService.getOutfitRecommendation(finalLocation, finalPurpose);
                 applyAiRecommendation(aiResponse);
             } catch (IOException e) {
+                e.printStackTrace();
                 Platform.runLater(() -> {
                     recommendLabel.setText("AI 응답 실패 😥");
                     topLabel.setText("· 상의: 없음");
@@ -93,22 +93,41 @@ public class RecommendAiController {
     }
 
     private void applyAiRecommendation(String response) {
-        // 형식: 상의: OOO\n하의: OOO\n신발: OOO\n악세사리: OOO
-        Pattern pattern = Pattern.compile("상의: (.*?)\\n하의: (.*?)\\n신발: (.*?)\\n악세사리: (.*)");
+        System.out.println("[GPT 응답 결과] \n" + response);
+
+        Pattern pattern = Pattern.compile(
+                "상의:\\s*(.*?)\\s*\\n" +
+                        "하의:\\s*(.*?)\\s*\\n" +
+                        "신발:\\s*(.*?)\\s*\\n" +
+                        "(악세사리|악세서리|액세서리):\\s*(.*)",
+                Pattern.DOTALL
+        );
         Matcher matcher = pattern.matcher(response);
 
-        Platform.runLater(() -> {
-            if (matcher.find()) {
-                topLabel.setText("· 상의: " + matcher.group(1));
-                bottomLabel.setText("· 하의: " + matcher.group(2));
-                shoesLabel.setText("· 신발: " + matcher.group(3));
-                accLabel.setText("· 악세사리: " + matcher.group(4));
+        if (matcher.find()) {
+            String top = matcher.group(1).trim();
+            String bottom = matcher.group(2).trim();
+            String shoes = matcher.group(3).trim();
+            String acc = matcher.group(5).trim();
+
+            Platform.runLater(() -> {
+                topLabel.setText("· 상의: " + top);
+                bottomLabel.setText("· 하의: " + bottom);
+                shoesLabel.setText("· 신발: " + shoes);
+                accLabel.setText("· 악세사리: " + acc);
                 recommendLabel.setText("회원님 옷 중 이런 코디는 어떠세요?");
-            } else {
-                recommendLabel.setText("AI 응답 형식을 인식하지 못했어요.");
-            }
-        });
+            });
+        } else {
+            Platform.runLater(() -> {
+                recommendLabel.setText("AI 응답 포맷을 이해하지 못했어요.");
+                topLabel.setText("· 상의: (확인 필요)");
+                bottomLabel.setText("· 하의: (확인 필요)");
+                shoesLabel.setText("· 신발: (확인 필요)");
+                accLabel.setText("· 악세사리: (확인 필요)");
+            });
+        }
     }
+
 
     @FXML
     private void handleRetryClick() {

@@ -91,7 +91,7 @@
                             <String fx:value="출근" />
                             <String fx:value="산책" />
                             <String fx:value="파티" />
-                            <String fx:value="기타" />
+                            <String fx:value="여행" />
                         </FXCollections>
                     </items>
                 </ComboBox>
