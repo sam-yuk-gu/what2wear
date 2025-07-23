@@ -3,15 +3,18 @@ package com.samyukgu.what2wear.friend.service;
 import com.samyukgu.what2wear.friend.dao.FriendDAO;
 import com.samyukgu.what2wear.member.dao.MemberDAO;
 import com.samyukgu.what2wear.member.model.Member;
+import com.samyukgu.what2wear.notification.dao.NotificationDAO;
 import java.util.List;
 
 public class FriendService {
     MemberDAO memberDAO;
     FriendDAO friendDAO;
+    NotificationDAO notificationDAO;
 
-    public FriendService(MemberDAO memberDAO, FriendDAO friendDAO) {
+    public FriendService(MemberDAO memberDAO, FriendDAO friendDAO, NotificationDAO notificationDAO) {
         this.memberDAO = memberDAO;
         this.friendDAO = friendDAO;
+        this.notificationDAO = notificationDAO;
     }
     
     // 친구 관계 검증
@@ -32,6 +35,7 @@ public class FriendService {
     // 친구 요청
     public void addFriend(Long member1Id, Long member2Id){
         friendDAO.save(member1Id, member2Id);
+        notificationDAO.save(member2Id, member1Id);
     }
 
     // 친구 요청 수락

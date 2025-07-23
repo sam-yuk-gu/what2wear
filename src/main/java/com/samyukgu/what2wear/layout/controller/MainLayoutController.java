@@ -6,6 +6,8 @@ import com.samyukgu.what2wear.common.controller.CustomModalController;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.member.Session.MemberSession;
 import com.samyukgu.what2wear.member.model.Member;
+import com.samyukgu.what2wear.notification.controller.NotificationModalController;
+import com.samyukgu.what2wear.notification.service.NotificationService;
 import com.samyukgu.what2wear.post.controller.DetailPostController;
 import com.samyukgu.what2wear.post.controller.EditPostController;
 import com.samyukgu.what2wear.post.model.Post;
@@ -43,6 +45,8 @@ public class MainLayoutController {
     private static MainLayoutController instance;
     private Button currentSelectedButton;
     private MemberSession memberSession;
+    private NotificationService notificationService;
+    List<Member> requests;
 
     // 하이라이트 대상 버튼 목록 (logoButton 제외)
     private List<Button> menuButtons;
@@ -53,6 +57,7 @@ public class MainLayoutController {
         setupDI();
         menuButtons = List.of(wardrobeButton, friendButton, boardButton, mypageButton);   // 버튼 리스트 초기화 (로고 제외)
         loadView("/com/samyukgu/what2wear/codi/CodiMainView.fxml");
+        requests = notificationService.getRequests(memberSession.getMember().getId());
         VBox.setVgrow(spacer, Priority.ALWAYS);     // 최대 여백 설정
     }
 
@@ -167,9 +172,37 @@ public class MainLayoutController {
         showConfirmationModal();
     }
 
+    @FXML
+    private void handleClickNotification() {
+        showNotificationModal();
+    }
+
+    // 알림 모달 표시 (친구 요청 목록 포함)
+    private void showNotificationModal() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/notification/NotificationModal.fxml"));
+            StackPane modal = loader.load();
+
+            NotificationModalController controller = loader.getController();
+
+            // 모달 닫기 콜백 설정
+            controller.setCloseCallback(() -> contentArea.getChildren().remove(modal));
+
+            // 최신 친구 요청 목록을 가져와서 모달에 설정
+            List<Member> currentRequests = notificationService.getRequests(memberSession.getMember().getId());
+            controller.setFriendRequests(currentRequests);
+
+            contentArea.getChildren().add(modal);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     // DI로 로그인 세션 가져오기
     private void setupDI(){
         memberSession = DIContainer.getInstance().resolve(MemberSession.class);
+        notificationService = DIContainer.getInstance().resolve(NotificationService.class);
     }
 
     private void showConfirmationModal() {
