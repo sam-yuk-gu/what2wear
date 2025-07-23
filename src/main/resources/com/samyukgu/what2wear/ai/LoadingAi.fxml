@@ -3,30 +3,38 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<StackPane fx:id="root" prefHeight="768.0" prefWidth="1280.0"
-        xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            stylesheets="/com/samyukgu/what2wear/ai/style.css"
-            fx:controller="com.samyukgu.what2wear.ai.controller.LoadingAiController">
-
-    <!-- 헤더 -->
-    <HBox alignment="CENTER" prefHeight="81.0" prefWidth="1030.0">
-        <fx:include fx:id="header_pane" source="/com/samyukgu/what2wear/common/PostHeader.fxml" />
-    </HBox>
-
-    <!-- 가운데 내용 -->
-        <VBox alignment="CENTER" spacing="24">
+<StackPane fx:id="root" prefHeight="768.0" prefWidth="1280.0" stylesheets="/com/samyukgu/what2wear/ai/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.ai.controller.LoadingAiController">
+    <VBox alignment="CENTER" spacing="40">
+        <!-- 가운데 내용 -->
+        <VBox alignment="CENTER">
             <!-- 텍스트 -->
-            <VBox alignment="CENTER" spacing="15">
-                <Label text="코디를 준비하고 있어요!" style="-fx-font-size: 16px; -fx-text-alignment: center;" />
-                <Label text="잠시만 기다려주세요..." style="-fx-font-size: 16px; -fx-text-alignment: center;" />
+            <VBox alignment="CENTER" prefWidth="1280.0" spacing="20">
+                <Label style="-fx-font-size: 16px; -fx-text-alignment: center;" text="코디를 준비하고 있어요!" />
+                <Label style="-fx-font-size: 16px; -fx-text-alignment: center;" text="잠시만 기다려주세요..." />
+               <!-- 애니메이션 -->
+               <HBox alignment="CENTER" prefHeight="80.0" prefWidth="1280.0" spacing="10">
+                   <Circle fx:id="circle1" fill="black" radius="6" />
+                   <Circle fx:id="circle2" fill="black" radius="6" />
+                   <Circle fx:id="circle3" fill="black" radius="6" />
+               </HBox>
+      
+          <!-- 나가기 버튼 -->
+          <HBox fx:id="bottom_two_button_hbox" alignment="CENTER" prefHeight="60.0" prefWidth="1030.0" styleClass="bottom_two_button" spacing="20">
+              <children>
+                  <Pane fx:id="bottom_two_button_pane" prefHeight="60.0" prefWidth="1030.0">
+                      <children>
+                          <Button fx:id="cancelButton" layoutX="440.0" layoutY="3.0" onAction="#handleCancelClick" prefHeight="55.0" prefWidth="150.0" styleClass="gray_stroke_button" text="나가기">
+                              <font>
+                                  <Font size="24.0" />
+                              </font>
+                          </Button>
+                      </children>
+                  </Pane>
+              </children>
+          </HBox>
             </VBox>
-            <!-- 애니메이션 -->
-            <HBox spacing="10" alignment="CENTER">
-                <Circle fx:id="circle1" radius="6" fill="black" />
-                <Circle fx:id="circle2" radius="6" fill="black" />
-                <Circle fx:id="circle3" radius="6" fill="black" />
-            </HBox>
         </VBox>
+    </VBox>
 </StackPane>

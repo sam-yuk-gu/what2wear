@@ -1,10 +1,12 @@
 package com.samyukgu.what2wear.wardrobe.controller;
 
+import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.member.Session.MemberSession;
 import com.samyukgu.what2wear.member.model.Member;
 import com.samyukgu.what2wear.wardrobe.dao.WardrobeOracleDAO;
 import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
+import com.samyukgu.what2wear.wardrobe.service.CategoryService;
 import com.samyukgu.what2wear.wardrobe.service.WardrobeService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,11 +30,15 @@ public class DetailWardrobeController implements Initializable {
     @FXML private Label keywordLabel;
     @FXML private Label memoLabel;
 
-    private final WardrobeService wardrobeService = new WardrobeService(new WardrobeOracleDAO());
+    private WardrobeService wardrobeService;
     private Wardrobe currentWardrobe;
+    private MemberSession memberSession;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        DIContainer diContainer = DIContainer.getInstance();
+        wardrobeService = diContainer.resolve(WardrobeService.class);
+        memberSession = diContainer.resolve(MemberSession.class);
         loadWardrobeDetail();
     }
 
@@ -133,8 +139,7 @@ public class DetailWardrobeController implements Initializable {
         // 로그인 정보가 필요할지 고민... sql은 해당 멤머만 삭제 가능하도록 코딩을 했는데
         // 옷 삭제하기 위해서는 조회 -> 상세 -> 삭제 흐름으로 가야함
         // 일단 회원 정보 있을때만 삭제 가능하도록 함
-        Member loginMember = MemberSession.getLoginMember();
-        if (loginMember == null) {
+        if (memberSession == null) {
             showError("로그인이 필요합니다.");
             return;
         }
