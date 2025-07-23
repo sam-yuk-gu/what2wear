@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+
+<StackPane fx:id="modalOverlay" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="768" prefWidth="1280" styleClass="modal_overlay" stylesheets="/com/samyukgu/what2wear/layout/style.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="com.samyukgu.what2wear.notification.controller.NotificationModalController">
+
+    <!-- 회색 반투명 배경 -->
+    <Rectangle fx:id="dimBackground" styleClass="modal-dim-background" onMouseClicked="#closeModal" />
+
+    <!-- 흰색 모달 박스 -->
+    <VBox alignment="TOP_CENTER" maxHeight="500" maxWidth="500" minHeight="300" minWidth="400" spacing="10" styleClass="modal_container">
+
+        <!-- 모달 헤더 -->
+        <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 20px 20px 10px 20px;">
+            <Label text="친구 요청" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+            <!-- Spacer -->
+            <Label HBox.hgrow="ALWAYS" />
+
+            <!-- 닫기 버튼 -->
+            <Button text="✕" onAction="#closeModal" style="-fx-background-color: transparent; -fx-font-size: 16px; -fx-text-fill: #666666;" />
+        </HBox>
+
+        <!-- 스크롤 가능한 친구 요청 목록 -->
+        <ScrollPane fitToWidth="true" prefHeight="350" style="-fx-background-color: transparent;">
+            <VBox fx:id="modalContainer" spacing="5" style="-fx-padding: 10px 20px;" />
+        </ScrollPane>
+
+        <!-- 템플릿용 HBox (숨김처리됨) -->
+        <HBox fx:id="friendRequestRow" alignment="CENTER_RIGHT" spacing="15" visible="false" managed="false">
+            <Label fx:id="templateLabel" text="Template Label" />
+            <Button fx:id="acceptButton" styleClass="confirm_button" text="수락" />
+            <Button fx:id="rejectButton" styleClass="cancel_button" text="거부" />
+        </HBox>
+
+    </VBox>
+</StackPane>
