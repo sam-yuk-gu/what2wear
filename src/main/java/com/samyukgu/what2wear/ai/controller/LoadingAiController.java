@@ -1,6 +1,6 @@
 package com.samyukgu.what2wear.ai.controller;
 
-import com.samyukgu.what2wear.common.controller.MainLayoutController;
+import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -2,16 +2,16 @@ package com.samyukgu.what2wear.friend.controller;
 
 import static com.samyukgu.what2wear.common.util.FxStyleUtil.applyHoverTransition;
 
+import com.samyukgu.what2wear.codi.dto.DummyCodiDTO;
 import com.samyukgu.what2wear.codi.model.CodiItem;
-import com.samyukgu.what2wear.codi.model.CodiSchedule;
-import com.samyukgu.what2wear.codi.model.ScheduleVisibility;
+import com.samyukgu.what2wear.codi.model.CodiScope;
 import com.samyukgu.what2wear.codi.service.DummyScheduleRepository;
-import com.samyukgu.what2wear.common.controller.MainLayoutController;
+import com.samyukgu.what2wear.layout.controller.MainLayoutController;
+import com.samyukgu.what2wear.common.util.CircularImageUtil;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.friend.service.FriendService;
 import com.samyukgu.what2wear.member.Session.MemberSession;
 import com.samyukgu.what2wear.member.model.Member;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,8 +47,8 @@ import javafx.stage.StageStyle;
 public class FriendMainController {
     private LocalDate currentDateSelected;
 
-    @FXML
-    private Label monthLabel;
+    @FXML private Button searchButton;
+    @FXML private Label monthLabel;
     @FXML private GridPane calendarGrid;
     @FXML private Label emptyLabel;
     @FXML private VBox scheduleListContainer;
@@ -56,11 +56,12 @@ public class FriendMainController {
     @FXML private HBox friendListArea;
 
     private LocalDate currentDate;
-    private Map<LocalDate, List<CodiSchedule>> scheduleMap; // 날짜별 일정 정보 저장
+    private Map<LocalDate, List<DummyCodiDTO>> scheduleMap; // 날짜별 일정 정보 저장
     private List<Member> friendList;
     private MemberSession memberSession;
     private FriendService friendService;
     private VBox selectedFriendBox;
+    private Member member;
 
     @FXML
     public void initialize() {
@@ -69,13 +70,15 @@ public class FriendMainController {
         loadScheduleForMonth(currentDate);
         renderCalendar(currentDate);
         showScheduleDetail(currentDateSelected);
-
+        setupDI();
+        loadMember();
         applyHoverTransition(addButton, Color.web("#F2FBFF"), Color.web("#E0F6FF"));
 
         // 테스트용 친구 데이터 생성
-        createTestFriendData();
+//        createTestFriendData();
         loadFriendList();
     }
+
     /**
      * 테스트용 친구 데이터를 생성하는 메서드
      */
@@ -93,6 +96,7 @@ public class FriendMainController {
 
         // 로컬 이미지 파일을 byte 배열로 변환
         byte[] testImageBytes = loadImageAsBytes("/assets/images/cute.jpg");
+//        byte[] testImageBytes = loadImageAsBytes("/assets/icons/defaultProfile.png");
 
         // 테스트 친구 데이터 생성 (더 많은 친구로 스크롤 테스트)
         int friendCount = testNicknames.length; // 스크롤 테스트를 위해 더 많은 친구 생성
@@ -107,6 +111,7 @@ public class FriendMainController {
     }
 
     /**
+     * todo: 테스트 멤버 메서드 지울 때 같이 지우기
      * 리소스 경로의 이미지 파일을 byte 배열로 변환하는 메서드
      */
     private byte[] loadImageAsBytes(String resourcePath) {
@@ -139,12 +144,10 @@ public class FriendMainController {
     }
 
     private void loadFriendList() {
-        // friendList가 null이면 빈 리스트로 초기화 또는 데이터 로드
         if (friendList == null) {
             friendList = new ArrayList<>();
-            // 여기에 실제 데이터 로드 로직 추가
-            // friendList = memberService.getFriendList();
         }
+        friendList = friendService.getFriends(member.getId());
 
         renderFriendList();
     }
@@ -153,10 +156,21 @@ public class FriendMainController {
         // 기존 친구 목록 제거 (새로고침 시 중복 방지)
         friendListArea.getChildren().clear();
 
+        if(friendList == null || friendList.isEmpty()){
+            showEmptyFriendMessage();
+            return;
+        }
+
+        boolean isFirstFriend = true;
         for (Member friend : friendList) {
             // Member의 profile_img가 byte[] 타입이므로 바이트 배열 버전 사용
             VBox friendBox = createFriendBoxWithBytes(friend, friend.getProfile_img());
             friendListArea.getChildren().add(friendBox);
+
+            if (isFirstFriend) {
+                handleFriendSelection(friend, friendBox);
+                isFirstFriend = false;
+            }
         }
 
         // 가로 스크롤 설정
@@ -227,7 +241,9 @@ public class FriendMainController {
         // 기본 스타일 클래스 제거 - 클릭 시에만 추가
 
         // 프로필 이미지 생성 (바이트 배열 사용)
-        ImageView profileImage = createProfileImageFromBytes(imageBytes);
+//        ImageView profileImage = createProfileImageFromBytes(imageBytes);
+//        ImageView profileImage = ImgToImageView.createProfileImageFromBytes(45.0, imageBytes);
+        ImageView profileImage = CircularImageUtil.createCircularImageFromBytes(45.0, imageBytes);
 
         // 닉네임 라벨 생성
         Label nicknameLabel = new Label(friend.getNickname());
@@ -241,89 +257,6 @@ public class FriendMainController {
         });
 
         return friendBox;
-    }
-
-    /**
-     * 프로필 이미지를 생성하는 메서드 (String 경로용)
-     */
-    private ImageView createProfileImage(String profileImagePath) {
-        ImageView imageView = new ImageView();
-        imageView.setFitHeight(150.0);
-        imageView.setFitWidth(50.0);
-        imageView.setPickOnBounds(true);
-        imageView.setPreserveRatio(true);
-
-        try {
-            // 프로필 이미지 설정
-            if (profileImagePath != null && !profileImagePath.isEmpty()) {
-                // 네트워크 URL인 경우
-                if (profileImagePath.startsWith("http")) {
-                    Image image = new Image(profileImagePath, true); // 백그라운드 로딩
-                    imageView.setImage(image);
-                }
-                // 리소스 경로인 경우 (예: /assets/images/cute.jpg)
-                else {
-                    String imagePath = getClass().getResource(profileImagePath).toExternalForm();
-                    Image image = new Image(imagePath);
-                    imageView.setImage(image);
-                }
-            } else {
-                // 기본 이미지 설정
-                String defaultImagePath = getClass().getResource("/assets/images/cute.jpg").toExternalForm();
-                Image defaultImage = new Image(defaultImagePath);
-                imageView.setImage(defaultImage);
-            }
-        } catch (Exception e) {
-            // 이미지 로드 실패 시 기본 이미지 사용
-            System.err.println("이미지 로드 실패: " + profileImagePath);
-            try {
-                String defaultImagePath = getClass().getResource("/assets/images/cute.jpg").toExternalForm();
-                Image defaultImage = new Image(defaultImagePath);
-                imageView.setImage(defaultImage);
-            } catch (Exception ex) {
-                System.err.println("기본 이미지도 로드 실패");
-            }
-        }
-
-        return imageView;
-    }
-
-    /**
-     * 프로필 이미지를 생성하는 메서드 (바이트 배열용)
-     */
-    private ImageView createProfileImageFromBytes(byte[] imageBytes) {
-        ImageView imageView = new ImageView();
-        imageView.setFitHeight(150.0);
-        imageView.setFitWidth(50.0);
-        imageView.setPickOnBounds(true);
-        imageView.setPreserveRatio(true);
-
-        try {
-            if (imageBytes != null && imageBytes.length > 0) {
-                // 바이트 배열을 InputStream으로 변환하여 Image 생성
-                ByteArrayInputStream inputStream = new ByteArrayInputStream(imageBytes);
-                Image image = new Image(inputStream);
-                imageView.setImage(image);
-                inputStream.close();
-            } else {
-                // 기본 이미지 설정
-                String defaultImagePath = getClass().getResource("/assets/images/cute.jpg").toExternalForm();
-                Image defaultImage = new Image(defaultImagePath);
-                imageView.setImage(defaultImage);
-            }
-        } catch (Exception e) {
-            // 이미지 로드 실패 시 기본 이미지 사용
-            System.err.println("바이트 배열에서 이미지 로드 실패: " + e.getMessage());
-            try {
-                String defaultImagePath = getClass().getResource("/assets/images/cute.jpg").toExternalForm();
-                Image defaultImage = new Image(defaultImagePath);
-                imageView.setImage(defaultImage);
-            } catch (Exception ex) {
-                System.err.println("기본 이미지도 로드 실패");
-            }
-        }
-
-        return imageView;
     }
 
     /**
@@ -454,11 +387,11 @@ public class FriendMainController {
 
             // 일정 점 렌더링
             if (scheduleMap.containsKey(currentDrawingDate)) {
-                List<CodiSchedule> schedules = scheduleMap.get(currentDrawingDate);
+                List<DummyCodiDTO> schedules = scheduleMap.get(currentDrawingDate);
                 HBox dotsBox = new HBox();
                 dotsBox.getStyleClass().add("dots-box");
 
-                for (CodiSchedule schedule : schedules) {
+                for (DummyCodiDTO schedule : schedules) {
                     Label dot = new Label("●");
                     dot.setStyle("-fx-font-size: 11;");
 
@@ -662,7 +595,7 @@ public class FriendMainController {
     }
 
     private void showScheduleDetail(LocalDate date) {
-        List<CodiSchedule> schedules = scheduleMap.get(date);
+        List<DummyCodiDTO> schedules = scheduleMap.get(date);
         scheduleListContainer.getChildren().clear();
         emptyLabel.setVisible(false);
         emptyLabel.setManaged(false);
@@ -679,7 +612,7 @@ public class FriendMainController {
         }
 
         for (int i = 0; i < schedules.size(); i++) {
-            CodiSchedule schedule = schedules.get(i);
+            DummyCodiDTO schedule = schedules.get(i);
 
             Label descLabel = new Label("│ " + schedule.getDescription());
             descLabel.getStyleClass().add("desc-label");
@@ -749,7 +682,7 @@ public class FriendMainController {
         }
     }
 
-    private String getVisibilityLabel(ScheduleVisibility visibility) {
+    private String getVisibilityLabel(CodiScope visibility) {
         return switch (visibility) {
             case PUBLIC -> "전체공개";
             case FRIENDS -> "친구공개";
@@ -795,10 +728,48 @@ public class FriendMainController {
     * 영역
     */
 
+
+    private void showEmptyFriendMessage() {
+        VBox emptyStateBox = new VBox();
+        emptyStateBox.setAlignment(Pos.CENTER);
+        emptyStateBox.setPrefHeight(friendListArea.getPrefHeight());
+        emptyStateBox.setPrefWidth(friendListArea.getPrefWidth());
+        emptyStateBox.setSpacing(15);
+        emptyStateBox.setStyle("-fx-background-color: #FFFFFF");
+
+        // 메인 메시지
+        Label mainMessage = new Label("아직 친구가 없어요!");
+        mainMessage.setStyle("-fx-font-size: 16px; -fx-text-fill: #666666;");
+
+        // 서브 메시지
+        Label subMessage = new Label("사용자를 검색해서 친구를 찾아보세요!");
+        subMessage.setStyle("-fx-font-size: 14px; -fx-text-fill: #999999;");
+
+        mainMessage.getStyleClass().add("bold-text");
+        subMessage.getStyleClass().add("bold-text");
+
+        // 요소들을 VBox에 추가
+        emptyStateBox.getChildren().addAll(mainMessage, subMessage);
+
+        // 빈 상태 박스를 친구 목록 영역에 추가
+        friendListArea.getChildren().add(emptyStateBox);
+
+        // 스타일 클래스 추가 (필요시)
+        emptyStateBox.getStyleClass().add("empty-state-container");
+    }
+
+    @FXML public void handleClickSearchButton(){
+        MainLayoutController.loadView("/com/samyukgu/what2wear/friend/FriendSearchView.fxml");
+    }
+
     // 컨테이너에 있는 인스턴스 멤버로 할당
     private void setupDI() {
         DIContainer diContainer = DIContainer.getInstance();
         memberSession = diContainer.resolve(MemberSession.class);
         friendService = diContainer.resolve(FriendService.class);
+    }
+
+    private void loadMember(){
+        this.member = memberSession.getMember();
     }
 }

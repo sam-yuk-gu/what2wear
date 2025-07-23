@@ -1,7 +1,7 @@
 package com.samyukgu.what2wear.ai.controller;
 
-import com.samyukgu.what2wear.common.controller.MainLayoutController;
 import javafx.event.ActionEvent;
+import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;

@@ -7,7 +7,7 @@
 
 <HBox fx:controller="com.samyukgu.what2wear.common.controller.BasicHeaderController"
       alignment="CENTER_LEFT"
-      prefHeight="70"
+      prefHeight="65"
       xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       stylesheets="@/com/samyukgu/what2wear/common/style.css"
@@ -37,7 +37,11 @@
     <!-- 우측 Spacer -->
     <Region fx:id="rightSpacer" HBox.hgrow="ALWAYS" />
 
-    <!-- 오른쪽: 20x20 가상공간 -->
-
+    <!-- 오른쪽: 가상공간 -->
+    <Button disable="true" focusTraversable="false" styleClass="header-back-button">
+        <graphic>
+            <ImageView fitHeight="20" fitWidth="20" />
+        </graphic>
+    </Button>
 
 </HBox>
