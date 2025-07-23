@@ -22,6 +22,10 @@ import com.samyukgu.what2wear.wardrobe.service.WardrobeService;
 import com.samyukgu.what2wear.post.dao.PostDAO;
 import com.samyukgu.what2wear.post.dao.PostOracleDAO;
 import com.samyukgu.what2wear.post.service.PostService;
+import com.samyukgu.what2wear.postcomment.dao.PostCommentDAO;
+import com.samyukgu.what2wear.postcomment.dao.PostCommentOracleDAO;
+import com.samyukgu.what2wear.postcomment.model.PostComment;
+import com.samyukgu.what2wear.postcomment.service.PostCommentService;
 
 public class ApplicationConfig {
     public static void configure() {
@@ -43,6 +47,7 @@ public class ApplicationConfig {
         container.registerSingleton(FriendDAO.class, new FriendOracleDAO());
         container.registerSingleton(CodiDAO.class, new CodiOracleDAO());
         container.registerSingleton(PostDAO.class, new PostOracleDAO());
+        container.registerSingleton(PostCommentDAO.class, new PostCommentOracleDAO());
 
         // Service
         container.registerSingleton(MemberService.class, new MemberService(container.resolve(MemberDAO.class)));
