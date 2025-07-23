@@ -1,11 +1,15 @@
 package com.samyukgu.what2wear.common.controller;
 
+import com.samyukgu.what2wear.di.DIContainer;
+import com.samyukgu.what2wear.member.Session.MemberSession;
+import com.samyukgu.what2wear.member.model.Member;
 import com.samyukgu.what2wear.post.controller.DetailPostController;
 import com.samyukgu.what2wear.post.controller.EditPostController;
 import com.samyukgu.what2wear.post.model.Post;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -15,9 +19,11 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import javafx.stage.Stage;
 
 public class MainLayoutController {
 
+    @FXML private Button logoutButton;
     @FXML private StackPane contentArea;
     @FXML private Region spacer;
 
@@ -31,6 +37,8 @@ public class MainLayoutController {
     private static MainLayoutController instance;
     private Button currentSelectedButton;
 
+    private MemberSession memberSession;
+
     // MainLayoutController.getInstance() 접근을 위한 getInstance() 정의
     public static MainLayoutController getInstance() {
         return instance;
@@ -42,7 +50,7 @@ public class MainLayoutController {
     @FXML
     public void initialize() {
         instance = this;
-
+        setupDI();
         menuButtons = List.of(wardrobeButton, friendButton, boardButton, mypageButton);   // 버튼 리스트 초기화 (로고 제외)
         loadView("/com/samyukgu/what2wear/codi/CodiMainView.fxml");
         VBox.setVgrow(spacer, Priority.ALWAYS);     // 최대 여백 설정
@@ -130,5 +138,68 @@ public class MainLayoutController {
     private void handleClickBoard() {
         selectMenu(boardButton); // 버튼 하이라이트 처리
         loadView("/com/samyukgu/what2wear/post/ListPost.fxml");
+    }
+
+    // 마이페이지 탭 연동
+    @FXML
+    private void handleClickMyPage() {
+        selectMenu(mypageButton); // 버튼 하이라이트 처리
+        loadView("/com/samyukgu/what2wear/member/MyPageView.fxml");
+    }
+
+    // 로그아웃 탭 연동
+    @FXML
+    private void handleClickLogout() {
+        showConfirmationModal();
+    }
+
+    // DI로 로그인 세션 가져오기
+    private void setupDI(){
+        memberSession = DIContainer.getInstance().resolve(MemberSession.class);
+    }
+
+    private void showConfirmationModal() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/CustomModal.fxml"));
+            StackPane modal = loader.load();
+
+            CustomModalController controller = loader.getController();
+            controller.configure(
+                    "로그아웃",
+                    "로그아웃 하시겠습니까?",
+                    "/assets/icons/redCheck.png",
+                    "#FA7B7F",
+                    "취소",
+                    "확인",
+                    () -> contentArea.getChildren().remove(modal),  // root → contentArea
+                    () -> {
+                        contentArea.getChildren().remove(modal);    // root → contentArea
+                        memberSession.clearMember();
+                        switchScene("/com/samyukgu/what2wear/member/LoginView.fxml", "로그인");
+                    }
+            );
+
+            contentArea.getChildren().add(modal);  // root → contentArea
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void switchScene(String fxmlPath, String title){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent newRoot = loader.load();
+
+            // 현재 Stage 가져오기 (기존 화면에서) - contentArea 사용
+            Stage stage = (Stage) this.contentArea.getScene().getWindow();
+            Scene scene = new Scene(newRoot, 1280, 768);
+            stage.setScene(scene);
+            stage.setTitle(title);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
