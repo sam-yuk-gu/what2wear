@@ -30,11 +30,12 @@ public class CreatePostController {
     // 회원 세션
     private MemberService memberService;
     private MemberSession memberSession;
-
-    private final PostService postService = DIContainer.getInstance().resolve(PostService.class);
+    private PostService postService;
 
     @FXML
     public void initialize() {
+        postService = DIContainer.getInstance().resolve(PostService.class);
+
         // 헤더 설정
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/PostHeader.fxml"));
