@@ -5,6 +5,7 @@ import com.samyukgu.what2wear.codi.model.CodiSchedule;
 import com.samyukgu.what2wear.codi.model.ScheduleVisibility;
 import com.samyukgu.what2wear.codi.service.DummyScheduleRepository;
 import com.samyukgu.what2wear.common.controller.MainLayoutController;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -466,5 +467,10 @@ public class CodiMainController {
     @FXML
     private void handleClickAddCodi() {
         MainLayoutController.loadView("/com/samyukgu/what2wear/codi/AddCodiView.fxml");
+    }
+
+    // ai 추천 안내 화면으로 전환
+    public void handleAiButtonClick(ActionEvent actionEvent) {
+        MainLayoutController.loadView("/com/samyukgu/what2wear/ai/IntroduceAi.fxml");
     }
 }

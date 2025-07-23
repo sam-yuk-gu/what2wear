@@ -11,6 +11,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import lombok.Getter;
 
 import java.io.IOException;
 import java.util.List;
@@ -28,13 +29,10 @@ public class MainLayoutController {
     @FXML private Button mypageButton;
 
 
+    // MainLayoutController.getInstance() 접근을 위한 getInstance() 정의
+    @Getter
     private static MainLayoutController instance;
     private Button currentSelectedButton;
-
-    // MainLayoutController.getInstance() 접근을 위한 getInstance() 정의
-    public static MainLayoutController getInstance() {
-        return instance;
-    }
 
     // 하이라이트 대상 버튼 목록 (logoButton 제외)
     private List<Button> menuButtons;

@@ -41,6 +41,13 @@
     -fx-padding: 20 0;
 }
 
+
+/* Modal Button 관련 */
+.close_button {
+    -fx-background-color: white;
+    -fx-cursor: hand;
+}
+
 .cancel_button {
     -fx-padding: 12 56;
     -fx-text-fill: #000000;
