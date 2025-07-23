@@ -15,8 +15,8 @@ public class Member {
     Long id;
     String account_id;
     String email;
-    String nickname;
     String name;
+    String nickname;
     String password;
     byte[] profile_img;
     String deleted;
