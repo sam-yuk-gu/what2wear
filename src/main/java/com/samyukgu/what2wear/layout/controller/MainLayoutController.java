@@ -1,5 +1,7 @@
-package com.samyukgu.what2wear.common.controller;
+package com.samyukgu.what2wear.layout.controller;
 
+import com.samyukgu.what2wear.codi.controller.CodiAddController;
+import com.samyukgu.what2wear.codi.controller.CodiEditController;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.member.Session.MemberSession;
 import com.samyukgu.what2wear.member.model.Member;
@@ -15,6 +17,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import lombok.Getter;
 
 import java.io.IOException;
 import java.util.List;
@@ -34,15 +37,11 @@ public class MainLayoutController {
     @FXML private Button mypageButton;
 
 
+    // MainLayoutController.getInstance() 접근을 위한 getInstance() 정의
+    @Getter
     private static MainLayoutController instance;
     private Button currentSelectedButton;
-
     private MemberSession memberSession;
-
-    // MainLayoutController.getInstance() 접근을 위한 getInstance() 정의
-    public static MainLayoutController getInstance() {
-        return instance;
-    }
 
     // 하이라이트 대상 버튼 목록 (logoButton 제외)
     private List<Button> menuButtons;
@@ -100,6 +99,20 @@ public class MainLayoutController {
         }
     }
 
+    public static void loadEditCodiView(Long codiId) {
+        try {
+            FXMLLoader loader = new FXMLLoader(MainLayoutController.class.getResource("/com/samyukgu/what2wear/codi/CodiEditView.fxml"));
+            Parent view = loader.load();
+
+            CodiEditController controller = loader.getController();
+            controller.setEditMode(codiId);
+
+            instance.contentArea.getChildren().setAll(view);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     // 로고 버튼은 하이라이트 제외, 나머지는 선택 상태 갱신
     private void selectMenu(Button selectedButton) {

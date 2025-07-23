@@ -1,7 +1,7 @@
 package com.samyukgu.what2wear.post.controller;
 
 import com.samyukgu.what2wear.common.controller.CustomModalController;
-import com.samyukgu.what2wear.common.controller.MainLayoutController;
+import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.common.controller.PostHeaderController;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.member.Session.MemberSession;
@@ -30,11 +30,12 @@ public class CreatePostController {
     // 회원 세션
     private MemberService memberService;
     private MemberSession memberSession;
-
-    private final PostService postService = DIContainer.getInstance().resolve(PostService.class);
+    private PostService postService;
 
     @FXML
     public void initialize() {
+        postService = DIContainer.getInstance().resolve(PostService.class);
+
         // 헤더 설정
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/PostHeader.fxml"));

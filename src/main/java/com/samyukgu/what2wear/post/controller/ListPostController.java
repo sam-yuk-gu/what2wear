@@ -1,8 +1,8 @@
 package com.samyukgu.what2wear.post.controller;
 
 import com.samyukgu.what2wear.common.controller.CustomModalController;
-import com.samyukgu.what2wear.common.controller.MainLayoutController;
 import com.samyukgu.what2wear.di.DIContainer;
+import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.post.model.Post;
 import com.samyukgu.what2wear.post.service.PostService;
 import javafx.collections.FXCollections;
@@ -55,7 +55,6 @@ public class ListPostController implements Initializable {
 
         // 검색 조건 기본 설정: 제목
         select_title.setValue("제목");
-
         colNo.setCellValueFactory(new PropertyValueFactory<>("id"));
         colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         colAuthor.setCellValueFactory(new PropertyValueFactory<>("writer_name"));

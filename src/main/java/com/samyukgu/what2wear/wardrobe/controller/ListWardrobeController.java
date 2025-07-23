@@ -1,9 +1,9 @@
 package com.samyukgu.what2wear.wardrobe.controller;
 
-import com.samyukgu.what2wear.common.controller.MainLayoutController;
+import com.samyukgu.what2wear.di.DIContainer;
+import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.member.Session.MemberSession;
 import com.samyukgu.what2wear.member.model.Member;
-import com.samyukgu.what2wear.wardrobe.dao.WardrobeOracleDAO;
 import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
 import com.samyukgu.what2wear.wardrobe.service.WardrobeService;
 import javafx.application.Platform;
@@ -24,7 +24,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ListWardrobeController {
-    private final WardrobeService wardrobeService = new WardrobeService(new WardrobeOracleDAO());
+    private WardrobeService wardrobeService;
+    private MemberSession memberSession;
 
     // 데이터 저장
     private List<Wardrobe> originalWardrobes = new ArrayList<>();
@@ -51,6 +52,9 @@ public class ListWardrobeController {
 
     @FXML
     public void initialize() {
+        DIContainer diContainer = DIContainer.getInstance();
+        wardrobeService = diContainer.resolve(WardrobeService.class);
+        memberSession = diContainer.resolve(MemberSession.class);
         setupUI();
 
         // contentContainer 강제 크기 설정
@@ -159,11 +163,10 @@ public class ListWardrobeController {
         Task<List<Wardrobe>> loadTask = new Task<List<Wardrobe>>() {
             @Override
             protected List<Wardrobe> call() throws Exception {
-                Member member = MemberSession.getLoginMember();
-                if (member == null) {
+                if (memberSession == null) {
                     throw new IllegalStateException("로그인된 사용자가 없습니다.");
                 }
-                long memberId = member.getId();
+                long memberId = memberSession.getMember().getId();
                 return wardrobeService.getAllWardrobe(memberId);
             }
 
