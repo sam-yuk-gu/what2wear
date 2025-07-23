@@ -119,8 +119,8 @@ public class WardrobeOracleDAO implements WardrobeDAO {
     public void save(Wardrobe wardrobe) {
         String sql = """
                 INSERT INTO clothes 
-                (id, member_id, category_id, name, memo, picture, keyword, item_size, color, brand, deleted)
-                VALUES (clothes_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                (id, member_id, category_id, name, memo, picture, keyword, item_size, color, brand, deleted, created_at)
+                VALUES (SEQ_CLOTHES.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """;
 
         try (Connection conn = getConnection();
@@ -141,6 +141,7 @@ public class WardrobeOracleDAO implements WardrobeDAO {
             pstmt.setString(8, wardrobe.getColor());
             pstmt.setString(9, wardrobe.getBrand());
             pstmt.setString(10, wardrobe.getDeleted());
+            pstmt.setDate(11, new Date(System.currentTimeMillis()));
 
             pstmt.executeUpdate();
 
