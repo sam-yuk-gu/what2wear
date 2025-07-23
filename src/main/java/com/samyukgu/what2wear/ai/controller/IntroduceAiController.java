@@ -1,6 +1,7 @@
 package com.samyukgu.what2wear.ai.controller;
 
 import com.samyukgu.what2wear.common.controller.MainLayoutController;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
@@ -29,7 +30,7 @@ public class IntroduceAiController {
         myClosetRadio.setToggleGroup(closetToggleGroup);
     }
 
-    // 추천받기 버튼 클릭 시
+    // 추천받기 버튼 클릭 시 AI 로딩 화면으로 전환
     @FXML
     private void handleRecommendClick() {
         // 위치 동의 여부
@@ -42,5 +43,10 @@ public class IntroduceAiController {
         System.out.println("선택한 옷장: " + closetChoice);
 
         MainLayoutController.loadView("/com/samyukgu/what2wear/ai/LoadingAi.fxml");
+    }
+
+    // 취소하기 버튼 클릭 시 메인 화면으로 전환
+    public void handleCancelClick(ActionEvent actionEvent) {
+        MainLayoutController.loadView("/com/samyukgu/what2wear/codi/CodiMainView.fxml");
     }
 }

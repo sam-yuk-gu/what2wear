@@ -12,8 +12,8 @@ public class RecommendAiController {
     @FXML StackPane root;
     @FXML
     private void handleRetryClick() {
-        System.out.println("다시 추천받기 클릭됨");
-        // 예시: 화면 전환 or recompute logic 호출
+        // AI 안내 화면으로 전환
+        MainLayoutController.loadView("/com/samyukgu/what2wear/ai/LoadingAi.fxml");
     }
 
     // 저장 로직 또는 알림창
@@ -33,13 +33,8 @@ public class RecommendAiController {
                 () -> root.getChildren().remove(modal),
                 () -> {
                     root.getChildren().remove(modal);
-//                    root.getChildren().setAll(modal);
                     // 게시글 목록으로 이동
                     MainLayoutController.loadView("/com/samyukgu/what2wear/codi/CodiMainView.fxml");
-                    System.out.println("root size: " + root.getWidth() + ", " + root.getHeight());
-                 System.out.println("codiMainView size: " + modal.prefWidth(-1) + ", " + modal.prefHeight(-1));
-
-//                    MainLayoutController.loadView("/com/samyukgu/what2wear/codi/CodiMainView.fxml");
                 }
         );
 
