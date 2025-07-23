@@ -15,4 +15,12 @@ public class CodiDTO {
     String scope;
     String scheduleName;
     List<CodiClothesDTO> codiClothesList;
+    Long codiId;
+
+    public CodiDTO (String scope, String scheduleName, List<CodiClothesDTO> codiClothesList) {
+        this.scope = scope;
+        this.scheduleName = scheduleName;
+        this.codiClothesList = codiClothesList;
+    }
 }
+

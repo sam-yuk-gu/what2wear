@@ -1,5 +1,7 @@
 package com.samyukgu.what2wear.layout.controller;
 
+import com.samyukgu.what2wear.codi.controller.CodiAddController;
+import com.samyukgu.what2wear.codi.controller.CodiEditController;
 import com.samyukgu.what2wear.post.controller.DetailPostController;
 import com.samyukgu.what2wear.post.controller.EditPostController;
 import com.samyukgu.what2wear.post.model.Post;
@@ -90,6 +92,20 @@ public class MainLayoutController {
         }
     }
 
+    public static void loadEditCodiView(Long codiId) {
+        try {
+            FXMLLoader loader = new FXMLLoader(MainLayoutController.class.getResource("/com/samyukgu/what2wear/codi/CodiEditView.fxml"));
+            Parent view = loader.load();
+
+            CodiEditController controller = loader.getController();
+            controller.setEditMode(codiId);
+
+            instance.contentArea.getChildren().setAll(view);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     // 로고 버튼은 하이라이트 제외, 나머지는 선택 상태 갱신
     private void selectMenu(Button selectedButton) {

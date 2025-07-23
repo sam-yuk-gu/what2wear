@@ -110,30 +110,42 @@ public class CodiMainController {
     private void loadScheduleForDay(LocalDate date) {
         List<CodiListDTO> codiLists = codiService.getCodiList(memberId, date);
 
-        // 날짜 기준으로 변환
-        List<CodiSchedule> detailedSchedules = codiLists.stream()
-            .flatMap(dto -> dto.getCodiList().stream().map(codiDTO -> {
+        List<CodiSchedule> detailedSchedules = new ArrayList<>();
+
+        for (CodiListDTO dto : codiLists) {
+            for (var codiDTO : dto.getCodiList()) {
+                // 조건: 일정명이나 코디가 하나라도 있으면 포함
+                boolean hasScheduleName = !codiDTO.getScheduleName().isBlank();
+                boolean hasClothes = !codiDTO.getCodiClothesList().isEmpty();
+
+                if (!hasScheduleName && !hasClothes) continue; // 둘 다 없으면 건너뜀
+
                 CodiSchedule schedule = new CodiSchedule();
+                schedule.setCodiId(codiDTO.getCodiId());
                 schedule.setDate(dto.getScheduleDate());
                 schedule.setDescription(codiDTO.getScheduleName());
                 schedule.setVisibility(fromString(codiDTO.getScope()));
 
-                List<CodiItem> items = codiDTO.getCodiClothesList().stream().map(clothes -> {
-                    CodiItem item = new CodiItem();
-                    item.setCategory(clothes.getCategoryName());
-                    item.setName(clothes.getClothesName());
-                    item.setImagePath(convertToImagePath(clothes.getClothesPicture()));
-                    return item;
-                }).toList();
+                if (hasClothes) {
+                    List<CodiItem> items = codiDTO.getCodiClothesList().stream().map(clothes -> {
+                        CodiItem item = new CodiItem();
+                        item.setCategory(clothes.getCategoryName());
+                        item.setName(clothes.getClothesName());
+                        item.setImagePath(convertToImagePath(clothes.getClothesPicture()));
+                        return item;
+                    }).toList();
 
-                schedule.setCodiItems(items);
-                return schedule;
-            }))
-            .toList();
+                    schedule.setCodiItems(items);
+                }
 
-        // 기존 점 정보 덮어쓰기
-        detailScheduleMap = new HashMap<>();
+                detailedSchedules.add(schedule);
+            }
+        }
+
+        if (detailScheduleMap == null) detailScheduleMap = new HashMap<>();
         detailScheduleMap.put(date, detailedSchedules);
+
+
     }
 
     private void renderCalendar(LocalDate baseDate) {
@@ -287,6 +299,7 @@ public class CodiMainController {
         loadScheduleForMonth(currentDate);
         renderCalendar(currentDate);
         showScheduleDetail(currentDateSelected);
+        changeMonthAndRender(currentDate);
     }
 
     @FXML
@@ -296,11 +309,12 @@ public class CodiMainController {
         loadScheduleForMonth(currentDate);
         renderCalendar(currentDate);
         showScheduleDetail(currentDateSelected);
+        changeMonthAndRender(currentDate);
     }
 
     private Button getButton(ComboBox<Integer> yearCombo, ComboBox<Integer> monthCombo, Stage popupStage) {
         Button confirmBtn = new Button("확인");
-        confirmBtn.setStyle(
+        confirmBtn.setStyle(    // 팝업 버튼: css 연동 불가
             "-fx-pref-width: 50;" +
             "-fx-background-color: #222222;" +
             "-fx-background-radius: 8;" +
@@ -311,15 +325,12 @@ public class CodiMainController {
         );
 
         confirmBtn.setOnAction(e -> {
-            LocalDate selectedMonthFirstDay = LocalDate.of(
-                    yearCombo.getValue(), monthCombo.getValue(), 1
-            );
-            currentDate = selectedMonthFirstDay;
-            currentDateSelected = selectedMonthFirstDay;
-
-            loadScheduleForMonth(currentDate);
-            renderCalendar(currentDate);
-            showScheduleDetail(currentDateSelected);
+            Integer selectedYear = yearCombo.getValue();
+            Integer selectedMonth = monthCombo.getValue();
+            if (selectedYear != null && selectedMonth != null) {
+                LocalDate selectedDate = LocalDate.of(selectedYear, selectedMonth, 1);
+                changeMonthAndRender(selectedDate);  // ✅ 여기도 재사용
+            }
             popupStage.close();
         });
         return confirmBtn;
@@ -382,6 +393,10 @@ public class CodiMainController {
                 }
 
                 scheduleListContainer.getChildren().add(scheduleBox);
+                scheduleBox.setOnMouseClicked(e -> {
+                    Long codiId = schedule.getCodiId();
+                    MainLayoutController.loadEditCodiView(codiId);
+                });
             } else {
                 // 이후 일정들: 설명 라벨만
                 VBox otherScheduleBox = new VBox();
@@ -418,6 +433,10 @@ public class CodiMainController {
                     }
                 }
 
+                otherScheduleBox.setOnMouseClicked(e -> {
+                    Long codiId = schedule.getCodiId();
+                    MainLayoutController.loadEditCodiView(codiId);
+                });
                 scheduleListContainer.getChildren().add(otherScheduleBox);
             }
         }
@@ -541,6 +560,16 @@ public class CodiMainController {
 
         yearCombo.setValue(currentDate.getYear());
         monthCombo.setValue(currentDate.getMonthValue());
+    }
+
+    private void changeMonthAndRender(LocalDate newDate) {
+        this.currentDate = newDate;
+        this.currentDateSelected = newDate.withDayOfMonth(1); // 선택 초기화
+
+        loadScheduleForMonth(currentDate);          // 월별 스케줄
+        loadScheduleForDay(currentDateSelected);    // 상세 스케쥴
+        renderCalendar(currentDate);                // 달력
+        showScheduleDetail(currentDateSelected);    // 첫 날짜 코디 상세
     }
 
     // ai 추천 안내 화면으로 전환

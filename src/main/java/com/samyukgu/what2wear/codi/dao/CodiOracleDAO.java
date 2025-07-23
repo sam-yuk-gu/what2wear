@@ -102,13 +102,14 @@ public class CodiOracleDAO implements CodiDAO {
              cl.name AS clothes_name,
              cl.picture AS clothes_picture
         FROM codi c
-        JOIN codi_detail cd ON c.id = cd.codi_id
-        JOIN clothes cl ON cd.clothes_id = cl.id
-        JOIN category cat ON cl.category_id = cat.id
+            LEFT JOIN codi_detail cd ON c.id = cd.codi_id
+            LEFT JOIN clothes cl ON cd.clothes_id = cl.id
+            LEFT JOIN category cat ON cl.category_id = cat.id
         WHERE c.member_id = ?
             AND c.schedule_date >= TO_DATE(?, 'YYYY-MM-DD')
             AND c.schedule_date < TO_DATE(?, 'YYYY-MM-DD')
             AND c.deleted = 'N'
+            AND (c.schedule IS NOT NULL OR cl.id IS NOT NULL)
         ORDER BY c.schedule_date, c.id
     """;
 
@@ -130,6 +131,7 @@ public class CodiOracleDAO implements CodiDAO {
                     CodiDTO codi = codiMap.get(codiId);
                     if (codi == null) {
                         codi = new CodiDTO();
+                        codi.setCodiId(codiId);
                         codi.setScope(String.valueOf(rs.getInt("scope")));
                         codi.setScheduleName(rs.getString("schedule_name"));
                         codi.setCodiClothesList(new ArrayList<>());
@@ -138,12 +140,17 @@ public class CodiOracleDAO implements CodiDAO {
                         groupedByDate.computeIfAbsent(scheduleDate, d -> new ArrayList<>()).add(codi);
                     }
 
-                    CodiClothesDTO clothes = new CodiClothesDTO();
-                    clothes.setCategoryName(rs.getString("category_name"));
-                    clothes.setClothesName(rs.getString("clothes_name"));
-                    clothes.setClothesPicture(rs.getBytes("clothes_picture"));
+                    String clothesName = rs.getString("clothes_name");
+                    byte[] clothesPicture = rs.getBytes("clothes_picture");
 
-                    codi.getCodiClothesList().add(clothes);
+                    if (clothesName != null || clothesPicture != null) {
+                        CodiClothesDTO clothes = new CodiClothesDTO();
+                        clothes.setCategoryName(rs.getString("category_name"));
+                        clothes.setClothesName(clothesName);
+                        clothes.setClothesPicture(clothesPicture);
+
+                        codi.getCodiClothesList().add(clothes);
+                    }
                 }
             }
 
@@ -154,7 +161,13 @@ public class CodiOracleDAO implements CodiDAO {
                 dto.setCodiList(entry.getValue());
                 result.add(dto);
             }
-
+            List<CodiListDTO> testResult = new ArrayList<>();
+            for (Map.Entry<LocalDate, List<CodiDTO>> entry : groupedByDate.entrySet()) {
+                CodiListDTO dto = new CodiListDTO();
+                dto.setScheduleDate(entry.getKey());
+                dto.setCodiList(entry.getValue());
+                testResult.add(dto);
+            }
             return result;
 
         } catch (SQLException e) {

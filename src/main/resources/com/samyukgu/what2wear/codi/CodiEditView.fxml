@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+
+<StackPane fx:id="root" stylesheets="@add-codi.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.codi.controller.CodiEditController">
+
+    <!-- 헤더 포함 영역 -->
+    <VBox fx:id="container">
+        <!-- 헤더 제외 실제 컨텐츠 영역 -->
+        <VBox styleClass="content-container">
+            <!-- inputs -->
+            <VBox fx:id="inputBox" spacing="20" styleClass="input-box">
+                <VBox spacing="15">
+                    <Label styleClass="label" text="일정명" />
+                    <TextField fx:id="scheduleNameField" promptText="일정명을 입력해주세요." styleClass="input-text" />
+                </VBox>
+                <VBox spacing="15">
+                    <Label styleClass="label" text="날짜" />
+                    <DatePicker fx:id="datePicker" styleClass="date-picker" />
+                </VBox>
+                <VBox spacing="15">
+                    <Label styleClass="label" text="코디" />
+                    <Pane fx:id="codiDisplayPane" prefHeight="120" style="-fx-border-color: #ccc; -fx-background-color: #fafafa;" />
+                </VBox>
+                <VBox spacing="15">
+                    <Label styleClass="label" text="공개 범위" />
+                    <HBox spacing="12">
+                        <ToggleButton fx:id="btnAll" styleClass="scope-public">
+                            <graphic>
+                                <HBox alignment="CENTER" spacing="6">
+                                    <SVGPath content="M11.4987 20.1663C10.2306 20.1663 9.03898 19.9256 7.9237 19.444C6.80842 18.9625 5.83828 18.3095 5.01328 17.4851C4.18828 16.6607 3.53531 15.6906 3.05437 14.5747C2.57342 13.4588 2.33264 12.2671 2.33203 10.9997C2.33142 9.73223 2.5722 8.54056 3.05437 7.42467C3.53653 6.30879 4.1895 5.33865 5.01328 4.51426C5.83706 3.68987 6.8072 3.0369 7.9237 2.55534C9.0402 2.07379 10.2319 1.83301 11.4987 1.83301C12.7655 1.83301 13.9572 2.07379 15.0737 2.55534C16.1902 3.0369 17.1603 3.68987 17.9841 4.51426C18.8079 5.33865 19.4612 6.30879 19.9439 7.42467C20.4267 8.54056 20.6672 9.73223 20.6654 10.9997C20.6635 12.2671 20.4228 13.4588 19.943 14.5747C19.4633 15.6906 18.8103 16.6607 17.9841 17.4851C17.1579 18.3095 16.1878 18.9628 15.0737 19.4449C13.9596 19.9271 12.768 20.1676 11.4987 20.1663ZM10.582 18.2872V16.4997C10.0779 16.4997 9.64642 16.3203 9.2877 15.9616C8.92898 15.6029 8.74931 15.1711 8.7487 14.6663V13.7497L4.3487 9.34967C4.30287 9.62467 4.261 9.89967 4.22312 10.1747C4.18523 10.4497 4.16598 10.7247 4.16537 10.9997C4.16537 12.8483 4.77281 14.4677 5.9877 15.858C7.20259 17.2483 8.73403 18.058 10.582 18.2872ZM16.907 15.9497C17.5334 15.2622 18.011 14.4946 18.3398 13.647C18.6686 12.7994 18.8326 11.917 18.832 10.9997C18.832 9.50245 18.4159 8.13509 17.5835 6.89759C16.7512 5.66009 15.6396 4.76634 14.2487 4.21634V4.58301C14.2487 5.08717 14.0693 5.51892 13.7106 5.87826C13.3519 6.23759 12.9201 6.41695 12.4154 6.41634H10.582V8.24967C10.582 8.5094 10.494 8.72726 10.318 8.90326C10.142 9.07926 9.92448 9.16695 9.66537 9.16634H7.83203V10.9997H13.332C13.5918 10.9997 13.8096 11.0877 13.9856 11.2637C14.1616 11.4397 14.2493 11.6572 14.2487 11.9163V14.6663H15.1654C15.5626 14.6663 15.9216 14.7849 16.2424 15.022C16.5633 15.2591 16.7848 15.5683 16.907 15.9497Z" fill="#60c0db" scaleX="0.8" scaleY="0.8" />
+                                    <Label styleClass="btn-label" text="전체" />
+                                </HBox>
+                            </graphic>
+                        </ToggleButton>
+                        <ToggleButton fx:id="btnFriend" styleClass="scope-friends">
+                            <graphic>
+                                <HBox alignment="CENTER" spacing="6">
+                                    <SVGPath content="M8.375 6.125C5.4875 6.125 3.125 8.4875 3.125 11.375C3.125 13.111 3.97987 14.6562 5.28537 15.6135C2.978 16.758 1.375 19.131 1.375 21.875H3.125C3.125 18.9665 5.4665 16.625 8.375 16.625C11.2835 16.625 13.625 18.9665 13.625 21.875H15.375C15.375 18.9665 17.7165 16.625 20.625 16.625C23.5335 16.625 25.875 18.9665 25.875 21.875H27.625C27.625 19.1301 26.022 16.758 23.7146 15.6135C24.383 15.127 24.927 14.4895 25.3025 13.753C25.6779 13.0165 25.874 12.2017 25.875 11.375C25.875 8.4875 23.5125 6.125 20.625 6.125C17.7375 6.125 15.375 8.4875 15.375 11.375C15.375 13.111 16.2299 14.6562 17.5354 15.6135C16.2568 16.2419 15.1986 17.2428 14.5 18.4844C13.8014 17.2428 12.7432 16.2419 11.4646 15.6135C12.133 15.127 12.677 14.4895 13.0525 13.753C13.4279 13.0165 13.624 12.2017 13.625 11.375C13.625 8.4875 11.2625 6.125 8.375 6.125ZM8.375 7.875C10.3201 7.875 11.875 9.42987 11.875 11.375C11.875 13.3201 10.3201 14.875 8.375 14.875C6.42987 14.875 4.875 13.3201 4.875 11.375C4.875 9.42987 6.42987 7.875 8.375 7.875ZM20.625 7.875C22.5701 7.875 24.125 9.42987 24.125 11.375C24.125 13.3201 22.5701 14.875 20.625 14.875C18.6799 14.875 17.125 13.3201 17.125 11.375C17.125 9.42987 18.6799 7.875 20.625 7.875Z" fill="#ffbb3c" scaleX="0.8" scaleY="0.8" />
+                                    <Label styleClass="btn-label" text="친구" />
+                                </HBox>
+                            </graphic>
+                        </ToggleButton>
+                        <ToggleButton fx:id="btnPrivate" styleClass="scope-private">
+                            <graphic>
+                                <HBox alignment="CENTER" spacing="6">
+                                    <SVGPath content="M7.83464 9.16667H6.0013C5.51507 9.16667 5.04876 9.35982 4.70494 9.70364C4.36112 10.0475 4.16797 10.5138 4.16797 11V17.4167C4.16797 17.9029 4.36112 18.3692 4.70494 18.713C5.04876 19.0568 5.51507 19.25 6.0013 19.25H17.0013C17.4875 19.25 17.9538 19.0568 18.2977 18.713C18.6415 18.3692 18.8346 17.9029 18.8346 17.4167V11C18.8346 10.5138 18.6415 10.0475 18.2977 9.70364C17.9538 9.35982 17.4875 9.16667 17.0013 9.16667H15.168M7.83464 9.16667V6.41667C7.83464 5.44421 8.22094 4.51158 8.90858 3.82394C9.59621 3.13631 10.5288 2.75 11.5013 2.75C12.4738 2.75 13.4064 3.13631 14.094 3.82394C14.7817 4.51158 15.168 5.44421 15.168 6.41667V9.16667M7.83464 9.16667H15.168M11.5013 12.8333V15.5833" fill="#ffffff00" scaleX="0.8" scaleY="0.8" stroke="GREY" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="2.0" />
+                                    <Label styleClass="btn-label" text="비공개" />
+                                </HBox>
+                            </graphic>
+                        </ToggleButton>
+                    </HBox>
+                </VBox>
+            </VBox>
+
+            <Button fx:id="submitButton" text="추가하기" styleClass="add-btn" />
+        </VBox>
+    </VBox>
+</StackPane>
