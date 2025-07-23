@@ -13,11 +13,8 @@ import com.samyukgu.what2wear.member.Session.MemberSession;
 import com.samyukgu.what2wear.member.dao.MemberDAO;
 import com.samyukgu.what2wear.member.dao.MemberOracleDAO;
 import com.samyukgu.what2wear.member.service.MemberService;
-import com.samyukgu.what2wear.myCodi.dao.CodiDAO;
 import com.samyukgu.what2wear.myCodi.dao.CodiDetailDAO;
 import com.samyukgu.what2wear.myCodi.dao.CodiDetailOracleDAO;
-import com.samyukgu.what2wear.myCodi.dao.CodiOracleDAO;
-import com.samyukgu.what2wear.myCodi.service.CodiService;
 import com.samyukgu.what2wear.wardrobe.dao.CategoryDAO;
 import com.samyukgu.what2wear.wardrobe.dao.CategoryOracleDAO;
 import com.samyukgu.what2wear.wardrobe.dao.WardrobeDAO;
@@ -67,7 +64,6 @@ public class ApplicationConfig {
         // myCodi
         container.registerSingleton(CodiDAO.class, new CodiOracleDAO());
         container.registerSingleton(CodiDetailDAO.class, new CodiDetailOracleDAO());
-        container.registerSingleton(CodiService.class, new CodiService(container.resolve(CodiDAO.class), container.resolve(CodiDetailDAO.class)));
 
         // Category
         container.registerSingleton(CategoryDAO.class, new CategoryOracleDAO());

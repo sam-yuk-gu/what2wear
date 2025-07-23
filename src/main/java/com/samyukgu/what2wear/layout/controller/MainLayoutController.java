@@ -2,6 +2,7 @@ package com.samyukgu.what2wear.layout.controller;
 
 import com.samyukgu.what2wear.codi.controller.CodiAddController;
 import com.samyukgu.what2wear.codi.controller.CodiEditController;
+import com.samyukgu.what2wear.common.controller.CustomModalController;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.member.Session.MemberSession;
 import com.samyukgu.what2wear.member.model.Member;
