@@ -43,7 +43,8 @@ dependencies {
     compileOnly("org.projectlombok:lombok:1.18.38")
     annotationProcessor("org.projectlombok:lombok:1.18.38")
     implementation("com.sun.mail:jakarta.mail:2.0.1")
-    implementation("com.sun.mail:jakarta.mail:2.0.1")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2") // JSON 파싱
+    implementation("com.squareup.okhttp3:okhttp:4.12.0") // ai 추가
 }
 
 tasks.withType<Test> {
