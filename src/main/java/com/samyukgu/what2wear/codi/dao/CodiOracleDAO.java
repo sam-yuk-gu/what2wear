@@ -88,7 +88,7 @@ public class CodiOracleDAO implements CodiDAO {
     }
 
     @Override
-    public List<CodiListDTO> findCodiList(String memberId, LocalDate date) {
+    public List<CodiListDTO> findCodiList(Long memberId, LocalDate date) {
         String fromDate = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String toDate = date.plusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
@@ -108,8 +108,7 @@ public class CodiOracleDAO implements CodiDAO {
         WHERE c.member_id = ?
             AND c.schedule_date >= TO_DATE(?, 'YYYY-MM-DD')
             AND c.schedule_date < TO_DATE(?, 'YYYY-MM-DD')
-            AND c.deleted IS NULL
-            AND cl.deleted = 'N'
+            AND c.deleted = 'N'
         ORDER BY c.schedule_date, c.id
     """;
 
@@ -119,7 +118,7 @@ public class CodiOracleDAO implements CodiDAO {
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)
         ) {
-            pstmt.setString(1, memberId);
+            pstmt.setLong(1, memberId);
             pstmt.setString(2, fromDate);
             pstmt.setString(3, toDate);
 
@@ -213,14 +212,16 @@ public class CodiOracleDAO implements CodiDAO {
                 }
             }
 
-            // 3. 코디옷상세정보 INSERT
-            try (PreparedStatement detailStmt = conn.prepareStatement(insertDetailSql)) {
-                for (Wardrobe outfit : selectedOutfits) {
-                    detailStmt.setLong(1, codiId);
-                    detailStmt.setLong(2, outfit.getId());
-                    detailStmt.addBatch();
+            if (selectedOutfits != null && !selectedOutfits.isEmpty()) {
+                // 3. 코디옷상세정보 INSERT
+                try (PreparedStatement detailStmt = conn.prepareStatement(insertDetailSql)) {
+                    for (Wardrobe outfit : selectedOutfits) {
+                        detailStmt.setLong(1, codiId);
+                        detailStmt.setLong(2, outfit.getId());
+                        detailStmt.addBatch();
+                    }
+                    detailStmt.executeBatch();
                 }
-                detailStmt.executeBatch();
             }
 
             conn.commit(); // 전체 성공 시 커밋

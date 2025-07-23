@@ -21,7 +21,7 @@ public class CodiService {
     }
 
     // 일자 별 코디 리스트 반환
-    public List<CodiListDTO> getCodiList(String memberId, LocalDate date) {
+    public List<CodiListDTO> getCodiList(Long memberId, LocalDate date) {
         return dao.findCodiList(memberId, date);
     }
 

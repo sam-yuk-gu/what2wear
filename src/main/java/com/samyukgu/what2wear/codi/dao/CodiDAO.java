@@ -15,7 +15,7 @@ public interface CodiDAO {
     List<CodiSchedule> findMonthlyCodiSchedules(Long memberId, LocalDate date);
     // date: 2025-07-01처럼 전달하면, 7월 전체로 처리
     // response: year-month-day, List<Codi : id, name, >
-    List<CodiListDTO> findCodiList(String memberId, LocalDate date);
+    List<CodiListDTO> findCodiList(Long memberId, LocalDate date);
 
     // getCodiScheduleDetail 일정 상세 조회 (member_id, codi_id) >>
     // 2. 일정 상세 조회

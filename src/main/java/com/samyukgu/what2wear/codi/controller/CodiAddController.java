@@ -7,6 +7,7 @@ import com.samyukgu.what2wear.common.controller.BasicHeaderController;
 import com.samyukgu.what2wear.common.controller.SelectOutfitModalController;
 import com.samyukgu.what2wear.common.util.DateUtils;
 import com.samyukgu.what2wear.di.DIContainer;
+import com.samyukgu.what2wear.member.Session.MemberSession;
 import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
 import com.samyukgu.what2wear.wardrobe.service.WardrobeService;
 import javafx.fxml.FXML;
@@ -41,15 +42,20 @@ public class CodiAddController {
     @FXML private ToggleButton btnFriend;
     @FXML private ToggleButton btnPrivate;
 
+    private Long memberId;
+    private MemberSession memberSession;
+    private CodiService codiService;
     private ToggleGroup scopeGroup;
     private final WardrobeService wardrobeService = DIContainer.getInstance().resolve(WardrobeService.class);
-    private final CodiService codiService = DIContainer.getInstance().resolve(CodiService.class);
 
     private List<Wardrobe> selectedOutfits;
     private Codi selectedCodi;
 
     @FXML
     public void initialize() {
+        setupDI();
+        setupUser();
+
         // 1. 헤더 동적 삽입
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/BasicHeader.fxml"));
@@ -98,6 +104,21 @@ public class CodiAddController {
         submitButton.setOnAction(event -> handleSubmit());
     }
 
+    private void setupDI() {
+        DIContainer diContainer = DIContainer.getInstance();
+        codiService = diContainer.resolve(CodiService.class);
+        memberSession = diContainer.resolve(MemberSession.class);
+    }
+
+    private void setupUser() {
+        if (memberSession == null || memberSession.getMember() == null) {
+            System.err.println("로그인 정보가 없습니다.");
+            return;
+        }
+
+        memberId = memberSession.getMember().getId();
+    }
+
     private void setupScopeToggleGroup() {
         scopeGroup = new ToggleGroup();
 
@@ -141,7 +162,7 @@ public class CodiAddController {
                     renderCodiDisplay();
                 },
                 () -> root.getChildren().remove(modal),
-                3L
+                memberId
             );
 
             root.getChildren().add(modal);
@@ -227,7 +248,7 @@ public class CodiAddController {
             LocalDate selectedDate = datePicker.getValue();
             CodiScope visibility = getSelectedVisibility();
             int scopeValue = getScopeValue(visibility);
-            codiService.createCodiSchedule(3L, title, selectedDate, scopeValue, selectedOutfits);
+            codiService.createCodiSchedule(memberId, title, selectedDate, scopeValue, selectedOutfits);
         }
 
         System.out.println("=== 코디 일정 제출 테스트 ===");

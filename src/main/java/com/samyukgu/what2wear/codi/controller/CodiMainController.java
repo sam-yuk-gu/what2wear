@@ -6,6 +6,8 @@ import com.samyukgu.what2wear.codi.model.CodiSchedule;
 //import com.samyukgu.what2wear.codi.model.ScheduleVisibility;
 import com.samyukgu.what2wear.codi.service.DummyScheduleRepository;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
+import com.samyukgu.what2wear.member.Session.MemberSession;
+import com.samyukgu.what2wear.member.model.Member;
 import javafx.event.ActionEvent;
 import com.samyukgu.what2wear.codi.service.CodiService;
 import com.samyukgu.what2wear.di.DIContainer;
@@ -48,15 +50,20 @@ public class CodiMainController {
     @FXML private Button aiButton;
     @FXML private Button addButton;
 
+    private Long memberId;
+    private MemberSession memberSession;
     private LocalDate currentDate;
-    private Map<LocalDate, List<CodiSchedule>> scheduleMap; // 날짜별 일정 정보 저장
+    private Map<LocalDate, List<CodiSchedule>> dotScheduleMap; // 날짜별 일정 정보 저장
+    private Map<LocalDate, List<CodiSchedule>> detailScheduleMap;
 
     @FXML
     public void initialize() {
         setupDI();
+        setupUser();
         currentDate = LocalDate.now();
         currentDateSelected = currentDate;
         loadScheduleForMonth(currentDate);
+        loadScheduleForDay(currentDateSelected);
         renderCalendar(currentDate);
         showScheduleDetail(currentDateSelected);
 
@@ -67,32 +74,40 @@ public class CodiMainController {
     private void setupDI() {
         DIContainer diContainer = DIContainer.getInstance();
         codiService = diContainer.resolve(CodiService.class);
+        memberSession = diContainer.resolve(MemberSession.class);
+    }
+
+    private void setupUser() {
+        if (memberSession == null || memberSession.getMember() == null) {
+            System.err.println("로그인 정보가 없습니다.");
+            return;
+        }
+
+        memberId = memberSession.getMember().getId();
     }
 
     private void loadScheduleForMonth(LocalDate month) {
-        Long memberId = 3L; // 로그인 유저의 memberId로 교체 필요
         List<CodiSchedule> scheduleList = codiService.getMonthlyCodiSchedules(memberId, month);
 
-        scheduleMap = new HashMap<>();
+        dotScheduleMap = new HashMap<>();
 
         for (CodiSchedule cs : scheduleList) {
             LocalDate date = cs.getDate(); // 날짜
 
             // 날짜별 리스트 초기화
-            scheduleMap.computeIfAbsent(date, d -> new ArrayList<>());
+            dotScheduleMap.computeIfAbsent(date, d -> new ArrayList<>());
 
             // 점 표시용 CodiSchedule 객체 생성
             CodiSchedule schedule = new CodiSchedule();
             schedule.setDate(date);
             schedule.setVisibility(cs.getVisibility());
 
-            scheduleMap.get(date).add(schedule);    // 날짜 별 스케쥴 저장
+            dotScheduleMap.get(date).add(schedule);    // 날짜 별 스케쥴 저장
         }
     }
 
     // 날짜 별 상세 일정
     private void loadScheduleForDay(LocalDate date) {
-        String memberId = "1"; // TODO: 로그인된 사용자 ID로 교체
         List<CodiListDTO> codiLists = codiService.getCodiList(memberId, date);
 
         // 날짜 기준으로 변환
@@ -117,7 +132,8 @@ public class CodiMainController {
             .toList();
 
         // 기존 점 정보 덮어쓰기
-        scheduleMap.put(date, detailedSchedules);
+        detailScheduleMap = new HashMap<>();
+        detailScheduleMap.put(date, detailedSchedules);
     }
 
     private void renderCalendar(LocalDate baseDate) {
@@ -192,8 +208,8 @@ public class CodiMainController {
             }
 
             // 일정 점 렌더링
-            if (scheduleMap.containsKey(currentDrawingDate)) {
-                List<CodiSchedule> schedules = scheduleMap.get(currentDrawingDate);
+            if (dotScheduleMap.containsKey(currentDrawingDate)) {
+                List<CodiSchedule> schedules = dotScheduleMap.get(currentDrawingDate);
                 HBox dotsBox = new HBox();
                 dotsBox.getStyleClass().add("dots-box");
 
@@ -224,6 +240,7 @@ public class CodiMainController {
                 dayCell.setOnMouseClicked(e -> {
                     currentDateSelected = dateForCell;
                     renderCalendar(currentDate);
+                    loadScheduleForDay(dateForCell);
                     showScheduleDetail(dateForCell);
                 });
                 dayCell.setCursor(Cursor.HAND);
@@ -309,7 +326,7 @@ public class CodiMainController {
     }
 
     private void showScheduleDetail(LocalDate date) {
-        List<CodiSchedule> schedules = scheduleMap.get(date);
+        List<CodiSchedule> schedules = detailScheduleMap.get(date);
         scheduleListContainer.getChildren().clear();
         emptyLabel.setVisible(false);
         emptyLabel.setManaged(false);
