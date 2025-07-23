@@ -149,19 +149,19 @@ public class CodiAddController {
 
             SelectOutfitModalController controller = loader.getController();
             controller.configure(
-                selectedOutfits,
-                selectedCodi,
-                scheduleNameField.getText(),
-                datePicker.getValue(),
-                getSelectedVisibility(),
-                result -> {
-                    root.getChildren().remove(modal);
-                    this.selectedOutfits = result.getOutfits();
-                    this.selectedCodi = result.getCodi();
-                    renderCodiDisplay();
-                },
-                () -> root.getChildren().remove(modal),
-                memberId
+                    selectedOutfits,
+                    selectedCodi,
+                    scheduleNameField.getText(),
+                    datePicker.getValue(),
+                    getSelectedVisibility(),
+                    result -> {
+                        root.getChildren().remove(modal);
+                        this.selectedOutfits = result.getOutfits();
+                        this.selectedCodi = result.getCodi();
+                        renderCodiDisplay();
+                    },
+                    () -> root.getChildren().remove(modal),
+                    memberId
             );
 
             root.getChildren().add(modal);

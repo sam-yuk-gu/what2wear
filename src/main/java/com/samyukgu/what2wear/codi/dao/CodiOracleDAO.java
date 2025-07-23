@@ -2,10 +2,12 @@ package com.samyukgu.what2wear.codi.dao;
 
 import com.samyukgu.what2wear.codi.dto.CodiClothesDTO;
 import com.samyukgu.what2wear.codi.dto.CodiDTO;
+import com.samyukgu.what2wear.codi.dto.CodiDetailDTO;
 import com.samyukgu.what2wear.codi.dto.CodiListDTO;
 import com.samyukgu.what2wear.codi.model.Codi;
 import com.samyukgu.what2wear.codi.model.CodiSchedule;
 import com.samyukgu.what2wear.codi.model.CodiScope;
+import com.samyukgu.what2wear.common.util.CategoryUtil;
 import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
 
 import java.io.InputStream;
@@ -176,9 +178,68 @@ public class CodiOracleDAO implements CodiDAO {
         }
     }
 
+    // 코디 상세 조회
     @Override
-    public Codi findCodiScheduleDetail(String memberId, String codiId) {
-        return null;
+    public CodiDetailDTO findCodiScheduleDetail(Long memberId, Long codiId) {
+        String sql = """
+        SELECT
+            c.id,
+            c.schedule_date,
+            c.scope,
+            c.schedule AS schedule_name,
+            cat.name AS category_name,
+            cl.name AS clothes_name,
+            cl.picture AS clothes_picture
+        FROM codi c
+            LEFT JOIN codi_detail cd ON c.id = cd.codi_id
+            LEFT JOIN clothes cl ON cd.clothes_id = cl.id
+            LEFT JOIN category cat ON cl.category_id = cat.id
+        WHERE c.member_id = ?
+          AND c.id = ?
+          AND c.deleted = 'N'
+    """;
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setLong(1, memberId);
+            pstmt.setLong(2, codiId);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                CodiDetailDTO codiInfo = null;
+                List<Wardrobe> clothesList = new ArrayList<>();
+
+                while (rs.next()) {
+                    if (codiInfo == null) {
+                        codiInfo = new CodiDetailDTO();
+                        codiInfo.setCodiId(rs.getLong("id"));
+                        codiInfo.setScheduleDate(rs.getDate("schedule_date").toLocalDate());
+                        codiInfo.setScope(rs.getInt("scope"));
+                        codiInfo.setScheduleName(rs.getString("schedule_name"));
+                        codiInfo.setClothes(clothesList);
+                    }
+
+                    String clothesName = rs.getString("clothes_name");
+                    byte[] clothesPicture = rs.getBytes("clothes_picture");
+                    Long categoryId = CategoryUtil.getIdByName(rs.getString("category_name"));
+
+                    // 옷 정보가 있다면 DTO 생성
+                    if (clothesName != null || clothesPicture != null) {
+                        Wardrobe clothes = new Wardrobe();
+                        clothes.setCategoryId(categoryId);
+                        clothes.setName(clothesName);
+                        clothes.setPicture(clothesPicture);
+                        clothesList.add(clothes);
+                    }
+                }
+
+                return codiInfo;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("코디 상세 조회 실패", e);
+        }
     }
 
     @Override
@@ -242,28 +303,6 @@ public class CodiOracleDAO implements CodiDAO {
             e.printStackTrace();
             throw new RuntimeException("코디 생성 중 오류 발생", e);
         }
-    }
-
-    public void insertCodiDetail(Long codiId, Long clothesId)  {
-        String sql = "INSERT INTO codi_detail (codi_id, clothes_id) VALUES (?, ?)";
-
-        try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setLong(1, codiId);
-            pstmt.setLong(2, clothesId);
-
-            pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error By Insert Codi Detail", e);
-        }
-    }
-
-    @Override
-    public void createCodiSchedule(String memberId, String scheduleName, LocalDate date, List<Number> clothingIds, CodiScope scope) {
-        CodiSchedule codiSchedule = new CodiSchedule();
     }
 
     @Override

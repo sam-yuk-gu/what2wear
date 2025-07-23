@@ -27,7 +27,7 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-public class SelectOutfitModalController implements Initializable {
+public class EditOutfitModalController implements Initializable {
 
     @FXML private StackPane modalOverlay;
     @FXML private Rectangle dimBackground;

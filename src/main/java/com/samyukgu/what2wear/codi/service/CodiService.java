@@ -1,6 +1,7 @@
 package com.samyukgu.what2wear.codi.service;
 
 import com.samyukgu.what2wear.codi.dao.CodiDAO;
+import com.samyukgu.what2wear.codi.dto.CodiDetailDTO;
 import com.samyukgu.what2wear.codi.dto.CodiListDTO;
 import com.samyukgu.what2wear.codi.model.Codi;
 import com.samyukgu.what2wear.codi.model.CodiSchedule;
@@ -34,5 +35,9 @@ public class CodiService {
         codi.setScope((long) scope);
         codi.setCodiType("S");
         dao.create(codi, selectedOutfits);
+    }
+
+    public CodiDetailDTO getCodiDetail(Long memberId, Long codiId) {
+        return dao.findCodiScheduleDetail(memberId, codiId);
     }
 }

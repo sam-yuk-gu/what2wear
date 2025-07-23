@@ -129,3 +129,29 @@
     -fx-font-family: "Pretendard Bold";
     -fx-font-size: 16;
 }
+
+.btn-box {
+    -fx-alignment: center-right;
+}
+
+.edit-btn {
+    -fx-pref-width: 150;
+    -fx-min-height: 50;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-background-color: #FA7B7F;
+    -fx-text-fill: white;
+    -fx-font-family: "Pretendard Bold";
+    -fx-font-size: 16;
+}
+
+.delete-btn {
+    -fx-pref-width: 150;
+    -fx-min-height: 50;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-background-color: #FA7B7F;
+    -fx-text-fill: white;
+    -fx-font-family: "Pretendard Bold";
+    -fx-font-size: 16;
+}
