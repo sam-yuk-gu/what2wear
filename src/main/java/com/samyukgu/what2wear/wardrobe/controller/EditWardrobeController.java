@@ -1,10 +1,9 @@
 package com.samyukgu.what2wear.wardrobe.controller;
 
 import com.samyukgu.what2wear.common.controller.MainLayoutController;
+import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.member.Session.MemberSession;
 import com.samyukgu.what2wear.member.model.Member;
-import com.samyukgu.what2wear.wardrobe.dao.CategoryOracleDAO;
-import com.samyukgu.what2wear.wardrobe.dao.WardrobeOracleDAO;
 import com.samyukgu.what2wear.wardrobe.model.Category;
 import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
 import com.samyukgu.what2wear.wardrobe.service.CategoryService;
@@ -42,11 +41,16 @@ public class EditWardrobeController implements Initializable {
     private byte[] pictureData;
     private Wardrobe currentWardrobe;
 
-    private final WardrobeService wardrobeService = new WardrobeService(new WardrobeOracleDAO());
-    private final CategoryService categoryService = new CategoryService(new CategoryOracleDAO());
+    private WardrobeService wardrobeService;
+    private CategoryService categoryService;
+    private MemberSession memberSession;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        DIContainer diContainer = DIContainer.getInstance();
+        wardrobeService = diContainer.resolve(WardrobeService.class);
+        categoryService = diContainer.resolve(CategoryService.class);
+        memberSession = diContainer.resolve(MemberSession.class);
         setupUI();
         loadCurrentWardrobeData();
         loadCategories();
@@ -161,6 +165,7 @@ public class EditWardrobeController implements Initializable {
         Task<List<Category>> loadTask = new Task<List<Category>>() {
             @Override
             protected List<Category> call() throws Exception {
+
                 return categoryService.getAllCategories();
             }
 
@@ -258,8 +263,7 @@ public class EditWardrobeController implements Initializable {
 
         // 기존 옷 정보를 복사하고 수정된 내용 적용
         Wardrobe updatedWardrobe = new Wardrobe();
-        Member member = MemberSession.getLoginMember();
-        updatedWardrobe.setMemberId(member.getId());
+        updatedWardrobe.setMemberId(memberSession.getMember().getId());
         // 기본 정보는 유지
         updatedWardrobe.setId(currentWardrobe.getId());
         updatedWardrobe.setDeleted(currentWardrobe.getDeleted());
