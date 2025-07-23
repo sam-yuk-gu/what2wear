@@ -61,25 +61,26 @@ public class EditOutfitModalController implements Initializable {
         if (wardrobeService != null && memberId != null) {
             List<Wardrobe> wardrobeList = wardrobeService.getAllWardrobe(memberId);
             allWardrobeItems = wardrobeList.stream()
+                    .filter(wardrobe -> wardrobe.getId() != null) // null ID 필터링
                     .map(wardrobe -> {
                         CodiItem item = new CodiItem();
                         item.setId(wardrobe.getId());
                         item.setName(wardrobe.getName());
                         item.setCategory(getCategoryName(wardrobe.getCategoryId()));
                         item.setImagePath(convertImageBytesToPath(wardrobe.getPicture()));
-                        System.out.println("item id: " + item.getId());
-                        System.out.println("wardrobe id: " + wardrobe.getId());
                         return item;
                     })
                     .collect(Collectors.toList());
             renderWardrobeItems();
+            // 초기 선택 상태 반영
+            refreshWardrobeSelection();
         } else {
             System.err.println("wardrobeService 또는 memberId가 null입니다.");
         }
     }
 
     private boolean isWardrobeSelected = true;
-    private final Map<String, Wardrobe> selectedClothes = new HashMap<>();
+    private final Map<String, Long> selectedClothes = new HashMap<>();
     private Codi selectedCodi = null;
 
     private String wardrobeSearchText = "";
@@ -136,8 +137,11 @@ public class EditOutfitModalController implements Initializable {
         this.onCancel = onCancel;
         if (outfits != null) {
             for (Wardrobe c : outfits) {
-                selectedClothes.put(getCategoryName(c.getCategoryId()), c);
+//                selectedClothes.put(getCategoryName(c.getCategoryId()), c);
+
+                selectedClothes.put(getCategoryName(c.getCategoryId()), c.getId());
             }
+
 
 //            for (Wardrobe c : outfits) {
 //                CodiItem item = new CodiItem();
@@ -265,16 +269,22 @@ public class EditOutfitModalController implements Initializable {
 
         // 선택 로직
         box.setOnMouseClicked(e -> {
+            if (item.getId() == null) {
+                System.err.println("아이템 ID가 null입니다: " + item.getName());
+                return;
+            }
+
             String category = item.getCategory();
             boolean alreadySelected = selectedClothes.containsKey(category);
 
             Wardrobe matched = wardrobeService.getAllWardrobe(memberId).stream()
-                    .filter(w -> Objects.equals(w.getId(), item.getId()))
+                    .filter(w -> w.getId() != null && Objects.equals(w.getId(), item.getId()))
                     .findFirst()
                     .orElse(null);
 
-            if (!alreadySelected || !Objects.equals(selectedClothes.get(category).getId(), item.getId())) {
-                if (matched != null) selectedClothes.put(category, matched);
+            if (!alreadySelected || selectedClothes.get(category) == null ||
+                    !Objects.equals(selectedClothes.get(category), item.getId())) {
+                if (matched != null) selectedClothes.put(category, matched.getId());
             } else {
                 selectedClothes.remove(category);
             }
@@ -302,14 +312,12 @@ public class EditOutfitModalController implements Initializable {
     private void refreshWardrobeSelection() {
         for (Node node : wardrobeItemPane.getChildren()) {
             VBox box = (VBox) node;
-
             CodiItem clothing = (CodiItem) box.getUserData();
 
-//            Clothing clothing = (Clothing) box.getUserData();
             boolean selected = selectedClothes.containsKey(clothing.getCategory())
-                    && selectedClothes.get(clothing.getCategory()).getId().equals(clothing.getId());
+                    && Objects.equals(selectedClothes.get(clothing.getCategory()), clothing.getId());
 
-            StackPane imageContainer = (StackPane) box.getChildren().getFirst(); // 이미지+오버레이+체크
+            StackPane imageContainer = (StackPane) box.getChildren().getFirst();
             Node[] overlays = (Node[]) imageContainer.getUserData();
             Rectangle overlay = (Rectangle) overlays[0];
             ImageView checkIcon = (ImageView) overlays[1];
@@ -464,7 +472,10 @@ public class EditOutfitModalController implements Initializable {
     @FXML
     private void handleConfirm() {
         if (onConfirm != null) {
-            List<Wardrobe> outfits = new ArrayList<>(selectedClothes.values());
+//            List<Wardrobe> outfits = new ArrayList<>(selectedClothes.values());
+            List<Wardrobe> outfits = wardrobeService.getAllWardrobe(memberId).stream()
+                    .filter(w -> selectedClothes.containsValue(w.getId()))
+                    .collect(Collectors.toList());
             onConfirm.accept(new SelectionResult(outfits, selectedCodi));
         }
         modalOverlay.setVisible(false);

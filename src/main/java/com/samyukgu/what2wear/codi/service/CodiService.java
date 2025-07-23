@@ -40,4 +40,19 @@ public class CodiService {
     public CodiDetailDTO getCodiDetail(Long memberId, Long codiId) {
         return dao.findCodiScheduleDetail(memberId, codiId);
     }
+
+    public void updateCodiSchedule(Long id, Long memberId, String title, LocalDate date, int scope, Collection<Wardrobe> selectedOutfits) {
+        Codi codi = new Codi();
+        codi.setId(id);
+        codi.setMemberId(memberId);
+        codi.setSchedule(title);
+        codi.setScheduleDate(date);
+        codi.setScope((long) scope);
+        codi.setCodiType("S");
+        dao.update(codi, selectedOutfits);
+    }
+
+    public void deleteCodiSchedule(Long memberId, Long codiId) {
+        dao.delete(memberId, codiId);
+    }
 }

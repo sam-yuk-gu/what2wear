@@ -235,7 +235,6 @@ public class CodiAddController {
     }
 
     private void handleSubmit() {
-
         String title = scheduleNameField.getText();
         String date = (datePicker.getValue() != null) ? datePicker.getValue().toString() : null;
         Toggle selected = scopeGroup.getSelectedToggle();

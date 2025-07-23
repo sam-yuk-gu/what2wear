@@ -29,6 +29,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
+import static com.samyukgu.what2wear.common.util.CategoryUtil.getNameById;
 
 public class CodiEditController {
 
@@ -130,7 +133,6 @@ public class CodiEditController {
 
     // 수정 데이터 불러오기
     private void loadCodiForEdit() {
-        System.out.println("수정 코디 id: " + editCodiId);
         CodiDetailDTO codiInfo = codiService.getCodiDetail(memberId, editCodiId);
 
         if (codiInfo == null) return;
@@ -183,8 +185,23 @@ public class CodiEditController {
             StackPane modal = loader.load();
 
             EditOutfitModalController controller = loader.getController();
+            List<Wardrobe> wardrobeList = selectedOutfits.stream()
+                    .map(item -> {
+                        Wardrobe w = new Wardrobe();
+                        w.setId(item.getId()); // ✅ 이거 꼭 필요해!
+                        w.setCategoryId(item.getCategoryId());
+                        w.setName(item.getName());
+                        try {
+                            w.setPicture(item.getPicture());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        return w;
+                    })
+                    .collect(Collectors.toList());
+
             controller.configure(
-                    selectedOutfits,
+                    wardrobeList,
                     selectedCodi,
                     scheduleNameField.getText(),
                     datePicker.getValue(),
@@ -288,10 +305,24 @@ public class CodiEditController {
         }
     }
 
-
     private void handleDelete() {
+        // TODO: 삭제 확인 모달창 한번 띄우고
+        codiService.deleteCodiSchedule(memberId, editCodiId);
+        MainLayoutController.loadView("/com/samyukgu/what2wear/codi/CodiMainView.fxml");
     }
 
     private void handleEdit() {
+        String title = scheduleNameField.getText();
+        if ((title == null || title.trim().isEmpty()) && selectedOutfits.isEmpty()) {
+            // TODO: 모달창 출력으로 변경
+            System.out.println("타이틀과 선택된 옷이 모두 입력되지 않았습니다.");
+        } else {
+            // TODO: 저장 확인 모달 넣을지말지?
+            LocalDate selectedDate = datePicker.getValue();
+            CodiScope visibility = getSelectedVisibility();
+            int scopeValue = getScopeValue(visibility);
+            codiService.updateCodiSchedule(editCodiId, memberId, title, selectedDate, scopeValue, selectedOutfits);
+            MainLayoutController.loadView("/com/samyukgu/what2wear/codi/CodiMainView.fxml");
+        }
     }
 }

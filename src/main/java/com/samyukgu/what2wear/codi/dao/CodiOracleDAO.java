@@ -57,6 +57,7 @@ public class CodiOracleDAO implements CodiDAO {
             SELECT *
             FROM codi
             WHERE member_id = ?
+              AND deleted = 'N'
               AND schedule_date >= TO_DATE(?, 'YYYY-MM')
               AND schedule_date <  TO_DATE(?, 'YYYY-MM')
             ORDER BY schedule_date, created_at
@@ -187,6 +188,7 @@ public class CodiOracleDAO implements CodiDAO {
             c.schedule_date,
             c.scope,
             c.schedule AS schedule_name,
+            cl.id AS clothes_id,
             cat.name AS category_name,
             cl.name AS clothes_name,
             cl.picture AS clothes_picture
@@ -224,8 +226,10 @@ public class CodiOracleDAO implements CodiDAO {
                     Long categoryId = CategoryUtil.getIdByName(rs.getString("category_name"));
 
                     // 옷 정보가 있다면 DTO 생성
+                    Long clothesId = rs.getLong("clothes_id");
                     if (clothesName != null || clothesPicture != null) {
                         Wardrobe clothes = new Wardrobe();
+                        clothes.setId(clothesId);
                         clothes.setCategoryId(categoryId);
                         clothes.setName(clothesName);
                         clothes.setPicture(clothesPicture);
@@ -306,13 +310,91 @@ public class CodiOracleDAO implements CodiDAO {
     }
 
     @Override
-    public void updateSchedule(String memberId, String codiId, String scheduleName, LocalDate date, List<Number> clothingIds, CodiScope scope) {
+    public void update(Codi codi, Collection<Wardrobe> selectedOutfits) {
+        String updateCodiSql = """
+        UPDATE codi
+        SET schedule = ?, schedule_date = ?, scope = ?
+        WHERE id = ? AND member_id = ? AND codi_type = ? AND deleted = 'N'
+    """;
 
+        String deleteDetailSql = "DELETE FROM  codi_detail WHERE codi_id = ?";
+        String insertDetailSql = "INSERT INTO codi_detail (codi_id, clothes_id) VALUES (?, ?)";
+
+        try (Connection conn = getConnection()) {
+            conn.setAutoCommit(false); // 트랜잭션 시작
+
+            // 1. 코디 일정 UPDATE
+            try (PreparedStatement updateStmt = conn.prepareStatement(updateCodiSql)) {
+                updateStmt.setString(1, codi.getSchedule());
+                updateStmt.setDate(2, java.sql.Date.valueOf(codi.getScheduleDate()));
+                updateStmt.setLong(3, codi.getScope());
+                updateStmt.setLong(4, codi.getId());
+                updateStmt.setLong(5, codi.getMemberId());
+                updateStmt.setString(6, codi.getCodiType());
+
+                int result = updateStmt.executeUpdate();
+                if (result == 0) {
+                    conn.rollback();
+                    throw new SQLException("CodiOracleDAO: 코디 일정 수정 실패");
+                }
+            }
+
+            // 2. 기존 코디-옷 관계 삭제
+            try (PreparedStatement deleteStmt = conn.prepareStatement(deleteDetailSql)) {
+                deleteStmt.setLong(1, codi.getId());
+                deleteStmt.executeUpdate();
+            }
+
+            // 3. 코디-옷 관계 다시 INSERT
+            if (selectedOutfits != null && !selectedOutfits.isEmpty()) {
+                try (PreparedStatement insertStmt = conn.prepareStatement(insertDetailSql)) {
+                    for (Wardrobe outfit : selectedOutfits) {
+                        insertStmt.setLong(1, codi.getId());
+                        insertStmt.setLong(2, outfit.getId());
+                        insertStmt.addBatch();
+                    }
+                    insertStmt.executeBatch();
+                }
+            }
+
+            conn.commit(); // 전체 성공 시 커밋
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("코디 수정 중 오류 발생", e);
+        }
     }
 
     @Override
-    public void deleteSchedule(String memberId, String codiId) {
+    public void delete(Long memberId, Long codiId) {
+        String deleteDetailsSql = "DELETE FROM codi_detail WHERE codi_id = ?";
+        String deleteCodiSql = "UPDATE codi SET deleted = 'Y' WHERE id = ? AND member_id = ?";
 
+        try (Connection conn = getConnection()) {
+            conn.setAutoCommit(false); // 트랜잭션 시작
+
+            // 1. codi_detail 삭제
+            try (PreparedStatement detailStmt = conn.prepareStatement(deleteDetailsSql)) {
+                detailStmt.setLong(1, codiId);
+                detailStmt.executeUpdate();
+            }
+
+            // 2. codi 논리 삭제
+            try (PreparedStatement codiStmt = conn.prepareStatement(deleteCodiSql)) {
+                codiStmt.setLong(1, codiId);
+                codiStmt.setLong(2, memberId);
+                int updated = codiStmt.executeUpdate();
+
+                if (updated == 0) {
+                    conn.rollback();
+                    throw new SQLException("코디 삭제 실패: 해당 ID가 없거나 권한이 없습니다.");
+                }
+            }
+
+            conn.commit(); // 전체 성공 시 커밋
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("코디 삭제 중 오류 발생", e);
+        }
     }
 
     @Override

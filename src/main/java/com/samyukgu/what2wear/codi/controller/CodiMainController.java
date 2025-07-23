@@ -115,7 +115,10 @@ public class CodiMainController {
         for (CodiListDTO dto : codiLists) {
             for (var codiDTO : dto.getCodiList()) {
                 // 조건: 일정명이나 코디가 하나라도 있으면 포함
-                boolean hasScheduleName = !codiDTO.getScheduleName().isBlank();
+                boolean hasScheduleName = false;
+                if (codiDTO.getScheduleName() != null && !codiDTO.getScheduleName().isBlank()) {
+                    hasScheduleName = true;
+                }
                 boolean hasClothes = !codiDTO.getCodiClothesList().isEmpty();
 
                 if (!hasScheduleName && !hasClothes) continue; // 둘 다 없으면 건너뜀
