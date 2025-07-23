@@ -76,7 +76,7 @@ public class MemberOracleDAO implements MemberDAO {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                mapResultSetToMember(rs);
+                return mapResultSetToMember(rs);
             }
             return null;
         } catch (SQLException e) {
@@ -218,7 +218,7 @@ public class MemberOracleDAO implements MemberDAO {
         String sql = """
                 SELECT * 
                 FROM member 
-                WHERE account_id = ? and password = ? 
+                WHERE account_id = ? and password = ? and deleted = 'N'
                 """;
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)
@@ -291,6 +291,174 @@ public class MemberOracleDAO implements MemberDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Error By Search User");
+        }
+    }
+
+    @Override
+    public Member updateNicknameById(Long memberId, String nickname) {
+        String sql = """
+        UPDATE member
+        SET nickname = ?
+        WHERE id = ?
+        """;
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, nickname);
+            pstmt.setLong(2, memberId);
+
+            int updated = pstmt.executeUpdate();
+            if (updated == 0) {
+                // 해당 memberId가 없었거나 이미 닉네임이 같아서 변경 없음
+                return null;
+            }
+            // 업데이트 성공했으면, 변경된 회원 정보 재조회
+            return findById(memberId);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error updating nickname for memberId=" + memberId, e);
+        }
+    }
+
+    @Override
+    public Member updateNameById(Long memberId, String name) {
+        String sql = """
+        UPDATE member
+        SET name = ?
+        WHERE id = ?
+        """;
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, name);
+            pstmt.setLong(2, memberId);
+
+            int updated = pstmt.executeUpdate();
+            if (updated == 0) {
+                // 해당 memberId가 없었거나 이미 이름이 같아서 변경 없음
+                return null;
+            }
+            // 업데이트 성공했으면, 변경된 회원 정보 재조회
+            return findById(memberId);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error updating nickname for memberId=" + memberId, e);
+        }
+    }
+
+    @Override
+    public Member updateEmailById(Long memberId, String email) {
+        String sql = """
+        UPDATE member
+        SET email = ?
+        WHERE id = ?
+        """;
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, email);
+            pstmt.setLong(2, memberId);
+
+            int updated = pstmt.executeUpdate();
+            if (updated == 0) {
+                // 해당 memberId가 없었거나 이미 이메일이 같아서 변경 없음
+                return null;
+            }
+            // 업데이트 성공했으면, 변경된 회원 정보 재조회
+            return findById(memberId);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error updating email for memberId=" + memberId, e);
+        }
+    }
+
+    @Override
+    public Member updatePasswordById(Long memberId, String password) {
+        String sql = """
+        UPDATE member
+        SET password = ?
+        WHERE id = ?
+        """;
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, password);
+            pstmt.setLong(2, memberId);
+
+            System.out.println(findById(memberId));
+
+            int updated = pstmt.executeUpdate();
+            if (updated == 0) {
+                // 해당 memberId가 없었거나 이미 비밀번호가 같아서 변경 없음
+                return null;
+            }
+            // 업데이트 성공했으면, 변경된 회원 정보 재조회
+            return findById(memberId);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error updating password for memberId=" + memberId, e);
+        }
+    }
+
+    @Override
+    public Member updateProfileImgById(Long memberId, byte[] profileImg) {
+        String sql = """
+        UPDATE member
+        SET profile_img = ?
+        WHERE id = ?
+        """;
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setBytes(1, profileImg);
+            pstmt.setLong(2, memberId);
+
+            int updated = pstmt.executeUpdate();
+            if (updated == 0) {
+                // 해당 memberId가 없었거나 이미 이메일이 같아서 변경 없음
+                return null;
+            }
+            // 업데이트 성공했으면, 변경된 회원 정보 재조회
+            return findById(memberId);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error updating profileImg for memberId=" + memberId, e);
+        }
+    }
+
+    // DELETED 열을 Y로 변경
+    @Override
+    public Member updateDeletedById(Long memberId) {
+        String sql = """
+        UPDATE member
+        SET deleted = 'Y'
+        WHERE id = ?
+        """;
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setLong(1, memberId);
+
+            int updated = pstmt.executeUpdate();
+            if (updated == 0) {
+                return null;
+            }
+            // 업데이트 성공했으면, 변경된 회원 정보 재조회
+            return findById(memberId);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error updating DELETED for memberId=" + memberId, e);
         }
     }
 
