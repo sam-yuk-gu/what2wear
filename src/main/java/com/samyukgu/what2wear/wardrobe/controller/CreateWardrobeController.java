@@ -1,10 +1,9 @@
 package com.samyukgu.what2wear.wardrobe.controller;
 
+import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.member.Session.MemberSession;
 import com.samyukgu.what2wear.member.model.Member;
-import com.samyukgu.what2wear.wardrobe.dao.CategoryOracleDAO;
-import com.samyukgu.what2wear.wardrobe.dao.WardrobeOracleDAO;
 import com.samyukgu.what2wear.wardrobe.model.Category;
 import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
 import com.samyukgu.what2wear.wardrobe.service.CategoryService;
@@ -40,11 +39,17 @@ public class CreateWardrobeController implements Initializable {
     @FXML private Button saveButton;
 
     private byte[] pictureData;
-    private final WardrobeService wardrobeService = new WardrobeService(new WardrobeOracleDAO());
-    private final CategoryService categoryService = new CategoryService(new CategoryOracleDAO());
+
+    private WardrobeService wardrobeService;
+    private CategoryService categoryService;
+    private MemberSession memberSession;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        DIContainer diContainer = DIContainer.getInstance();
+        wardrobeService = diContainer.resolve(WardrobeService.class);
+        categoryService = diContainer.resolve(CategoryService.class);
+        memberSession = diContainer.resolve(MemberSession.class);
         setupUI();
         loadCategories();
     }
@@ -185,8 +190,7 @@ public class CreateWardrobeController implements Initializable {
         Wardrobe wardrobe = new Wardrobe();
 
         Category selectedCategory = categoryField.getValue();
-        Member member = MemberSession.getLoginMember();
-        wardrobe.setMemberId(member.getId());
+        wardrobe.setMemberId(memberSession.getMember().getId());
         wardrobe.setCategoryId(selectedCategory.getId());
         wardrobe.setName(nameField.getText().trim());
         wardrobe.setLike("N"); // 기본값은 즐겨찾기 없음
