@@ -54,11 +54,11 @@ public class LoginController {
 
         if(member!=null){
             memberSession.setMember(member);
-
-            Region defaultRegion = new Region(1L, "서울특별시", "", 60L, 127L);
-            regionWeatherSession.setRegion(defaultRegion);
-            Weather weather = weatherService.fetchWeatherFromApi(defaultRegion.getNx().intValue(), defaultRegion.getNy().intValue());
-            RegionWeatherSession.setWeather(weather);
+//
+//            Region defaultRegion = new Region(1L, "서울특별시", "", 60L, 127L);
+//            regionWeatherSession.setRegion(defaultRegion);
+//            Weather weather = weatherService.fetchWeatherFromApi(defaultRegion.getNx().intValue(), defaultRegion.getNy().intValue());
+//            RegionWeatherSession.setWeather(weather);
 
             switchScene("/com/samyukgu/what2wear/layout/MainLayout.fxml", "내일 뭐 입지?");
         }else{
