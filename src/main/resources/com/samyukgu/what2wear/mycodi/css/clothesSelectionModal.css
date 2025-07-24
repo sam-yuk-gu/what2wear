@@ -1,0 +1,72 @@
+/* 상단 헤더 */
+#headerPane {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #dee2e6;
+    -fx-border-width: 0 0 1 0;
+}
+
+/* 카테고리 라벨 (제목) */
+#categoryLabel {
+    -fx-font-size: 20;
+    -fx-font-family: "Pretendard SemiBold";
+}
+
+/* 개수 라벨 */
+#countLabel {
+    -fx-text-fill: #6c757d;
+    -fx-font-size: 12;
+}
+
+/* 검색창 컨테이너 */
+#searchContainer {
+    -fx-background-color: white;
+    -fx-border-color: #ced4da;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+/* 검색 텍스트 필드 */
+#searchField {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+/* 검색 아이콘 */
+#searchIcon {
+    -fx-font-size: 14px;
+    -fx-text-fill: gray;
+    -fx-padding: 5;
+}
+
+/* 메인 콘텐츠 영역 */
+#mainContentPane {
+}
+
+/* 메인 스크롤 패널 */
+#mainScrollPane {
+    -fx-background: white;
+    -fx-background-color: white;
+}
+
+/* 하단 버튼 영역 */
+#bottomPane {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #dee2e6;
+    -fx-border-width: 1 0 0 0;
+}
+
+/* 취소 버튼 */
+#cancelButton {
+    -fx-background-color: #6c757d;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+}
+
+/* 선택 버튼 */
+#confirmButton {
+    -fx-background-color: #007acc;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+}

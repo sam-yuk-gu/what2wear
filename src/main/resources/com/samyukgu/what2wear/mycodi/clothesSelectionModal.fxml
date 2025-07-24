@@ -6,43 +6,35 @@
 
 <VBox prefHeight="550.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.12"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.samyukgu.what2wear.myCodi.controller.ClothesSelectionModalController">
+      fx:controller="com.samyukgu.what2wear.myCodi.controller.ClothesSelectionModalController"
+      stylesheets="@css/clothesSelectionModal.css">
     <children>
 
         <!-- 상단 헤더 -->
-        <AnchorPane prefHeight="60.0" prefWidth="700.0" style="-fx-background-color: #f8f9fa; -fx-border-color: #dee2e6; -fx-border-width: 0 0 1 0;">
+        <AnchorPane fx:id="headerPane" prefHeight="60.0" prefWidth="700.0">
             <children>
                 <Label fx:id="categoryLabel" layoutX="20.0" layoutY="15.0" text="옷 선택">
-                    <font>
-                        <Font name="System Bold" size="20.0" />
-                    </font>
                 </Label>
-                <Label fx:id="countLabel" layoutX="20.0" layoutY="38.0" style="-fx-text-fill: #6c757d;" text="0개의 옷">
-                    <font>
-                        <Font size="12.0" />
-                    </font>
+                <Label fx:id="countLabel" layoutX="20.0" layoutY="38.0" text="0개의 옷">
                 </Label>
 
                 <!-- 검색 필드 -->
-                <HBox alignment="CENTER_LEFT" layoutX="450.0" layoutY="18.0" prefHeight="25.0" prefWidth="230.0"
-                      style="-fx-background-color: white; -fx-border-color: #ced4da; -fx-border-radius: 5; -fx-background-radius: 5;">
+                <HBox fx:id="searchContainer" alignment="CENTER_LEFT" layoutX="450.0" layoutY="18.0" prefHeight="25.0" prefWidth="230.0">
                     <children>
-                        <TextField fx:id="searchField" prefWidth="200.0" promptText="옷 이름으로 검색..."
-                                   style="-fx-background-color: transparent; -fx-border-color: transparent;" />
-                        <Label style="-fx-font-size: 14px; -fx-text-fill: gray; -fx-padding: 5;" text="🔍" />
+                        <TextField fx:id="searchField" prefWidth="200.0" promptText="옷 이름으로 검색..." />
+                        <Label fx:id="searchIcon" text="🔍" />
                     </children>
                 </HBox>
             </children>
         </AnchorPane>
 
         <!-- 메인 콘텐츠 영역 -->
-        <AnchorPane prefHeight="430.0" prefWidth="700.0" VBox.vgrow="ALWAYS">
+        <AnchorPane fx:id="mainContentPane" prefHeight="430.0" prefWidth="700.0" VBox.vgrow="ALWAYS">
             <children>
                 <!-- 스크롤 가능한 옷 목록 -->
-                <ScrollPane fitToWidth="true" prefHeight="430.0" prefWidth="700.0"
-                            style="-fx-background: white; -fx-background-color: white;">
+                <ScrollPane fx:id="mainScrollPane" fitToWidth="true" prefHeight="430.0" prefWidth="700.0">
                     <content>
-                        <VBox prefWidth="680.0">
+                        <VBox fx:id="scrollContentContainer" prefWidth="680.0">
                             <children>
                                 <!-- 로딩 인디케이터 -->
                                 <StackPane fx:id="loadingContainer" prefHeight="200.0">
@@ -61,16 +53,14 @@
         </AnchorPane>
 
         <!-- 하단 버튼 영역 -->
-        <AnchorPane prefHeight="60.0" prefWidth="700.0" style="-fx-background-color: #f8f9fa; -fx-border-color: #dee2e6; -fx-border-width: 1 0 0 0;">
+        <AnchorPane fx:id="bottomPane" prefHeight="60.0" prefWidth="700.0">
             <children>
-                <HBox alignment="CENTER_RIGHT" layoutX="20.0" layoutY="15.0" prefHeight="30.0" prefWidth="660.0" spacing="10.0">
+                <HBox fx:id="buttonContainer" alignment="CENTER_RIGHT" layoutX="20.0" layoutY="15.0" prefHeight="30.0" prefWidth="660.0" spacing="10.0">
                     <children>
                         <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#handleCancel"
-                                prefHeight="30.0" prefWidth="80.0" text="취소"
-                                style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" />
+                                prefHeight="30.0" prefWidth="80.0" text="취소" />
                         <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#handleConfirm"
-                                prefHeight="30.0" prefWidth="80.0" text="선택"
-                                style="-fx-background-color: #007acc; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" />
+                                prefHeight="30.0" prefWidth="80.0" text="선택" />
                     </children>
                 </HBox>
             </children>
