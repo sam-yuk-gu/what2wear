@@ -1,44 +1,53 @@
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.Region?>
+<?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<BorderPane fx:id="mainLayout"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.samyukgu.what2wear.layout.controller.MainLayoutController"
-            stylesheets="@/com/samyukgu/what2wear/layout/style.css">
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+
+<BorderPane fx:id="mainLayout" stylesheets="@/com/samyukgu/what2wear/layout/style.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="com.samyukgu.what2wear.layout.controller.MainLayoutController">
     <left>
-        <VBox alignment="CENTER"
-              styleClass="sidebar"
-              xmlns:fx="http://javafx.com/fxml"
-              prefWidth="250" prefHeight="768">
+        <VBox alignment="CENTER" prefHeight="768" prefWidth="250" styleClass="sidebar" xmlns:fx="http://javafx.com/fxml">
 
             <!-- 상단: 로고 + 메뉴 -->
-            <VBox spacing="60" alignment="CENTER">
+            <VBox alignment="CENTER" spacing="60">
                 <!-- 로고 버튼 -->
-                <Button fx:id="logoButton" text="내일뭐입지" styleClass="logo-button" onAction="#handleClickCodi" maxHeight="28"/>
+                <Button fx:id="logoButton" maxHeight="28" onAction="#handleClickCodi" styleClass="logo-button" text="내일뭐입지" />
 
                 <!-- 메뉴 그룹 -->
                 <VBox spacing="20">
-                    <Button fx:id="wardrobeButton" text="내 옷장" onAction="#handleClickWardrobe" styleClass="menu-button" minHeight="53" maxWidth="Infinity"/>
-                    <Button fx:id="friendButton" text="친구" onAction="#handleClickFriend" styleClass="menu-button" minHeight="53" maxWidth="Infinity"/>
-                    <Button fx:id="boardButton" text="게시판" onAction="#handleClickBoard" styleClass="menu-button" minHeight="53" maxWidth="Infinity"/>
-                    <Button fx:id="mypageButton" text="마이페이지" onAction="#handleClickMyPage" styleClass="menu-button" minHeight="53" maxWidth="Infinity"/>
+                    <HBox styleClass="menu-box" onMouseClicked="#handleClickWardrobe">
+                        <SVGPath content="M18.2083 1.91699H4.79167C3.73312 1.91699 2.875 2.77511 2.875 3.83366V19.167C2.875 20.2255 3.73312 21.0837 4.79167 21.0837H18.2083C19.2669 21.0837 20.125 20.2255 20.125 19.167V3.83366C20.125 2.77511 19.2669 1.91699 18.2083 1.91699Z M7.66667 9.58366H7.67625M11.5 1.91699V16.292M15.3333 9.58366H15.3429M2.875 16.292H20.125" fill="TRANSPARENT" stroke="#5d5d5d" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="1.7" />
+                        <Button fx:id="wardrobeButton" maxWidth="Infinity" minHeight="53" onAction="#handleClickWardrobe" styleClass="menu-button" text="내 옷장" />
+                    </HBox>
+                    <HBox styleClass="menu-box" onMouseClicked="#handleClickFriend">
+                        <SVGPath content="M7 18V17C7 15.6739 7.52678 14.4021 8.46447 13.4645C9.40215 12.5268 10.6739 12 12 12M12 12C13.3261 12 14.5979 12.5268 15.5355 13.4645C16.4732 14.4021 17 15.6739 17 17V18M12 12C12.7956 12 13.5587 11.6839 14.1213 11.1213C14.6839 10.5587 15 9.79565 15 9C15 8.20435 14.6839 7.44129 14.1213 6.87868C13.5587 6.31607 12.7956 6 12 6C11.2044 6 10.4413 6.31607 9.87868 6.87868C9.31607 7.44129 9 8.20435 9 9C9 9.79565 9.31607 10.5587 9.87868 11.1213C10.4413 11.6839 11.2044 12 12 12ZM1 18V17C1 16.2044 1.31607 15.4413 1.87868 14.8787C2.44129 14.3161 3.20435 14 4 14M4 14C4.53043 14 5.03914 13.7893 5.41421 13.4142C5.78929 13.0391 6 12.5304 6 12C6 11.4696 5.78929 10.9609 5.41421 10.5858C5.03914 10.2107 4.53043 10 4 10C3.46957 10 2.96086 10.2107 2.58579 10.5858C2.21071 10.9609 2 11.4696 2 12C2 12.5304 2.21071 13.0391 2.58579 13.4142C2.96086 13.7893 3.46957 14 4 14ZM23 18V17C23 16.2044 22.6839 15.4413 22.1213 14.8787C21.5587 14.3161 20.7956 14 20 14M20 14C20.5304 14 21.0391 13.7893 21.4142 13.4142C21.7893 13.0391 22 12.5304 22 12C22 11.4696 21.7893 10.9609 21.4142 10.5858C21.0391 10.2107 20.5304 10 20 10C19.4696 10 18.9609 10.2107 18.5858 10.5858C18.2107 10.9609 18 11.4696 18 12C18 12.5304 18.2107 13.0391 18.5858 13.4142C18.9609 13.7893 19.4696 14 20 14Z" fill="#5c5c5c00" stroke="#5c5c5c" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="1.7" />
+                        <Button fx:id="friendButton" maxWidth="Infinity" minHeight="53" onAction="#handleClickFriend" styleClass="menu-button" text="친구" />
+                    </HBox>
+                    <HBox styleClass="menu-box" onMouseClicked="#handleClickBoard">
+                        <SVGPath content="M8 19H5C4.46957 19 3.96086 18.7893 3.58579 18.4142C3.21071 18.0391 3 17.5304 3 17V7C3 6.46957 3.21071 5.96086 3.58579 5.58579C3.96086 5.21071 4.46957 5 5 5H19C19.5304 5 20.0391 5.21071 20.4142 5.58579C20.7893 5.96086 21 6.46957 21 7V18C21 18.2652 20.8946 18.5196 20.7071 18.7071C20.5196 18.8946 20.2652 19 20 19 M11 17C11 16.7348 11.1054 16.4804 11.2929 16.2929C11.4804 16.1054 11.7348 16 12 16H16C16.2652 16 16.5196 16.1054 16.7071 16.2929C16.8946 16.4804 17 16.7348 17 17V18C17 18.2652 16.8946 18.5196 16.7071 18.7071C16.5196 18.8946 16.2652 19 16 19H12C11.7348 19 11.4804 18.8946 11.2929 18.7071C11.1054 18.5196 11 18.2652 11 18V17Z" fill="TRANSPARENT" stroke="#5c5c5c" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="1.7" />
+                        <Button fx:id="boardButton" maxWidth="Infinity" minHeight="53" onAction="#handleClickBoard" styleClass="menu-button" text="게시판" />
+                    </HBox>
+                    <HBox styleClass="menu-box" onMouseClicked="#handleClickMyPage">
+                        <SVGPath content="M10.9987 1.83301C5.93595 1.83301 1.83203 5.93692 1.83203 10.9997C1.83203 16.0624 5.93595 20.1663 10.9987 20.1663C16.0614 20.1663 20.1654 16.0624 20.1654 10.9997C20.1654 5.93692 16.0614 1.83301 10.9987 1.83301Z M3.91406 16.8172C3.91406 16.8172 5.95731 14.2083 10.999 14.2083C16.0406 14.2083 18.0848 16.8172 18.0848 16.8172M10.999 11C11.7283 11 12.4278 10.7103 12.9435 10.1945C13.4592 9.67882 13.749 8.97935 13.749 8.25C13.749 7.52065 13.4592 6.82118 12.9435 6.30546C12.4278 5.78973 11.7283 5.5 10.999 5.5C10.2696 5.5 9.57016 5.78973 9.05444 6.30546C8.53871 6.82118 8.24898 7.52065 8.24898 8.25C8.24898 8.97935 8.53871 9.67882 9.05444 10.1945C9.57016 10.7103 10.2696 11 10.999 11Z" fill="TRANSPARENT" stroke="#5c5c5c" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="1.7" />
+                        <Button fx:id="mypageButton" maxWidth="Infinity" minHeight="53" onAction="#handleClickMyPage" styleClass="menu-button" text="마이페이지" />
+                    </HBox>
                 </VBox>
             </VBox>
             <Region fx:id="spacer" />
             <VBox spacing="20">
                 <HBox>
-                    <Button fx:id="notificationButton" onAction="#handleClickNotification" text="알림함" styleClass="menu-button" minHeight="53" maxWidth="Infinity"/>
+                    <Button fx:id="notificationButton" maxWidth="Infinity" minHeight="53" onAction="#handleClickNotification" styleClass="menu-button" text="알림함" />
                 </HBox>
-                <Button fx:id="logoutButton" onAction="#handleClickLogout" text="로그아웃" styleClass="menu-button" minHeight="53" maxWidth="Infinity"/>
+                <Button fx:id="logoutButton" maxWidth="Infinity" minHeight="53" onAction="#handleClickLogout" styleClass="menu-button" text="로그아웃" />
             </VBox>
         </VBox>
     </left>
 
     <center>
-        <StackPane fx:id="contentArea" styleClass="content-pane"/>
+        <StackPane fx:id="contentArea" styleClass="content-pane" />
     </center>
 </BorderPane>

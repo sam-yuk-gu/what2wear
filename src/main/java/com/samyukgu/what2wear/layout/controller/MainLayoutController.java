@@ -18,14 +18,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import lombok.Getter;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import javafx.stage.Stage;
 
@@ -53,12 +51,21 @@ public class MainLayoutController {
 
     // 하이라이트 대상 버튼 목록 (logoButton 제외)
     private List<Button> menuButtons;
+    private Map<Button, HBox> menuButtonToBox;
 
     @FXML
     public void initialize() {
         instance = this;
         setupDI();
         menuButtons = List.of(wardrobeButton, friendButton, boardButton, mypageButton);   // 버튼 리스트 초기화 (로고 제외)
+        // 버튼과 menu-box 매핑
+        menuButtonToBox = Map.of(
+                wardrobeButton, (HBox) wardrobeButton.getParent(),
+                friendButton, (HBox) friendButton.getParent(),
+                boardButton, (HBox) boardButton.getParent(),
+                mypageButton, (HBox) mypageButton.getParent()
+        );
+
         loadView("/com/samyukgu/what2wear/codi/CodiMainView.fxml");
         initializeNotificationBadge();
         updateNotificationBadge();
@@ -127,11 +134,17 @@ public class MainLayoutController {
     // 로고 버튼은 하이라이트 제외, 나머지는 선택 상태 갱신
     private void selectMenu(Button selectedButton) {
         for (Button button : menuButtons) {
-            button.getStyleClass().remove("selected");
+            HBox box = menuButtonToBox.get(button);
+            if (box != null) {
+                box.getStyleClass().remove("selected");
+            }
         }
 
         if (menuButtons.contains(selectedButton)) {
-            selectedButton.getStyleClass().add("selected");
+            HBox selectedBox = menuButtonToBox.get(selectedButton);
+            if (selectedBox != null) {
+                selectedBox.getStyleClass().add("selected");
+            }
             currentSelectedButton = selectedButton;
         } else {
             currentSelectedButton = null;
