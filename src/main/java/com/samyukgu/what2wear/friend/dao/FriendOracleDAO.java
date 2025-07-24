@@ -227,4 +227,26 @@ public class FriendOracleDAO implements FriendDAO{
         member.setProfile_img(rs.getBytes("profile_img"));
         return member;
     }
+
+    
+    // 수락된 친구 ID 목록 조회
+    @Override
+    public List<Long> getAcceptedFriendIds(Long myId) {
+        List<Long> ids = new ArrayList<>();
+        String sql = "SELECT member2_id FROM friend WHERE member1_id = ? AND status = 'Y'";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setLong(1, myId);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                ids.add(rs.getLong("member2_id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ids;
+    }
 }

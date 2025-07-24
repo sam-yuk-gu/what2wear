@@ -4,6 +4,8 @@ import com.samyukgu.what2wear.ai.service.OpenAiChatService;
 import com.samyukgu.what2wear.ai.service.WeatherAiService;
 import com.samyukgu.what2wear.common.controller.CustomModalController;
 import com.samyukgu.what2wear.config.ConfigUtil;
+import com.samyukgu.what2wear.friend.dao.FriendDAO;
+import com.samyukgu.what2wear.friend.dao.FriendOracleDAO;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.member.Session.MemberSession;
 import com.samyukgu.what2wear.wardrobe.dao.WardrobeDAO;
@@ -51,43 +53,25 @@ public class RecommendAiController {
     @FXML
     public void initialize() {
         long memberId = MemberSession.getLoginMember().getId();
-        WardrobeDAO wardrobeDAO = new WardrobeOracleDAO();
-        WardrobeService wardrobeService = new WardrobeService(wardrobeDAO);
-        List<Wardrobe> wardrobeList = wardrobeService.getAllWardrobe(memberId);
-
-        // categoryId → 카테고리명으로 변환
-        Map<Long, String> categoryMap = Map.of(
-                1L, "상의",
-                2L, "바지",
-                3L, "원피스/스커트",
-                4L, "가방",
-                5L, "아우터",
-                6L, "신발",
-                7L, "악세사리",
-                8L, "기타"
-        );
-
-        // categoryId → 카테고리명으로 가공
-        Map<String, List<String>> myClothes = new HashMap<>();
-        for (Wardrobe item : wardrobeList) {
-            String categoryName = categoryMap.get(item.getCategoryId());
-            myClothes.computeIfAbsent(categoryName, k -> new ArrayList<>()).add(item.getName());
-        }
-
-        // 옷장 디버깅
-        System.out.println("[나의 옷장 구성]");
-        for (Map.Entry<String, List<String>> entry : myClothes.entrySet()) {
-            System.out.println(entry.getKey() + " → " + entry.getValue());
-        }
-
-
-
         this.location = IntroduceAiController.selectedLocation;
         this.purpose = IntroduceAiController.selectedPurpose;
 
         if (location == null || purpose == null || location.isBlank() || purpose.isBlank()) {
             recommendLabel.setText("추천을 위한 정보가 부족해요.");
             return;
+        }
+
+        Map<String, List<String>> clothesMap;
+
+        if (IntroduceAiController.isMyClosetSelected) {
+            clothesMap = getClothesFromMyWardrobe(memberId);
+        } else {
+            clothesMap = getClothesFromFriendsWardrobes(memberId);
+        }
+
+        System.out.println("[선택된 옷장 구성]");
+        for (Map.Entry<String, List<String>> entry : clothesMap.entrySet()) {
+            System.out.println(entry.getKey() + " → " + entry.getValue());
         }
 
         introLabel1.setText("안녕하세요!");
@@ -98,8 +82,6 @@ public class RecommendAiController {
                 var weatherInfo = weatherService.getWeatherInfo(location);
                 String high = weatherInfo.get("high");
                 String low = weatherInfo.get("low");
-                String feel = weatherInfo.get("sensible");
-                String uv = weatherInfo.get("uv");
 
                 Platform.runLater(() -> {
                     introLabel2.setText(purpose + "할 때 입을 옷을 추천해드릴게요 :)");
@@ -120,7 +102,7 @@ public class RecommendAiController {
 
         new Thread(() -> {
             try {
-                String aiResponse = aiService.getOutfitRecommendation(location, purpose, myClothes);
+                String aiResponse = aiService.getOutfitRecommendation(location, purpose, clothesMap);
                 applyAiRecommendation(aiResponse);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -137,6 +119,48 @@ public class RecommendAiController {
         endingLabel1.setText("더위에 대비해");
         endingLabel2.setText("쿨링 재킷이나 모자를 챙기면 좋아요.");
         endingLabel3.setText("오늘도 멋진 하루 보내세요!");
+    }
+
+    private Map<String, List<String>> getClothesFromMyWardrobe(long memberId) {
+        WardrobeService wardrobeService = new WardrobeService(new WardrobeOracleDAO());
+        List<Wardrobe> wardrobeList = wardrobeService.getAllWardrobe(memberId);
+        return mapByCategoryName(wardrobeList);
+    }
+
+    private Map<String, List<String>> getClothesFromFriendsWardrobes(long memberId) {
+        FriendDAO friendDAO = new FriendOracleDAO();
+        List<Long> friendIds = friendDAO.getAcceptedFriendIds(memberId);
+
+        WardrobeService wardrobeService = new WardrobeService(new WardrobeOracleDAO());
+        List<Wardrobe> total = new ArrayList<>();
+
+        for (Long fid : friendIds) {
+            total.addAll(wardrobeService.getAllWardrobe(fid));
+        }
+
+        return mapByCategoryName(total);
+    }
+
+    private Map<String, List<String>> mapByCategoryName(List<Wardrobe> wardrobeList) {
+        Map<Long, String> categoryMap = Map.of(
+                1L, "상의",
+                2L, "바지",
+                3L, "원피스/스커트",
+                4L, "가방",
+                5L, "아우터",
+                6L, "신발",
+                7L, "악세사리",
+                8L, "기타"
+        );
+
+        Map<String, List<String>> map = new HashMap<>();
+        for (Wardrobe item : wardrobeList) {
+            String categoryName = categoryMap.get(item.getCategoryId());
+            if (categoryName != null) {
+                map.computeIfAbsent(categoryName, k -> new ArrayList<>()).add(item.getName());
+            }
+        }
+        return map;
     }
 
     private void applyAiRecommendation(String response) {

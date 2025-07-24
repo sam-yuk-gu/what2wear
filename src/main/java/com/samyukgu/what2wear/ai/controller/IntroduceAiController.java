@@ -14,6 +14,8 @@ public class IntroduceAiController {
     @FXML private RadioButton myClosetRadio;
 
     private ToggleGroup closetToggleGroup;
+    // 선택된 라디오 버튼 값 저장
+    public static boolean isMyClosetSelected;
 
     // 선택값 저장용 static 변수
     public static String selectedLocation;
@@ -27,6 +29,19 @@ public class IntroduceAiController {
 
         select_location_title.setValue("서울시 종로구");
         select_title.setValue("공부");
+
+
+        myClosetRadio.setSelected(true); // 기본값
+        isMyClosetSelected = true;
+
+        // 옷장 범위 선택 확인
+        closetToggleGroup.selectedToggleProperty().addListener((obs, old, selected) -> {
+            if (selected == myClosetRadio) {
+                isMyClosetSelected = true;
+            } else if (selected == otherClosetRadio) {
+                isMyClosetSelected = false;
+            }
+        });
     }
 
     @FXML
