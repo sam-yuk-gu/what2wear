@@ -62,30 +62,8 @@ public class ListWardrobeController {
             contentContainer.setPrefWidth(988);
             contentContainer.setMaxWidth(988);
             contentContainer.setFillWidth(true);
-
         }
         loadWardrobes();
-    }
-
-    // 페이지네이션을 완전히 무시하고 contentContainer만 사용
-    private void displayAllItems() {
-        if (contentContainer == null) {
-            System.err.println("contentContainer is null!");
-            return;
-        }
-
-        // 기존 내용 모두 제거
-        contentContainer.getChildren().clear();
-        if (filteredWardrobes.isEmpty()) {
-            showEmptyState(contentContainer);
-            return;
-        }
-
-        // 페이지네이션 없이 모든 아이템 표시 (또는 첫 페이지만)
-        int endIndex = Math.min(ITEMS_PER_PAGE, filteredWardrobes.size());
-        List<Wardrobe> itemsToShow = filteredWardrobes.subList(0, endIndex);
-        displayWardrobesOnPage(contentContainer, itemsToShow);
-        System.out.println("Displayed " + itemsToShow.size() + " items directly in contentContainer");
     }
 
     private void setupUI() {
@@ -107,9 +85,29 @@ public class ListWardrobeController {
         }
     }
 
+    // 정렬 기능 설정 (수정됨)
     private void setupSortFunctionality() {
         if (sortComboBox != null) {
-            sortComboBox.setOnAction(e -> sortWardrobes());
+            // 기본값 설정 (최신 순)
+            sortComboBox.setValue("최신 순");
+
+            // 선택 변경 이벤트 리스너 추가
+            sortComboBox.setOnAction(e -> {
+                System.out.println("ComboBox Action 이벤트 발생");
+                handleSortChange();
+            });
+
+            // 값 변경 리스너도 추가 (더 안전한 방법)
+            sortComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue != null && !newValue.equals(oldValue)) {
+                    System.out.println("정렬 옵션 변경: " + oldValue + " -> " + newValue);
+                    Platform.runLater(() -> sortWardrobes());
+                }
+            });
+
+            System.out.println("정렬 기능 설정 완료");
+        } else {
+            System.out.println("ERROR: sortComboBox가 null입니다!");
         }
     }
 
@@ -133,30 +131,8 @@ public class ListWardrobeController {
             pagination.setPageFactory(pageIndex -> new VBox());
         }
     }
-    private void displaySpecificPage(int pageIndex) {
-        if (contentContainer == null) return;
 
-        Platform.runLater(() -> {
-            contentContainer.getChildren().clear();
-
-            if (filteredWardrobes.isEmpty()) {
-                showEmptyState(contentContainer);
-                return;
-            }
-            int startIndex = pageIndex * ITEMS_PER_PAGE;
-            int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, filteredWardrobes.size());
-            if (startIndex < filteredWardrobes.size()) {
-                List<Wardrobe> pageItems = filteredWardrobes.subList(startIndex, endIndex);
-                displayWardrobesOnPage(contentContainer, pageItems);
-            }
-        });
-    }
-
-    private VBox createPageForPagination(int pageIndex) {
-        VBox pageContent = createPage(pageIndex);
-        return pageContent;
-    }
-
+    // 옷장 로딩 (수정됨)
     private void loadWardrobes() {
         showStatus("로딩 중...", true);
 
@@ -176,6 +152,8 @@ public class ListWardrobeController {
                 filteredWardrobes = new ArrayList<>(originalWardrobes);
                 Platform.runLater(() -> {
                     hideStatus();
+                    // 초기 정렬 적용 후 화면 표시
+                    sortWardrobes(); // 기본 "최신 순" 정렬 적용
                     filterAndDisplayWardrobes();
                 });
             }
@@ -191,8 +169,69 @@ public class ListWardrobeController {
         new Thread(loadTask).start();
     }
 
+    // 정렬 메서드 (완전히 새로 작성)
+    private void sortWardrobes() {
+        if (sortComboBox == null || sortComboBox.getValue() == null) {
+            System.out.println("sortComboBox가 null이거나 선택된 값이 없습니다.");
+            return;
+        }
+
+        String selectedSort = sortComboBox.getValue();
+        System.out.println("선택된 정렬 옵션: " + selectedSort);
+
+        switch (selectedSort) {
+            case "최신 순":
+                // 최신 등록된 옷부터 (ID가 높은 순서대로)
+                filteredWardrobes.sort(Comparator.comparing(Wardrobe::getId).reversed());
+                System.out.println("최신 순으로 정렬 완료");
+                break;
+
+            case "오래된 순":
+                // 오래된 옷부터 (ID가 낮은 순서대로)
+                filteredWardrobes.sort(Comparator.comparing(Wardrobe::getId));
+                System.out.println("오래된 순으로 정렬 완료");
+                break;
+
+            case "이름순":
+                // 가나다 순 (한글 정렬)
+                filteredWardrobes.sort(Comparator.comparing(wardrobe -> {
+                    String name = wardrobe.getName();
+                    // null이나 빈 문자열인 경우 맨 뒤로 보내기
+                    return name != null ? name.trim() : "zzz";
+                }));
+                System.out.println("이름순(가나다순)으로 정렬 완료");
+                break;
+
+            default:
+                System.out.println("알 수 없는 정렬 옵션: " + selectedSort);
+                // 기본값은 최신 순
+                filteredWardrobes.sort(Comparator.comparing(Wardrobe::getId).reversed());
+                break;
+        }
+
+        // 정렬 후 페이지네이션 업데이트
+        updatePagination();
+
+        // 첫 번째 페이지로 이동
+        if (pagination != null && pagination.getPageCount() > 0) {
+            pagination.setCurrentPageIndex(0);
+        }
+
+        // 화면 새로고침
+        Platform.runLater(() -> displayAllItems());
+    }
+
+    @FXML
+    private void handleSortChange() {
+        System.out.println("정렬 옵션 변경됨");
+        sortWardrobes();
+    }
+
+    // 필터링 메서드 (수정됨)
     private void filterAndDisplayWardrobes() {
         Stream<Wardrobe> stream = originalWardrobes.stream();
+
+        // 카테고리 필터링
         if (!"전체".equals(currentCategory)) {
             stream = stream.filter(w -> {
                 String category = getCategoryFromId(w.getCategoryId());
@@ -200,10 +239,12 @@ public class ListWardrobeController {
             });
         }
 
+        // 즐겨찾기 필터링
         if (showFavoritesOnly) {
             stream = stream.filter(w -> "Y".equals(w.getLike()));
         }
 
+        // 검색어 필터링
         if (searchField != null) {
             String searchText = searchField.getText();
             if (searchText != null && !searchText.trim().isEmpty()) {
@@ -214,7 +255,10 @@ public class ListWardrobeController {
         }
 
         filteredWardrobes = stream.collect(Collectors.toList());
+
+        // 필터링 후 현재 선택된 정렬 옵션 적용
         sortWardrobes();
+
         updatePagination();
         Platform.runLater(() -> displayAllItems());
     }
@@ -233,31 +277,44 @@ public class ListWardrobeController {
             default: return "기타";
         }
     }
-
-    private void sortWardrobes() {
-        if (sortComboBox == null || sortComboBox.getValue() == null) return;
-
-        String selectedSort = sortComboBox.getValue();
-
-        switch (selectedSort) {
-            case "등록일 순":
-                // 옷 ID 기준으로 정렬 (등록 순서)
-                filteredWardrobes.sort(Comparator.comparing(Wardrobe::getId).reversed());
-                break;
-            case "이름순":
-                filteredWardrobes.sort(Comparator.comparing(w ->
-                        w.getName() != null ? w.getName() : ""));
-                break;
-            case "최근 착용순":
-                // 이부분 아직 더 고민이 필요..
-                filteredWardrobes.sort(Comparator.comparing(Wardrobe::getId).reversed());
-                break;
+    // 페이지네이션을 완전히 무시하고 contentContainer만 사용
+    private void displayAllItems() {
+        if (contentContainer == null) {
+            System.err.println("contentContainer is null!");
+            return;
         }
 
-        updatePagination();
-        if (pagination != null && pagination.getPageCount() > 0) {
-            pagination.setCurrentPageIndex(0);
+        // 기존 내용 모두 제거
+        contentContainer.getChildren().clear();
+        if (filteredWardrobes.isEmpty()) {
+            showEmptyState(contentContainer);
+            return;
         }
+
+        // 페이지네이션 없이 모든 아이템 표시 (또는 첫 페이지만)
+        int endIndex = Math.min(ITEMS_PER_PAGE, filteredWardrobes.size());
+        List<Wardrobe> itemsToShow = filteredWardrobes.subList(0, endIndex);
+        displayWardrobesOnPage(contentContainer, itemsToShow);
+        System.out.println("Displayed " + itemsToShow.size() + " items directly in contentContainer");
+    }
+
+    private void displaySpecificPage(int pageIndex) {
+        if (contentContainer == null) return;
+
+        Platform.runLater(() -> {
+            contentContainer.getChildren().clear();
+
+            if (filteredWardrobes.isEmpty()) {
+                showEmptyState(contentContainer);
+                return;
+            }
+            int startIndex = pageIndex * ITEMS_PER_PAGE;
+            int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, filteredWardrobes.size());
+            if (startIndex < filteredWardrobes.size()) {
+                List<Wardrobe> pageItems = filteredWardrobes.subList(startIndex, endIndex);
+                displayWardrobesOnPage(contentContainer, pageItems);
+            }
+        });
     }
 
     private void updatePagination() {
@@ -265,27 +322,6 @@ public class ListWardrobeController {
 
         int totalPages = Math.max(1, (int) Math.ceil((double) filteredWardrobes.size() / ITEMS_PER_PAGE));
         pagination.setPageCount(totalPages);
-    }
-
-    private VBox createPage(int pageIndex) {
-        VBox pageContent = new VBox();
-        pageContent.setSpacing(10);
-        pageContent.setPrefWidth(988); // ScrollPane 너비에 맞춤
-        pageContent.setMaxWidth(988);
-        pageContent.setFillWidth(true);
-
-        if (filteredWardrobes.isEmpty()) {
-            showEmptyState(pageContent);
-            return pageContent;
-        }
-
-        int startIndex = pageIndex * ITEMS_PER_PAGE;
-        int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, filteredWardrobes.size());
-
-        List<Wardrobe> pageItems = filteredWardrobes.subList(startIndex, endIndex);
-        displayWardrobesOnPage(pageContent, pageItems);
-
-        return pageContent;
     }
 
     private void displayWardrobesOnPage(VBox pageContent, List<Wardrobe> wardrobes) {
@@ -350,7 +386,7 @@ public class ListWardrobeController {
         // 이미지 설정
         setClothesImage(clothesImage, wardrobe);
 
-        // 하트 아이콘 (리소스 오류 방지)
+        // 하트 아이콘 (수정된 버전)
         ImageView heartIcon = createHeartIcon(wardrobe);
 
         imageStack.getChildren().addAll(clothesImage, heartIcon);
@@ -422,16 +458,18 @@ public class ListWardrobeController {
         }
     }
 
+    // 하트 아이콘 생성 (likedY.png, likedN.png 사용)
     private ImageView createHeartIcon(Wardrobe wardrobe) {
         ImageView heartIcon = new ImageView();
         heartIcon.setFitHeight(20);
         heartIcon.setFitWidth(20);
         heartIcon.setPreserveRatio(true);
+        heartIcon.setPickOnBounds(true); // 투명한 부분도 클릭 가능
 
         boolean isFavorite = "Y".equals(wardrobe.getLike());
 
-        // 리소스 오류 방지를 위한 안전한 아이콘 설정
-        setHeartIconSafe(heartIcon, isFavorite);
+        // likedY.png, likedN.png 사용
+        setHeartIconImage(heartIcon, isFavorite);
 
         heartIcon.setOnMouseClicked(event -> {
             event.consume(); // 부모 클릭 이벤트 방지
@@ -445,12 +483,12 @@ public class ListWardrobeController {
         return heartIcon;
     }
 
-    // 안전한 하트 아이콘 설정 메서드
-    private void setHeartIconSafe(ImageView heartIcon, boolean isFavorite) {
+    // 하트 아이콘 이미지 설정 메서드
+    private void setHeartIconImage(ImageView heartIcon, boolean isFavorite) {
         try {
-            String iconPath = isFavorite ? "/images/heart-filled.png" : "/images/heart.png";
+            String iconPath = isFavorite ? "/images/likedY.png" : "/images/likedN.png";
 
-            // 먼저 리소스가 존재하는지 확인
+            // 먼저 likedY.png, likedN.png 시도
             if (getClass().getResourceAsStream(iconPath) != null) {
                 Image heartImage = new Image(getClass().getResourceAsStream(iconPath));
                 if (heartImage != null && !heartImage.isError()) {
@@ -459,41 +497,82 @@ public class ListWardrobeController {
                 }
             }
 
-            // 리소스가 없으면 기본 하트 아이콘 시도
-            createDefaultHeartIcon(heartIcon, isFavorite);
+            // 대체 경로들 시도
+            String[] fallbackPaths = {
+                    "/wardrobe/images/" + (isFavorite ? "likedY.png" : "likedN.png"),
+                    "/com/samyukgu/what2wear/wardrobe/images/" + (isFavorite ? "likedY.png" : "likedN.png"),
+                    "/images/heart.png"
+            };
+
+            for (String fallbackPath : fallbackPaths) {
+                try {
+                    if (getClass().getResourceAsStream(fallbackPath) != null) {
+                        Image fallbackImage = new Image(getClass().getResourceAsStream(fallbackPath));
+                        if (fallbackImage != null && !fallbackImage.isError()) {
+                            heartIcon.setImage(fallbackImage);
+
+                            // heart.png를 사용하는 경우 스타일로 구분
+                            if (fallbackPath.contains("heart.png")) {
+                                heartIcon.setOpacity(isFavorite ? 1.0 : 0.6);
+                                if (isFavorite) {
+                                    heartIcon.setStyle("-fx-cursor: hand; -fx-effect: dropshadow(gaussian, gold, 3, 0.7, 0, 0);");
+                                } else {
+                                    heartIcon.setStyle("-fx-cursor: hand;");
+                                }
+                            }
+                            return;
+                        }
+                    }
+                } catch (Exception e) {
+                    System.err.println("대체 하트 이미지 로딩 실패: " + fallbackPath);
+                }
+            }
+
+            // 모든 이미지 로딩 실패 시 기본 설정
+            System.err.println("WARNING: 모든 하트 이미지 로딩 실패");
+            heartIcon.setOpacity(isFavorite ? 1.0 : 0.5);
+            heartIcon.setStyle("-fx-cursor: hand;");
 
         } catch (Exception e) {
-            System.err.println("하트 아이콘 로딩 실패, 기본 아이콘으로 대체: " + e.getMessage());
-            createDefaultHeartIcon(heartIcon, isFavorite);
+            System.err.println("하트 아이콘 이미지 설정 실패: " + e.getMessage());
         }
     }
 
-    // 기본 하트 아이콘 생성
-    private void createDefaultHeartIcon(ImageView heartIcon, boolean isFavorite) {
-        // 간단한 텍스트 기반 하트 이미지 생성하거나 숨김
-        heartIcon.setVisible(true);
-    }
-
     private void updateHeartIcon(ImageView heartIcon, boolean isFavorite) {
-        setHeartIconSafe(heartIcon, isFavorite);
+        setHeartIconImage(heartIcon, isFavorite);
     }
 
     private void toggleFavorite(Wardrobe wardrobe, ImageView heartIcon) {
         try {
             boolean currentFavorite = "Y".equals(wardrobe.getLike());
             String newFavoriteStatus = currentFavorite ? "N" : "Y";
+
+            System.out.println("목록에서 즐겨찾기 토글 - 옷 ID: " + wardrobe.getId() +
+                    ", 현재: " + wardrobe.getLike() + " -> 새로운: " + newFavoriteStatus);
+
             // 모델 업데이트
             wardrobe.setLike(newFavoriteStatus);
-            // DB 업데이트
-            wardrobeService.updateWardrobe(wardrobe);
+
+            // 서비스의 토글 메서드 사용
+            wardrobeService.toggleFavoriteStatus(wardrobe.getId(), wardrobe.getMemberId());
+
             // 아이콘 업데이트
             updateHeartIcon(heartIcon, "Y".equals(newFavoriteStatus));
+
             // 즐겨찾기 필터가 활성화된 경우 새로고침
             if (showFavoritesOnly) {
                 filterAndDisplayWardrobes();
             }
+
         } catch (Exception e) {
+            System.err.println("목록에서 즐겨찾기 토글 실패: " + e.getMessage());
+            e.printStackTrace();
             showAlert("즐겨찾기 업데이트에 실패했습니다: " + e.getMessage());
+
+            // 실패 시 원래 상태로 되돌림
+            String originalStatus = "Y".equals(wardrobe.getLike()) ? "N" : "Y";
+            wardrobe.setLike(originalStatus);
+            updateHeartIcon(heartIcon, "Y".equals(originalStatus));
         }
     }
 
@@ -626,11 +705,6 @@ public class ListWardrobeController {
         } else {
             favoriteButton.setStyle("-fx-background-color: transparent; -fx-border-color: #cccccc; -fx-border-width: 1; -fx-text-fill: #000000; -fx-font-size: 13px; -fx-font-weight: normal; -fx-background-radius: 4; -fx-border-radius: 4; -fx-padding: 6 12; -fx-cursor: hand;");
         }
-    }
-
-    @FXML
-    private void handleSortChange() {
-        sortWardrobes();
     }
 
     // 아이템 클릭 시 상세 페이지로 이동

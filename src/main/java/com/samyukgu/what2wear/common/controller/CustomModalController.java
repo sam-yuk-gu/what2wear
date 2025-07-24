@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 
@@ -24,6 +25,7 @@ public class CustomModalController implements Initializable {
     @FXML private Button cancelButton;
     @FXML private Button confirmButton;
     @FXML private Button closeButton;
+    @FXML private HBox two_button_hbox;
 
     public CustomModalController() {}
 
@@ -62,27 +64,39 @@ public class CustomModalController implements Initializable {
         if (cancelText != null) {
             cancelButton.setText(cancelText);
             cancelButton.setVisible(true);
+            cancelButton.setManaged(true);  // 레이아웃에서 공간 차지
             cancelButton.setOnAction(e -> {
                 if (onCancel != null) onCancel.run();
                 modalOverlay.setVisible(false);
             });
         } else {
-            cancelButton.setVisible(false);  // 버튼 숨김
+            cancelButton.setVisible(false);
+            cancelButton.setManaged(false);  // 레이아웃에서 공간 차지하지 않음
         }
 
+        // 확인 버튼은 항상 표시
         if (actionText != null) confirmButton.setText(actionText);
         confirmButton.setOnAction(e -> {
             if (onAction != null) onAction.run();
             modalOverlay.setVisible(false);
         });
 
+        // 닫기 버튼 처리
         closeButton.setOnAction(e -> {
             if (onCancel != null) onCancel.run();
             modalOverlay.setVisible(false);
         });
 
+        // 테마 색상 적용
         if (themeColor != null && !themeColor.isEmpty()) {
             confirmButton.setStyle("-fx-background-color: " + themeColor + "; -fx-text-fill: white;");
+        }
+
+        // 버튼이 하나만 있을 때 HBox의 정렬을 CENTER로 변경
+        if (cancelText == null) {
+            two_button_hbox.setAlignment(javafx.geometry.Pos.CENTER);
+        } else {
+            two_button_hbox.setAlignment(javafx.geometry.Pos.CENTER);  // 또는 기본 정렬 유지
         }
     }
 

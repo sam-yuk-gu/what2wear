@@ -187,10 +187,10 @@ public class CodiOracleDAO implements CodiDAO {
             INSERT INTO codi (
                 id, member_id, schedule, schedule_date, scope, codi_type, deleted
             ) VALUES (
-                codi_seq.NEXTVAL, ?, ?, ?, ?, ?, 'N'
+                SEQ_CODI.NEXTVAL, ?, ?, ?, ?, ?, 'N'
             )
         """;
-        String getIdSql = "SELECT codi_seq.CURRVAL FROM dual";
+        String getIdSql = "SELECT SEQ_CODI.CURRVAL FROM dual";
         String insertDetailSql = "INSERT INTO codi_detail (codi_id, clothes_id) VALUES (?, ?)";
 
         try (Connection conn = getConnection()) {

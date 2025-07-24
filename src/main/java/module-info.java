@@ -18,6 +18,7 @@ module com.samyukgu.what2wear {
     opens com.samyukgu.what2wear.member.controller to javafx.fxml;
     opens com.samyukgu.what2wear.wardrobe.controller to javafx.fxml;
     opens com.samyukgu.what2wear.friend.controller to javafx.fxml;
+    opens com.samyukgu.what2wear.notification.controller to javafx.fxml;
 
     exports com.samyukgu.what2wear;
     opens com.samyukgu.what2wear.layout.controller to javafx.fxml;

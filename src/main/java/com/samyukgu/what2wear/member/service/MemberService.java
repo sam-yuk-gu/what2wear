@@ -1,6 +1,7 @@
 package com.samyukgu.what2wear.member.service;
 
 import com.samyukgu.what2wear.mail.common.PasswordUtils;
+import com.samyukgu.what2wear.member.common.MemberConstants;
 import com.samyukgu.what2wear.member.dao.MemberDAO;
 import com.samyukgu.what2wear.member.model.Member;
 import java.nio.charset.StandardCharsets;
@@ -81,11 +82,67 @@ public class MemberService {
 
         return newPassword;
     }
-    
+
+    // 키워드로 사용자 닉네임 검색
     public List<Member> searchMember(Long memberId,String keyword){
         return dao.findByNicknameContaining(memberId, keyword);
     }
+
+    // 닉네임 변경
+    public Member changeNickname(Long memberId, String nickname){
+        return dao.updateNicknameById(memberId, nickname);
+    }
+
+    // 이름 변경
+    public Member changeName(Long memberId, String name){
+        return dao.updateNameById(memberId, name);
+    }
+
+    // 이메일 변경
+    public Member changeEmail(Long memberId, String email){
+        return dao.updateEmailById(memberId, email);
+    }
+
+    // 비밀번호 변경
+    public Member changePassword(Long memberId, String password){
+        return dao.updatePasswordById(memberId, md5(password));
+    }
     
+    // 비밀번호 검증
+    public boolean isPasswordMatched(Long memberId, String password){
+        Member member = dao.findById(memberId);
+        return member.getPassword().equals(md5(password));
+    }
+
+    // 회원 탈퇴 (deleted -> 'Y')
+    public Member unregisterMember(Long memberId){
+        return dao.updateDeletedById(memberId);
+    }
+
+    // 프로필 사진 변경
+    public Member changeProfileImg(Long memberId,byte[] img){
+        return dao.updateProfileImgById(memberId, img);
+    }
+
+    public boolean isValidToChange(String existCurPassword,String curPassword, String newPassword, String confirmNewPassword){
+        if(!existCurPassword.equals(md5(curPassword))) // DB에 등록된 비밀번호와 사용자가 입력한 현재 비밀번호가 다를 경우
+            return false;
+
+        if(!newPassword.equals(confirmNewPassword)) // 입력한 새 비밀번호와 다시 입력한 새 비밀번호의 입력값이 다를 경우
+            return false;
+
+        if(!newPassword.matches(MemberConstants.PASSWORD_PATTERN)) // 패스워드 패턴이랑 일치하지 않으면
+            return false;
+
+        if(newPassword.length()<MemberConstants.PASSWORD_MIN_LENGTH) // 비밀번호 최소 길이보다 작으면
+            return false;
+
+        if(newPassword.length()>MemberConstants.PASSWORD_MAX_LENGTH) // 비밀번호 최대 길이보다 크면
+            return false;
+
+        return true;
+    }
+
     // md5 암호화 메서드
     private String md5(String plain) {
         try {

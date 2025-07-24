@@ -134,3 +134,24 @@
     -fx-border-width: 0 0 1px 0;
     -fx-border-style: none none solid none;
 }
+
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+}
+
+.scroll-pane .viewport {
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+}
+
+.scroll-pane .scroll-bar:vertical {
+    -fx-background-radius: 5px;
+}
+
+.scroll-pane .scroll-bar:horizontal {
+    -fx-background-radius: 5px;
+}
+
+
