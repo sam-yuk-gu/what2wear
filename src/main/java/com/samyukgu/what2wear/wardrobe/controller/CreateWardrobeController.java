@@ -244,7 +244,7 @@ public class CreateWardrobeController implements Initializable {
                     Image image = new Image(selectedFile.toURI().toString());
                     if (!image.isError()) {
                         pictureView.setImage(image);
-                        showAlert("이미지가 성공적으로 업로드되었습니다.");
+//                        showAlert("이미지가 성공적으로 업로드되었습니다.");
                     } else {
                         throw new Exception("이미지 파일이 손상되었거나 지원하지 않는 형식입니다.");
                     }
@@ -267,21 +267,21 @@ public class CreateWardrobeController implements Initializable {
     @FXML
     private void handleBackClick() {
         // 변경사항이 있다면 확인 대화상자 표시
-        if (hasUnsavedChanges()) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-                    "저장하지 않은 변경사항이 있습니다. 정말로 나가시겠습니까?",
-                    ButtonType.YES, ButtonType.NO);
-            alert.setTitle("확인");
-            alert.setHeaderText(null);
+//        if (hasUnsavedChanges()) {
+//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+//                    "저장하지 않은 변경사항이 있습니다. 정말로 나가시겠습니까?",
+//                    ButtonType.YES, ButtonType.NO);
+//            alert.setTitle("확인");
+//            alert.setHeaderText(null);
 
-            alert.showAndWait().ifPresent(result -> {
-                if (result == ButtonType.YES) {
+//            alert.showAndWait().ifPresent(result -> {
+//                if (result == ButtonType.YES) {
                     MainLayoutController.loadView("/com/samyukgu/what2wear/wardrobe/wardrobeList.fxml");
-                }
-            });
-        } else {
-            MainLayoutController.loadView("/com/samyukgu/what2wear/wardrobe/wardrobeList.fxml");
-        }
+//                }
+//            });
+//        } else {
+//            MainLayoutController.loadView("/com/samyukgu/what2wear/wardrobe/wardrobeList.fxml");
+//        }
     }
 
     private boolean hasUnsavedChanges() {

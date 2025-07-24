@@ -909,11 +909,11 @@ public class EditMyCodiController implements Initializable {
             List<Wardrobe> selectedClothes = collectSelectedClothes();
             String confirmMessage = "코디 정보를 수정하시겠습니까?";
 
-            if (selectedClothes.isEmpty()) {
-                confirmMessage = "선택된 옷이 없어 스냅샷이 생성되지 않습니다.\n그래도 수정하시겠습니까?";
-            } else {
-                confirmMessage = "선택된 " + selectedClothes.size() + "개 옷의 스냅샷과 함께 코디를 수정하시겠습니까?";
-            }
+//            if (selectedClothes.isEmpty()) {
+//                confirmMessage = "선택된 옷이 없어 스냅샷이 생성되지 않습니다.\n그래도 수정하시겠습니까?";
+//            } else {
+//                confirmMessage = "선택된 " + selectedClothes.size() + "개 옷의 스냅샷과 함께 코디를 수정하시겠습니까?";
+//            }
 
             // CustomModal로 확인창 표시
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/CustomModal.fxml"));
@@ -921,7 +921,7 @@ public class EditMyCodiController implements Initializable {
 
             CustomModalController controller = loader.getController();
             controller.configure(
-                    "코디 수정 확인",
+                    "코디 수정",
                     confirmMessage,
                     "/assets/icons/greenCheck.png",
                     "#4CAF50",
