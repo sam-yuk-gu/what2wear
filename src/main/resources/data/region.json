@@ -1,0 +1,1892 @@
+[
+  {
+    "id": 1,
+    "regionParent": "서울특별시",
+    "regionChild": "",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 2,
+    "regionParent": "서울특별시",
+    "regionChild": "종로구",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 3,
+    "regionParent": "서울특별시",
+    "regionChild": "중구",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 4,
+    "regionParent": "서울특별시",
+    "regionChild": "용산구",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 5,
+    "regionParent": "서울특별시",
+    "regionChild": "성동구",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 6,
+    "regionParent": "서울특별시",
+    "regionChild": "광진구",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 7,
+    "regionParent": "서울특별시",
+    "regionChild": "동대문구",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 8,
+    "regionParent": "서울특별시",
+    "regionChild": "중랑구",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 9,
+    "regionParent": "서울특별시",
+    "regionChild": "성북구",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 10,
+    "regionParent": "서울특별시",
+    "regionChild": "강북구",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 11,
+    "regionParent": "서울특별시",
+    "regionChild": "도봉구",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 12,
+    "regionParent": "서울특별시",
+    "regionChild": "노원구",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 13,
+    "regionParent": "서울특별시",
+    "regionChild": "은평구",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 14,
+    "regionParent": "서울특별시",
+    "regionChild": "서대문구",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 15,
+    "regionParent": "서울특별시",
+    "regionChild": "마포구",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 16,
+    "regionParent": "서울특별시",
+    "regionChild": "양천구",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 17,
+    "regionParent": "서울특별시",
+    "regionChild": "강서구",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 18,
+    "regionParent": "서울특별시",
+    "regionChild": "구로구",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 19,
+    "regionParent": "서울특별시",
+    "regionChild": "금천구",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 20,
+    "regionParent": "서울특별시",
+    "regionChild": "영등포구",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 21,
+    "regionParent": "서울특별시",
+    "regionChild": "동작구",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 22,
+    "regionParent": "서울특별시",
+    "regionChild": "관악구",
+    "nx": 60,
+    "ny": 126
+  },
+  {
+    "id": 23,
+    "regionParent": "서울특별시",
+    "regionChild": "서초구",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 24,
+    "regionParent": "서울특별시",
+    "regionChild": "강남구",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 25,
+    "regionParent": "서울특별시",
+    "regionChild": "송파구",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 26,
+    "regionParent": "서울특별시",
+    "regionChild": "강동구",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 27,
+    "regionParent": "부산광역시",
+    "regionChild": "",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 28,
+    "regionParent": "부산광역시",
+    "regionChild": "중구",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 29,
+    "regionParent": "부산광역시",
+    "regionChild": "서구",
+    "nx": 60,
+    "ny": 126
+  },
+  {
+    "id": 30,
+    "regionParent": "부산광역시",
+    "regionChild": "동구",
+    "nx": 60,
+    "ny": 126
+  },
+  {
+    "id": 31,
+    "regionParent": "부산광역시",
+    "regionChild": "영도구",
+    "nx": 60,
+    "ny": 126
+  },
+  {
+    "id": 32,
+    "regionParent": "부산광역시",
+    "regionChild": "부산진구",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 33,
+    "regionParent": "부산광역시",
+    "regionChild": "동래구",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 34,
+    "regionParent": "부산광역시",
+    "regionChild": "남구",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 35,
+    "regionParent": "부산광역시",
+    "regionChild": "북구",
+    "nx": 60,
+    "ny": 126
+  },
+  {
+    "id": 36,
+    "regionParent": "부산광역시",
+    "regionChild": "해운대구",
+    "nx": 60,
+    "ny": 126
+  },
+  {
+    "id": 37,
+    "regionParent": "부산광역시",
+    "regionChild": "사하구",
+    "nx": 60,
+    "ny": 126
+  },
+  {
+    "id": 38,
+    "regionParent": "부산광역시",
+    "regionChild": "금정구",
+    "nx": 60,
+    "ny": 126
+  },
+  {
+    "id": 39,
+    "regionParent": "부산광역시",
+    "regionChild": "강서구",
+    "nx": 60,
+    "ny": 126
+  },
+  {
+    "id": 40,
+    "regionParent": "부산광역시",
+    "regionChild": "연제구",
+    "nx": 60,
+    "ny": 126
+  },
+  {
+    "id": 41,
+    "regionParent": "부산광역시",
+    "regionChild": "수영구",
+    "nx": 60,
+    "ny": 126
+  },
+  {
+    "id": 42,
+    "regionParent": "부산광역시",
+    "regionChild": "사상구",
+    "nx": 59,
+    "ny": 126
+  },
+  {
+    "id": 43,
+    "regionParent": "부산광역시",
+    "regionChild": "기장군",
+    "nx": 60,
+    "ny": 126
+  },
+  {
+    "id": 44,
+    "regionParent": "대구광역시",
+    "regionChild": "",
+    "nx": 60,
+    "ny": 126
+  },
+  {
+    "id": 45,
+    "regionParent": "대구광역시",
+    "regionChild": "중구",
+    "nx": 60,
+    "ny": 126
+  },
+  {
+    "id": 46,
+    "regionParent": "대구광역시",
+    "regionChild": "동구",
+    "nx": 60,
+    "ny": 126
+  },
+  {
+    "id": 47,
+    "regionParent": "대구광역시",
+    "regionChild": "서구",
+    "nx": 59,
+    "ny": 126
+  },
+  {
+    "id": 48,
+    "regionParent": "대구광역시",
+    "regionChild": "남구",
+    "nx": 60,
+    "ny": 126
+  },
+  {
+    "id": 49,
+    "regionParent": "대구광역시",
+    "regionChild": "북구",
+    "nx": 60,
+    "ny": 126
+  },
+  {
+    "id": 50,
+    "regionParent": "대구광역시",
+    "regionChild": "수성구",
+    "nx": 60,
+    "ny": 126
+  },
+  {
+    "id": 51,
+    "regionParent": "대구광역시",
+    "regionChild": "달서구",
+    "nx": 60,
+    "ny": 126
+  },
+  {
+    "id": 52,
+    "regionParent": "대구광역시",
+    "regionChild": "달성군",
+    "nx": 60,
+    "ny": 126
+  },
+  {
+    "id": 53,
+    "regionParent": "대구광역시",
+    "regionChild": "군위군",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 54,
+    "regionParent": "인천광역시",
+    "regionChild": "",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 55,
+    "regionParent": "인천광역시",
+    "regionChild": "중구",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 56,
+    "regionParent": "인천광역시",
+    "regionChild": "동구",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 57,
+    "regionParent": "인천광역시",
+    "regionChild": "미추홀구",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 58,
+    "regionParent": "인천광역시",
+    "regionChild": "연수구",
+    "nx": 61,
+    "ny": 126
+  },
+  {
+    "id": 59,
+    "regionParent": "인천광역시",
+    "regionChild": "남동구",
+    "nx": 61,
+    "ny": 126
+  },
+  {
+    "id": 60,
+    "regionParent": "인천광역시",
+    "regionChild": "부평구",
+    "nx": 61,
+    "ny": 126
+  },
+  {
+    "id": 61,
+    "regionParent": "인천광역시",
+    "regionChild": "계양구",
+    "nx": 61,
+    "ny": 126
+  },
+  {
+    "id": 62,
+    "regionParent": "인천광역시",
+    "regionChild": "서구",
+    "nx": 61,
+    "ny": 126
+  },
+  {
+    "id": 63,
+    "regionParent": "인천광역시",
+    "regionChild": "강화군",
+    "nx": 61,
+    "ny": 126
+  },
+  {
+    "id": 64,
+    "regionParent": "인천광역시",
+    "regionChild": "옹진군",
+    "nx": 60,
+    "ny": 126
+  },
+  {
+    "id": 65,
+    "regionParent": "광주광역시",
+    "regionChild": "",
+    "nx": 61,
+    "ny": 126
+  },
+  {
+    "id": 66,
+    "regionParent": "광주광역시",
+    "regionChild": "동구",
+    "nx": 61,
+    "ny": 126
+  },
+  {
+    "id": 67,
+    "regionParent": "광주광역시",
+    "regionChild": "서구",
+    "nx": 61,
+    "ny": 126
+  },
+  {
+    "id": 68,
+    "regionParent": "광주광역시",
+    "regionChild": "남구",
+    "nx": 61,
+    "ny": 126
+  },
+  {
+    "id": 69,
+    "regionParent": "광주광역시",
+    "regionChild": "북구",
+    "nx": 61,
+    "ny": 126
+  },
+  {
+    "id": 70,
+    "regionParent": "광주광역시",
+    "regionChild": "광산구",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 71,
+    "regionParent": "대전광역시",
+    "regionChild": "",
+    "nx": 62,
+    "ny": 126
+  },
+  {
+    "id": 72,
+    "regionParent": "대전광역시",
+    "regionChild": "동구",
+    "nx": 61,
+    "ny": 126
+  },
+  {
+    "id": 73,
+    "regionParent": "대전광역시",
+    "regionChild": "중구",
+    "nx": 62,
+    "ny": 126
+  },
+  {
+    "id": 74,
+    "regionParent": "대전광역시",
+    "regionChild": "서구",
+    "nx": 62,
+    "ny": 127
+  },
+  {
+    "id": 75,
+    "regionParent": "대전광역시",
+    "regionChild": "유성구",
+    "nx": 62,
+    "ny": 127
+  },
+  {
+    "id": 76,
+    "regionParent": "대전광역시",
+    "regionChild": "대덕구",
+    "nx": 62,
+    "ny": 127
+  },
+  {
+    "id": 77,
+    "regionParent": "울산광역시",
+    "regionChild": "",
+    "nx": 62,
+    "ny": 127
+  },
+  {
+    "id": 78,
+    "regionParent": "울산광역시",
+    "regionChild": "중구",
+    "nx": 62,
+    "ny": 126
+  },
+  {
+    "id": 79,
+    "regionParent": "울산광역시",
+    "regionChild": "남구",
+    "nx": 62,
+    "ny": 126
+  },
+  {
+    "id": 80,
+    "regionParent": "울산광역시",
+    "regionChild": "동구",
+    "nx": 62,
+    "ny": 126
+  },
+  {
+    "id": 81,
+    "regionParent": "울산광역시",
+    "regionChild": "북구",
+    "nx": 62,
+    "ny": 126
+  },
+  {
+    "id": 82,
+    "regionParent": "울산광역시",
+    "regionChild": "울주군",
+    "nx": 61,
+    "ny": 126
+  },
+  {
+    "id": 83,
+    "regionParent": "세종특별자치시",
+    "regionChild": "",
+    "nx": 61,
+    "ny": 126
+  },
+  {
+    "id": 84,
+    "regionParent": "세종특별자치시",
+    "regionChild": "세종특별자치시",
+    "nx": 62,
+    "ny": 126
+  },
+  {
+    "id": 85,
+    "regionParent": "경기도",
+    "regionChild": "",
+    "nx": 62,
+    "ny": 126
+  },
+  {
+    "id": 86,
+    "regionParent": "경기도",
+    "regionChild": "수원시장안구",
+    "nx": 62,
+    "ny": 126
+  },
+  {
+    "id": 87,
+    "regionParent": "경기도",
+    "regionChild": "수원시권선구",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 88,
+    "regionParent": "경기도",
+    "regionChild": "수원시팔달구",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 89,
+    "regionParent": "경기도",
+    "regionChild": "수원시영통구",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 90,
+    "regionParent": "경기도",
+    "regionChild": "성남시수정구",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 91,
+    "regionParent": "경기도",
+    "regionChild": "성남시중원구",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 92,
+    "regionParent": "경기도",
+    "regionChild": "성남시분당구",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 93,
+    "regionParent": "경기도",
+    "regionChild": "의정부시",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 94,
+    "regionParent": "경기도",
+    "regionChild": "안양시만안구",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 95,
+    "regionParent": "경기도",
+    "regionChild": "안양시동안구",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 96,
+    "regionParent": "경기도",
+    "regionChild": "부천시원미구",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 97,
+    "regionParent": "경기도",
+    "regionChild": "부천시소사구",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 98,
+    "regionParent": "경기도",
+    "regionChild": "부천시오정구",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 99,
+    "regionParent": "경기도",
+    "regionChild": "광명시",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 100,
+    "regionParent": "경기도",
+    "regionChild": "평택시",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 101,
+    "regionParent": "경기도",
+    "regionChild": "동두천시",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 102,
+    "regionParent": "경기도",
+    "regionChild": "안산시상록구",
+    "nx": 62,
+    "ny": 128
+  },
+  {
+    "id": 103,
+    "regionParent": "경기도",
+    "regionChild": "안산시단원구",
+    "nx": 62,
+    "ny": 127
+  },
+  {
+    "id": 104,
+    "regionParent": "경기도",
+    "regionChild": "고양시덕양구",
+    "nx": 62,
+    "ny": 127
+  },
+  {
+    "id": 105,
+    "regionParent": "경기도",
+    "regionChild": "고양시일산동구",
+    "nx": 62,
+    "ny": 127
+  },
+  {
+    "id": 106,
+    "regionParent": "경기도",
+    "regionChild": "고양시일산서구",
+    "nx": 62,
+    "ny": 127
+  },
+  {
+    "id": 107,
+    "regionParent": "경기도",
+    "regionChild": "과천시",
+    "nx": 62,
+    "ny": 127
+  },
+  {
+    "id": 108,
+    "regionParent": "경기도",
+    "regionChild": "구리시",
+    "nx": 62,
+    "ny": 127
+  },
+  {
+    "id": 109,
+    "regionParent": "경기도",
+    "regionChild": "남양주시",
+    "nx": 62,
+    "ny": 127
+  },
+  {
+    "id": 110,
+    "regionParent": "경기도",
+    "regionChild": "오산시",
+    "nx": 62,
+    "ny": 127
+  },
+  {
+    "id": 111,
+    "regionParent": "경기도",
+    "regionChild": "시흥시",
+    "nx": 62,
+    "ny": 127
+  },
+  {
+    "id": 112,
+    "regionParent": "경기도",
+    "regionChild": "군포시",
+    "nx": 62,
+    "ny": 127
+  },
+  {
+    "id": 113,
+    "regionParent": "경기도",
+    "regionChild": "의왕시",
+    "nx": 62,
+    "ny": 128
+  },
+  {
+    "id": 114,
+    "regionParent": "경기도",
+    "regionChild": "하남시",
+    "nx": 62,
+    "ny": 128
+  },
+  {
+    "id": 115,
+    "regionParent": "경기도",
+    "regionChild": "용인시처인구",
+    "nx": 62,
+    "ny": 127
+  },
+  {
+    "id": 116,
+    "regionParent": "경기도",
+    "regionChild": "용인시기흥구",
+    "nx": 62,
+    "ny": 127
+  },
+  {
+    "id": 117,
+    "regionParent": "경기도",
+    "regionChild": "용인시수지구",
+    "nx": 62,
+    "ny": 128
+  },
+  {
+    "id": 118,
+    "regionParent": "경기도",
+    "regionChild": "파주시",
+    "nx": 62,
+    "ny": 128
+  },
+  {
+    "id": 119,
+    "regionParent": "경기도",
+    "regionChild": "이천시",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 120,
+    "regionParent": "경기도",
+    "regionChild": "안성시",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 121,
+    "regionParent": "경기도",
+    "regionChild": "김포시",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 122,
+    "regionParent": "경기도",
+    "regionChild": "화성시",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 123,
+    "regionParent": "경기도",
+    "regionChild": "광주시",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 124,
+    "regionParent": "경기도",
+    "regionChild": "양주시",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 125,
+    "regionParent": "경기도",
+    "regionChild": "포천시",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 126,
+    "regionParent": "경기도",
+    "regionChild": "여주시",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 127,
+    "regionParent": "경기도",
+    "regionChild": "연천군",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 128,
+    "regionParent": "경기도",
+    "regionChild": "가평군",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 129,
+    "regionParent": "경기도",
+    "regionChild": "양평군",
+    "nx": 60,
+    "ny": 128
+  },
+  {
+    "id": 130,
+    "regionParent": "충청북도",
+    "regionChild": "",
+    "nx": 60,
+    "ny": 128
+  },
+  {
+    "id": 131,
+    "regionParent": "충청북도",
+    "regionChild": "청주시상당구",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 132,
+    "regionParent": "충청북도",
+    "regionChild": "청주시서원구",
+    "nx": 61,
+    "ny": 128
+  },
+  {
+    "id": 133,
+    "regionParent": "충청북도",
+    "regionChild": "청주시흥덕구",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 134,
+    "regionParent": "충청북도",
+    "regionChild": "청주시청원구",
+    "nx": 61,
+    "ny": 128
+  },
+  {
+    "id": 135,
+    "regionParent": "충청북도",
+    "regionChild": "충주시",
+    "nx": 61,
+    "ny": 127
+  },
+  {
+    "id": 136,
+    "regionParent": "충청북도",
+    "regionChild": "제천시",
+    "nx": 61,
+    "ny": 128
+  },
+  {
+    "id": 137,
+    "regionParent": "충청북도",
+    "regionChild": "보은군",
+    "nx": 61,
+    "ny": 128
+  },
+  {
+    "id": 138,
+    "regionParent": "충청북도",
+    "regionChild": "옥천군",
+    "nx": 61,
+    "ny": 128
+  },
+  {
+    "id": 139,
+    "regionParent": "충청북도",
+    "regionChild": "영동군",
+    "nx": 61,
+    "ny": 128
+  },
+  {
+    "id": 140,
+    "regionParent": "충청북도",
+    "regionChild": "증평군",
+    "nx": 61,
+    "ny": 128
+  },
+  {
+    "id": 141,
+    "regionParent": "충청북도",
+    "regionChild": "진천군",
+    "nx": 61,
+    "ny": 128
+  },
+  {
+    "id": 142,
+    "regionParent": "충청북도",
+    "regionChild": "괴산군",
+    "nx": 61,
+    "ny": 128
+  },
+  {
+    "id": 143,
+    "regionParent": "충청북도",
+    "regionChild": "음성군",
+    "nx": 61,
+    "ny": 128
+  },
+  {
+    "id": 144,
+    "regionParent": "충청북도",
+    "regionChild": "단양군",
+    "nx": 61,
+    "ny": 128
+  },
+  {
+    "id": 145,
+    "regionParent": "충청남도",
+    "regionChild": "",
+    "nx": 61,
+    "ny": 128
+  },
+  {
+    "id": 146,
+    "regionParent": "충청남도",
+    "regionChild": "천안시동남구",
+    "nx": 61,
+    "ny": 128
+  },
+  {
+    "id": 147,
+    "regionParent": "충청남도",
+    "regionChild": "천안시서북구",
+    "nx": 61,
+    "ny": 128
+  },
+  {
+    "id": 148,
+    "regionParent": "충청남도",
+    "regionChild": "공주시",
+    "nx": 61,
+    "ny": 128
+  },
+  {
+    "id": 149,
+    "regionParent": "충청남도",
+    "regionChild": "보령시",
+    "nx": 60,
+    "ny": 128
+  },
+  {
+    "id": 150,
+    "regionParent": "충청남도",
+    "regionChild": "아산시",
+    "nx": 61,
+    "ny": 128
+  },
+  {
+    "id": 151,
+    "regionParent": "충청남도",
+    "regionChild": "서산시",
+    "nx": 61,
+    "ny": 128
+  },
+  {
+    "id": 152,
+    "regionParent": "충청남도",
+    "regionChild": "논산시",
+    "nx": 60,
+    "ny": 128
+  },
+  {
+    "id": 153,
+    "regionParent": "충청남도",
+    "regionChild": "계룡시",
+    "nx": 60,
+    "ny": 128
+  },
+  {
+    "id": 154,
+    "regionParent": "충청남도",
+    "regionChild": "당진시",
+    "nx": 61,
+    "ny": 129
+  },
+  {
+    "id": 155,
+    "regionParent": "충청남도",
+    "regionChild": "금산군",
+    "nx": 61,
+    "ny": 128
+  },
+  {
+    "id": 156,
+    "regionParent": "충청남도",
+    "regionChild": "부여군",
+    "nx": 61,
+    "ny": 128
+  },
+  {
+    "id": 157,
+    "regionParent": "충청남도",
+    "regionChild": "서천군",
+    "nx": 61,
+    "ny": 128
+  },
+  {
+    "id": 158,
+    "regionParent": "충청남도",
+    "regionChild": "청양군",
+    "nx": 61,
+    "ny": 129
+  },
+  {
+    "id": 159,
+    "regionParent": "충청남도",
+    "regionChild": "홍성군",
+    "nx": 61,
+    "ny": 129
+  },
+  {
+    "id": 160,
+    "regionParent": "충청남도",
+    "regionChild": "예산군",
+    "nx": 61,
+    "ny": 129
+  },
+  {
+    "id": 161,
+    "regionParent": "충청남도",
+    "regionChild": "태안군",
+    "nx": 61,
+    "ny": 129
+  },
+  {
+    "id": 162,
+    "regionParent": "전라남도",
+    "regionChild": "",
+    "nx": 61,
+    "ny": 128
+  },
+  {
+    "id": 163,
+    "regionParent": "전라남도",
+    "regionChild": "목포시",
+    "nx": 61,
+    "ny": 129
+  },
+  {
+    "id": 164,
+    "regionParent": "전라남도",
+    "regionChild": "여수시",
+    "nx": 61,
+    "ny": 128
+  },
+  {
+    "id": 165,
+    "regionParent": "전라남도",
+    "regionChild": "순천시",
+    "nx": 61,
+    "ny": 129
+  },
+  {
+    "id": 166,
+    "regionParent": "전라남도",
+    "regionChild": "나주시",
+    "nx": 61,
+    "ny": 129
+  },
+  {
+    "id": 167,
+    "regionParent": "전라남도",
+    "regionChild": "광양시",
+    "nx": 61,
+    "ny": 129
+  },
+  {
+    "id": 168,
+    "regionParent": "전라남도",
+    "regionChild": "담양군",
+    "nx": 61,
+    "ny": 129
+  },
+  {
+    "id": 169,
+    "regionParent": "전라남도",
+    "regionChild": "곡성군",
+    "nx": 61,
+    "ny": 129
+  },
+  {
+    "id": 170,
+    "regionParent": "전라남도",
+    "regionChild": "구례군",
+    "nx": 61,
+    "ny": 128
+  },
+  {
+    "id": 171,
+    "regionParent": "전라남도",
+    "regionChild": "고흥군",
+    "nx": 61,
+    "ny": 128
+  },
+  {
+    "id": 172,
+    "regionParent": "전라남도",
+    "regionChild": "보성군",
+    "nx": 61,
+    "ny": 128
+  },
+  {
+    "id": 173,
+    "regionParent": "전라남도",
+    "regionChild": "화순군",
+    "nx": 61,
+    "ny": 128
+  },
+  {
+    "id": 174,
+    "regionParent": "전라남도",
+    "regionChild": "장흥군",
+    "nx": 62,
+    "ny": 128
+  },
+  {
+    "id": 175,
+    "regionParent": "전라남도",
+    "regionChild": "강진군",
+    "nx": 61,
+    "ny": 128
+  },
+  {
+    "id": 176,
+    "regionParent": "전라남도",
+    "regionChild": "해남군",
+    "nx": 61,
+    "ny": 128
+  },
+  {
+    "id": 177,
+    "regionParent": "전라남도",
+    "regionChild": "영암군",
+    "nx": 62,
+    "ny": 128
+  },
+  {
+    "id": 178,
+    "regionParent": "전라남도",
+    "regionChild": "무안군",
+    "nx": 62,
+    "ny": 129
+  },
+  {
+    "id": 179,
+    "regionParent": "전라남도",
+    "regionChild": "함평군",
+    "nx": 62,
+    "ny": 129
+  },
+  {
+    "id": 180,
+    "regionParent": "전라남도",
+    "regionChild": "영광군",
+    "nx": 61,
+    "ny": 128
+  },
+  {
+    "id": 181,
+    "regionParent": "전라남도",
+    "regionChild": "장성군",
+    "nx": 61,
+    "ny": 129
+  },
+  {
+    "id": 182,
+    "regionParent": "전라남도",
+    "regionChild": "완도군",
+    "nx": 61,
+    "ny": 129
+  },
+  {
+    "id": 183,
+    "regionParent": "전라남도",
+    "regionChild": "진도군",
+    "nx": 61,
+    "ny": 129
+  },
+  {
+    "id": 184,
+    "regionParent": "전라남도",
+    "regionChild": "신안군",
+    "nx": 61,
+    "ny": 129
+  },
+  {
+    "id": 185,
+    "regionParent": "경상북도",
+    "regionChild": "",
+    "nx": 61,
+    "ny": 129
+  },
+  {
+    "id": 186,
+    "regionParent": "경상북도",
+    "regionChild": "포항시남구",
+    "nx": 61,
+    "ny": 129
+  },
+  {
+    "id": 187,
+    "regionParent": "경상북도",
+    "regionChild": "포항시북구",
+    "nx": 61,
+    "ny": 129
+  },
+  {
+    "id": 188,
+    "regionParent": "경상북도",
+    "regionChild": "경주시",
+    "nx": 61,
+    "ny": 129
+  },
+  {
+    "id": 189,
+    "regionParent": "경상북도",
+    "regionChild": "김천시",
+    "nx": 59,
+    "ny": 127
+  },
+  {
+    "id": 190,
+    "regionParent": "경상북도",
+    "regionChild": "안동시",
+    "nx": 59,
+    "ny": 127
+  },
+  {
+    "id": 191,
+    "regionParent": "경상북도",
+    "regionChild": "구미시",
+    "nx": 59,
+    "ny": 128
+  },
+  {
+    "id": 192,
+    "regionParent": "경상북도",
+    "regionChild": "영주시",
+    "nx": 59,
+    "ny": 128
+  },
+  {
+    "id": 193,
+    "regionParent": "경상북도",
+    "regionChild": "영천시",
+    "nx": 59,
+    "ny": 128
+  },
+  {
+    "id": 194,
+    "regionParent": "경상북도",
+    "regionChild": "상주시",
+    "nx": 59,
+    "ny": 128
+  },
+  {
+    "id": 195,
+    "regionParent": "경상북도",
+    "regionChild": "문경시",
+    "nx": 59,
+    "ny": 128
+  },
+  {
+    "id": 196,
+    "regionParent": "경상북도",
+    "regionChild": "경산시",
+    "nx": 59,
+    "ny": 128
+  },
+  {
+    "id": 197,
+    "regionParent": "경상북도",
+    "regionChild": "의성군",
+    "nx": 59,
+    "ny": 127
+  },
+  {
+    "id": 198,
+    "regionParent": "경상북도",
+    "regionChild": "청송군",
+    "nx": 59,
+    "ny": 127
+  },
+  {
+    "id": 199,
+    "regionParent": "경상북도",
+    "regionChild": "영양군",
+    "nx": 59,
+    "ny": 127
+  },
+  {
+    "id": 200,
+    "regionParent": "경상북도",
+    "regionChild": "영덕군",
+    "nx": 59,
+    "ny": 127
+  },
+  {
+    "id": 201,
+    "regionParent": "경상북도",
+    "regionChild": "청도군",
+    "nx": 59,
+    "ny": 127
+  },
+  {
+    "id": 202,
+    "regionParent": "경상북도",
+    "regionChild": "고령군",
+    "nx": 59,
+    "ny": 127
+  },
+  {
+    "id": 203,
+    "regionParent": "경상북도",
+    "regionChild": "성주군",
+    "nx": 59,
+    "ny": 127
+  },
+  {
+    "id": 204,
+    "regionParent": "경상북도",
+    "regionChild": "칠곡군",
+    "nx": 58,
+    "ny": 127
+  },
+  {
+    "id": 205,
+    "regionParent": "경상북도",
+    "regionChild": "예천군",
+    "nx": 59,
+    "ny": 128
+  },
+  {
+    "id": 206,
+    "regionParent": "경상북도",
+    "regionChild": "봉화군",
+    "nx": 59,
+    "ny": 127
+  },
+  {
+    "id": 207,
+    "regionParent": "경상북도",
+    "regionChild": "울진군",
+    "nx": 60,
+    "ny": 127
+  },
+  {
+    "id": 208,
+    "regionParent": "경상북도",
+    "regionChild": "울릉군",
+    "nx": 59,
+    "ny": 126
+  },
+  {
+    "id": 209,
+    "regionParent": "경상남도",
+    "regionChild": "",
+    "nx": 59,
+    "ny": 127
+  },
+  {
+    "id": 210,
+    "regionParent": "경상남도",
+    "regionChild": "창원시의창구",
+    "nx": 59,
+    "ny": 126
+  },
+  {
+    "id": 211,
+    "regionParent": "경상남도",
+    "regionChild": "창원시성산구",
+    "nx": 59,
+    "ny": 127
+  },
+  {
+    "id": 212,
+    "regionParent": "경상남도",
+    "regionChild": "창원시마산합포구",
+    "nx": 59,
+    "ny": 127
+  },
+  {
+    "id": 213,
+    "regionParent": "경상남도",
+    "regionChild": "창원시마산회원구",
+    "nx": 59,
+    "ny": 127
+  },
+  {
+    "id": 214,
+    "regionParent": "경상남도",
+    "regionChild": "창원시진해구",
+    "nx": 59,
+    "ny": 127
+  },
+  {
+    "id": 215,
+    "regionParent": "경상남도",
+    "regionChild": "진주시",
+    "nx": 59,
+    "ny": 127
+  },
+  {
+    "id": 216,
+    "regionParent": "경상남도",
+    "regionChild": "통영시",
+    "nx": 59,
+    "ny": 127
+  },
+  {
+    "id": 217,
+    "regionParent": "경상남도",
+    "regionChild": "사천시",
+    "nx": 59,
+    "ny": 127
+  },
+  {
+    "id": 218,
+    "regionParent": "경상남도",
+    "regionChild": "김해시",
+    "nx": 59,
+    "ny": 127
+  },
+  {
+    "id": 219,
+    "regionParent": "경상남도",
+    "regionChild": "밀양시",
+    "nx": 59,
+    "ny": 127
+  },
+  {
+    "id": 220,
+    "regionParent": "경상남도",
+    "regionChild": "거제시",
+    "nx": 59,
+    "ny": 127
+  },
+  {
+    "id": 221,
+    "regionParent": "경상남도",
+    "regionChild": "양산시",
+    "nx": 59,
+    "ny": 127
+  },
+  {
+    "id": 222,
+    "regionParent": "경상남도",
+    "regionChild": "의령군",
+    "nx": 59,
+    "ny": 126
+  },
+  {
+    "id": 223,
+    "regionParent": "경상남도",
+    "regionChild": "함안군",
+    "nx": 60,
+    "ny": 126
+  },
+  {
+    "id": 224,
+    "regionParent": "경상남도",
+    "regionChild": "창녕군",
+    "nx": 59,
+    "ny": 126
+  },
+  {
+    "id": 225,
+    "regionParent": "경상남도",
+    "regionChild": "고성군",
+    "nx": 59,
+    "ny": 126
+  },
+  {
+    "id": 226,
+    "regionParent": "경상남도",
+    "regionChild": "남해군",
+    "nx": 59,
+    "ny": 126
+  },
+  {
+    "id": 227,
+    "regionParent": "경상남도",
+    "regionChild": "하동군",
+    "nx": 59,
+    "ny": 126
+  },
+  {
+    "id": 228,
+    "regionParent": "경상남도",
+    "regionChild": "산청군",
+    "nx": 59,
+    "ny": 126
+  },
+  {
+    "id": 229,
+    "regionParent": "경상남도",
+    "regionChild": "함양군",
+    "nx": 59,
+    "ny": 126
+  },
+  {
+    "id": 230,
+    "regionParent": "경상남도",
+    "regionChild": "거창군",
+    "nx": 59,
+    "ny": 126
+  },
+  {
+    "id": 231,
+    "regionParent": "경상남도",
+    "regionChild": "합천군",
+    "nx": 59,
+    "ny": 126
+  },
+  {
+    "id": 232,
+    "regionParent": "제주특별자치도",
+    "regionChild": "",
+    "nx": 59,
+    "ny": 126
+  },
+  {
+    "id": 233,
+    "regionParent": "제주특별자치도",
+    "regionChild": "제주시",
+    "nx": 59,
+    "ny": 126
+  },
+  {
+    "id": 234,
+    "regionParent": "제주특별자치도",
+    "regionChild": "서귀포시",
+    "nx": 59,
+    "ny": 127
+  },
+  {
+    "id": 235,
+    "regionParent": "이어도",
+    "regionChild": "",
+    "nx": 59,
+    "ny": 127
+  },
+  {
+    "id": 236,
+    "regionParent": "강원특별자치도",
+    "regionChild": "",
+    "nx": 59,
+    "ny": 127
+  },
+  {
+    "id": 237,
+    "regionParent": "강원특별자치도",
+    "regionChild": "춘천시",
+    "nx": 58,
+    "ny": 127
+  },
+  {
+    "id": 238,
+    "regionParent": "강원특별자치도",
+    "regionChild": "원주시",
+    "nx": 58,
+    "ny": 126
+  },
+  {
+    "id": 239,
+    "regionParent": "강원특별자치도",
+    "regionChild": "강릉시",
+    "nx": 58,
+    "ny": 126
+  },
+  {
+    "id": 240,
+    "regionParent": "강원특별자치도",
+    "regionChild": "동해시",
+    "nx": 58,
+    "ny": 126
+  },
+  {
+    "id": 241,
+    "regionParent": "강원특별자치도",
+    "regionChild": "태백시",
+    "nx": 58,
+    "ny": 126
+  },
+  {
+    "id": 242,
+    "regionParent": "강원특별자치도",
+    "regionChild": "속초시",
+    "nx": 58,
+    "ny": 126
+  },
+  {
+    "id": 243,
+    "regionParent": "강원특별자치도",
+    "regionChild": "삼척시",
+    "nx": 58,
+    "ny": 126
+  },
+  {
+    "id": 244,
+    "regionParent": "강원특별자치도",
+    "regionChild": "홍천군",
+    "nx": 57,
+    "ny": 126
+  },
+  {
+    "id": 245,
+    "regionParent": "강원특별자치도",
+    "regionChild": "횡성군",
+    "nx": 58,
+    "ny": 126
+  },
+  {
+    "id": 246,
+    "regionParent": "강원특별자치도",
+    "regionChild": "영월군",
+    "nx": 57,
+    "ny": 126
+  },
+  {
+    "id": 247,
+    "regionParent": "강원특별자치도",
+    "regionChild": "평창군",
+    "nx": 57,
+    "ny": 126
+  },
+  {
+    "id": 248,
+    "regionParent": "강원특별자치도",
+    "regionChild": "정선군",
+    "nx": 57,
+    "ny": 126
+  },
+  {
+    "id": 249,
+    "regionParent": "강원특별자치도",
+    "regionChild": "철원군",
+    "nx": 58,
+    "ny": 126
+  },
+  {
+    "id": 250,
+    "regionParent": "강원특별자치도",
+    "regionChild": "화천군",
+    "nx": 57,
+    "ny": 126
+  },
+  {
+    "id": 251,
+    "regionParent": "강원특별자치도",
+    "regionChild": "양구군",
+    "nx": 58,
+    "ny": 126
+  },
+  {
+    "id": 252,
+    "regionParent": "강원특별자치도",
+    "regionChild": "인제군",
+    "nx": 58,
+    "ny": 126
+  },
+  {
+    "id": 253,
+    "regionParent": "강원특별자치도",
+    "regionChild": "고성군",
+    "nx": 58,
+    "ny": 126
+  },
+  {
+    "id": 254,
+    "regionParent": "강원특별자치도",
+    "regionChild": "양양군",
+    "nx": 58,
+    "ny": 126
+  },
+  {
+    "id": 255,
+    "regionParent": "전북특별자치도",
+    "regionChild": "",
+    "nx": 58,
+    "ny": 126
+  },
+  {
+    "id": 256,
+    "regionParent": "전북특별자치도",
+    "regionChild": "전주시완산구",
+    "nx": 58,
+    "ny": 125
+  },
+  {
+    "id": 257,
+    "regionParent": "전북특별자치도",
+    "regionChild": "전주시덕진구",
+    "nx": 58,
+    "ny": 126
+  },
+  {
+    "id": 258,
+    "regionParent": "전북특별자치도",
+    "regionChild": "군산시",
+    "nx": 58,
+    "ny": 126
+  },
+  {
+    "id": 259,
+    "regionParent": "전북특별자치도",
+    "regionChild": "익산시",
+    "nx": 58,
+    "ny": 126
+  },
+  {
+    "id": 260,
+    "regionParent": "전북특별자치도",
+    "regionChild": "정읍시",
+    "nx": 58,
+    "ny": 126
+  },
+  {
+    "id": 261,
+    "regionParent": "전북특별자치도",
+    "regionChild": "남원시",
+    "nx": 58,
+    "ny": 126
+  },
+  {
+    "id": 262,
+    "regionParent": "전북특별자치도",
+    "regionChild": "김제시",
+    "nx": 58,
+    "ny": 126
+  },
+  {
+    "id": 263,
+    "regionParent": "전북특별자치도",
+    "regionChild": "완주군",
+    "nx": 58,
+    "ny": 126
+  },
+  {
+    "id": 264,
+    "regionParent": "전북특별자치도",
+    "regionChild": "진안군",
+    "nx": 57,
+    "ny": 126
+  },
+  {
+    "id": 265,
+    "regionParent": "전북특별자치도",
+    "regionChild": "무주군",
+    "nx": 58,
+    "ny": 126
+  },
+  {
+    "id": 266,
+    "regionParent": "전북특별자치도",
+    "regionChild": "장수군",
+    "nx": 58,
+    "ny": 126
+  },
+  {
+    "id": 267,
+    "regionParent": "전북특별자치도",
+    "regionChild": "임실군",
+    "nx": 58,
+    "ny": 126
+  },
+  {
+    "id": 268,
+    "regionParent": "전북특별자치도",
+    "regionChild": "순창군",
+    "nx": 58,
+    "ny": 126
+  },
+  {
+    "id": 269,
+    "regionParent": "전북특별자치도",
+    "regionChild": "고창군",
+    "nx": 57,
+    "ny": 127
+  },
+  {
+    "id": 270,
+    "regionParent": "전북특별자치도",
+    "regionChild": "부안군",
+    "nx": 58,
+    "ny": 127
+  }
+]

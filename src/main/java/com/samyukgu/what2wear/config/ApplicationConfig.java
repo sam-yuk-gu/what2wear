@@ -12,6 +12,7 @@ import com.samyukgu.what2wear.member.dao.MemberOracleDAO;
 import com.samyukgu.what2wear.member.service.MemberService;
 import com.samyukgu.what2wear.myCodi.dao.CodiDetailDAO;
 import com.samyukgu.what2wear.myCodi.dao.CodiDetailOracleDAO;
+import com.samyukgu.what2wear.region.service.RegionService;
 import com.samyukgu.what2wear.wardrobe.dao.CategoryDAO;
 import com.samyukgu.what2wear.wardrobe.dao.CategoryOracleDAO;
 import com.samyukgu.what2wear.wardrobe.dao.WardrobeDAO;
@@ -23,8 +24,10 @@ import com.samyukgu.what2wear.post.dao.PostOracleDAO;
 import com.samyukgu.what2wear.post.service.PostService;
 import com.samyukgu.what2wear.postcomment.dao.PostCommentDAO;
 import com.samyukgu.what2wear.postcomment.dao.PostCommentOracleDAO;
-import com.samyukgu.what2wear.postcomment.model.PostComment;
-import com.samyukgu.what2wear.postcomment.service.PostCommentService;
+import com.samyukgu.what2wear.region.Session.RegionWeatherSession;
+import com.samyukgu.what2wear.region.dao.RegionDAO;
+import com.samyukgu.what2wear.region.dao.RegionOracleDAO;
+import com.samyukgu.what2wear.weather.service.WeatherService;
 
 public class ApplicationConfig {
     public static void configure() {
@@ -39,8 +42,9 @@ public class ApplicationConfig {
            container.registerSingleton(DomainService.class, new UserService(container.resolve(DomainDAO.class)));
         */
 
-        // MemberSession
+        // Session
         container.registerSingleton(MemberSession.class, new MemberSession());
+        container.registerSingleton(RegionWeatherSession.class, new RegionWeatherSession());
 
         // DAO
         container.registerSingleton(MemberDAO.class, new MemberOracleDAO());
@@ -49,6 +53,7 @@ public class ApplicationConfig {
                 new com.samyukgu.what2wear.codi.dao.CodiOracleDAO());
         container.registerSingleton(PostDAO.class, new PostOracleDAO());
         container.registerSingleton(PostCommentDAO.class, new PostCommentOracleDAO());
+        container.registerSingleton(RegionDAO.class, new RegionOracleDAO());
 
         // Service
         container.registerSingleton(MemberService.class, new MemberService(container.resolve(MemberDAO.class)));
@@ -57,6 +62,8 @@ public class ApplicationConfig {
                 new com.samyukgu.what2wear.codi.service.CodiService(
                         container.resolve(com.samyukgu.what2wear.codi.dao.CodiDAO.class)
                 ));
+        container.registerSingleton(WeatherService.class, new WeatherService());
+        container.registerSingleton(RegionService.class,  new RegionService(container.resolve(RegionDAO.class)));
 
         // wardrobe
         container.registerSingleton(WardrobeDAO.class, new WardrobeOracleDAO());
