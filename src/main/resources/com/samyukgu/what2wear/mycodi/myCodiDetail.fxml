@@ -11,37 +11,9 @@
            xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="com.samyukgu.what2wear.myCodi.controller.DetailMyCodiController"
            stylesheets="@css/myCodiDetail.css">
-    <children>
-        <!-- 기존 HBox를 StackPane 안에 넣기 -->
-        <HBox prefHeight="768.0" prefWidth="1280.0">
             <children>
                 <!-- 메인 컨테이너 -->
                 <VBox fx:id="mainContainer" prefHeight="768.0" prefWidth="1030.0">
-                    <!-- 상단 헤더 바 -->
-                    <AnchorPane fx:id="headerPane" prefHeight="50.0" prefWidth="1030.0">
-                        <children>
-                            <HBox fx:id="headerHBox" alignment="CENTER_LEFT" layoutX="14.0" layoutY="5.0" spacing="15.0">
-                                <children>
-                                    <!-- 뒤로가기 버튼 -->
-                                    <Button fx:id="backButton" onAction="#handleBackClick">
-                                        <graphic>
-                                            <ImageView fx:id="backIcon" fitHeight="30" fitWidth="30">
-                                                <image>
-                                                    <Image preserveRatio="true" url="@../wardrobe/images/tabler_arrow-left.png" />
-                                                </image>
-                                            </ImageView>
-                                        </graphic>
-                                    </Button>
-                                    <Label fx:id="pageTitle" text="나만의 코디 상세">
-                                        <font>
-                                            <Font name="System Bold" size="18.0" />
-                                        </font>
-                                    </Label>
-                                </children>
-                            </HBox>
-                        </children>
-                    </AnchorPane>
-
                     <!-- 메인 콘텐츠 영역 -->
                     <HBox fx:id="mainContentHBox" prefHeight="718.0" prefWidth="1030.0" spacing="15" HBox.hgrow="ALWAYS">
                         <children>
@@ -49,20 +21,17 @@
                             <VBox fx:id="leftContainer" prefHeight="687.0" prefWidth="703.0" spacing="10" HBox.hgrow="NEVER">
                                 <children>
                                     <!-- 코디 이름 영역 -->
+                                    <AnchorPane>
                                     <VBox fx:id="codiNameContainer" spacing="5">
                                         <children>
-                                            <Label fx:id="codiNameTitle" text="코디 이름">
-                                                <font>
-                                                    <Font name="System Bold" size="12.0" />
-                                                </font>
+                                            <Label fx:id="codiNameTitle" text="나만의 코디 이름">
                                             </Label>
-                                            <TextField fx:id="codiNameField" editable="false" prefHeight="35">
-                                                <font>
-                                                    <Font name="System Bold" size="14.0" />
-                                                </font>
+                                            <TextField fx:id="codiNameField" editable="false"
+                                                       prefWidth="400.0" promptText="코디 이름을 입력하세요 (최대 255자)">
                                             </TextField>
                                         </children>
                                     </VBox>
+                                    </AnchorPane>
 
                                     <!-- 옷 아이템 FlowPane -->
                                     <VBox fx:id="itemsContainer" spacing="8">
@@ -80,16 +49,10 @@
                                     <!-- 액션 버튼들 -->
                                     <HBox fx:id="buttonContainer" alignment="CENTER" prefHeight="101.0" prefWidth="294.0" spacing="15.0" style="-fx-padding: 10 0 5 0;">
                                         <children>
-                                            <Button fx:id="editButton" onAction="#handleEdit" prefHeight="35.0" prefWidth="120.0" text="수정하기">
-                                                <font>
-                                                    <Font name="System Bold" size="12.0" />
-                                                </font>
-                                            </Button>
-                                            <Button fx:id="deleteButton" onAction="#handleDelete" prefHeight="35.0" prefWidth="120.0" text="삭제하기">
-                                                <font>
-                                                    <Font name="System Bold" size="12.0" />
-                                                </font>
-                                            </Button>
+                                            <Button fx:id="editButton" onAction="#handleEdit"
+                                                    prefHeight="35.0" prefWidth="120.0" text="수정하기"/>
+                                            <Button fx:id="deleteButton" onAction="#handleDelete"
+                                                    prefHeight="35.0" prefWidth="120.0" text="삭제하기"/>
                                         </children>
                                     </HBox>
                                 </children>
@@ -103,48 +66,24 @@
                                             <VBox fx:id="detailVBox" spacing="8">
                                                 <children>
                                                     <!-- 제목 -->
-                                                    <Label fx:id="detailTitle" text="선택된 아이템 상세">
-                                                        <font>
-                                                            <Font name="System Bold" size="14.0" />
-                                                        </font>
-                                                    </Label>
+                                                    <Label fx:id="detailTitle" text="선택된 아이템 상세"/>
 
                                                     <!-- 동적으로 생성되는 상세 정보들이 여기에 추가됩니다 -->
 
                                                     <!-- 코디 통계 정보 -->
                                                     <VBox fx:id="statsContainer" spacing="8">
                                                         <children>
-                                                            <Label fx:id="statsTitle" text="코디 정보">
-                                                                <font>
-                                                                    <Font name="System Bold" size="12.0" />
-                                                                </font>
-                                                            </Label>
+                                                            <Label fx:id="statsTitle" text="코디 정보"/>
                                                             <HBox fx:id="totalItemsContainer" spacing="5">
                                                                 <children>
-                                                                    <Label fx:id="totalItemsTitle" text="총 아이템 수:">
-                                                                        <font>
-                                                                            <Font name="System Bold" size="11.0" />
-                                                                        </font>
-                                                                    </Label>
-                                                                    <Label fx:id="totalItemsLabel" text="0개">
-                                                                        <font>
-                                                                            <Font size="11.0" />
-                                                                        </font>
-                                                                    </Label>
+                                                                    <Label fx:id="totalItemsTitle" text="총 아이템 수:"/>
+                                                                    <Label fx:id="totalItemsLabel" text="0개"/>
                                                                 </children>
                                                             </HBox>
                                                             <HBox fx:id="createdDateContainer" spacing="5">
                                                                 <children>
-                                                                    <Label fx:id="createdDateTitle" text="코디 등록일:">
-                                                                        <font>
-                                                                            <Font name="System Bold" size="11.0" />
-                                                                        </font>
-                                                                    </Label>
-                                                                    <Label fx:id="createdDateLabel" text="-">
-                                                                        <font>
-                                                                            <Font size="11.0" />
-                                                                        </font>
-                                                                    </Label>
+                                                                    <Label fx:id="createdDateTitle" text="코디 등록일:"/>
+                                                                    <Label fx:id="createdDateLabel" text="-"/>
                                                                 </children>
                                                             </HBox>
                                                         </children>
@@ -159,6 +98,6 @@
                     </HBox>
                 </VBox>
             </children>
-        </HBox>
-    </children>
+<!--        </HBox>-->
+<!--    </children>-->
 </StackPane>

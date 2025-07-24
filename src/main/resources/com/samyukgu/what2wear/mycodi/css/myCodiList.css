@@ -71,3 +71,24 @@
     -fx-font-size: 16px;
     -fx-text-fill: #666;
 }
+/* 검색창 */
+.search_title {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #C0C0C0;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-font-size: 14px;
+    -fx-font-family: "Pretendard Regular";
+}
+.search_icon:hover {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-cursor: hand;
+}
+.pagination.no-page-info .page-information {
+    -fx-opacity: 0;
+    -fx-max-height: 0;
+    -fx-padding: 0;
+    -fx-font-size: 0;
+}
+

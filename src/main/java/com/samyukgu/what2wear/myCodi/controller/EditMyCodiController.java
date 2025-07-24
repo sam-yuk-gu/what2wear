@@ -1,18 +1,13 @@
 package com.samyukgu.what2wear.myCodi.controller;
 
+import com.samyukgu.what2wear.common.controller.BasicHeaderController;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.di.DIContainer;
-import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.member.Session.MemberSession;
-import com.samyukgu.what2wear.member.model.Member;
-import com.samyukgu.what2wear.myCodi.dao.CodiDetailOracleDAO;
-import com.samyukgu.what2wear.myCodi.dao.CodiOracleDAO;
 import com.samyukgu.what2wear.myCodi.model.Codi;
 import com.samyukgu.what2wear.myCodi.model.CodiWithDetails;
 import com.samyukgu.what2wear.myCodi.service.CodiService;
-import com.samyukgu.what2wear.wardrobe.dao.WardrobeOracleDAO;
 import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
-import com.samyukgu.what2wear.wardrobe.service.WardrobeService;
 import com.samyukgu.what2wear.common.controller.CustomModalController;
 
 import javafx.application.Platform;
@@ -24,19 +19,14 @@ import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
@@ -119,6 +109,7 @@ public class EditMyCodiController implements Initializable {
 
     // 추가: rootPane 필드
     @FXML private StackPane rootPane;
+    @FXML private VBox container;
 
     // 서비스 객체들
     private CodiService codiService;
@@ -149,6 +140,26 @@ public class EditMyCodiController implements Initializable {
             System.err.println("초기화 중 오류: " + e.getMessage());
             e.printStackTrace();
             showError("초기화 중 오류가 발생했습니다: " + e.getMessage());
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/BasicHeader.fxml"));
+            HBox header = loader.load();
+
+            BasicHeaderController controller = loader.getController();
+            controller.setTitle("나만의 코디 수정");
+            controller.setOnBackAction(() -> {
+                try {
+                    Parent view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/samyukgu/what2wear/myCodi/myCodiList.fxml")));
+                    rootPane.getChildren().setAll(view);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+
+            container.getChildren().add(0, header); // StackPane 맨 위에 삽입
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
