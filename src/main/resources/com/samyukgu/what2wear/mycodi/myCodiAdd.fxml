@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
-<HBox prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.myCodi.controller.CreateMyCodiController">
+<HBox prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.myCodi.controller.CreateMyCodiController">
    <children>
 
       <!-- 오른쪽 전체 -->
@@ -58,12 +66,10 @@
                               </rowConstraints>
                               <children>
                                  <!-- 상의 -->
-                                 <AnchorPane fx:id="topPane" onMouseClicked="#handleTopClick" prefHeight="200.0" prefWidth="200.0"
-                                             style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;">
+                                 <AnchorPane fx:id="topPane" onMouseClicked="#handleTopClick" prefHeight="200.0" prefWidth="200.0" style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;">
                                     <children>
                                        <!-- 선택된 옷 이미지 표시용 (초기에는 숨김) -->
-                                       <ImageView fx:id="topImageView" fitHeight="90.0" fitWidth="90.0" layoutX="14.0" layoutY="43.0"
-                                                  pickOnBounds="true" preserveRatio="true" visible="false" />
+                                       <ImageView fx:id="topImageView" fitHeight="90.0" fitWidth="90.0" layoutX="14.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true" visible="false" />
                                        <!-- 선택 표시용 원과 플러스 아이콘 -->
                                        <Circle fx:id="topCircle" fill="#f0f0f0ef" layoutX="74.0" layoutY="84.0" radius="30.0" strokeType="INSIDE" />
                                        <ImageView fx:id="topPlusIcon" fitHeight="40.0" fitWidth="40.0" layoutX="54.0" layoutY="64.0">
@@ -85,13 +91,10 @@
                                  </AnchorPane>
 
                                  <!-- 바지 -->
-                                 <AnchorPane fx:id="bottomPane" onMouseClicked="#handleBottomClick" prefHeight="200.0" prefWidth="200.0"
-                                             style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;"
-                                             GridPane.columnIndex="1">
+                                 <AnchorPane fx:id="bottomPane" onMouseClicked="#handleBottomClick" prefHeight="200.0" prefWidth="200.0" style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;" GridPane.columnIndex="1">
                                     <children>
                                        <!-- 선택된 옷 이미지 표시용 (초기에는 숨김) -->
-                                       <ImageView fx:id="bottomImageView" fitHeight="90.0" fitWidth="90.0" layoutX="15.0" layoutY="47.0"
-                                                  pickOnBounds="true" preserveRatio="true" visible="false" />
+                                       <ImageView fx:id="bottomImageView" fitHeight="90.0" fitWidth="90.0" layoutX="15.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true" visible="false" />
                                        <Circle fx:id="bottomCircle" fill="#f0f0f0ef" layoutX="63.0" layoutY="88.0" radius="30.0" strokeType="INSIDE" />
                                        <ImageView fx:id="bottomPlusIcon" fitHeight="40.0" fitWidth="40.0" layoutX="43.0" layoutY="68.0">
                                           <image>
@@ -112,13 +115,10 @@
                                  </AnchorPane>
 
                                  <!-- 신발 -->
-                                 <AnchorPane fx:id="shoesPane" onMouseClicked="#handleShoesClick" prefHeight="175.0" prefWidth="217.0"
-                                             style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;"
-                                             GridPane.columnIndex="2">
+                                 <AnchorPane fx:id="shoesPane" onMouseClicked="#handleShoesClick" prefHeight="200.0" prefWidth="200.0" style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;" GridPane.columnIndex="2">
                                     <children>
                                        <!-- 선택된 옷 이미지 표시용 (초기에는 숨김) -->
-                                       <ImageView fx:id="shoesImageView" fitHeight="90.0" fitWidth="90.0" layoutX="26.0" layoutY="48.0"
-                                                  pickOnBounds="true" preserveRatio="true" visible="false" />
+                                       <ImageView fx:id="shoesImageView" fitHeight="90.0" fitWidth="90.0" layoutX="26.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" visible="false" />
                                        <Circle fx:id="shoesCircle" fill="#f0f0f0ef" layoutX="87.0" layoutY="88.0" radius="30.0" strokeType="INSIDE" />
                                        <ImageView fx:id="shoesPlusIcon" fitHeight="40.0" fitWidth="40.0" layoutX="67.0" layoutY="68.0">
                                           <image>
@@ -139,13 +139,10 @@
                                  </AnchorPane>
 
                                  <!-- 가방 -->
-                                 <AnchorPane fx:id="bagPane" onMouseClicked="#handleBagClick" prefHeight="200.0" prefWidth="200.0"
-                                             style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;"
-                                             GridPane.rowIndex="1">
+                                 <AnchorPane fx:id="bagPane" onMouseClicked="#handleBagClick" prefHeight="200.0" prefWidth="200.0" style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;" GridPane.rowIndex="1">
                                     <children>
                                        <!-- 선택된 옷 이미지 표시용 (초기에는 숨김) -->
-                                       <ImageView fx:id="bagImageView" fitHeight="90.0" fitWidth="90.0" layoutX="20.0" layoutY="45.0"
-                                                  pickOnBounds="true" preserveRatio="true" visible="false" />
+                                       <ImageView fx:id="bagImageView" fitHeight="90.0" fitWidth="90.0" layoutX="20.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" visible="false" />
                                        <Circle fx:id="bagCircle" fill="#f0f0f0ef" layoutX="78.0" layoutY="86.0" radius="30.0" strokeType="INSIDE" />
                                        <ImageView fx:id="bagPlusIcon" fitHeight="40.0" fitWidth="40.0" layoutX="58.0" layoutY="66.0">
                                           <image>
@@ -166,18 +163,15 @@
                                  </AnchorPane>
 
                                  <!-- 원피스/스커트 -->
-                                 <AnchorPane fx:id="dressPane" onMouseClicked="#handleDressClick" prefHeight="200.0" prefWidth="200.0"
-                                             style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;"
-                                             GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <AnchorPane fx:id="dressPane" onMouseClicked="#handleDressClick" prefHeight="200.0" prefWidth="200.0" style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                     <children>
-                                       <ImageView fx:id="dressImageView" fitHeight="90.0" fitWidth="90.0" layoutX="15.0" layoutY="47.0"
-                                                  pickOnBounds="true" preserveRatio="true" visible="false">
+                                       <ImageView fx:id="dressImageView" fitHeight="90.0" fitWidth="90.0" layoutX="15.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true" visible="false">
                                           <image>
-                                             <Image url="@../wardrobe/images/dress.png" />
+                                             <Image url="@../wardrobe/images/plus.png" />
                                           </image>
                                        </ImageView>
-                                       <Circle fx:id="dressCircle" fill="#f0f0f0ef" layoutX="60.0" layoutY="88.0" radius="30.0" strokeType="INSIDE" />
-                                       <ImageView fx:id="dressPlusIcon" fitHeight="40.0" fitWidth="40.0" layoutX="40.0" layoutY="68.0">
+                                       <Circle fx:id="dressCircle" fill="#f0f0f0ef" layoutX="54.0" layoutY="88.0" radius="30.0" strokeType="INSIDE" />
+                                       <ImageView fx:id="dressPlusIcon" fitHeight="40.0" fitWidth="40.0" layoutX="34.0" layoutY="68.0">
                                           <image>
                                              <Image url="@../wardrobe/images/plus.png" />
                                           </image>
@@ -196,14 +190,11 @@
                                  </AnchorPane>
 
                                  <!-- 아우터 -->
-                                 <AnchorPane fx:id="outerPane" onMouseClicked="#handleOuterClick" prefHeight="200.0" prefWidth="200.0"
-                                             style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;"
-                                             GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                 <AnchorPane fx:id="outerPane" onMouseClicked="#handleOuterClick" prefHeight="200.0" prefWidth="200.0" style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                     <children>
-                                       <ImageView fx:id="outerImageView" fitHeight="90.0" fitWidth="90.0" layoutX="26.0" layoutY="48.0"
-                                                  pickOnBounds="true" preserveRatio="true" visible="false">
+                                       <ImageView fx:id="outerImageView" fitHeight="90.0" fitWidth="90.0" layoutX="26.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" visible="false">
                                           <image>
-                                             <Image url="@../wardrobe/images/outer.png" />
+                                             <Image url="@../wardrobe/images/plus.png" />
                                           </image>
                                        </ImageView>
                                        <Circle fx:id="outerCircle" fill="#f0f0f0ef" layoutX="87.0" layoutY="88.0" radius="30.0" strokeType="INSIDE" />
@@ -226,14 +217,11 @@
                                  </AnchorPane>
 
                                  <!-- 악세사리 -->
-                                 <AnchorPane fx:id="accessoryPane" onMouseClicked="#handleAccessoryClick" prefHeight="200.0" prefWidth="200.0"
-                                             style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;"
-                                             GridPane.rowIndex="2">
+                                 <AnchorPane fx:id="accessoryPane" onMouseClicked="#handleAccessoryClick" prefHeight="200.0" prefWidth="200.0" style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;" GridPane.rowIndex="2">
                                     <children>
-                                       <ImageView fx:id="accessoryImageView" fitHeight="90.0" fitWidth="90.0" layoutX="20.0" layoutY="45.0"
-                                                  pickOnBounds="true" preserveRatio="true" visible="false">
+                                       <ImageView fx:id="accessoryImageView" fitHeight="90.0" fitWidth="90.0" layoutX="20.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" visible="false">
                                           <image>
-                                             <Image url="@../wardrobe/images/accessory.png" />
+                                             <Image url="@../wardrobe/images/plus.png" />
                                           </image>
                                        </ImageView>
                                        <Circle fx:id="accessoryCircle" fill="#f0f0f0ef" layoutX="78.0" layoutY="88.0" radius="30.0" strokeType="INSIDE" />
@@ -256,14 +244,11 @@
                                  </AnchorPane>
 
                                  <!-- 기타 -->
-                                 <AnchorPane fx:id="etcPane" onMouseClicked="#handleEtcClick" prefHeight="200.0" prefWidth="200.0"
-                                             style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;"
-                                             GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <AnchorPane fx:id="etcPane" onMouseClicked="#handleEtcClick" prefHeight="200.0" prefWidth="200.0" style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                     <children>
-                                       <ImageView fx:id="etcImageView" fitHeight="90.0" fitWidth="90.0" layoutX="15.0" layoutY="47.0"
-                                                  pickOnBounds="true" preserveRatio="true" visible="false">
+                                       <ImageView fx:id="etcImageView" fitHeight="90.0" fitWidth="90.0" layoutX="15.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true" visible="false">
                                           <image>
-                                             <Image url="@../wardrobe/images/etc.png" />
+                                             <Image url="@../wardrobe/images/plus.png" />
                                           </image>
                                        </ImageView>
                                        <Circle fx:id="etcCircle" fill="#f0f0f0ef" layoutX="69.0" layoutY="88.0" radius="30.0" strokeType="INSIDE" />
@@ -299,64 +284,56 @@
                                  <Font size="18.0" />
                               </font>
                            </Label>
-                           <TextField fx:id="topField" editable="false" layoutX="14.0" layoutY="70.0" prefHeight="32.0" prefWidth="115.0"
-                                      promptText="미선택" style="-fx-background-color: #f8f8f8;" />
+                           <TextField fx:id="topField" editable="false" layoutX="14.0" layoutY="70.0" prefHeight="32.0" prefWidth="115.0" promptText="미선택" style="-fx-background-color: #f8f8f8;" />
 
                            <Label layoutX="137.0" layoutY="39.0" text="바지">
                               <font>
                                  <Font size="18.0" />
                               </font>
                            </Label>
-                           <TextField fx:id="bottomField" editable="false" layoutX="137.0" layoutY="70.0" prefHeight="32.0" prefWidth="115.0"
-                                      promptText="미선택" style="-fx-background-color: #f8f8f8;" />
+                           <TextField fx:id="bottomField" editable="false" layoutX="137.0" layoutY="70.0" prefHeight="32.0" prefWidth="115.0" promptText="미선택" style="-fx-background-color: #f8f8f8;" />
 
                            <Label layoutX="18.0" layoutY="134.0" text="신발">
                               <font>
                                  <Font size="18.0" />
                               </font>
                            </Label>
-                           <TextField fx:id="shoesField" editable="false" layoutX="18.0" layoutY="165.0" prefHeight="32.0" prefWidth="115.0"
-                                      promptText="미선택" style="-fx-background-color: #f8f8f8;" />
+                           <TextField fx:id="shoesField" editable="false" layoutX="18.0" layoutY="165.0" prefHeight="32.0" prefWidth="115.0" promptText="미선택" style="-fx-background-color: #f8f8f8;" />
 
                            <Label layoutX="141.0" layoutY="134.0" text="가방">
                               <font>
                                  <Font size="18.0" />
                               </font>
                            </Label>
-                           <TextField fx:id="bagField" editable="false" layoutX="141.0" layoutY="165.0" prefHeight="32.0" prefWidth="115.0"
-                                      promptText="미선택" style="-fx-background-color: #f8f8f8;" />
+                           <TextField fx:id="bagField" editable="false" layoutX="141.0" layoutY="165.0" prefHeight="32.0" prefWidth="115.0" promptText="미선택" style="-fx-background-color: #f8f8f8;" />
 
                            <Label layoutX="18.0" layoutY="230.0" text="원피스/스커트">
                               <font>
                                  <Font size="18.0" />
                               </font>
                            </Label>
-                           <TextField fx:id="dressField" editable="false" layoutX="18.0" layoutY="261.0" prefHeight="32.0" prefWidth="115.0"
-                                      promptText="미선택" style="-fx-background-color: #f8f8f8;" />
+                           <TextField fx:id="dressField" editable="false" layoutX="18.0" layoutY="261.0" prefHeight="32.0" prefWidth="115.0" promptText="미선택" style="-fx-background-color: #f8f8f8;" />
 
                            <Label layoutX="141.0" layoutY="230.0" text="아우터">
                               <font>
                                  <Font size="18.0" />
                               </font>
                            </Label>
-                           <TextField fx:id="outerField" editable="false" layoutX="141.0" layoutY="261.0" prefHeight="32.0" prefWidth="115.0"
-                                      promptText="미선택" style="-fx-background-color: #f8f8f8;" />
+                           <TextField fx:id="outerField" editable="false" layoutX="141.0" layoutY="261.0" prefHeight="32.0" prefWidth="115.0" promptText="미선택" style="-fx-background-color: #f8f8f8;" />
 
                            <Label layoutX="18.0" layoutY="329.0" text="악세사리">
                               <font>
                                  <Font size="18.0" />
                               </font>
                            </Label>
-                           <TextField fx:id="accessoryField" editable="false" layoutX="18.0" layoutY="360.0" prefHeight="32.0" prefWidth="115.0"
-                                      promptText="미선택" style="-fx-background-color: #f8f8f8;" />
+                           <TextField fx:id="accessoryField" editable="false" layoutX="18.0" layoutY="360.0" prefHeight="32.0" prefWidth="115.0" promptText="미선택" style="-fx-background-color: #f8f8f8;" />
 
                            <Label layoutX="141.0" layoutY="329.0" text="기타">
                               <font>
                                  <Font size="18.0" />
                               </font>
                            </Label>
-                           <TextField fx:id="etcField" editable="false" layoutX="141.0" layoutY="360.0" prefHeight="32.0" prefWidth="115.0"
-                                      promptText="미선택" style="-fx-background-color: #f8f8f8;" />
+                           <TextField fx:id="etcField" editable="false" layoutX="141.0" layoutY="360.0" prefHeight="32.0" prefWidth="115.0" promptText="미선택" style="-fx-background-color: #f8f8f8;" />
 
                            <!-- 선택된 아이템 개수 표시 -->
                            <Label fx:id="selectedCountLabel" layoutX="18.0" layoutY="420.0" style="-fx-text-fill: #666666;" text="선택된 아이템: 0개">
@@ -366,7 +343,7 @@
                            </Label>
 
                            <!-- 도움말 텍스트 추가 -->
-                           <Label layoutX="18.0" layoutY="450.0" style="-fx-text-fill: #999999;" text="※ 상의, 바지, 신발, 가방 중 최소 1개 선택 필수" wrapText="true" prefWidth="220.0">
+                           <Label layoutX="18.0" layoutY="450.0" prefWidth="220.0" style="-fx-text-fill: #999999;" text="※ 상의, 바지, 신발, 가방 중 최소 1개 선택 필수" wrapText="true">
                               <font>
                                  <Font size="11.0" />
                               </font>
@@ -379,12 +356,8 @@
                <!-- 버튼들 -->
                <HBox alignment="CENTER" layoutX="350.0" layoutY="649.0" spacing="20.0">
                   <children>
-                     <Button fx:id="resetButton" onAction="#handleResetClick" prefHeight="35.0" prefWidth="100.0"
-                             style="-fx-background-color: #f8f9fa; -fx-text-fill: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5;"
-                             text="초기화" />
-                     <Button fx:id="saveButton" onAction="#handleSaveClick" prefHeight="35.0" prefWidth="127.0"
-                             style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"
-                             text="저장하기" />
+                     <Button fx:id="resetButton" onAction="#handleResetClick" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #f8f9fa; -fx-text-fill: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5;" text="초기화" />
+                     <Button fx:id="saveButton" onAction="#handleSaveClick" prefHeight="35.0" prefWidth="127.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="저장하기" />
                   </children>
                </HBox>
             </children>
