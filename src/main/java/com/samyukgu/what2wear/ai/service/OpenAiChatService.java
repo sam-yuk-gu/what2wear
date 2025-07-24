@@ -33,7 +33,7 @@ public class OpenAiChatService {
         ArrayNode messages = objectMapper.createArrayNode();
         messages.add(objectMapper.createObjectNode()
                 .put("role", "system")
-                .put("content", "너는 패션 코디 전문가야. 유저가 가지고 있는 옷을 기반으로 코디를 제안해줘. 다음 형식으로만 대답해: '상의: OOO\\n하의: OOO\\n신발: OOO\\n악세사리: OOO'. 만약 해당 항목의 추천이 어렵거나 없는 경우 '없음'이라고 명확하게 써줘. 다른 말은 하지 마.")
+                .put("content", "너는 패션 코디 전문가야. 유저가 가지고 있는 옷을 기반으로 코디를 제안해줘. 다음 형식으로만 대답해: '상의: OOO\\n하의: OOO\\n신발: OOO\\n악세사리: OOO'. 만약 해당 항목의 추천이 어렵거나 없는 경우 '없음'이라고 명확하게 써줘. 다른 말은 하지 마. 응답도 좀 제대로 해줘")
         );
         messages.add(objectMapper.createObjectNode()
                 .put("role", "user")
@@ -63,6 +63,8 @@ public class OpenAiChatService {
                 System.err.println("응답 바디: " + responseBody);
                 throw new IOException("OpenAI API 호출 실패: " + response.code());
             }
+            System.out.println(response.message());
+            System.out.println(response.message());
 
             JsonNode jsonNode = objectMapper.readTree(responseBody);
             return jsonNode.get("choices").get(0).get("message").get("content").asText().trim();

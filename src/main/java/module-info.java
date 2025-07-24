@@ -9,7 +9,8 @@ module com.samyukgu.what2wear {
     requires okhttp3;
 //    requires gradle.api;  // requires로 불러오는 대상 아니라서 주석 처리
     requires com.fasterxml.jackson.databind;    // jackson.databind 모듈 오류 해결을 위해 추가
-    requires java.net.http; // http 추가
+    requires java.net.http;
+    requires com.google.gson; // http 추가
 
     opens com.samyukgu.what2wear to javafx.fxml;
     opens com.samyukgu.what2wear.post.controller to javafx.fxml;

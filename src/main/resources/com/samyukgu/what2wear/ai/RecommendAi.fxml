@@ -57,14 +57,13 @@
                     <VBox alignment="CENTER_LEFT" spacing="40">
                         <VBox spacing="10">
                             <Label styleClass="description_text" text="안녕하세요!" fx:id="introLabel1"/>
-                            <Label styleClass="description_text" text="내일 서울시 종로구는 덥고 습한 날씨가 이어질 예정이에요." fx:id="introLabel2"/>
-                            <Label styleClass="description_text" text="낮 최고기온은 35도까지 오를 수 있고," fx:id="introLabel3"/>
-                            <Label styleClass="description_text" text="아침 최저도 24도 정도로 꽤 더운 하루가 될 것 같아요." fx:id="introLabel4"/>
-                            <Label styleClass="description_text" text="자외선도 강하고, 체감 온도는 더 높게 느껴질 수 있어요." fx:id="introLabel5"/>
+                            <Label styleClass="description_text" text="오늘 00시 00도의 날씨 정보는" fx:id="introLabel2"/>
+                            <Label styleClass="description_text" text="최고 기온은 00도, 최저 기온은 00도 입니다." fx:id="introLabel3"/>
+                            <Label styleClass="description_text" text="자외선 지수는 높음으로 외출 시 주의해주요." fx:id="introLabel4"/>
                         </VBox>
 
                         <VBox prefHeight="199.0" prefWidth="543.0" spacing="10">
-                            <Label styleClass="description_text" text="회원님이 가지고 계신 옷들 중에서 이런 코디는 어떨까요?" fx:id="recommendLabel"/>
+                            <Label styleClass="description_text" text="이런 코디는 어떠세요?" fx:id="recommendLabel"/>
                             <Label styleClass="description_text" text="· 상의: OOO" fx:id="topLabel"/>
                             <Label styleClass="description_text" text="· 하의: OOO" fx:id="bottomLabel"/>
                             <Label styleClass="description_text" text="· 신발: OOO" fx:id="shoesLabel"/>
@@ -80,7 +79,7 @@
 
                     <!-- 버튼 영역 -->
                     <HBox alignment="CENTER_RIGHT" prefHeight="68.0" prefWidth="550.0" spacing="10">
-                        <Button fx:id="recommendBtn" onAction="#handleRetryClick" styleClass="gray_stroke_button" text="다시하기 (남은 횟수: n)" />
+                        <Button fx:id="recommendBtn" onAction="#handleRetryClick" styleClass="gray_stroke_button" text="다시하기" />
                         <Button onAction="#handleSaveClick" styleClass="black_background_button" text="저장하기" />
                     </HBox>
 
