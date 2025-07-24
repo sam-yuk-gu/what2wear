@@ -119,7 +119,6 @@ public class LoginController {
         }
     }
 
-    // todo: 버튼 하나있는 모달로 바꾸기
     private void showConfirmationModal() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/CustomModal.fxml"));
@@ -131,12 +130,8 @@ public class LoginController {
                     "아이디와 비밀번호를 다시 확인해주세요.",
                     "/assets/icons/redCheck.png",
                     "#FA7B7F",
-                    "취소",
                     "확인",
-                    () -> root.getChildren().remove(modal),
-                    () -> {
-                        root.getChildren().remove(modal);
-                    }
+                    () -> root.getChildren().remove(modal)
             );
 
             root.getChildren().add(modal);
