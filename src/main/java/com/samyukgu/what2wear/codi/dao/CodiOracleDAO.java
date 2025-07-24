@@ -113,7 +113,7 @@ public class CodiOracleDAO implements CodiDAO {
             AND c.schedule_date < TO_DATE(?, 'YYYY-MM-DD')
             AND c.deleted = 'N'
             AND (c.schedule IS NOT NULL OR cl.id IS NOT NULL)
-        ORDER BY c.schedule_date, c.id
+        ORDER BY c.schedule_date, c.id, cat.id
     """;
 
         Map<LocalDate, List<CodiDTO>> groupedByDate = new LinkedHashMap<>();
