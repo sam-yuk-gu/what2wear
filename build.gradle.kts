@@ -32,7 +32,7 @@ application {
 
 javafx {
     version = "21"
-    modules = listOf("javafx.controls", "javafx.fxml")
+    modules = listOf("javafx.controls", "javafx.fxml", "javafx.swing")
 }
 
 dependencies {
@@ -51,6 +51,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.fasterxml.jackson.core:jackson-core:2.17.0")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.17.0")
+    implementation("org.openjfx:javafx-swing:21")
 }
 
 tasks.withType<Test> {

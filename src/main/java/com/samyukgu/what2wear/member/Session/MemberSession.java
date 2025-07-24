@@ -4,8 +4,7 @@ import com.samyukgu.what2wear.member.model.Member;
 import com.samyukgu.what2wear.post.model.Post;
 
 public class MemberSession {
-    private static Member member;
-//    Member member;
+    private Member member;
 
     // 현재 세션의 회원 정보 저장
     public void setMember(Member member){
@@ -20,9 +19,5 @@ public class MemberSession {
     // 회원 정보 초기화 (로그아웃 시 실행)
     public void clearMember(){
         this.member = null;
-    }
-
-    public static Member getLoginMember() {
-        return member;
     }
 }

@@ -284,6 +284,23 @@ public class SelectOutfitModalController implements Initializable {
         return box;
     }
 
+//    private void refreshWardrobeSelection() {
+//        for (Node node : wardrobeItemPane.getChildren()) {
+//            VBox box = (VBox) node;
+//            CodiItem clothing = (CodiItem) box.getUserData();
+////            Clothing clothing = (Clothing) box.getUserData();
+//            boolean selected = selectedClothes.containsKey(clothing.getCategory())
+//                    && selectedClothes.get(clothing.getCategory()).getId().equals(clothing.getId());
+//
+//            StackPane imageContainer = (StackPane) box.getChildren().getFirst(); // 이미지+오버레이+체크
+//            Node[] overlays = (Node[]) imageContainer.getUserData();
+//            Rectangle overlay = (Rectangle) overlays[0];
+//            ImageView checkIcon = (ImageView) overlays[1];
+//
+//            overlay.setVisible(selected);
+//            checkIcon.setVisible(selected);
+//        }
+//    }
 
     // TODO: 코디 연결 필요
     private VBox createCodiBox(Codi codi) {

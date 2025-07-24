@@ -5,149 +5,158 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.wardrobe.controller.DetailWardrobeController">
+<!-- 최상위를 StackPane으로 변경하고 fx:id 추가 -->
+<StackPane fx:id="rootPane" prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.12"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.samyukgu.what2wear.wardrobe.controller.DetailWardrobeController"
+           stylesheets="@css/wardrobeDetail.css">
     <children>
+        <!-- 기존 HBox를 StackPane 안에 넣기 -->
+        <HBox prefHeight="768.0" prefWidth="1280.0">
+            <children>
 
-        <!-- 오른쪽 전체 -->
-        <VBox prefHeight="768.0" prefWidth="1030.0">
-            <!-- 상단 바 -->
-            <AnchorPane prefHeight="50.0" prefWidth="1030.0" style="-fx-background-color: #eeeeee;">
-                <children>
-                    <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="10.0" spacing="20.0">
+                <!-- 오른쪽 전체 -->
+                <VBox prefHeight="768.0" prefWidth="1030.0">
+                    <!-- 상단 바 -->
+                    <AnchorPane fx:id="topBar" prefHeight="50.0" prefWidth="1030.0">
                         <children>
-                            <ImageView fx:id="backButton" fitHeight="30" fitWidth="30" onMouseClicked="#handleBackClick" style="-fx-cursor: hand;">
-                                <image>
-                                    <Image preserveRatio="true" url="@images/tabler_arrow-left.png" />
-                                </image>
-                            </ImageView>
-                            <Label style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: #333;" text="옷 상세정보" />
-                        </children>
-                    </HBox>
-                </children>
-            </AnchorPane>
-
-            <!-- 메인 콘텐츠 -->
-            <ScrollPane fitToWidth="true" prefHeight="718.0" prefWidth="1030.0" style="-fx-background-color: #fafafa; -fx-border-color: transparent;">
-                <content>
-                    <AnchorPane prefHeight="700.0" prefWidth="1010.0">
-                        <children>
-                            <HBox layoutX="50.0" layoutY="30.0" prefHeight="640.0" prefWidth="910.0" spacing="50">
+                            <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="10.0" spacing="20.0">
                                 <children>
+                                    <ImageView fx:id="backButton" fitHeight="30" fitWidth="30" onMouseClicked="#handleBackClick">
+                                        <image>
+                                            <Image preserveRatio="true" url="@images/tabler_arrow-left.png" />
+                                        </image>
+                                    </ImageView>
+                                    <Label fx:id="pageTitle" text="옷 상세정보" />
+                                </children>
+                            </HBox>
+                        </children>
+                    </AnchorPane>
 
-                                    <!-- 왼쪽: 이미지 -->
-                                    <VBox alignment="TOP_CENTER" prefHeight="640.0" prefWidth="420.0">
-                                        <padding>
-                                            <Insets top="20" />
-                                        </padding>
+                    <!-- 메인 콘텐츠 -->
+                    <ScrollPane fx:id="mainScrollPane" fitToWidth="true" prefHeight="718.0" prefWidth="1030.0">
+                        <content>
+                            <AnchorPane prefHeight="700.0" prefWidth="1010.0">
+                                <children>
+                                    <HBox layoutX="50.0" layoutY="30.0" prefHeight="640.0" prefWidth="910.0" spacing="50">
                                         <children>
-                                            <VBox alignment="CENTER" spacing="20" style="-fx-background-color: white; -fx-background-radius: 15; -fx-border-color: #e0e0e0; -fx-border-width: 2; -fx-border-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
+
+                                            <!-- 왼쪽: 이미지 -->
+                                            <VBox alignment="TOP_CENTER" prefHeight="640.0" prefWidth="420.0">
                                                 <padding>
-                                                    <Insets bottom="30" left="30" right="30" top="30" />
+                                                    <Insets top="20" />
                                                 </padding>
                                                 <children>
-                                                    <ImageView fx:id="imageView" fitHeight="350.0" fitWidth="350.0" preserveRatio="true" style="-fx-background-radius: 10;" />
-                                                </children>
-                                            </VBox>
-                                        </children>
-                                    </VBox>
-
-                                    <!-- 오른쪽: 정보 -->
-                                    <VBox prefHeight="640.0" prefWidth="440.0" spacing="30" style="-fx-background-color: white; -fx-background-radius: 15; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
-                                        <padding>
-                                            <Insets bottom="40" left="40" right="40" top="40" />
-                                        </padding>
-                                        <children>
-
-                                            <!-- 제목과 즐겨찾기 -->
-                                            <HBox alignment="CENTER_LEFT" spacing="15">
-                                                <children>
-                                                    <!-- 즐겨찾기 하트 아이콘 (클릭 가능) -->
-                                                    <ImageView fx:id="heartIcon" fitHeight="30.0" fitWidth="30.0" preserveRatio="true" pickOnBounds="true">
-                                                        <image>
-                                                            <!-- 기본 이미지는 likedN.png -->
-                                                            <Image url="@images/likedN.png" />
-                                                        </image>
-                                                    </ImageView>
-                                                    <Label fx:id="nameLabel" style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #333;" text="상품명" />
-                                                </children>
-                                            </HBox>
-
-                                            <!-- 기본 정보 -->
-                                            <VBox spacing="20">
-                                                <children>
-                                                    <!-- 카테고리와 브랜드 -->
-                                                    <HBox spacing="50">
+                                                    <VBox fx:id="imageContainer" alignment="CENTER" spacing="20">
+                                                        <padding>
+                                                            <Insets bottom="30" left="30" right="30" top="30" />
+                                                        </padding>
                                                         <children>
-                                                            <VBox prefWidth="180" spacing="8">
-                                                                <children>
-                                                                    <Label style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #666;" text="카테고리" />
-                                                                    <Label fx:id="categoryLabel" style="-fx-font-size: 18; -fx-text-fill: #333;" text="-" />
-                                                                </children>
-                                                            </VBox>
-                                                            <VBox prefWidth="180" spacing="8">
-                                                                <children>
-                                                                    <Label style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #666;" text="브랜드" />
-                                                                    <Label fx:id="brandLabel" style="-fx-font-size: 18; -fx-text-fill: #333;" text="-" />
-                                                                </children>
-                                                            </VBox>
-                                                        </children>
-                                                    </HBox>
-
-                                                    <!-- 사이즈와 색상 -->
-                                                    <HBox spacing="50">
-                                                        <children>
-                                                            <VBox prefWidth="180" spacing="8">
-                                                                <children>
-                                                                    <Label style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #666;" text="사이즈" />
-                                                                    <Label fx:id="sizeLabel" style="-fx-font-size: 18; -fx-text-fill: #333;" text="-" />
-                                                                </children>
-                                                            </VBox>
-                                                            <VBox prefWidth="180" spacing="8">
-                                                                <children>
-                                                                    <Label style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #666;" text="색상" />
-                                                                    <Label fx:id="colorLabel" style="-fx-font-size: 18; -fx-text-fill: #333;" text="-" />
-                                                                </children>
-                                                            </VBox>
-                                                        </children>
-                                                    </HBox>
-
-                                                    <!-- 키워드 -->
-                                                    <VBox spacing="8">
-                                                        <children>
-                                                            <Label style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #666;" text="스타일 키워드" />
-                                                            <Label fx:id="keywordLabel" style="-fx-font-size: 18; -fx-text-fill: #333;" text="-" />
+                                                            <ImageView fx:id="imageView" fitHeight="350.0" fitWidth="350.0" preserveRatio="true" />
                                                         </children>
                                                     </VBox>
                                                 </children>
                                             </VBox>
 
-                                            <!-- 메모 영역 -->
-                                            <VBox prefHeight="150" spacing="12">
+                                            <!-- 오른쪽: 정보 -->
+                                            <VBox fx:id="infoContainer" prefHeight="640.0" prefWidth="440.0" spacing="30">
+                                                <padding>
+                                                    <Insets bottom="40" left="40" right="40" top="40" />
+                                                </padding>
                                                 <children>
-                                                    <Label style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #666;" text="메모" />
-                                                    <ScrollPane prefHeight="100" style="-fx-background-color: #f8f9fa; -fx-background-radius: 8; -fx-border-color: #e9ecef; -fx-border-width: 1; -fx-border-radius: 8;">
-                                                        <content>
-                                                            <Label fx:id="memoLabel" style="-fx-font-size: 14; -fx-text-fill: #495057; -fx-padding: 12;" text="메모 없음" wrapText="true" />
-                                                        </content>
-                                                    </ScrollPane>
+
+                                                    <!-- 제목과 즐겨찾기 -->
+                                                    <HBox alignment="CENTER_LEFT" spacing="15">
+                                                        <children>
+                                                            <!-- 즐겨찾기 하트 아이콘 (클릭 가능) -->
+                                                            <ImageView fx:id="heartIcon" fitHeight="30.0" fitWidth="30.0" preserveRatio="true" pickOnBounds="true">
+                                                                <image>
+                                                                    <!-- 기본 이미지는 likedN.png -->
+                                                                    <Image url="@images/likedN.png" />
+                                                                </image>
+                                                            </ImageView>
+                                                            <Label fx:id="nameLabel" text="상품명" />
+                                                        </children>
+                                                    </HBox>
+
+                                                    <!-- 기본 정보 -->
+                                                    <VBox spacing="20">
+                                                        <children>
+                                                            <!-- 카테고리와 브랜드 -->
+                                                            <HBox spacing="50">
+                                                                <children>
+                                                                    <VBox prefWidth="180" spacing="8">
+                                                                        <children>
+                                                                            <Label fx:id="categoryTitleLabel" text="카테고리" />
+                                                                            <Label fx:id="categoryLabel" text="-" />
+                                                                        </children>
+                                                                    </VBox>
+                                                                    <VBox prefWidth="180" spacing="8">
+                                                                        <children>
+                                                                            <Label fx:id="brandTitleLabel" text="브랜드" />
+                                                                            <Label fx:id="brandLabel" text="-" />
+                                                                        </children>
+                                                                    </VBox>
+                                                                </children>
+                                                            </HBox>
+
+                                                            <!-- 사이즈와 색상 -->
+                                                            <HBox spacing="50">
+                                                                <children>
+                                                                    <VBox prefWidth="180" spacing="8">
+                                                                        <children>
+                                                                            <Label fx:id="sizeTitleLabel" text="사이즈" />
+                                                                            <Label fx:id="sizeLabel" text="-" />
+                                                                        </children>
+                                                                    </VBox>
+                                                                    <VBox prefWidth="180" spacing="8">
+                                                                        <children>
+                                                                            <Label fx:id="colorTitleLabel" text="색상" />
+                                                                            <Label fx:id="colorLabel" text="-" />
+                                                                        </children>
+                                                                    </VBox>
+                                                                </children>
+                                                            </HBox>
+
+                                                            <!-- 키워드 -->
+                                                            <VBox spacing="8">
+                                                                <children>
+                                                                    <Label fx:id="keywordTitleLabel" text="스타일 키워드" />
+                                                                    <Label fx:id="keywordLabel" text="-" />
+                                                                </children>
+                                                            </VBox>
+                                                        </children>
+                                                    </VBox>
+
+                                                    <!-- 메모 영역 -->
+                                                    <VBox prefHeight="150" spacing="12">
+                                                        <children>
+                                                            <Label fx:id="memoTitleLabel" text="메모" />
+                                                            <ScrollPane fx:id="memoScrollPane" prefHeight="100">
+                                                                <content>
+                                                                    <Label fx:id="memoLabel" text="메모 없음" wrapText="true" />
+                                                                </content>
+                                                            </ScrollPane>
+                                                        </children>
+                                                    </VBox>
+
+                                                    <!-- 액션 버튼들 -->
+                                                    <HBox alignment="CENTER" prefHeight="60" spacing="20">
+                                                        <children>
+                                                            <Button fx:id="editButton" onAction="#handleEdit" prefHeight="45" prefWidth="150" text="수정하기" />
+                                                            <Button fx:id="deleteButton" onAction="#handleDelete" prefHeight="45" prefWidth="150" text="삭제하기" />
+                                                        </children>
+                                                    </HBox>
                                                 </children>
                                             </VBox>
-
-                                            <!-- 액션 버튼들 -->
-                                            <HBox alignment="CENTER" prefHeight="60" spacing="20">
-                                                <children>
-                                                    <Button fx:id="editButton" onAction="#handleEdit" prefHeight="45" prefWidth="150" style="-fx-background-color: #17a2b8; -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold; -fx-background-radius: 22; -fx-cursor: hand;" text="수정하기" />
-                                                    <Button fx:id="deleteButton" onAction="#handleDelete" prefHeight="45" prefWidth="150" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold; -fx-background-radius: 22; -fx-cursor: hand;" text="삭제하기" />
-                                                </children>
-                                            </HBox>
                                         </children>
-                                    </VBox>
+                                    </HBox>
                                 </children>
-                            </HBox>
-                        </children>
-                    </AnchorPane>
-                </content>
-            </ScrollPane>
-        </VBox>
+                            </AnchorPane>
+                        </content>
+                    </ScrollPane>
+                </VBox>
+            </children>
+        </HBox>
     </children>
-</HBox>
+</StackPane>

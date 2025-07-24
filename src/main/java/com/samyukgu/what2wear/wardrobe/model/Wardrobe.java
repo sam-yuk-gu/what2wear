@@ -22,14 +22,12 @@ public class Wardrobe {
     public void setId(Long id) { this.id = id; }
     public Long getId() { return id; }
 
-    // 올바른 코드
     public void setMemberId(Long memberId) {
         this.member_id = memberId;     // 매개변수 memberId를 필드 member_id에 저장
     }
     public void setCategoryId(Long categoryId) {
         this.category_id = categoryId; // 매개변수 categoryId를 필드 category_id에 저장
     }
-
 
     public Long getMemberId() { return member_id; }
 
@@ -41,7 +39,7 @@ public class Wardrobe {
     public void setMemo(String memo) { this.memo = memo; }
     public String getMemo() { return memo; }
 
-    public void setLike(String like) { this.liked = liked; }
+    public void setLike(String like) { this.liked = like; }
     public String getLike() { return liked; }
 
     public void setPicture(byte[] picture) { this.picture = picture; }
