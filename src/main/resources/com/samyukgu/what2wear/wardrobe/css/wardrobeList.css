@@ -1,0 +1,88 @@
+/* 카테고리 필터 버튼들 */
+#allButton, #topButton, #pantsButton, #dressButton, #bagButton, #outerButton, #shoesButton, #accessoryButton, #etcButton {
+    -fx-text-fill: black;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+/* 메인 콘텐츠 영역 */
+#mainContentArea {
+    -fx-background-color: white;
+}
+
+/* 즐겨찾기 필터 버튼 */
+#favoriteButton {
+    -fx-background-color: transparent;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1;
+    -fx-text-fill: #000000;
+    -fx-font-size: 13px;
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-background-radius: 4;
+    -fx-border-radius: 4;
+    -fx-padding: 6 12;
+    -fx-cursor: hand;
+}
+
+/* 검색창 컨테이너 */
+#searchContainer {
+    -fx-background-color: #d9d9d9;
+    -fx-background-radius: 5;
+}
+
+/* 검색 텍스트 필드 */
+#searchField {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+/* 검색 아이콘 라벨 */
+#searchIcon {
+    -fx-font-size: 14px;
+    -fx-text-fill: gray;
+    -fx-padding: 5;
+}
+
+/* 추가하기 버튼 */
+#addButton {
+    -fx-background-color: #f2f2f2;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+}
+
+/* 추가하기 라벨 */
+#addLabel {
+    -fx-text-fill: black;
+    -fx-font-size: 12;
+}
+
+/* 나만의 코디 버튼 */
+#myWardrobeButton {
+    -fx-background-color: #f2f2f2;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+}
+
+/* 나만의 코디 라벨 */
+#myWardrobeLabel {
+    -fx-text-fill: black;
+    -fx-font-size: 12;
+}
+
+/* 메인 스크롤 패널 */
+#mainScrollPane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+/* 콘텐츠 컨테이너 */
+#contentContainer {
+    -fx-padding: 10;
+    -fx-fill-width: true;
+}
+
+/* 상태 라벨 */
+#statusLabel {
+    -fx-font-size: 16px;
+    -fx-text-fill: #666;
+}

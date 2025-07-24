@@ -1,0 +1,126 @@
+/* 상단 바 스타일 */
+#topBar {
+    -fx-background-color: #eeeeee;
+}
+
+/* 뒤로가기 버튼 */
+#backButton {
+    -fx-cursor: hand;
+}
+
+/* 페이지 제목 */
+#pageTitle {
+    -fx-font-size: 18;
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-text-fill: #333;
+}
+
+/* 메인 콘텐츠 영역 */
+#mainContent {
+    -fx-background-color: #fafafa;
+}
+
+/* 이미지 컨테이너 */
+#imageContainer {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 2;
+    -fx-border-radius: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
+}
+
+/* 이미지 뷰 */
+#pictureView {
+    -fx-background-radius: 10;
+}
+
+/* 업로드 버튼 */
+#uploadButton {
+    -fx-background-color: #79C998;
+    -fx-text-fill: white;
+    -fx-font-size: 14;
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-background-radius: 20;
+    -fx-cursor: hand;
+}
+
+/* 키워드 컨테이너 */
+#keywordContainer {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1;
+    -fx-border-radius: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 1);
+}
+
+/* 키워드 라벨 */
+#keywordLabel {
+    -fx-font-size: 16;
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-text-fill: #333;
+}
+
+/* 키워드 콤보박스 */
+#keywordField {
+    -fx-font-size: 14;
+}
+
+/* 폼 컨테이너 */
+#formContainer {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1;
+    -fx-border-radius: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
+}
+
+/* 폼 제목 */
+#formTitle {
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
+
+/* 입력 필드 라벨들 */
+#nameLabel, #categoryLabel, #brandLabel, #sizeLabel, #colorLabel, #memoLabel {
+    -fx-font-size: 14;
+    -fx-font-weight: bold;
+    -fx-text-fill: #555;
+}
+
+/* 텍스트 필드들 */
+#nameField, #brandField, #sizeField, #memoField {
+    -fx-font-size: 14;
+    -fx-background-radius: 5;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 5;
+}
+
+/* 콤보박스들 */
+#categoryField, #colorField {
+    -fx-font-size: 14;
+    -fx-font-family: "Pretendard SemiBold";
+}
+
+/* 취소 버튼 */
+#cancelButton {
+    -fx-background-color: #6c757d;
+    -fx-text-fill: white;
+    -fx-font-size: 14;
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-background-radius: 20;
+    -fx-cursor: hand;
+}
+
+/* 수정완료 버튼 */
+#updateButton {
+    -fx-background-color: #79C998;
+    -fx-text-fill: white;
+    -fx-font-size: 14;
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-background-radius: 20;
+    -fx-cursor: hand;
+}
