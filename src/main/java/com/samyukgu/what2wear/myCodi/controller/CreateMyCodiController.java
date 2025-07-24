@@ -10,17 +10,33 @@ import com.samyukgu.what2wear.myCodi.service.CodiService;
 import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
 import com.samyukgu.what2wear.wardrobe.service.WardrobeService;
 
+import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -95,6 +111,9 @@ public class CreateMyCodiController implements Initializable {
     @FXML private Button resetButton;
     @FXML private Button saveButton;
 
+    // GridPane 추가 (스냅샷 촬영용)
+    @FXML private GridPane clothingGridPane;
+
     // 서비스 객체들
     private CodiService codiService;
     private MemberSession memberSession;
@@ -102,7 +121,6 @@ public class CreateMyCodiController implements Initializable {
     // 선택된 옷 정보들
     private Wardrobe selectedTop, selectedBottom, selectedShoes, selectedBag;
     private Wardrobe selectedDress, selectedOuter, selectedAccessory, selectedEtc;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         DIContainer diContainer = DIContainer.getInstance();
@@ -256,17 +274,220 @@ public class CreateMyCodiController implements Initializable {
             showError("옷 선택 중 오류가 발생했습니다: " + e.getMessage());
         }
     }
+    // 개선된 스냅샷 생성 메서드 (선택된 옷들만 깔끔하게 배치)
+    private byte[] createCodiSnapshot() {
+        try {
+            System.out.println("코디 스냅샷 생성 시작");
 
-    private Wardrobe createTempWardrobe(String name, Long categoryId, Long memberId) {
-        Wardrobe clothes = new Wardrobe();
-        clothes.setId(System.currentTimeMillis()); // 임시 ID
-        clothes.setName(name);
-        clothes.setCategoryId(categoryId);
-        clothes.setMemberId(memberId);
-        clothes.setDeleted("N");
-        return clothes;
+            // 현재 스레드가 FX Application Thread인지 확인
+            if (!Platform.isFxApplicationThread()) {
+                System.err.println("스냅샷은 FX Application Thread에서만 생성할 수 있습니다.");
+                return null;
+            }
+
+            // 선택된 옷들 수집
+            List<Wardrobe> selectedClothes = collectSelectedClothes();
+            if (selectedClothes.isEmpty()) {
+                System.out.println("선택된 옷이 없어 스냅샷을 생성하지 않습니다.");
+                return null;
+            }
+
+            // 새로운 GridPane 생성 (스냅샷 전용)
+            GridPane snapshotGrid = createSnapshotGridPane(selectedClothes);
+
+            if (snapshotGrid == null) {
+                System.err.println("스냅샷용 GridPane 생성에 실패했습니다.");
+                return null;
+            }
+
+            // 임시 Scene 생성 (스냅샷을 위해)
+            Scene tempScene = new Scene(snapshotGrid);
+
+            // 스타일 적용 (배경색 등)
+            snapshotGrid.setStyle("-fx-background-color: white; -fx-padding: 20;");
+
+            // GridPane의 스냅샷 생성
+            WritableImage snapshot = snapshotGrid.snapshot(null, null);
+
+            if (snapshot == null) {
+                System.err.println("스냅샷 생성에 실패했습니다.");
+                return null;
+            }
+
+            // WritableImage를 BufferedImage로 변환
+            BufferedImage bufferedImage = SwingFXUtils.fromFXImage(snapshot, null);
+
+            if (bufferedImage == null) {
+                System.err.println("BufferedImage 변환에 실패했습니다.");
+                return null;
+            }
+
+            // BufferedImage를 byte[]로 변환
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(bufferedImage, "PNG", baos);
+            byte[] imageBytes = baos.toByteArray();
+
+            System.out.println("코디 스냅샷 생성 완료 - 크기: " + imageBytes.length + " bytes");
+            return imageBytes;
+
+        } catch (IOException e) {
+            System.err.println("스냅샷 생성 중 I/O 오류: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        } catch (Exception e) {
+            System.err.println("스냅샷 생성 중 예상치 못한 오류: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
     }
 
+    // 선택된 옷들을 수집하는 메서드
+    private List<Wardrobe> collectSelectedClothes() {
+        List<Wardrobe> selectedClothes = new ArrayList<>();
+
+        if (selectedTop != null) selectedClothes.add(selectedTop);
+        if (selectedBottom != null) selectedClothes.add(selectedBottom);
+        if (selectedShoes != null) selectedClothes.add(selectedShoes);
+        if (selectedBag != null) selectedClothes.add(selectedBag);
+        if (selectedDress != null) selectedClothes.add(selectedDress);
+        if (selectedOuter != null) selectedClothes.add(selectedOuter);
+        if (selectedAccessory != null) selectedClothes.add(selectedAccessory);
+        if (selectedEtc != null) selectedClothes.add(selectedEtc);
+
+        return selectedClothes;
+    }
+
+    // 스냅샷 전용 GridPane 생성
+    private GridPane createSnapshotGridPane(List<Wardrobe> selectedClothes) {
+        try {
+            // 적절한 그리드 크기 계산 (옷 개수에 따라)
+            int itemCount = selectedClothes.size();
+            int cols = Math.min(itemCount, 3); // 최대 3열
+            int rows = (int) Math.ceil((double) itemCount / cols); // 필요한 행 수
+
+            GridPane grid = new GridPane();
+            grid.setHgap(15); // 수평 간격
+            grid.setVgap(15); // 수직 간격
+            grid.setAlignment(Pos.CENTER);
+
+            // 컬럼 제약 조건 설정
+            for (int i = 0; i < cols; i++) {
+                ColumnConstraints colConstraint = new ColumnConstraints();
+                colConstraint.setMinWidth(120);
+                colConstraint.setPrefWidth(120);
+                colConstraint.setHalignment(HPos.CENTER);
+                grid.getColumnConstraints().add(colConstraint);
+            }
+
+            // 로우 제약 조건 설정
+            for (int i = 0; i < rows; i++) {
+                RowConstraints rowConstraint = new RowConstraints();
+                rowConstraint.setMinHeight(140);
+                rowConstraint.setPrefHeight(140);
+                rowConstraint.setValignment(VPos.CENTER);
+                grid.getRowConstraints().add(rowConstraint);
+            }
+
+            // 선택된 옷들을 그리드에 배치
+            for (int i = 0; i < selectedClothes.size(); i++) {
+                Wardrobe clothes = selectedClothes.get(i);
+                int col = i % cols;
+                int row = i / cols;
+
+                VBox clothesBox = createClothesBox(clothes);
+                grid.add(clothesBox, col, row);
+            }
+
+            return grid;
+
+        } catch (Exception e) {
+            System.err.println("스냅샷 GridPane 생성 중 오류: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // 개별 옷 아이템 박스 생성
+    private VBox createClothesBox(Wardrobe clothes) {
+        VBox box = new VBox();
+        box.setAlignment(Pos.CENTER);
+        box.setSpacing(8);
+        box.setPrefWidth(120);
+        box.setPrefHeight(140);
+
+        // 이미지뷰 생성
+        ImageView imageView = new ImageView();
+        imageView.setFitWidth(100);
+        imageView.setFitHeight(100);
+        imageView.setPreserveRatio(true);
+        imageView.setSmooth(true);
+
+        // 이미지 설정
+        setSnapshotClothesImage(imageView, clothes);
+
+//        // 라벨 생성 (옷 이름)
+//        Label nameLabel = new Label(clothes.getName());
+//        nameLabel.setStyle("-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-alignment: center;");
+//        nameLabel.setMaxWidth(110);
+//        nameLabel.setWrapText(true);
+//        nameLabel.setTextAlignment(TextAlignment.CENTER);
+
+//        // 카테고리 라벨 생성
+//        String categoryName = getCategoryName(clothes.getCategoryId());
+//        Label categoryLabel = new Label(categoryName);
+//        categoryLabel.setStyle("-fx-font-size: 10px; -fx-text-fill: #666666; -fx-text-alignment: center;");
+
+        box.getChildren().addAll(imageView);
+
+        return box;
+    }
+
+    // 스냅샷용 이미지 설정 메서드
+    private void setSnapshotClothesImage(ImageView imageView, Wardrobe clothes) {
+        try {
+            if (clothes.getPicture() != null && clothes.getPicture().length > 0) {
+                ByteArrayInputStream bis = new ByteArrayInputStream(clothes.getPicture());
+                Image image = new Image(bis);
+                if (!image.isError()) {
+                    imageView.setImage(image);
+                    return;
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("스냅샷 이미지 로딩 실패: " + e.getMessage());
+        }
+
+        // 기본 이미지 설정
+        try {
+            Image defaultImage = new Image(getClass().getResourceAsStream("/images/default-clothes.png"));
+            if (defaultImage != null && !defaultImage.isError()) {
+                imageView.setImage(defaultImage);
+            } else {
+                // 기본 이미지도 없으면 색상 배경으로 대체
+                imageView.setStyle("-fx-background-color: #f0f0f0; -fx-border-color: #cccccc; -fx-border-width: 1;");
+            }
+        } catch (Exception e) {
+            System.err.println("기본 이미지 로딩 실패: " + e.getMessage());
+            imageView.setStyle("-fx-background-color: #f0f0f0; -fx-border-color: #cccccc; -fx-border-width: 1;");
+        }
+    }
+
+    // 카테고리 ID를 카테고리 이름으로 변환
+    private String getCategoryName(Long categoryId) {
+        if (categoryId == null) return "기타";
+
+        switch (categoryId.intValue()) {
+            case 1: return "상의";
+            case 2: return "바지";
+            case 3: return "원피스/스커트";
+            case 4: return "가방";
+            case 5: return "아우터";
+            case 6: return "신발";
+            case 7: return "악세사리";
+            case 8: return "기타";
+            default: return "기타";
+        }
+    }
     // 카테고리별 UI 업데이트
     private void updateCategoryUI(CategoryType categoryType, Wardrobe clothes) {
         switch (categoryType) {
@@ -477,7 +698,6 @@ public class CreateMyCodiController implements Initializable {
             System.err.println("기본 이미지 로딩 실패: " + e.getMessage());
         }
     }
-
     @FXML
     private void handleSaveClick() {
         System.out.println("저장 버튼 클릭됨");
@@ -495,6 +715,10 @@ public class CreateMyCodiController implements Initializable {
 
             System.out.println("폼 검증 통과, 저장 작업 시작");
 
+            // FX Application Thread에서 스냅샷 미리 생성
+            byte[] snapshotBytes = createCodiSnapshot();
+            System.out.println("스냅샷 생성 완료: " + (snapshotBytes != null ? snapshotBytes.length + " bytes" : "null"));
+
             Task<Void> saveTask = new Task<Void>() {
                 @Override
                 protected Void call() throws Exception {
@@ -502,6 +726,14 @@ public class CreateMyCodiController implements Initializable {
 
                     Codi codi = createCodiFromForm();
                     System.out.println("Codi 객체 생성 완료: " + codi.getName());
+
+                    // 미리 생성된 스냅샷 설정
+                    if (snapshotBytes != null) {
+                        codi.setPicture(snapshotBytes);
+                        System.out.println("코디 스냅샷 설정 완료");
+                    } else {
+                        System.out.println("코디 스냅샷 생성 실패 - null 이미지로 저장");
+                    }
 
                     List<Long> clothesIds = collectSelectedClothesIds();
                     System.out.println("선택된 옷 ID 목록: " + clothesIds);
@@ -522,15 +754,6 @@ public class CreateMyCodiController implements Initializable {
                 protected void succeeded() {
                     System.out.println("저장 성공");
                     navigateToCodiList();
-                }
-
-                private void showSuccess(String message) {
-                    System.out.println("성공: " + message);
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("성공");
-                    alert.setHeaderText(null);
-                    alert.setContentText(message);
-                    alert.showAndWait();
                 }
 
                 @Override
@@ -635,7 +858,7 @@ public class CreateMyCodiController implements Initializable {
         codi.setMemberId(memberSession.getMember().getId());
         codi.setName(codiNameField.getText().trim());
         codi.setDeleted("N");
-        codi.setCodiType("N"); // 기본값
+        codi.setCodiType("W"); // W: 옷장
 
         System.out.println("Codi 객체 생성 완료 - MemberID: " + memberSession.getMember().getId() + ", Name: " + codi.getName());
         return codi;
@@ -691,7 +914,6 @@ public class CreateMyCodiController implements Initializable {
 
         System.out.println("폼 초기화 완료");
     }
-
     private void resetAllUI() {
         String defaultStyle = "-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;";
 
@@ -768,6 +990,30 @@ public class CreateMyCodiController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private Wardrobe createTempWardrobe(String name, Long categoryId, Long memberId) {
+        Wardrobe clothes = new Wardrobe();
+        clothes.setId(System.currentTimeMillis()); // 임시 ID
+        clothes.setName(name);
+        clothes.setCategoryId(categoryId);
+        clothes.setMemberId(memberId);
+        clothes.setDeleted("N");
+        return clothes;
+    }
+
+    // GridPane 찾기 메서드 (기존 방식 - 필요시 사용)
+    private GridPane findGridPane() {
+        try {
+            // 부모 컨테이너에서 GridPane 찾기
+            if (topPane != null && topPane.getParent() instanceof GridPane) {
+                return (GridPane) topPane.getParent();
+            }
+            return null;
+        } catch (Exception e) {
+            System.err.println("GridPane 찾기 중 오류: " + e.getMessage());
+            return null;
+        }
     }
 
     // 열거형과 인터페이스

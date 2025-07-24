@@ -176,26 +176,14 @@ public class DetailMyCodiController implements Initializable {
                         "-fx-padding: 10;"
         );
 
-        // 카테고리 이름 라벨
-        Long categoryId = wardrobe.getCategoryId() != null ? wardrobe.getCategoryId() : 8L;
-        String categoryName = categoryNames.getOrDefault(categoryId, "기타");
-
-        Label categoryLabel = new Label(categoryName);
-        categoryLabel.setStyle("-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #495057;");
-
         // 옷 이미지
         ImageView imageView = new ImageView();
-        imageView.setFitHeight(70);
-        imageView.setFitWidth(70);
+        imageView.setFitHeight(100);
+        imageView.setFitWidth(100);
         imageView.setPreserveRatio(true);
         setClothesImage(imageView, wardrobe);
 
-        // 옷 이름 라벨
-        Label nameLabel = new Label(wardrobe.getName() != null ? wardrobe.getName() : "이름 없음");
-        nameLabel.setStyle("-fx-font-size: 9px; -fx-text-fill: #6c757d; -fx-wrap-text: true; -fx-text-alignment: center;");
-        nameLabel.setMaxWidth(180);
-
-        itemBox.getChildren().addAll(categoryLabel, imageView, nameLabel);
+        itemBox.getChildren().addAll(imageView);
 
         return itemBox;
     }

@@ -1,6 +1,7 @@
 module com.samyukgu.what2wear {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.swing;
     requires java.sql;
     requires jdk.jdi;
     requires jakarta.mail;
@@ -16,6 +17,7 @@ module com.samyukgu.what2wear {
     opens com.samyukgu.what2wear.wardrobe.controller to javafx.fxml;
     opens com.samyukgu.what2wear.friend.controller to javafx.fxml;
     opens com.samyukgu.what2wear.notification.controller to javafx.fxml;
+    opens com.samyukgu.what2wear.myCodi.controller to javafx.fxml;
 
     exports com.samyukgu.what2wear;
     opens com.samyukgu.what2wear.layout.controller to javafx.fxml;

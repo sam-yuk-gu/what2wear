@@ -16,18 +16,33 @@ import com.samyukgu.what2wear.common.controller.CustomModalController;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -117,7 +132,6 @@ public class EditMyCodiController implements Initializable {
 
     // 원본 옷 정보들
     private Map<String, Wardrobe> originalClothes = new HashMap<>();
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         DIContainer diContainer = DIContainer.getInstance();
@@ -275,7 +289,6 @@ public class EditMyCodiController implements Initializable {
             if (field != null) field.clear();
         }
     }
-
     // 카테고리별 옷 선택 메서드들
     @FXML
     private void handleTopClick() {
@@ -677,6 +690,203 @@ public class EditMyCodiController implements Initializable {
             System.err.println("기본 이미지 로딩 실패: " + e.getMessage());
         }
     }
+    // 스냅샷 생성 관련 메서드들
+    private byte[] createCodiSnapshot() {
+        try {
+            System.out.println("코디 스냅샷 생성 시작");
+
+            // 현재 스레드가 FX Application Thread인지 확인
+            if (!Platform.isFxApplicationThread()) {
+                System.err.println("스냅샷은 FX Application Thread에서만 생성할 수 있습니다.");
+                return null;
+            }
+
+            // 선택된 옷들 수집
+            List<Wardrobe> selectedClothes = collectSelectedClothes();
+            if (selectedClothes.isEmpty()) {
+                System.out.println("선택된 옷이 없어 스냅샷을 생성하지 않습니다.");
+                return null;
+            }
+
+            // 새로운 GridPane 생성 (스냅샷 전용)
+            GridPane snapshotGrid = createSnapshotGridPane(selectedClothes);
+
+            if (snapshotGrid == null) {
+                System.err.println("스냅샷용 GridPane 생성에 실패했습니다.");
+                return null;
+            }
+
+            // 임시 Scene 생성 (스냅샷을 위해)
+            Scene tempScene = new Scene(snapshotGrid);
+
+            // 스타일 적용 (배경색 등)
+            snapshotGrid.setStyle("-fx-background-color: white; -fx-padding: 20;");
+
+            // GridPane의 스냅샷 생성
+            WritableImage snapshot = snapshotGrid.snapshot(null, null);
+
+            if (snapshot == null) {
+                System.err.println("스냅샷 생성에 실패했습니다.");
+                return null;
+            }
+
+            // WritableImage를 BufferedImage로 변환
+            BufferedImage bufferedImage = SwingFXUtils.fromFXImage(snapshot, null);
+
+            if (bufferedImage == null) {
+                System.err.println("BufferedImage 변환에 실패했습니다.");
+                return null;
+            }
+
+            // BufferedImage를 byte[]로 변환
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(bufferedImage, "PNG", baos);
+            byte[] imageBytes = baos.toByteArray();
+
+            System.out.println("코디 스냅샷 생성 완료 - 크기: " + imageBytes.length + " bytes");
+            return imageBytes;
+
+        } catch (IOException e) {
+            System.err.println("스냅샷 생성 중 I/O 오류: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        } catch (Exception e) {
+            System.err.println("스냅샷 생성 중 예상치 못한 오류: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private List<Wardrobe> collectSelectedClothes() {
+        List<Wardrobe> selectedClothes = new ArrayList<>();
+
+        if (selectedTop != null) selectedClothes.add(selectedTop);
+        if (selectedBottom != null) selectedClothes.add(selectedBottom);
+        if (selectedShoes != null) selectedClothes.add(selectedShoes);
+        if (selectedBag != null) selectedClothes.add(selectedBag);
+        if (selectedDress != null) selectedClothes.add(selectedDress);
+        if (selectedOuter != null) selectedClothes.add(selectedOuter);
+        if (selectedAccessory != null) selectedClothes.add(selectedAccessory);
+        if (selectedEtc != null) selectedClothes.add(selectedEtc);
+
+        return selectedClothes;
+    }
+
+    private GridPane createSnapshotGridPane(List<Wardrobe> selectedClothes) {
+        try {
+            // 적절한 그리드 크기 계산 (옷 개수에 따라)
+            int itemCount = selectedClothes.size();
+            int cols = Math.min(itemCount, 3); // 최대 3열
+            int rows = (int) Math.ceil((double) itemCount / cols); // 필요한 행 수
+
+            GridPane grid = new GridPane();
+            grid.setHgap(15); // 수평 간격
+            grid.setVgap(15); // 수직 간격
+            grid.setAlignment(Pos.CENTER);
+
+            // 컬럼 제약 조건 설정
+            for (int i = 0; i < cols; i++) {
+                ColumnConstraints colConstraint = new ColumnConstraints();
+                colConstraint.setMinWidth(120);
+                colConstraint.setPrefWidth(120);
+                colConstraint.setHalignment(HPos.CENTER);
+                grid.getColumnConstraints().add(colConstraint);
+            }
+
+            // 로우 제약 조건 설정
+            for (int i = 0; i < rows; i++) {
+                RowConstraints rowConstraint = new RowConstraints();
+                rowConstraint.setMinHeight(140);
+                rowConstraint.setPrefHeight(140);
+                rowConstraint.setValignment(VPos.CENTER);
+                grid.getRowConstraints().add(rowConstraint);
+            }
+
+            // 선택된 옷들을 그리드에 배치
+            for (int i = 0; i < selectedClothes.size(); i++) {
+                Wardrobe clothes = selectedClothes.get(i);
+                int col = i % cols;
+                int row = i / cols;
+
+                VBox clothesBox = createClothesBox(clothes);
+                grid.add(clothesBox, col, row);
+            }
+
+            return grid;
+
+        } catch (Exception e) {
+            System.err.println("스냅샷 GridPane 생성 중 오류: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private VBox createClothesBox(Wardrobe clothes) {
+        VBox box = new VBox();
+        box.setAlignment(Pos.CENTER);
+        box.setSpacing(8);
+        box.setPrefWidth(120);
+        box.setPrefHeight(140);
+
+        // 이미지뷰 생성
+        ImageView imageView = new ImageView();
+        imageView.setFitWidth(100);
+        imageView.setFitHeight(100);
+        imageView.setPreserveRatio(true);
+        imageView.setSmooth(true);
+
+        // 이미지 설정
+        setSnapshotClothesImage(imageView, clothes);
+
+        box.getChildren().addAll(imageView);
+
+        return box;
+    }
+
+    private void setSnapshotClothesImage(ImageView imageView, Wardrobe clothes) {
+        try {
+            if (clothes.getPicture() != null && clothes.getPicture().length > 0) {
+                ByteArrayInputStream bis = new ByteArrayInputStream(clothes.getPicture());
+                Image image = new Image(bis);
+                if (!image.isError()) {
+                    imageView.setImage(image);
+                    return;
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("스냅샷 이미지 로딩 실패: " + e.getMessage());
+        }
+
+        // 기본 이미지 설정
+        try {
+            Image defaultImage = new Image(getClass().getResourceAsStream("/images/default-clothes.png"));
+            if (defaultImage != null && !defaultImage.isError()) {
+                imageView.setImage(defaultImage);
+            } else {
+                // 기본 이미지도 없으면 색상 배경으로 대체
+                imageView.setStyle("-fx-background-color: #f0f0f0; -fx-border-color: #cccccc; -fx-border-width: 1;");
+            }
+        } catch (Exception e) {
+            System.err.println("기본 이미지 로딩 실패: " + e.getMessage());
+            imageView.setStyle("-fx-background-color: #f0f0f0; -fx-border-color: #cccccc; -fx-border-width: 1;");
+        }
+    }
+
+    private String getCategoryName(Long categoryId) {
+        if (categoryId == null) return "기타";
+
+        switch (categoryId.intValue()) {
+            case 1: return "상의";
+            case 2: return "바지";
+            case 3: return "원피스/스커트";
+            case 4: return "가방";
+            case 5: return "아우터";
+            case 6: return "신발";
+            case 7: return "악세사리";
+            case 8: return "기타";
+            default: return "기타";
+        }
+    }
 
     // 수정된 handleUpdate 메서드 - CustomModal 사용
     @FXML
@@ -695,6 +905,16 @@ public class EditMyCodiController implements Initializable {
                 return;
             }
 
+            // 선택된 옷이 있는지 확인 (스냅샷 생성을 위해)
+            List<Wardrobe> selectedClothes = collectSelectedClothes();
+            String confirmMessage = "코디 정보를 수정하시겠습니까?";
+
+            if (selectedClothes.isEmpty()) {
+                confirmMessage = "선택된 옷이 없어 스냅샷이 생성되지 않습니다.\n그래도 수정하시겠습니까?";
+            } else {
+                confirmMessage = "선택된 " + selectedClothes.size() + "개 옷의 스냅샷과 함께 코디를 수정하시겠습니까?";
+            }
+
             // CustomModal로 확인창 표시
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/CustomModal.fxml"));
             StackPane modal = loader.load();
@@ -702,9 +922,9 @@ public class EditMyCodiController implements Initializable {
             CustomModalController controller = loader.getController();
             controller.configure(
                     "코디 수정 확인",
-                    "코디 정보를 수정하시겠습니까?",
-                    "/assets/icons/greenCheck.png", // 아이콘 없음
-                    "#4CAF50", // 파란색
+                    confirmMessage,
+                    "/assets/icons/greenCheck.png",
+                    "#4CAF50",
                     "취소",
                     "수정",
                     () -> rootPane.getChildren().remove(modal), // 취소
@@ -722,7 +942,7 @@ public class EditMyCodiController implements Initializable {
         }
     }
 
-    // 실제 수정 작업을 수행하는 메서드 (새로 추가)
+    // 실제 수정 작업을 수행하는 메서드 (스냅샷 포함)
     private void performUpdate() {
         System.out.println("폼 검증 통과, 수정 작업 시작");
 
@@ -730,6 +950,10 @@ public class EditMyCodiController implements Initializable {
         if (updateButton != null) {
             updateButton.setDisable(true);
         }
+
+        // FX Application Thread에서 스냅샷 미리 생성
+        byte[] snapshotBytes = createCodiSnapshot();
+        System.out.println("스냅샷 생성 완료: " + (snapshotBytes != null ? snapshotBytes.length + " bytes" : "null"));
 
         Task<Void> updateTask = new Task<Void>() {
             @Override
@@ -739,8 +963,28 @@ public class EditMyCodiController implements Initializable {
                 Codi updatedCodi = createUpdatedCodi();
                 System.out.println("수정된 Codi 객체 생성 완료: " + updatedCodi.getName());
 
+                // 미리 생성된 스냅샷 설정
+                if (snapshotBytes != null) {
+                    updatedCodi.setPicture(snapshotBytes);
+                    System.out.println("코디 스냅샷 업데이트 완료");
+                } else {
+                    System.out.println("코디 스냅샷 생성 실패 - 기존 이미지 유지");
+                    // 기존 이미지를 유지하거나 null로 설정할지 결정
+                    // 여기서는 기존 이미지를 유지하도록 설정하지 않음 (새로운 스냅샷으로 교체)
+                }
+
                 List<Long> clothesIds = collectSelectedClothesIds();
                 System.out.println("선택된 옷 ID 목록: " + clothesIds);
+
+                // 디버깅을 위한 상세 정보 출력
+                if (selectedTop != null) System.out.println("상의: " + selectedTop.getName() + " (ID: " + selectedTop.getId() + ")");
+                if (selectedBottom != null) System.out.println("바지: " + selectedBottom.getName() + " (ID: " + selectedBottom.getId() + ")");
+                if (selectedShoes != null) System.out.println("신발: " + selectedShoes.getName() + " (ID: " + selectedShoes.getId() + ")");
+                if (selectedBag != null) System.out.println("가방: " + selectedBag.getName() + " (ID: " + selectedBag.getId() + ")");
+                if (selectedDress != null) System.out.println("원피스/스커트: " + selectedDress.getName() + " (ID: " + selectedDress.getId() + ")");
+                if (selectedOuter != null) System.out.println("아우터: " + selectedOuter.getName() + " (ID: " + selectedOuter.getId() + ")");
+                if (selectedAccessory != null) System.out.println("악세사리: " + selectedAccessory.getName() + " (ID: " + selectedAccessory.getId() + ")");
+                if (selectedEtc != null) System.out.println("기타: " + selectedEtc.getName() + " (ID: " + selectedEtc.getId() + ")");
 
                 codiService.updateCodi(updatedCodi, clothesIds);
                 System.out.println("코디 수정 완료");
@@ -776,7 +1020,7 @@ public class EditMyCodiController implements Initializable {
         updateThread.start();
     }
 
-    // 수정 성공 모달 (새로 추가)
+    // 수정 성공 모달
     private void showUpdateSuccessModal() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/CustomModal.fxml"));
@@ -786,8 +1030,8 @@ public class EditMyCodiController implements Initializable {
             controller.configure(
                     "수정 완료",
                     "코디가 성공적으로 수정되었습니다.",
-                    "/assets/icons/greenCheck.png", // 아이콘 없음
-                    "#4CAF50", // 초록색
+                    "/assets/icons/greenCheck.png",
+                    "#4CAF50",
                     null, // 취소 버튼 없음
                     "확인",
                     null, // 취소 액션 없음
@@ -797,7 +1041,7 @@ public class EditMyCodiController implements Initializable {
 
                         // 데이터 정리하고 상세 페이지로 이동
                         MyCodiEditData.clearSelectedCodi();
-                        MainLayoutController.loadView("/com/samyukgu/what2wear/myCodi/myCodiDetail.fxml");
+                        MainLayoutController.loadView("/com/samyukgu/what2wear/myCodi/myCodiList.fxml");
                     }
             );
 
@@ -876,7 +1120,7 @@ public class EditMyCodiController implements Initializable {
                 CustomModalController controller = loader.getController();
                 controller.configure(
                         "변경사항 확인",
-                        "저장하지 않은 변경사항이 있습니다.\n정말로 취소하시겠습니까?",
+                        "저장하지 않은 변경사항이 있습니다.",
                         null, // 아이콘 없음
                         "#dc3545", // 빨간색
                         "계속 수정",
@@ -955,22 +1199,65 @@ public class EditMyCodiController implements Initializable {
 
         Codi updatedCodi = new Codi();
 
-        // 기본 정보는 유지
+        // 기본 정보는 유지 - 모든 필드를 정확히 복사
         updatedCodi.setId(currentCodi.getId());
         updatedCodi.setMemberId(currentCodi.getMemberId());
         updatedCodi.setSchedule(currentCodi.getSchedule());
         updatedCodi.setScheduleDate(currentCodi.getScheduleDate());
         updatedCodi.setScope(currentCodi.getScope());
         updatedCodi.setWeather(currentCodi.getWeather());
-        updatedCodi.setPicture(currentCodi.getPicture());
         updatedCodi.setCodiType(currentCodi.getCodiType());
         updatedCodi.setDeleted(currentCodi.getDeleted());
+
+        // ⭐ 중요: createdAt 필드 추가 (이제 모델에 추가됨)
+        updatedCodi.setCreatedAt(currentCodi.getCreatedAt());
 
         // 수정된 정보 적용
         updatedCodi.setName(codiNameField.getText().trim());
 
-        System.out.println("수정된 Codi 객체 생성 완료 - ID: " + updatedCodi.getId() + ", Name: " + updatedCodi.getName());
+        // picture는 performUpdate에서 설정하므로 여기서는 설정하지 않음
+
+        // 필수값 검증
+        if (updatedCodi.getId() == null) {
+            throw new IllegalStateException("코디 ID가 null입니다.");
+        }
+        if (updatedCodi.getMemberId() == null) {
+            throw new IllegalStateException("멤버 ID가 null입니다.");
+        }
+        if (updatedCodi.getName() == null || updatedCodi.getName().trim().isEmpty()) {
+            throw new IllegalStateException("코디 이름이 null이거나 비어있습니다.");
+        }
+
+        // 디버깅 정보 출력
+        System.out.println("수정된 Codi 객체 생성 완료:");
+        System.out.println("- ID: " + updatedCodi.getId());
+        System.out.println("- Name: " + updatedCodi.getName());
+        System.out.println("- MemberID: " + updatedCodi.getMemberId());
+        System.out.println("- CreatedAt: " + updatedCodi.getCreatedAt());
+        System.out.println("- CodiType: " + updatedCodi.getCodiType());
+        System.out.println("- Deleted: " + updatedCodi.getDeleted());
+
         return updatedCodi;
+    }
+    private void debugCurrentCodiInfo() {
+        if (currentCodi != null) {
+            System.out.println("=== 현재 코디 정보 ===");
+            System.out.println("ID: " + currentCodi.getId());
+            System.out.println("Name: " + currentCodi.getName());
+            System.out.println("MemberID: " + currentCodi.getMemberId());
+            System.out.println("CreatedAt: " + currentCodi.getCreatedAt());
+            System.out.println("CodiType: " + currentCodi.getCodiType());
+            System.out.println("Deleted: " + currentCodi.getDeleted());
+            System.out.println("Schedule: " + currentCodi.getSchedule());
+            System.out.println("ScheduleDate: " + currentCodi.getScheduleDate());
+            System.out.println("Scope: " + currentCodi.getScope());
+            System.out.println("Weather: " + currentCodi.getWeather());
+            System.out.println("Clothes count: " + (currentCodi.getClothes() != null ? currentCodi.getClothes().size() : 0));
+            System.out.println("Picture size: " + (currentCodi.getPicture() != null ? currentCodi.getPicture().length + " bytes" : "null"));
+            System.out.println("=====================");
+        } else {
+            System.out.println("currentCodi is null!");
+        }
     }
 
     private List<Long> collectSelectedClothesIds() {
@@ -1063,6 +1350,19 @@ public class EditMyCodiController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    // 추가 유틸리티 메서드들
+    private boolean canCreateSnapshot() {
+        List<Wardrobe> selectedClothes = collectSelectedClothes();
+        return !selectedClothes.isEmpty();
+    }
+
+    private void preserveExistingPicture(Codi updatedCodi) {
+        if (currentCodi != null && currentCodi.getPicture() != null) {
+            updatedCodi.setPicture(currentCodi.getPicture());
+            System.out.println("기존 코디 이미지를 유지합니다.");
+        }
     }
 
     // 열거형과 인터페이스
