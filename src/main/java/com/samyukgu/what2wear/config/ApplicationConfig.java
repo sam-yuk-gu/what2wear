@@ -12,6 +12,9 @@ import com.samyukgu.what2wear.member.dao.MemberOracleDAO;
 import com.samyukgu.what2wear.member.service.MemberService;
 import com.samyukgu.what2wear.myCodi.dao.CodiDetailDAO;
 import com.samyukgu.what2wear.myCodi.dao.CodiDetailOracleDAO;
+import com.samyukgu.what2wear.notification.dao.NotificationDAO;
+import com.samyukgu.what2wear.notification.dao.NotificationOracleDAO;
+import com.samyukgu.what2wear.notification.service.NotificationService;
 import com.samyukgu.what2wear.region.service.RegionService;
 import com.samyukgu.what2wear.wardrobe.dao.CategoryDAO;
 import com.samyukgu.what2wear.wardrobe.dao.CategoryOracleDAO;
@@ -53,11 +56,22 @@ public class ApplicationConfig {
                 new com.samyukgu.what2wear.codi.dao.CodiOracleDAO());
         container.registerSingleton(PostDAO.class, new PostOracleDAO());
         container.registerSingleton(PostCommentDAO.class, new PostCommentOracleDAO());
+        container.registerSingleton(NotificationDAO.class, new NotificationOracleDAO());
         container.registerSingleton(RegionDAO.class, new RegionOracleDAO());
 
         // Service
         container.registerSingleton(MemberService.class, new MemberService(container.resolve(MemberDAO.class)));
         container.registerSingleton(PostService.class, new PostService(container.resolve(PostDAO.class)));
+        container.registerSingleton(com.samyukgu.what2wear.codi.service.CodiService.class,
+                new com.samyukgu.what2wear.codi.service.CodiService(
+                        container.resolve(com.samyukgu.what2wear.codi.dao.CodiDAO.class)
+                ));
+        container.registerSingleton(NotificationService.class,
+                new NotificationService(
+                        container.resolve(FriendDAO.class),
+                        container.resolve(NotificationDAO.class),
+                        container.resolve(MemberDAO.class))
+        );
         container.registerSingleton(com.samyukgu.what2wear.codi.service.CodiService.class,
                 new com.samyukgu.what2wear.codi.service.CodiService(
                         container.resolve(com.samyukgu.what2wear.codi.dao.CodiDAO.class)
@@ -85,6 +99,10 @@ public class ApplicationConfig {
 
         container.registerSingleton(MailService.class, new MailService());
         container.registerSingleton(AuthService.class, new AuthService(container.resolve(MailService.class)));
-        container.registerSingleton(FriendService.class, new FriendService(container.resolve(MemberDAO.class), container.resolve(FriendDAO.class)));
+        container.registerSingleton(FriendService.class, new FriendService(
+                container.resolve(MemberDAO.class),
+                container.resolve(FriendDAO.class),
+                container.resolve(NotificationDAO.class)
+                ));
     }
 }

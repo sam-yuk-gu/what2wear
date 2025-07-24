@@ -255,7 +255,7 @@ public class CodiOracleDAO implements CodiDAO {
                 seq_codi.NEXTVAL, ?, ?, ?, ?, ?, 'N'
             )
         """;
-        String getIdSql = "SELECT seq_codi.CURRVAL FROM dual";
+        String getIdSql = "SELECT SEQ_CODI.CURRVAL FROM dual";
         String insertDetailSql = "INSERT INTO codi_detail (codi_id, clothes_id) VALUES (?, ?)";
 
         try (Connection conn = getConnection()) {

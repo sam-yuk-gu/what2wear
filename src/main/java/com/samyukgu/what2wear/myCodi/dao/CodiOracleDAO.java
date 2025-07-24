@@ -175,7 +175,10 @@ public class CodiOracleDAO implements CodiDAO {
         String sql = """
             SELECT * 
             FROM codi 
-            WHERE id = ? AND member_id = ? AND deleted = 'N'
+            WHERE id = ?
+            AND member_id = ?
+            AND deleted = 'N'
+            AND codi_type = 'W'
             """;
 
         try (Connection conn = getConnection();
@@ -202,7 +205,9 @@ public class CodiOracleDAO implements CodiDAO {
         String sql = """
             SELECT * 
             FROM codi 
-            WHERE member_id = ? AND deleted = 'N'
+            WHERE member_id = ?
+            AND deleted = 'N'
+            AND codi_type = 'W'
             ORDER BY id DESC
             """;
 
@@ -235,7 +240,10 @@ public class CodiOracleDAO implements CodiDAO {
             FROM codi c
             LEFT JOIN codi_detail cd ON c.id = cd.codi_id
             LEFT JOIN clothes cl ON cd.clothes_id = cl.id AND cl.deleted = 'N'
-            WHERE c.id = ? AND c.member_id = ? AND c.deleted = 'N'
+            WHERE c.id = ?
+            AND c.member_id = ?
+            AND c.deleted = 'N'
+            AND c.codi_type = 'W'
             """;
 
         CodiWithDetails codiWithDetails = null;

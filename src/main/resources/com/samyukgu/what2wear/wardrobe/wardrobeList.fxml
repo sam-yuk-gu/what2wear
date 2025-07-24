@@ -17,37 +17,40 @@
 <HBox prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.wardrobe.controller.ListWardrobeController">
    <children>
       <VBox prefHeight="768.0" prefWidth="1030.0">
-               <HBox layoutX="14.0" layoutY="6.0" spacing="10.0">
-                  <children>
-                     <Button fx:id="allButton" onAction="#filterAll" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="전체" />
-                     <Button fx:id="topButton" onAction="#filterTops" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="상의" />
-                     <Button fx:id="pantsButton" onAction="#filterPants" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="바지" />
-                     <Button fx:id="dressButton" onAction="#filterDress" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="원피스 / 스커트" />
-                     <Button fx:id="bagButton" onAction="#filterBags" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="가방" />
-                     <Button fx:id="outerButton" onAction="#filterOuter" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="아우터" />
-                     <Button fx:id="shoesButton" onAction="#filterShoes" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="신발" />
-                     <Button fx:id="accessoryButton" onAction="#filterAccessory" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="악세사리" />
-                     <Button fx:id="etcButton" onAction="#filterEtc" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="기타" />
-                  </children>
-               </HBox>
+         <HBox layoutX="14.0" layoutY="6.0" spacing="10.0">
+            <children>
+               <Button fx:id="allButton" onAction="#filterAll" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="전체" />
+               <Button fx:id="topButton" onAction="#filterTops" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="상의" />
+               <Button fx:id="pantsButton" onAction="#filterPants" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="바지" />
+               <Button fx:id="dressButton" onAction="#filterDress" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="원피스 / 스커트" />
+               <Button fx:id="bagButton" onAction="#filterBags" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="가방" />
+               <Button fx:id="outerButton" onAction="#filterOuter" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="아우터" />
+               <Button fx:id="shoesButton" onAction="#filterShoes" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="신발" />
+               <Button fx:id="accessoryButton" onAction="#filterAccessory" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="악세사리" />
+               <Button fx:id="etcButton" onAction="#filterEtc" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="기타" />
+            </children>
+         </HBox>
 
          <!-- 하단 콘텐츠 영역 -->
          <AnchorPane prefHeight="629.0" prefWidth="1030.0" style="-fx-background-color: white;">
             <children>
 
                <!-- 오른쪽 상단 필터 및 검색창 -->
-               <HBox alignment="CENTER_RIGHT" layoutX="571.0" layoutY="26.0" prefHeight="29.0" prefWidth="425.0" spacing="10.0">
+               <HBox alignment="CENTER_RIGHT" layoutX="551.0" layoutY="26.0" prefHeight="30.0" prefWidth="445.0" spacing="10.0">
                   <children>
                      <Button fx:id="favoriteButton" onAction="#filterFavorites" style="-fx-background-color: transparent; -fx-border-color: #cccccc; -fx-border-width: 1; -fx-text-fill: #000000; -fx-font-size: 13px; -fx-font-weight: normal; -fx-background-radius: 4; -fx-border-radius: 4; -fx-padding: 6 12; -fx-cursor: hand;" text="즐겨찾기" />
-                     <ComboBox fx:id="sortComboBox" onAction="#handleSortChange" prefWidth="100" promptText="등록일 순">
+
+                     <!-- 수정된 정렬 ComboBox -->
+                     <ComboBox fx:id="sortComboBox" onAction="#handleSortChange" prefWidth="120" promptText="정렬 방식">
                         <items>
                            <FXCollections fx:factory="observableArrayList">
-                              <String fx:value="등록일 순" />
+                              <String fx:value="최신 순" />
+                              <String fx:value="오래된 순" />
                               <String fx:value="이름순" />
-                              <String fx:value="최근 착용순" />
                            </FXCollections>
                         </items>
                      </ComboBox>
+
                      <HBox alignment="CENTER_LEFT" style="-fx-background-color: #d9d9d9; -fx-background-radius: 5;">
                         <children>
                            <TextField fx:id="searchField" focusTraversable="false" prefWidth="200" promptText="검색어를 입력하세요" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
