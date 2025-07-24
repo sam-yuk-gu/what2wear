@@ -11,6 +11,11 @@ module com.samyukgu.what2wear {
     requires com.fasterxml.jackson.databind;    // jackson.databind 모듈 오류 해결을 위해 추가
     requires java.net.http;
     requires com.google.gson; // http 추가
+    requires org.json;
+    requires com.google.gson;
+    requires com.fasterxml.jackson.core;
+    requires com.fasterxml.jackson.databind;
+    requires com.fasterxml.jackson.annotation;
 
     opens com.samyukgu.what2wear to javafx.fxml;
     opens com.samyukgu.what2wear.post.controller to javafx.fxml;

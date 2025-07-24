@@ -1,9 +1,12 @@
 package com.samyukgu.what2wear.codi.controller;
 
+import com.samyukgu.what2wear.codi.dto.CodiDetailDTO;
 import com.samyukgu.what2wear.codi.model.Codi;
 import com.samyukgu.what2wear.codi.model.CodiScope;
 import com.samyukgu.what2wear.codi.service.CodiService;
 import com.samyukgu.what2wear.common.controller.BasicHeaderController;
+import com.samyukgu.what2wear.common.controller.CustomModalController;
+import com.samyukgu.what2wear.common.controller.EditOutfitModalController;
 import com.samyukgu.what2wear.common.controller.SelectOutfitModalController;
 import com.samyukgu.what2wear.common.util.DateUtils;
 import com.samyukgu.what2wear.di.DIContainer;
@@ -27,6 +30,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
+import static com.samyukgu.what2wear.common.util.CategoryUtil.getNameById;
 
 public class CodiEditController {
 
@@ -36,7 +42,8 @@ public class CodiEditController {
     @FXML private TextField scheduleNameField;
     @FXML private DatePicker datePicker;
     @FXML private Pane codiDisplayPane;
-    @FXML private Button submitButton;
+    @FXML private Button editButton;
+    @FXML private Button deleteButton;
 
     @FXML private ToggleButton btnAll;
     @FXML private ToggleButton btnFriend;
@@ -46,7 +53,6 @@ public class CodiEditController {
     private MemberSession memberSession;
     private CodiService codiService;
 
-    private boolean isEditMode = false;
     private Long editCodiId = null;
 
     private ToggleGroup scopeGroup;
@@ -96,14 +102,26 @@ public class CodiEditController {
         });
 
         datePicker.getEditor().setCursor(Cursor.HAND);
-        datePicker.setEditable(false); // 직접 입력 막기
         datePicker.setValue(LocalDate.now()); // 기본 선택 날짜 = 오늘
         datePicker.getEditor().setOnMouseClicked(event -> {
             datePicker.show(); // show()를 명시적으로 호출
         });
 
         codiDisplayPane.setOnMouseClicked(event -> showSelectOutfitModal());
-        submitButton.setOnAction(event -> handleSubmit());
+        editButton.setOnAction(event -> {
+            try {
+                handleEdit();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        deleteButton.setOnAction(event -> {
+            try {
+                handleDelete();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     private void setupDI() {
@@ -122,43 +140,32 @@ public class CodiEditController {
     }
 
     public void setEditMode(Long codiId) {
-        this.isEditMode = true;
         this.editCodiId = codiId;
         loadCodiForEdit();
     }
 
-    // 수정 데이터 불러우기
+    // 수정 데이터 불러오기
     private void loadCodiForEdit() {
-        System.out.println("수정 코디 id: " + editCodiId);
-//        Codi existingCodi = codiService.getCodiById(editCodiId);
-//
-//        if (existingCodi == null) return;
-//
-//        // 일정명
-//        if (existingCodi.getScheduleName() != null) {
-//            scheduleNameField.setText(existingCodi.getScheduleName());
-//        }
-//
-//        // 날짜
-//        if (existingCodi.getScheduleDate() != null) {
-//            datePicker.setValue(existingCodi.getScheduleDate());
-//        }
-//
-//        // 공개 범위
-//        switch (existingCodi.getScope()) {
-//            case PUBLIC -> btnAll.setSelected(true);
-//            case FRIENDS -> btnFriend.setSelected(true);
-//            case PRIVATE -> btnPrivate.setSelected(true);
-//        }
-//
-//        // 코디 or 옷
-//        if (existingCodi.getCodiItems() != null && !existingCodi.getCodiItems().isEmpty()) {
-//            selectedOutfits = existingCodi.getCodiItems();
-//        } else if (existingCodi.getSelectedCodi() != null) {
-//            selectedCodi = existingCodi.getSelectedCodi();
-//        }
-//
-//        renderCodiDisplay(); // 다시 그리기
+        CodiDetailDTO codiInfo = codiService.getCodiDetail(memberId, editCodiId);
+
+        if (codiInfo == null) return;
+
+        // 인풋값 받아온 데이터로 수정
+        if (codiInfo.getScheduleName() != null) {
+            scheduleNameField.setText(codiInfo.getScheduleName());
+        }
+        if (codiInfo.getScheduleDate() != null) {
+            datePicker.setValue(codiInfo.getScheduleDate());
+        }
+
+        switch (codiInfo.getScope()) {
+            case 0 -> btnAll.setSelected(true);
+            case 1 -> btnFriend.setSelected(true);
+            case 2 -> btnPrivate.setSelected(true);
+        }
+
+        selectedOutfits = codiInfo.getClothes();
+        renderCodiDisplay(); // 다시 그리기
     }
 
     private void setupScopeToggleGroup() {
@@ -187,12 +194,27 @@ public class CodiEditController {
 
     private void showSelectOutfitModal() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/SelectOutfitModal.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/EditOutfitModal.fxml"));
             StackPane modal = loader.load();
 
-            SelectOutfitModalController controller = loader.getController();
+            EditOutfitModalController controller = loader.getController();
+            List<Wardrobe> wardrobeList = selectedOutfits.stream()
+                    .map(item -> {
+                        Wardrobe w = new Wardrobe();
+                        w.setId(item.getId());
+                        w.setCategoryId(item.getCategoryId());
+                        w.setName(item.getName());
+                        try {
+                            w.setPicture(item.getPicture());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        return w;
+                    })
+                    .collect(Collectors.toList());
+
             controller.configure(
-                    selectedOutfits,
+                    wardrobeList,
                     selectedCodi,
                     scheduleNameField.getText(),
                     datePicker.getValue(),
@@ -200,7 +222,7 @@ public class CodiEditController {
                     result -> {
                         root.getChildren().remove(modal);
                         this.selectedOutfits = result.getOutfits();
-                        this.selectedCodi = result.getCodi();
+//                        this.selectedCodi = result.getCodi();
                         renderCodiDisplay();
                     },
                     () -> root.getChildren().remove(modal),
@@ -277,21 +299,58 @@ public class CodiEditController {
         };
     }
 
-    private void handleSubmit() {
+    private void handleDelete() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/CustomModal.fxml"));
+        StackPane modal = loader.load();
+        CustomModalController controller = loader.getController();
+        controller.configure(
+                "일정을 삭제하시겠습니까?",
+                "삭제된 일정 정보는 저장되지 않습니다.",
+                "/assets/icons/redCheck.png",
+                "#FA7B7F",
+                "취소",
+                "삭제",
+                () -> root.getChildren().remove(modal),
+                () -> {
+                    codiService.deleteCodiSchedule(memberId, editCodiId);
+                    root.getChildren().remove(modal);
+                    MainLayoutController.loadView("/com/samyukgu/what2wear/codi/CodiMainView.fxml");
+                }
+        );
 
+        root.getChildren().add(modal);
+    }
+
+    private void handleEdit() throws IOException {
         String title = scheduleNameField.getText();
-        String date = (datePicker.getValue() != null) ? datePicker.getValue().toString() : null;
-        Toggle selected = scopeGroup.getSelectedToggle();
-
         if ((title == null || title.trim().isEmpty()) && selectedOutfits.isEmpty()) {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/CustomModal.fxml"));
+            StackPane modal = loader.load();
+            CustomModalController controller = loader.getController();
+            controller.configure(
+                    "입력 내용 확인",
+                    "일정명을 입력하거나, 코디에 포함할 옷을 선택해주세요.",
+                    "/assets/icons/redCheck.png",
+                    "#FA7B7F",
+                    "취소",
+                    "삭제",
+                    () -> root.getChildren().remove(modal),
+                    () -> {
+                        codiService.deleteCodiSchedule(memberId, editCodiId);
+                        root.getChildren().remove(modal);
+                        MainLayoutController.loadView("/com/samyukgu/what2wear/codi/CodiMainView.fxml");
+                    }
+            );
+
+            root.getChildren().add(modal);
             // TODO: 모달창 출력으로 변경
             System.out.println("타이틀과 선택된 옷이 모두 입력되지 않았습니다.");
         } else {
-            // TODO: 저장 확인 모달 넣을지말지?
             LocalDate selectedDate = datePicker.getValue();
             CodiScope visibility = getSelectedVisibility();
             int scopeValue = getScopeValue(visibility);
-            codiService.createCodiSchedule(memberId, title, selectedDate, scopeValue, selectedOutfits);
+            codiService.updateCodiSchedule(editCodiId, memberId, title, selectedDate, scopeValue, selectedOutfits);
             MainLayoutController.loadView("/com/samyukgu/what2wear/codi/CodiMainView.fxml");
         }
     }
