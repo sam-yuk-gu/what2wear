@@ -2,6 +2,7 @@ package com.samyukgu.what2wear.notification.controller;
 
 import com.samyukgu.what2wear.common.util.CircularImageUtil;
 import com.samyukgu.what2wear.di.DIContainer;
+import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.member.Session.MemberSession;
 import com.samyukgu.what2wear.member.model.Member;
 import com.samyukgu.what2wear.notification.service.NotificationService;
@@ -127,10 +128,9 @@ public class NotificationModalController {
         try {
             notificationService.acceptRequest(currentMember.getId(), requester.getId());
 
-            // UI에서 해당 요청 제거
             removeFriendRequestFromUI(requester);
 
-            System.out.println("친구 요청 수락: " + requester.getNickname());
+            MainLayoutController.updateNotificationStatus();
         } catch (Exception e) {
             e.printStackTrace();
             // 에러 처리 로직 추가 가능
@@ -142,10 +142,9 @@ public class NotificationModalController {
         try {
             notificationService.rejectRequest(currentMember.getId(), requester.getId());
 
-            // UI에서 해당 요청 제거
             removeFriendRequestFromUI(requester);
 
-            System.out.println("친구 요청 거부: " + requester.getNickname());
+            MainLayoutController.updateNotificationStatus();
         } catch (Exception e) {
             e.printStackTrace();
             // 에러 처리 로직 추가 가능
