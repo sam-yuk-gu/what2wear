@@ -1,52 +1,64 @@
 package com.samyukgu.what2wear.ai.controller;
 
-import javafx.event.ActionEvent;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 
 public class IntroduceAiController {
-
-    @FXML private RadioButton agreeLocationRadio;
-    @FXML private RadioButton disagreeLocationRadio;
-
+    @FXML private ComboBox<String> select_location_title;
+    @FXML private ComboBox<String> select_title;
     @FXML private RadioButton otherClosetRadio;
     @FXML private RadioButton myClosetRadio;
 
-    private ToggleGroup locationGroup;
     private ToggleGroup closetToggleGroup;
+    // 선택된 라디오 버튼 값 저장
+    public static boolean isMyClosetSelected;
+
+    // 선택값 저장용 static 변수
+    public static String selectedLocation;
+    public static String selectedPurpose;
 
     @FXML
     private void initialize() {
-        // ToggleGroup 논리적으로 묶기 (위치 동의)
-        locationGroup = new ToggleGroup();
-        agreeLocationRadio.setToggleGroup(locationGroup);
-        disagreeLocationRadio.setToggleGroup(locationGroup);
-
-        // ToggleGroup 논리적으로 묶기 (옷장 범위)
         closetToggleGroup = new ToggleGroup();
         otherClosetRadio.setToggleGroup(closetToggleGroup);
         myClosetRadio.setToggleGroup(closetToggleGroup);
+
+        select_location_title.setValue("서울시 종로구");
+        select_title.setValue("공부");
+
+
+        myClosetRadio.setSelected(true); // 기본값
+        isMyClosetSelected = true;
+
+        // 옷장 범위 선택 확인
+        closetToggleGroup.selectedToggleProperty().addListener((obs, old, selected) -> {
+            if (selected == myClosetRadio) {
+                isMyClosetSelected = true;
+            } else if (selected == otherClosetRadio) {
+                isMyClosetSelected = false;
+            }
+        });
     }
 
-    // 추천받기 버튼 클릭 시 AI 로딩 화면으로 전환
     @FXML
     private void handleRecommendClick() {
-        // 위치 동의 여부
-        boolean isLocationAgreed = agreeLocationRadio.isSelected();
+        selectedLocation = select_location_title.getValue();
+        selectedPurpose = select_title.getValue();
 
-        // 선택된 옷장
-        String closetChoice = myClosetRadio.isSelected() ? "나의 옷장" : "다른 사람 옷장";
-
-        System.out.println("위치 동의 여부: " + isLocationAgreed);
-        System.out.println("선택한 옷장: " + closetChoice);
+        if (selectedLocation == null || selectedPurpose == null) {
+            System.out.println("지역 또는 외출 목적이 선택되지 않음");
+            return;
+        }
 
         MainLayoutController.loadView("/com/samyukgu/what2wear/ai/LoadingAi.fxml");
     }
 
-    // 취소하기 버튼 클릭 시 메인 화면으로 전환
-    public void handleCancelClick(ActionEvent actionEvent) {
+    @FXML
+    public void handleCancelClick(ActionEvent event) {
         MainLayoutController.loadView("/com/samyukgu/what2wear/codi/CodiMainView.fxml");
     }
 }

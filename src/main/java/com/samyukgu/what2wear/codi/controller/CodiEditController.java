@@ -243,7 +243,7 @@ public class CodiEditController {
             emptyBox.setSpacing(10);
             emptyBox.setAlignment(Pos.CENTER);
 
-            ImageView emptyImage = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/images/dummy-1.png"))));
+            ImageView emptyImage = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/images/dummy_1.png"))));
             emptyImage.setFitHeight(60);
             emptyImage.setPreserveRatio(true);
 

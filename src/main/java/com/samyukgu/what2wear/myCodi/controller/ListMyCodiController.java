@@ -2,7 +2,6 @@ package com.samyukgu.what2wear.myCodi.controller;
 
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.di.DIContainer;
-import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.member.Session.MemberSession;
 import com.samyukgu.what2wear.myCodi.model.CodiWithDetails;
 import com.samyukgu.what2wear.myCodi.service.CodiService;
@@ -12,7 +11,6 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
