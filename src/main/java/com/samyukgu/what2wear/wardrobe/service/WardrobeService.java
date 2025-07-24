@@ -1,6 +1,7 @@
 package com.samyukgu.what2wear.wardrobe.service;
 
 import com.samyukgu.what2wear.wardrobe.dao.WardrobeDAO;
+import com.samyukgu.what2wear.wardrobe.dao.WardrobeOracleDAO;
 import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
 
 import java.util.List;
@@ -39,7 +40,6 @@ public class WardrobeService {
         }
     }
 
-
     // 로그인한 회원이 새로운 옷 추가
     public void addWardrobe(Wardrobe wardrobe) {
         try {
@@ -56,6 +56,11 @@ public class WardrobeService {
     // 로그인 회원의 옷 수정
     public void updateWardrobe(Wardrobe wardrobe) {
         try {
+            logger.info("=== WardrobeService updateWardrobe 시작 ===");
+            logger.info("수정할 옷 ID: " + wardrobe.getId());
+            logger.info("회원 ID: " + wardrobe.getMemberId());
+            logger.info("즐겨찾기 상태: " + wardrobe.getLike());
+
             validateWardrobeForUpdate(wardrobe);
 
             // 기존 데이터 존재 여부 확인
@@ -63,6 +68,7 @@ public class WardrobeService {
             if (existingWardrobe == null) {
                 throw new IllegalArgumentException("수정하려는 옷이 존재하지 않습니다.");
             }
+
             wardrobeDAO.update(wardrobe);
             logger.info("옷 수정 완료 - ID: " + wardrobe.getId() + ", Name: " + wardrobe.getName());
         } catch (Exception e) {
@@ -89,7 +95,45 @@ public class WardrobeService {
         }
     }
 
-    // 로그인 한 회원이 가지고 있는 옷 즐겨찾기
+    // 즐겨찾기 상태만 업데이트하는 전용 메서드 추가
+    public void toggleFavoriteStatus(Long id, Long memberId) {
+        try {
+            logger.info("=== 즐겨찾기 토글 시작 ===");
+            logger.info("옷 ID: " + id + ", 회원 ID: " + memberId);
+
+            validateIds(id, memberId);
+
+            // 현재 옷 정보 조회
+            Wardrobe wardrobe = wardrobeDAO.findById(id, memberId);
+            if (wardrobe == null) {
+                throw new IllegalArgumentException("해당 옷이 존재하지 않습니다.");
+            }
+
+            // 즐겨찾기 상태 토글
+            boolean currentFavorite = "Y".equals(wardrobe.getLike());
+            String newFavoriteStatus = currentFavorite ? "N" : "Y";
+
+            logger.info("현재 즐겨찾기: " + wardrobe.getLike() + " -> 새로운 상태: " + newFavoriteStatus);
+
+            // 옷 모델 업데이트
+            wardrobe.setLike(newFavoriteStatus);
+
+            // DAO의 즐겨찾기 전용 메서드 사용
+            if (wardrobeDAO instanceof WardrobeOracleDAO) {
+                ((WardrobeOracleDAO) wardrobeDAO).updateFavoriteStatus(id, memberId, newFavoriteStatus);
+            } else {
+                // 일반 업데이트 메서드 사용
+                wardrobeDAO.update(wardrobe);
+            }
+
+            logger.info("즐겨찾기 상태 변경 완료 - ID: " + id + ", 즐겨찾기: " + newFavoriteStatus);
+        } catch (Exception e) {
+            logger.severe("즐겨찾기 상태 변경 실패 - ID: " + id + ", Error: " + e.getMessage());
+            throw new RuntimeException("즐겨찾기 상태를 변경하는데 실패했습니다: " + e.getMessage(), e);
+        }
+    }
+
+    // 기존 즐겨찾기 메서드 (boolean 매개변수 사용)
     public void updateFavoriteStatus(Long id, Long memberId, boolean isFavorite) {
         try {
             validateIds(id, memberId);

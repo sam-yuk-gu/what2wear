@@ -17,19 +17,26 @@
 <HBox prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.myCodi.controller.ListMyCodiController">
     <children>
         <VBox prefHeight="768.0" prefWidth="1030.0">
+            <!-- 상단 타이틀 -->
+            <HBox layoutX="14.0" layoutY="6.0" spacing="10.0" style="-fx-padding: 10; -fx-background-color: white">
+<!--                <children>-->
+<!--                    <Label style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #333;" text="나만의 코디" />-->
+<!--                </children>-->
+            </HBox>
+
             <!-- 하단 콘텐츠 영역 -->
             <AnchorPane prefHeight="629.0" prefWidth="1030.0" style="-fx-background-color: white;">
                 <children>
-                    <!-- 오른쪽 상단 필터 및 검색창 -->
-                    <HBox alignment="CENTER_RIGHT" layoutX="571.0" layoutY="26.0" prefHeight="29.0" prefWidth="425.0" spacing="10.0">
-                        <children>
-                            <Button fx:id="favoriteButton" onAction="#filterFavorites" style="-fx-background-color: transparent; -fx-border-color: #cccccc; -fx-border-width: 1; -fx-text-fill: #000000; -fx-font-size: 13px; -fx-font-weight: normal; -fx-background-radius: 4; -fx-border-radius: 4; -fx-padding: 6 12; -fx-cursor: hand;" text="즐겨찾기" />
 
-                            <ComboBox fx:id="sortComboBox" onAction="#handleSortChange" prefWidth="100" promptText="등록일 순">
+                    <!-- 오른쪽 상단 필터 및 검색창 -->
+                    <HBox alignment="CENTER_RIGHT" layoutX="551.0" layoutY="26.0" prefHeight="30.0" prefWidth="445.0" spacing="10.0">
+                        <children>
+                            <!-- 수정된 정렬 ComboBox -->
+                            <ComboBox fx:id="sortComboBox" onAction="#handleSortChange" prefWidth="120" promptText="정렬 방식">
                                 <items>
                                     <FXCollections fx:factory="observableArrayList">
-                                        <String fx:value="등록일 순" />
-                                        <String fx:value="인기순" />
+                                        <String fx:value="최신 순" />
+                                        <String fx:value="오래된 순" />
                                         <String fx:value="이름순" />
                                     </FXCollections>
                                 </items>
@@ -37,7 +44,7 @@
 
                             <HBox alignment="CENTER_LEFT" style="-fx-background-color: #d9d9d9; -fx-background-radius: 5;">
                                 <children>
-                                    <TextField fx:id="searchField" focusTraversable="false" prefWidth="200" promptText="검색어를 입력하세요" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
+                                    <TextField fx:id="searchField" focusTraversable="false" prefWidth="200" promptText="코디 이름 검색" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
                                     <Label style="-fx-font-size: 14px; -fx-text-fill: gray; -fx-padding: 5;" text="🔍" />
                                 </children>
                             </HBox>
@@ -51,20 +58,20 @@
                                 <children>
                                     <ImageView fitHeight="40" fitWidth="40">
                                         <image>
-                                            <Image preserveRatio="true" url="@../wardrobe/images/plus2.png" />
+                                            <Image preserveRatio="true" url="@images/plus.png" />
                                         </image>
                                     </ImageView>
-                                    <Label style="-fx-text-fill: black; -fx-font-size: 12;" text="추가하기" />
+                                    <Label style="-fx-text-fill: black; -fx-font-size: 12;" text="코디 추가" />
                                 </children>
                             </VBox>
-                            <VBox alignment="CENTER" onMouseClicked="#handleWardrobeClick" prefHeight="70.0" prefWidth="70.0" spacing="5" style="-fx-background-color: #f2f2f2; -fx-background-radius: 10; -fx-cursor: hand;">
+                            <VBox fx:id="wardrobeButton" alignment="CENTER" onMouseClicked="#handleWardrobeClick" prefHeight="70.0" prefWidth="70.0" spacing="5" style="-fx-background-color: #f2f2f2; -fx-background-radius: 10; -fx-cursor: hand;">
                                 <children>
-                                    <ImageView fitHeight="37.0" fitWidth="42.0">
+                                    <ImageView fitHeight="40" fitWidth="40">
                                         <image>
-                                            <Image url="@../wardrobe/images/wardrobe.png" />
+                                            <Image preserveRatio="true" url="@images/img.png" />
                                         </image>
                                     </ImageView>
-                                    <Label style="-fx-text-fill: black; -fx-font-size: 12;" text="나만의 옷장" />
+                                    <Label style="-fx-text-fill: black; -fx-font-size: 12;" text="옷장" />
                                 </children>
                             </VBox>
                         </children>
@@ -73,13 +80,13 @@
                     <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutX="21.0" layoutY="93.0" prefHeight="590.0" prefWidth="988.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" vbarPolicy="AS_NEEDED">
                         <content>
                             <VBox fx:id="codiGridContainer" maxWidth="988.0" prefWidth="988.0" spacing="1.0" style="-fx-padding: 10; -fx-fill-width: true;">
-                                <!-- 동적으로 생성되는 코디 아이템들이 여기에 추가됩니다 -->
+                                <!-- 여기에 나만의 코디들이 들어갈거야!!! -->
                             </VBox>
                         </content>
                     </ScrollPane>
 
                     <!-- 페이지네이션 -->
-                    <Pagination fx:id="pagination" layoutX="361.0" layoutY="624.0" prefHeight="59.0" prefWidth="305.0" />
+                    <Pagination fx:id="pagination" layoutX="361.0" layoutY="627.0" prefHeight="53.0" prefWidth="305.0" />
 
                     <!-- 로딩 및 상태 표시 영역 -->
                     <VBox fx:id="statusContainer" alignment="CENTER" layoutX="400.0" layoutY="300.0" prefHeight="100.0" prefWidth="200.0" visible="false">
@@ -87,6 +94,7 @@
                             <Label fx:id="statusLabel" style="-fx-font-size: 16px; -fx-text-fill: #666;" text="로딩 중" />
                         </children>
                     </VBox>
+
                 </children>
             </AnchorPane>
         </VBox>
