@@ -4,6 +4,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.Region?>
 
+<?import javafx.scene.layout.HBox?>
 <BorderPane fx:id="mainLayout"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.samyukgu.what2wear.layout.controller.MainLayoutController"
@@ -29,7 +30,9 @@
             </VBox>
             <Region fx:id="spacer" />
             <VBox spacing="20">
-                <Button fx:id="notificationButton" text="알림함" styleClass="menu-button" minHeight="53" maxWidth="Infinity"/>
+                <HBox>
+                    <Button fx:id="notificationButton" onAction="#handleClickNotification" text="알림함" styleClass="menu-button" minHeight="53" maxWidth="Infinity"/>
+                </HBox>
                 <Button fx:id="logoutButton" onAction="#handleClickLogout" text="로그아웃" styleClass="menu-button" minHeight="53" maxWidth="Infinity"/>
             </VBox>
         </VBox>
