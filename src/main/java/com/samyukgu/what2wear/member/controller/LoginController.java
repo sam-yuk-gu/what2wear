@@ -7,6 +7,10 @@ import com.samyukgu.what2wear.member.model.Member;
 import java.io.IOException;
 
 import com.samyukgu.what2wear.member.service.MemberService;
+import com.samyukgu.what2wear.region.Session.RegionWeatherSession;
+import com.samyukgu.what2wear.region.model.Region;
+import com.samyukgu.what2wear.weather.model.Weather;
+import com.samyukgu.what2wear.weather.service.WeatherService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -33,7 +37,8 @@ public class LoginController {
 
     private MemberService memberService;
     private MemberSession memberSession;
-
+    private RegionWeatherSession  regionWeatherSession;
+    private WeatherService  weatherService;
 
      // 초기화할때 UI 및 DI Container 세팅
     @FXML
@@ -49,6 +54,12 @@ public class LoginController {
 
         if(member!=null){
             memberSession.setMember(member);
+
+            Region defaultRegion = new Region(1L, "서울특별시", "", 60L, 127L);
+            regionWeatherSession.setRegion(defaultRegion);
+            Weather weather = weatherService.fetchWeatherFromApi(defaultRegion.getNx().intValue(), defaultRegion.getNy().intValue());
+            RegionWeatherSession.setWeather(weather);
+
             switchScene("/com/samyukgu/what2wear/layout/MainLayout.fxml", "내일 뭐 입지?");
         }else{
             showConfirmationModal();
@@ -78,6 +89,8 @@ public class LoginController {
         DIContainer diContainer = DIContainer.getInstance();
         memberService = diContainer.resolve(MemberService.class);
         memberSession = diContainer.resolve(MemberSession.class);
+        regionWeatherSession = diContainer.resolve(RegionWeatherSession.class);
+        weatherService = diContainer.resolve(WeatherService.class);
     }
 
     // 초기 로그인 배너 크기 및 모서리 처리

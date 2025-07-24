@@ -4,14 +4,14 @@ import com.samyukgu.what2wear.codi.dto.CodiListDTO;
 import com.samyukgu.what2wear.codi.model.CodiItem;
 import com.samyukgu.what2wear.codi.model.CodiSchedule;
 //import com.samyukgu.what2wear.codi.model.ScheduleVisibility;
-import com.samyukgu.what2wear.codi.service.DummyScheduleRepository;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.member.Session.MemberSession;
-import com.samyukgu.what2wear.member.model.Member;
+import com.samyukgu.what2wear.region.Session.RegionWeatherSession;
+import com.samyukgu.what2wear.weather.model.Weather;
+import com.samyukgu.what2wear.weather.service.WeatherService;
 import javafx.event.ActionEvent;
 import com.samyukgu.what2wear.codi.service.CodiService;
 import com.samyukgu.what2wear.di.DIContainer;
-import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -41,7 +41,9 @@ import static com.samyukgu.what2wear.common.util.ImageUtil.convertToImagePath;
 public class CodiMainController {
 
     private CodiService codiService;
-    private LocalDate currentDateSelected;
+    private WeatherService weatherService;
+    private MemberSession memberSession;
+    private RegionWeatherSession weatherSession;
 
     @FXML private Label monthLabel;
     @FXML private GridPane calendarGrid;
@@ -51,8 +53,8 @@ public class CodiMainController {
     @FXML private Button addButton;
 
     private Long memberId;
-    private MemberSession memberSession;
     private LocalDate currentDate;
+    private LocalDate currentDateSelected;
     private Map<LocalDate, List<CodiSchedule>> dotScheduleMap; // 날짜별 일정 정보 저장
     private Map<LocalDate, List<CodiSchedule>> detailScheduleMap;
 
@@ -60,6 +62,7 @@ public class CodiMainController {
     public void initialize() {
         setupDI();
         setupUser();
+        setupWeather();
         currentDate = LocalDate.now();
         currentDateSelected = currentDate;
         loadScheduleForMonth(currentDate);
@@ -69,12 +72,25 @@ public class CodiMainController {
 
         applyHoverTransition(aiButton, Color.web("#FFFDF0"), Color.web("#FFF8DA"));
         applyHoverTransition(addButton, Color.web("#F2FBFF"), Color.web("#E0F6FF"));
+
+        Weather weather = weatherSession.getWeather();
+        System.out.println("오늘의 기온: " + weather.getTemp());
+        String parent = weatherSession.getRegion().getRegionParent();
+        String child = weatherSession.getRegion().getRegionChild();
+        int nx = weatherSession.getRegion().getNx().intValue();
+        int ny = weatherSession.getRegion().getNy().intValue();
+
+        System.out.println("parent: " + parent + ", child: " + child + ", nx: " + nx + ", ny: " + ny);
+
+
     }
 
     private void setupDI() {
         DIContainer diContainer = DIContainer.getInstance();
         codiService = diContainer.resolve(CodiService.class);
+        weatherService = diContainer.resolve(WeatherService.class);
         memberSession = diContainer.resolve(MemberSession.class);
+        weatherSession = diContainer.resolve(RegionWeatherSession.class);
     }
 
     private void setupUser() {
@@ -84,6 +100,10 @@ public class CodiMainController {
         }
 
         memberId = memberSession.getMember().getId();
+    }
+
+    private void setupWeather() {
+//        weatherService.updateRegionWeather(1L, 61, 127);
     }
 
     private void loadScheduleForMonth(LocalDate month) {
@@ -115,7 +135,10 @@ public class CodiMainController {
         for (CodiListDTO dto : codiLists) {
             for (var codiDTO : dto.getCodiList()) {
                 // 조건: 일정명이나 코디가 하나라도 있으면 포함
-                boolean hasScheduleName = !codiDTO.getScheduleName().isBlank();
+                boolean hasScheduleName = false;
+                if (codiDTO.getScheduleName() != null && !codiDTO.getScheduleName().isBlank()) {
+                    hasScheduleName = true;
+                }
                 boolean hasClothes = !codiDTO.getCodiClothesList().isEmpty();
 
                 if (!hasScheduleName && !hasClothes) continue; // 둘 다 없으면 건너뜀
@@ -391,7 +414,6 @@ public class CodiMainController {
                         scheduleBox.getChildren().add(buildCodiItemBox(item));
                     }
                 }
-
                 scheduleListContainer.getChildren().add(scheduleBox);
                 scheduleBox.setOnMouseClicked(e -> {
                     Long codiId = schedule.getCodiId();
@@ -575,5 +597,9 @@ public class CodiMainController {
     // ai 추천 안내 화면으로 전환
     public void handleAiButtonClick(ActionEvent actionEvent) {
         MainLayoutController.loadView("/com/samyukgu/what2wear/ai/IntroduceAi.fxml");
+    }
+
+    public void handleWeatherClick() {
+        MainLayoutController.loadView("/com/samyukgu/what2wear/region/SettingRegionView.fxml");
     }
 }

@@ -20,4 +20,10 @@ public class CodiItem {
         this.name = name;
         this.imagePath = imagePath;
     }
+
+    public CodiItem (Long id, String name, String imagePath) {
+        this.id = id;
+        this.name = name;
+        this.imagePath = imagePath;
+    }
 }

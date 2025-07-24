@@ -62,7 +62,10 @@
                 </VBox>
             </VBox>
 
-            <Button fx:id="submitButton" text="추가하기" styleClass="add-btn" />
+            <HBox spacing="10" styleClass="btn-box">
+                <Button fx:id="editButton" text="수정하기" styleClass="edit-btn" />
+                <Button fx:id="deleteButton" text="삭제하기" styleClass="delete-btn" />
+            </HBox>
         </VBox>
     </VBox>
 </StackPane>
