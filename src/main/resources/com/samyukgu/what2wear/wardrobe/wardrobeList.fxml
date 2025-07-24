@@ -98,7 +98,10 @@
                </ScrollPane>
 
                <!-- 페이지네이션 -->
-               <Pagination fx:id="pagination" layoutX="361.0" layoutY="627.0" prefHeight="53.0" prefWidth="305.0" />
+               <Pagination fx:id="pagination"
+                           styleClass="no-page-info"
+                           layoutX="361.0" layoutY="627.0"
+                           prefHeight="53.0" prefWidth="305.0"/>
 
                <!-- 로딩 및 상태 표시 영역 -->
                <VBox fx:id="statusContainer" alignment="CENTER" layoutX="400.0" layoutY="300.0" prefHeight="100.0" prefWidth="200.0" visible="false">

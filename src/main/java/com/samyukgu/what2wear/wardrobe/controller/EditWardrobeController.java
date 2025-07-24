@@ -1,5 +1,6 @@
 package com.samyukgu.what2wear.wardrobe.controller;
 
+import com.samyukgu.what2wear.common.controller.BasicHeaderController;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.member.Session.MemberSession;
@@ -16,17 +17,22 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class EditWardrobeController implements Initializable {
@@ -44,6 +50,7 @@ public class EditWardrobeController implements Initializable {
 
     // 추가: rootPane 필드
     @FXML private StackPane rootPane;
+    @FXML private VBox container;
 
     private byte[] pictureData;
     private Wardrobe currentWardrobe;
@@ -61,7 +68,30 @@ public class EditWardrobeController implements Initializable {
         setupUI();
         loadCurrentWardrobeData();
         loadCategories();
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/BasicHeader.fxml"));
+            HBox header = loader.load();
+
+            BasicHeaderController controller = loader.getController();
+            controller.setTitle("옷 수정");
+            controller.setOnBackAction(() -> {
+                try {
+                    Parent view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/samyukgu/what2wear/wardrobe/wardrobeList.fxml")));
+                    rootPane.getChildren().setAll(view);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+
+            container.getChildren().add(0, header); // StackPane 맨 위에 삽입
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
+
+
 
     private void setupUI() {
         // 업로드 버튼 연결

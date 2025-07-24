@@ -86,3 +86,10 @@
     -fx-font-size: 16px;
     -fx-text-fill: #666;
 }
+
+.pagination.no-page-info .page-information {
+    -fx-opacity: 0;
+    -fx-max-height: 0;
+    -fx-padding: 0;
+    -fx-font-size: 0;
+}

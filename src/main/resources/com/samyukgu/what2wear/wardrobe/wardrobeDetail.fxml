@@ -11,27 +11,14 @@
            fx:controller="com.samyukgu.what2wear.wardrobe.controller.DetailWardrobeController"
            stylesheets="@css/wardrobeDetail.css">
     <children>
+
         <!-- 기존 HBox를 StackPane 안에 넣기 -->
-        <HBox prefHeight="768.0" prefWidth="1280.0">
+        <VBox fx:id="container" prefHeight="768.0" prefWidth="1280.0">
             <children>
 
                 <!-- 오른쪽 전체 -->
                 <VBox prefHeight="768.0" prefWidth="1030.0">
-                    <!-- 상단 바 -->
-                    <AnchorPane fx:id="topBar" prefHeight="50.0" prefWidth="1030.0">
-                        <children>
-                            <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="10.0" spacing="20.0">
-                                <children>
-                                    <ImageView fx:id="backButton" fitHeight="30" fitWidth="30" onMouseClicked="#handleBackClick">
-                                        <image>
-                                            <Image preserveRatio="true" url="@images/tabler_arrow-left.png" />
-                                        </image>
-                                    </ImageView>
-                                    <Label fx:id="pageTitle" text="옷 상세정보" />
-                                </children>
-                            </HBox>
-                        </children>
-                    </AnchorPane>
+
 
                     <!-- 메인 콘텐츠 -->
                     <ScrollPane fx:id="mainScrollPane" fitToWidth="true" prefHeight="718.0" prefWidth="1030.0">
@@ -157,6 +144,6 @@
                     </ScrollPane>
                 </VBox>
             </children>
-        </HBox>
+        </VBox>
     </children>
 </StackPane>
