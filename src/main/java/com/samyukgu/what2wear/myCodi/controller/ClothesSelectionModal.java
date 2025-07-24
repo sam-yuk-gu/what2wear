@@ -28,7 +28,7 @@ public class ClothesSelectionModal {
             modalStage.initOwner(parentStage);
             modalStage.initStyle(StageStyle.UTILITY);
             modalStage.setResizable(true);
-            modalStage.setMinWidth(600);
+            modalStage.setMinWidth(720);
             modalStage.setMinHeight(500);
 
             // 씬 설정

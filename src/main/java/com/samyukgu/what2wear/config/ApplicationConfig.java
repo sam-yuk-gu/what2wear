@@ -61,9 +61,14 @@ public class ApplicationConfig {
         container.registerSingleton(WardrobeDAO.class, new WardrobeOracleDAO());
         container.registerSingleton(WardrobeService.class, new WardrobeService(container.resolve(WardrobeDAO.class)));
 
-        // myCodi
+        // Codi
         container.registerSingleton(CodiDAO.class, new CodiOracleDAO());
+        container.registerSingleton(CodiService.class, new CodiService(container.resolve(CodiDAO.class)));
+
+        // mycodi
+        container.registerSingleton(com.samyukgu.what2wear.myCodi.dao.CodiDAO.class, new com.samyukgu.what2wear.myCodi.dao.CodiOracleDAO());
         container.registerSingleton(CodiDetailDAO.class, new CodiDetailOracleDAO());
+        container.registerSingleton(com.samyukgu.what2wear.myCodi.service.CodiService.class, new com.samyukgu.what2wear.myCodi.service.CodiService(container.resolve(com.samyukgu.what2wear.myCodi.dao.CodiDAO.class), container.resolve(CodiDetailDAO.class)));
 
         // Category
         container.registerSingleton(CategoryDAO.class, new CategoryOracleDAO());

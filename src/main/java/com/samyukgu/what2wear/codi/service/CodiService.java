@@ -4,6 +4,7 @@ import com.samyukgu.what2wear.codi.dao.CodiDAO;
 import com.samyukgu.what2wear.codi.dto.CodiListDTO;
 import com.samyukgu.what2wear.codi.model.Codi;
 import com.samyukgu.what2wear.codi.model.CodiSchedule;
+import com.samyukgu.what2wear.myCodi.dao.CodiDetailDAO;
 import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
 
 import java.time.LocalDate;
@@ -14,6 +15,7 @@ public class CodiService {
     private final CodiDAO dao;
 
     public CodiService(CodiDAO dao) { this.dao = dao; }
+
 
     // 월별 코디 반환
     public List<CodiSchedule> getMonthlyCodiSchedules(Long memberId, LocalDate date){
