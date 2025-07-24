@@ -5,6 +5,7 @@ import com.samyukgu.what2wear.common.controller.MainLayoutController;
 import com.samyukgu.what2wear.common.controller.PostHeaderController;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.member.Session.MemberSession;
+import com.samyukgu.what2wear.member.model.Member;
 import com.samyukgu.what2wear.member.service.MemberService;
 import com.samyukgu.what2wear.post.dao.PostOracleDAO;
 import com.samyukgu.what2wear.post.model.Post;
@@ -24,6 +25,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -43,10 +45,12 @@ public class DetailPostController {
     @FXML private Button editPostButton;
     @FXML private Button deletePostButton;
     @FXML private TextField commentField;
+    @FXML private ImageView profileImageView;
 
     // 회원 세션
     private MemberService memberService;
     private MemberSession memberSession;
+    private Member member;
 
     private int likeCount;
     private boolean isLiked = false;
@@ -56,6 +60,7 @@ public class DetailPostController {
     private void initialize() {
         // 회원 정보 불러오기
         setupDI();
+        loadMember();
 
         hideEditDeleteButtons();
 
@@ -71,12 +76,30 @@ public class DetailPostController {
         likeButton.setOnMouseExited(e -> likeButton.setStyle("-fx-scale-x: 1.0; -fx-scale-y: 1.0;"));
     }
 
+    private void loadMember() {
+        member = memberSession.getMember();
+        if (member == null) return;
+
+        authorLabel.setText(member.getNickname());
+
+        byte[] profileBytes = member.getProfile_img();
+        if (profileBytes != null) {
+            Image image = new Image(new ByteArrayInputStream(profileBytes));
+            profileImageView.setImage(image);
+        } else {
+            // 기본 이미지 경로로 대체
+            profileImageView.setImage(new Image(getClass().getResourceAsStream("/assets/icons/defaultProfile.png")));
+        }
+    }
+
+
     // 회원 정보 불러오기
     private void setupDI() {
         DIContainer diContainer = DIContainer.getInstance();
         memberService = diContainer.resolve(MemberService.class);
         memberSession = diContainer.resolve(MemberSession.class);
     }
+
 
     public void setPostData(Post post) {
         this.currentPost = post;
