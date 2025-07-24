@@ -57,4 +57,8 @@ public class CodiService {
     public void deleteCodiSchedule(Long memberId, Long codiId) {
         dao.delete(memberId, codiId);
     }
+
+    public List<Codi> getAllCodi(Long memberId) {
+        return dao.findAll(memberId);
+    }
 }

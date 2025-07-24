@@ -13,10 +13,10 @@ public class CategoryUtil {
     static {
         NAME_TO_ID.put("상의", 1L);
         NAME_TO_ID.put("바지", 2L);
-        NAME_TO_ID.put("신발", 3L);
+        NAME_TO_ID.put("원피스/스커트", 3L);
         NAME_TO_ID.put("가방", 4L);
-        NAME_TO_ID.put("원피스/스커트", 5L);
-        NAME_TO_ID.put("아우터", 6L);
+        NAME_TO_ID.put("아우터", 5L);
+        NAME_TO_ID.put("신발", 6L);
         NAME_TO_ID.put("악세사리", 7L);
         NAME_TO_ID.put("기타", 8L);
 

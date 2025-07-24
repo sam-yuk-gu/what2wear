@@ -31,7 +31,7 @@ public interface CodiDAO {
     void delete(Long memberId, Long codiId);
 
     // 전체 코디 목록 조회
-    List<Codi> findAll(String memberId);
+    List<Codi> findAll(Long memberId);
 
     // 코디명 검색
     List<Codi> findByName(String memberId, String keyword);

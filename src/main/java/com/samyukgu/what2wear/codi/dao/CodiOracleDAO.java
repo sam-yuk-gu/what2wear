@@ -21,6 +21,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.sql.Date;
 
 public class CodiOracleDAO implements CodiDAO {
     private static String url;
@@ -398,8 +399,40 @@ public class CodiOracleDAO implements CodiDAO {
     }
 
     @Override
-    public List<Codi> findAll(String memberId) {
-        return List.of();
+    public List<Codi> findAll(Long memberId) {
+        String sql = """
+            SELECT *
+            FROM codi
+            WHERE deleted = 'N'
+              AND member_id = ?
+        """;
+
+        List<Codi> codis = new ArrayList<>();
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setLong(1, memberId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    Date sqlDate = rs.getDate("schedule_date");
+                    LocalDate scheduleDate = (sqlDate != null) ? sqlDate.toLocalDate() : null;
+                    codis.add(new Codi(
+                        rs.getLong("id"), // 아이디
+                        rs.getLong("member_id"), // 멤버 아이디
+                        rs.getString("name"), // 코디명
+                        rs.getString("schedule"),   // 스케쥴명
+                        scheduleDate, // 날짜
+                        rs.getLong("scope"), // 공개범위
+                        rs.getString("weather"), // 날씨
+                        rs.getBytes("picture"), // 사진
+                        rs.getString("codi_type") // 코디 타입
+                    ));
+                }
+            }
+            return codis;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("CodiOracleDAO: Failed to findAll", e);
+        }
     }
 
     @Override
