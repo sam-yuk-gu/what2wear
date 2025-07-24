@@ -2,7 +2,9 @@
     -fx-padding: 50;
     -fx-spacing: 40;
     -fx-alignment: top-right;
+    -fx-background-color: white;
 }
+
 
 .label {
     -fx-font-family: "Pretendard Medium";
@@ -63,6 +65,10 @@
 
 .date-picker-popup .day-cell:hover {
     -fx-background-color: #FA7B7F;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: white;
 }
 
 /* date picker end */
@@ -134,6 +140,15 @@
     -fx-alignment: center-right;
 }
 
+.stack-box {
+    -fx-background-color: white;
+    -fx-border-radius: 10;
+    -fx-border-color: #EAEAEA;
+    -fx-border-width: 1;
+    -fx-alignment: center;
+    -fx-padding: 10 0;
+}
+
 .edit-btn {
     -fx-pref-width: 150;
     -fx-min-height: 50;
@@ -154,4 +169,9 @@
     -fx-text-fill: white;
     -fx-font-family: "Pretendard Bold";
     -fx-font-size: 16;
+}
+
+.item-box {
+    -fx-pref-width: 300;
+    -fx-padding: 10 30;
 }

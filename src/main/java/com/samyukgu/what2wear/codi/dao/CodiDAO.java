@@ -5,6 +5,7 @@ import com.samyukgu.what2wear.codi.dto.CodiListDTO;
 import com.samyukgu.what2wear.codi.model.Codi;
 import com.samyukgu.what2wear.codi.model.CodiSchedule;
 import com.samyukgu.what2wear.codi.model.CodiScope;
+import com.samyukgu.what2wear.myCodi.model.CodiDetail;
 import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
 
 import java.time.LocalDate;
@@ -32,6 +33,8 @@ public interface CodiDAO {
 
     // 전체 코디 목록 조회
     List<Codi> findAll(Long memberId);
+    List<CodiDetailDTO> findAllWithDetails(Long memberId);
+
 
     // 코디명 검색
     List<Codi> findByName(String memberId, String keyword);
