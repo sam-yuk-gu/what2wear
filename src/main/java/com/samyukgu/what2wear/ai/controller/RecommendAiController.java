@@ -5,6 +5,11 @@ import com.samyukgu.what2wear.ai.service.WeatherAiService;
 import com.samyukgu.what2wear.common.controller.CustomModalController;
 import com.samyukgu.what2wear.config.ConfigUtil;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
+import com.samyukgu.what2wear.member.Session.MemberSession;
+import com.samyukgu.what2wear.wardrobe.dao.WardrobeDAO;
+import com.samyukgu.what2wear.wardrobe.dao.WardrobeOracleDAO;
+import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
+import com.samyukgu.what2wear.wardrobe.service.WardrobeService;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,7 +27,6 @@ public class RecommendAiController {
     @FXML private StackPane root;
     @FXML private Button recommendBtn;
 
-    // 텍스트 영역
     @FXML private Label introLabel1;
     @FXML private Label introLabel2;
     @FXML private Label introLabel3;
@@ -46,6 +51,34 @@ public class RecommendAiController {
 
     @FXML
     public void initialize() {
+        long memberId = MemberSession.getLoginMember().getId();
+        WardrobeDAO wardrobeDAO = new WardrobeOracleDAO();
+        WardrobeService wardrobeService = new WardrobeService(wardrobeDAO);
+        List<Wardrobe> wardrobeList = wardrobeService.getAllWardrobe(memberId);
+
+        // categoryId → 카테고리명으로 변환
+        Map<Long, String> categoryMap = Map.of(
+                1L, "상의",
+                2L, "하의",
+                3L, "신발",
+                4L, "악세사리"
+        );
+
+        // categoryId → 카테고리명으로 가공
+        Map<String, List<String>> myClothes = new HashMap<>();
+        for (Wardrobe item : wardrobeList) {
+            String categoryName = categoryMap.get(item.getCategoryId());
+            myClothes.computeIfAbsent(categoryName, k -> new ArrayList<>()).add(item.getName());
+        }
+
+        // 옷장 디버깅
+        System.out.println("[나의 옷장 구성]");
+        for (Map.Entry<String, List<String>> entry : myClothes.entrySet()) {
+            System.out.println(entry.getKey() + " → " + entry.getValue());
+        }
+
+
+
         this.location = IntroduceAiController.selectedLocation;
         this.purpose = IntroduceAiController.selectedPurpose;
 
@@ -57,7 +90,6 @@ public class RecommendAiController {
         introLabel1.setText("안녕하세요!");
         recommendLabel.setText("AI가 코디를 준비 중이에요...");
 
-        // 날씨 정보 받아오기
         new Thread(() -> {
             try {
                 var weatherInfo = weatherService.getWeatherInfo(location);
@@ -67,12 +99,10 @@ public class RecommendAiController {
                 String uv = weatherInfo.get("uv");
 
                 Platform.runLater(() -> {
-                    introLabel2.setText("안녕하세요!");
                     introLabel2.setText(purpose + "할 때 입을 옷을 추천해드릴게요 :)");
                     introLabel3.setText("오늘 " + location + "의 날씨 정보는");
                     introLabel4.setText("최고기온은 " + high + "°C, " + "최저기온은 " + low + "°C입니다.");
-                    introLabel5.setText("자외선 지수는 높음으로 외출 시 주의해주세요.");     // 추후 공공데이터포털의 "자외선지수예보조회" API를 사용
-
+                    introLabel5.setText("자외선 지수는 높음으로 외출 시 주의해주세요.");
                 });
 
             } catch (Exception e) {
@@ -86,16 +116,9 @@ public class RecommendAiController {
             }
         }).start();
 
-        // OpenAI 프롬프트 생성 및 요청
-        String prompt = String.format(
-                "내일 %s에서 %s할 예정입니다. 날씨에 어울리는 옷을 아래와 같은 정확한 형식으로 추천해줘. 절대 다른 말 하지 말고 형식을 꼭 지켜줘.\n" +
-                        "형식:\n상의: (여기에 상의 옷)\n하의: (여기에 하의 옷)\n신발: (여기에 신발)\n악세사리: (여기에 악세사리)\n",
-                location, purpose
-        );
-
         new Thread(() -> {
             try {
-                String aiResponse = aiService.getOutfitRecommendation(location, purpose);
+                String aiResponse = aiService.getOutfitRecommendation(location, purpose, myClothes);
                 applyAiRecommendation(aiResponse);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -109,7 +132,6 @@ public class RecommendAiController {
             }
         }).start();
 
-        // 하단 마무리 멘트
         endingLabel1.setText("더위에 대비해");
         endingLabel2.setText("쿨링 재킷이나 모자를 챙기면 좋아요.");
         endingLabel3.setText("오늘도 멋진 하루 보내세요!");
