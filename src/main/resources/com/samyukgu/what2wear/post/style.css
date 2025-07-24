@@ -2,19 +2,22 @@
    공통 배경
    ======================= */
 .root {
-    -fx-background-color: #F9FBFC;
+    -fx-background-color: #FFFFFF;
 }
 
 .board_vbox {
     -fx-background-color: #FFFFFF;
-    -fx-background-radius: 20px 0px 0px 20px;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0.2, 0, 4);
+    /*-fx-background-radius: 20px 0px 0px 20px;*/
+    /*-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0.2, 0, 4);*/
 }
 
 .board_detail_vbox {
     -fx-background-color: #FFFFFF;
-    -fx-background-radius: 20px 0px 0px 0px;
+    /*-fx-border-color: red;*/
+    /*-fx-border-width: 1;*/
+    /*-fx-background-radius: 20px 0px 0px 0px;*/
 }
+
 
 .board_bottom_hbox {
     -fx-alignment: center;
@@ -39,6 +42,7 @@
     -fx-border-radius: 5px;
     -fx-font-size: 14px;
     -fx-font-family: "Pretendard Regular";
+    -fx-padding: 5;
 }
 
 .search_title {
@@ -46,18 +50,20 @@
     -fx-border-color: #C0C0C0;
     -fx-border-width: 1px;
     -fx-border-radius: 5px;
+    -fx-font-size: 14px;
+    -fx-font-family: "Pretendard Regular";
 }
 
 .datail_title_text {
     -fx-text-fill: #000000;
-    -fx-font-size: 32px;
-    -fx-font-family: "Pretendard Bold";
+    -fx-font-size: 28px;
+    -fx-font-family: "Pretendard SemiBold";
 }
 
 .author_text, .comment_author {
     -fx-text-fill: #000000;
-    -fx-font-size: 16px;
-    -fx-font-family: "Pretendard Medium";
+    -fx-font-size: 15px;
+    -fx-font-family: "Pretendard SemiBold";
 }
 
 .date_text {
@@ -153,16 +159,17 @@
     -fx-font-family: "Pretendard SemiBold";
     -fx-alignment: center;
     -fx-text-fill: black;
+    -fx-padding: 15 0 15 0;
 }
 
 /* 셀 기본 스타일 */
 .table-view .table-cell {
     -fx-font-size: 14px;
     -fx-font-family: "Pretendard Regular";
-    -fx-alignment: center;
-    -fx-padding: 10 0;
+    -fx-pref-height: 50px;
     -fx-background-color: white;
     -fx-border-color: transparent;
+    -fx-alignment: center;
 }
 
 /* 선택/포커스 시에도 배경, 테두리 변화 없음 */
@@ -175,7 +182,7 @@
 
 /* 컬럼 헤더 hover 시 커서와 배경 변경 */
 .table-view .table-row-cell .table-cell:hover {
-    -fx-background-color: #f0f0f0;
+    /*-fx-background-color: #f0f0f0;*/
     -fx-cursor: hand;
 }
 
@@ -232,6 +239,7 @@
 .content_hbox {
     -fx-border-color: transparent transparent #C0C0C0 transparent;
     -fx-border-width: 0 0 1px 0;
+    -fx-padding: 10 0 0 0;
 }
 
 .like_pane {
@@ -252,7 +260,8 @@
    -fx-background-color: white;
     -fx-border-color: #ccc;
     -fx-border-radius: 4;
-    -fx-font-size: 13px;
+    -fx-font-size: 11px;
+    -fx-font-family: "Pretendard Medium";
 }
 
 
@@ -294,7 +303,7 @@
 .gray_stroke_button:hover,
 .double_button:hover,
 .arrow_button:hover {
-    -fx-background-color: #f0f0f0;
+    /*-fx-background-color: #f0f0f0;*/
 }
 
 .arrow_button, .search_icon:hover {
@@ -309,4 +318,50 @@
 .board_scroll_pane {
     -fx-background-color: transparent;
     -fx-padding: 0;
+}
+
+/* 추가 항목 */
+/* ListPost.fxml */
+.title_text {
+    -fx-font-size: 24;
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-padding: 0 0 20 0;
+}
+.btn-write {
+    -fx-padding: 10 20;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+
+    -fx-background-color: black;
+    -fx-text-fill: white;
+    -fx-border-color: black;
+}
+
+/* DetailPost.fxml */
+.board_title_box {
+    -fx-padding: 40 0 0 35;
+    -fx-font-size: 24;
+    -fx-font-family: "Pretendard SemiBold";
+}
+
+.user-box {
+}
+
+.user-info {
+}
+
+.inner-uer-info {
+    -fx-alignment: center-left;
+}
+
+.content-box {
+    -fx-padding: 30 0 0 35;
+}
+
+.image-box {
+    -fx-padding: 40 0 0 0;
+    -fx-alignment: center;
 }

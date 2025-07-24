@@ -6,6 +6,8 @@ import com.samyukgu.what2wear.codi.model.CodiSchedule;
 //import com.samyukgu.what2wear.codi.model.ScheduleVisibility;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.member.Session.MemberSession;
+import com.samyukgu.what2wear.member.model.Member;
+import com.samyukgu.what2wear.member.service.MemberService;
 import com.samyukgu.what2wear.region.Session.RegionWeatherSession;
 import com.samyukgu.what2wear.weather.model.Weather;
 import com.samyukgu.what2wear.weather.service.WeatherService;
@@ -44,6 +46,8 @@ public class CodiMainController {
     private WeatherService weatherService;
     private MemberSession memberSession;
     private RegionWeatherSession weatherSession;
+    private MemberService memberService;
+    private RegionWeatherSession regionWeatherSession;
 
     @FXML private Label monthLabel;
     @FXML private GridPane calendarGrid;
@@ -61,6 +65,16 @@ public class CodiMainController {
     @FXML
     public void initialize() {
         setupDI();
+
+        // TODO: 코드 롤백 후 커밋 >> 삭제처리
+        Member member = memberService.login("chtoqur", "chtoqur1234");
+        memberSession.setMember(member);
+        com.samyukgu.what2wear.region.model.Region defaultRegion = new com.samyukgu.what2wear.region.model.Region(1L, "서울특별시", "", 60L, 127L);
+        regionWeatherSession.setRegion(defaultRegion);
+        Weather weather = weatherService.fetchWeatherFromApi(defaultRegion.getNx().intValue(), defaultRegion.getNy().intValue());
+        RegionWeatherSession.setWeather(weather);
+
+
         setupUser();
         setupWeather();
         currentDate = LocalDate.now();
@@ -73,7 +87,15 @@ public class CodiMainController {
         applyHoverTransition(aiButton, Color.web("#FFFDF0"), Color.web("#FFF8DA"));
         applyHoverTransition(addButton, Color.web("#F2FBFF"), Color.web("#E0F6FF"));
 
-        Weather weather = weatherSession.getWeather();
+
+
+        // TODO: 코드 원복 후 커밋
+//        Weather weather = weatherSession.getWeather();
+        weather = weatherSession.getWeather();
+
+
+
+
         System.out.println("오늘의 기온: " + weather.getTemp());
         String parent = weatherSession.getRegion().getRegionParent();
         String child = weatherSession.getRegion().getRegionChild();
@@ -91,12 +113,15 @@ public class CodiMainController {
         weatherService = diContainer.resolve(WeatherService.class);
         memberSession = diContainer.resolve(MemberSession.class);
         weatherSession = diContainer.resolve(RegionWeatherSession.class);
+        memberService = diContainer.resolve(MemberService.class);
+        regionWeatherSession = diContainer.resolve(RegionWeatherSession.class);
     }
 
     private void setupUser() {
         if (memberSession == null || memberSession.getMember() == null) {
-            System.err.println("로그인 정보가 없습니다.");
-            return;
+        // TODO: 코드 롤백 후 커밋 >> 주석 해제
+//            System.err.println("로그인 정보가 없습니다.");
+//            return;
         }
 
         memberId = memberSession.getMember().getId();
@@ -465,25 +490,37 @@ public class CodiMainController {
     }
 
     private HBox buildCodiItemBox(CodiItem item) {
+        // 이미지 뷰 생성
         ImageView imageView = new ImageView(new Image(item.getImagePath()));
-        imageView.getStyleClass().add("item-image");
         imageView.setFitWidth(80);
         imageView.setFitHeight(80);
+        imageView.setPreserveRatio(true);
+        imageView.setSmooth(true);
+        imageView.getStyleClass().add("item-image");
 
+        // StackPane으로 감싸서 고정 박스 안에 비율 유지하며 중앙 배치
+        StackPane imageWrapper = new StackPane(imageView);
+        imageWrapper.setPrefSize(80, 80);
+        imageWrapper.setMaxSize(80, 80);
+        imageWrapper.setMinSize(80, 80);
+        imageWrapper.setAlignment(Pos.CENTER);  // 중앙 정렬
+        imageWrapper.getStyleClass().add("image-wrapper");
+
+        // 텍스트 영역
         Label itemCategory = new Label(item.getCategory());
         itemCategory.getStyleClass().add("item-category");
+
         Label itemName = new Label(item.getName());
         itemName.getStyleClass().add("item-name");
 
-        VBox textBox = new VBox(
-                itemCategory,
-                itemName
-        );
+        VBox textBox = new VBox(itemCategory, itemName);
         textBox.getStyleClass().add("text-box");
 
-        HBox box = new HBox(imageView, textBox);
+        // 최종 HBox 조합
+        HBox box = new HBox(imageWrapper, textBox);
         box.setAlignment(Pos.CENTER_LEFT);
         box.setSpacing(15);
+        box.setStyle("-fx-padding: 5 10;");
         return box;
     }
 
