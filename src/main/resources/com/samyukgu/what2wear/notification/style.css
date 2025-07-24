@@ -1,0 +1,157 @@
+.root{
+    -fx-background-color: "white";
+}
+
+.content-area{
+    -fx-background-color: "white";
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0.3, 0, 2);
+}
+
+#bg{
+    -fx-background-color: #F9FBFC;
+}
+
+.bold-text {
+    -fx-font-family: "Pretendard Bold";
+}
+
+.semi-bold-text {
+    -fx-font-family: "Pretendard SemiBold";
+}
+
+.text-red{
+    -fx-text-fill: #FF5F63;
+    -fx-font-family: "Pretendard SemiBold";
+}
+
+.text-green{
+    -fx-text-fill: #79C998;
+    -fx-font-family: "Pretendard SemiBold";
+}
+
+.text-gray{
+    -fx-text-fill: #8F8F8F;
+    -fx-font-family: "Pretendard SemiBold";
+}
+
+.btn-black{
+    -fx-background-color: "black";
+    -fx-text-fill: "white";
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 24;
+}
+
+.btn-white{
+    -fx-background-color: "white";
+    -fx-text-fill: "black";
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+
+    -fx-border-color: #000000;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+}
+
+.btn-white-semi-bold{
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-background-color: "white";
+    -fx-text-fill: "black";
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+
+    -fx-border-color: #000000;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+}
+
+.btn-gray{
+    -fx-background-color: #8E8E8E;
+    -fx-text-fill: "white";
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 20;
+}
+
+.btn-gray-semi-bold{
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-background-color: #8E8E8E;
+    -fx-text-fill: "white";
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 20;
+}
+
+.btn-red{
+    -fx-background-color: FF5F63;
+    -fx-text-fill: "white";
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 18;
+}
+
+.btn-red-semi-bold{
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-background-color: FF5F63;
+    -fx-text-fill: "white";
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 18;
+}
+
+.btn-green{
+    -fx-background-color: #79C998;
+    -fx-text-fill: "white";
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 20;
+}
+
+.btn-green-semi-bold{
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-background-color: #79C998;
+    -fx-text-fill: "white";
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 20;
+}
+
+.input-field{
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-font-size: 18;
+}
+
+.label-clickable {
+    -fx-cursor: hand;
+}
+
+.sep-section {
+    -fx-border-color: transparent transparent #8f8f8f transparent;
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-style: none none solid none;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+}
+
+.scroll-pane .viewport {
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+}
+
+.scroll-pane .scroll-bar:vertical {
+    -fx-background-radius: 5px;
+}
+
+.scroll-pane .scroll-bar:horizontal {
+    -fx-background-radius: 5px;
+}
+
+
