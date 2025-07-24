@@ -274,4 +274,60 @@ public class WardrobeOracleDAO implements WardrobeDAO {
             throw new RuntimeException("Failed to update favorite status", e);
         }
     }
+
+    // AI가 추천한 해당 멤버의 옷과 일치하는 이름의 사진 조회
+    public Wardrobe findByNameAndMember(String name, Long memberId) {
+        String sql = """
+        SELECT * FROM clothes
+        WHERE member_id = ? AND name = ? AND deleted = 'N'
+        FETCH FIRST 1 ROWS ONLY
+    """;
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setLong(1, memberId);
+            pstmt.setString(2, name);
+
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                Wardrobe wardrobe = new Wardrobe();
+                wardrobe.setId(rs.getLong("id"));
+                wardrobe.setName(rs.getString("name"));
+                wardrobe.setPicture(rs.getBytes("picture"));
+                return wardrobe;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    // AI가 추천한 해당 멤버의 옷 PK로 사진 조회
+    @Override
+    public Wardrobe findByNameAndMemberId(String name, Long memberId) {
+        String sql = """
+        SELECT * FROM clothes
+        WHERE name = ? AND member_id = ?
+        """;
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, name);
+            pstmt.setLong(2, memberId);
+
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                Wardrobe wardrobe = new Wardrobe();
+                wardrobe.setId(rs.getLong("id"));
+                wardrobe.setName(rs.getString("name"));
+                wardrobe.setPicture(rs.getBytes("picture"));
+                return wardrobe;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

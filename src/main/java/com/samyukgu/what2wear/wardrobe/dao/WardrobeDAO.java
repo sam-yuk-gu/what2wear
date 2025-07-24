@@ -16,5 +16,8 @@ public interface WardrobeDAO {
     void update(Wardrobe wardrobe);
     // 옷 삭제
     void delete(Long id, Long memberId);
-
+    // AI 추천한 멤버의 옷 조회
+    Wardrobe findByNameAndMember(String name, Long memberId);
+    // AI가 추천한 해당 멤버의 옷 PK로 사진 조회
+    Wardrobe findByNameAndMemberId(String name, Long memberId);
 }

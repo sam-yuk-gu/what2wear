@@ -17,8 +17,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -40,6 +43,12 @@ public class RecommendAiController {
     @FXML private Label shoesLabel;
     @FXML private Label accLabel;
 
+    @FXML private ImageView mainImage;
+    @FXML private ImageView topImage;
+    @FXML private ImageView bottomImage;
+    @FXML private ImageView shoesImage;
+    @FXML private ImageView accImage;
+
     @FXML private Label endingLabel1;
     @FXML private Label endingLabel2;
     @FXML private Label endingLabel3;
@@ -49,6 +58,7 @@ public class RecommendAiController {
 
     private String location;
     private String purpose;
+    private long selectedMemberId;
 
     @FXML
     public void initialize() {
@@ -56,22 +66,27 @@ public class RecommendAiController {
         this.location = IntroduceAiController.selectedLocation;
         this.purpose = IntroduceAiController.selectedPurpose;
 
-        if (location == null || purpose == null || location.isBlank() || purpose.isBlank()) {
-            recommendLabel.setText("추천을 위한 정보가 부족해요.");
-            return;
-        }
+        // 클릭 시 메인 이미지 변경
+        topImage.setOnMouseClicked(e -> mainImage.setImage(topImage.getImage()));
+        bottomImage.setOnMouseClicked(e -> mainImage.setImage(bottomImage.getImage()));
+        shoesImage.setOnMouseClicked(e -> mainImage.setImage(shoesImage.getImage()));
+        accImage.setOnMouseClicked(e -> mainImage.setImage(accImage.getImage()));
 
         Map<String, List<String>> clothesMap;
 
         if (IntroduceAiController.isMyClosetSelected) {
             clothesMap = getClothesFromMyWardrobe(memberId);
+            selectedMemberId = memberId;
         } else {
             clothesMap = getClothesFromFriendsWardrobes(memberId);
+            // 추천된 친구 옷장에서 가져온 경우, 첫 번째 친구로 설정
+            List<Long> friendIds = new FriendOracleDAO().getAcceptedFriendIds(memberId);
+            selectedMemberId = friendIds.isEmpty() ? memberId : friendIds.get(0);
         }
 
-        System.out.println("[선택된 옷장 구성]");
-        for (Map.Entry<String, List<String>> entry : clothesMap.entrySet()) {
-            System.out.println(entry.getKey() + " → " + entry.getValue());
+        if (location == null || purpose == null || location.isBlank() || purpose.isBlank()) {
+            recommendLabel.setText("추천을 위한 정보가 부족해요.");
+            return;
         }
 
         introLabel1.setText("안녕하세요!");
@@ -86,7 +101,7 @@ public class RecommendAiController {
                 Platform.runLater(() -> {
                     introLabel2.setText(purpose + "할 때 입을 옷을 추천해드릴게요 :)");
                     introLabel3.setText("오늘 " + location + "의 날씨 정보는");
-                    introLabel4.setText("최고기온은 " + high + "°C, " + "최저기온은 " + low + "°C입니다.");
+                    introLabel4.setText("최고기온은 " + high + "°C, 최저기온은 " + low + "°C입니다.");
                 });
 
             } catch (Exception e) {
@@ -187,6 +202,26 @@ public class RecommendAiController {
                 shoesLabel.setText("· 신발: " + shoes);
                 accLabel.setText("· 악세사리: " + acc);
                 recommendLabel.setText("회원님 옷 중 이런 코디는 어떠세요?");
+
+                Image topImg = loadClothesImage(top);
+                Image bottomImg = loadClothesImage(bottom);
+                Image shoesImg = loadClothesImage(shoes);
+                Image accImg = loadClothesImage(acc);
+
+                topImage.setImage(topImg);
+                bottomImage.setImage(bottomImg);
+                shoesImage.setImage(shoesImg);
+                accImage.setImage(accImg);
+
+                if (topImg != null) {
+                    mainImage.setImage(topImg);
+                } else if (bottomImg != null) {
+                    mainImage.setImage(bottomImg);
+                } else if (shoesImg != null) {
+                    mainImage.setImage(shoesImg);
+                } else if (accImg != null) {
+                    mainImage.setImage(accImg);
+                }
             });
         } else {
             Platform.runLater(() -> {
@@ -196,6 +231,22 @@ public class RecommendAiController {
                 shoesLabel.setText("· 신발: (확인 필요)");
                 accLabel.setText("· 악세사리: (확인 필요)");
             });
+        }
+    }
+
+    private Image loadClothesImage(String itemName) {
+        try {
+            WardrobeDAO wardrobeDAO = new WardrobeOracleDAO();
+            Wardrobe wardrobe = wardrobeDAO.findByNameAndMemberId(itemName, selectedMemberId);
+            if (wardrobe != null && wardrobe.getPicture() != null) {
+                return new Image(new ByteArrayInputStream(wardrobe.getPicture()));
+            } else {
+                System.out.println("AI 옷 추천 이미지 로드 실패: " + itemName);
+                return null;
+            }
+        } catch (Exception e) {
+            System.out.println("AI 옷 추천 이미지 로드 실패: " + itemName);
+            return null;
         }
     }
 

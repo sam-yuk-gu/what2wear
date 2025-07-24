@@ -18,15 +18,8 @@ import java.util.Map;
 public class WeatherAiService {
     private final String SERVICE_KEY;
     public WeatherAiService() {
-
+        // 기상청 api 키
         this.SERVICE_KEY = ConfigUtil.get("weather.api.key");
-
-        // 디버깅용 출력
-        if (SERVICE_KEY == null || SERVICE_KEY.isEmpty()) {
-            System.out.println("[디버깅] ❌ SERVICE_KEY가 null이거나 비어 있습니다. application.properties 파일 확인 필요!");
-        } else {
-            System.out.println("[디버깅] ✅ SERVICE_KEY 정상 로드됨: " + SERVICE_KEY.substring(0, 10) + "****");
-        }
     }
 
     public Map<String, String> getWeatherInfo(String location) throws Exception {
@@ -74,13 +67,10 @@ public class WeatherAiService {
                 }
             }
         }
-
         Map<String, String> result = new HashMap<>();
         result.put("high", high);
         result.put("low", low);
         result.put("sensible", sensible);
-
-        System.out.println("[디버깅] 최고: " + high + " / 최저: " + low + " / 체감온도: " + sensible);
 
         return result;
     }

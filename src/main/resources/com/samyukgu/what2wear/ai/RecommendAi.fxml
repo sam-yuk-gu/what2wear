@@ -18,33 +18,33 @@
 
             <!-- 왼쪽: 옷 이미지 리스트 -->
             <VBox fx:id="left_vbox" alignment="CENTER" spacing="10">
-                <ImageView fitHeight="140" fitWidth="100" preserveRatio="true">
+                <ImageView fx:id="topImage" fitHeight="140" fitWidth="100" preserveRatio="true">
                     <image>
                         <Image url="@/assets/images/dummy_cody.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="140" fitWidth="100">
+                <ImageView fx:id="bottomImage" fitHeight="140" fitWidth="100">
                     <image>
-                        <Image url="@/assets/images/dummy_top.png" />
+                        <Image url="@/assets/images/dummy_cody.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="140" fitWidth="100">
+                <ImageView fx:id="shoesImage" fitHeight="140" fitWidth="100">
                     <image>
-                        <Image url="@/assets/images/dummy_bottom.png" />
+                        <Image url="@/assets/images/dummy_cody.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="140" fitWidth="100">
+                <ImageView fx:id="accImage" fitHeight="140" fitWidth="100">
                     <image>
-                        <Image url="@/assets/images/dummy_shoes.png" />
+                        <Image url="@/assets/images/dummy_cody.png" />
                     </image>
                 </ImageView>
             </VBox>
 
             <!-- 오른쪽: 추천 설명 -->
-            <HBox fx:id="right_vbox" alignment="CENTER" prefHeight="630.0" prefWidth="830.0" spacing="20">
+            <HBox alignment="CENTER" prefHeight="630.0" prefWidth="830.0" spacing="20">
 
                 <!-- 코디 사진 -->
-                <ImageView>
+                <ImageView fx:id="mainImage" fitHeight="440" fitWidth="280">
                     <image>
                         <Image url="@/assets/images/dummy_cody.png" />
                     </image>

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
 import okhttp3.*;
 
 import java.io.IOException;
@@ -92,4 +93,20 @@ public class OpenAiChatService {
 
         return sb.toString();
     }
+
+//    private String buildClosetText(Map<String, List<Wardrobe>> closet) {
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("내 옷 목록은 다음과 같아.\n");
+//
+//        for (String category : List.of("상의", "바지", "신발", "악세사리")) {
+//            List<Wardrobe> items = closet.getOrDefault(category, List.of());
+//
+//            for(Wardrobe clothes : closet.get(category)){
+//                sb.append(clothes.getName()).append(" pk = ").append(clothes.getId());
+//            }
+//            sb.append(category).append(": ").append(joined).append("\n");
+//        }
+//
+//        return sb.toString();
+//    }
 }
