@@ -3,7 +3,6 @@ package com.samyukgu.what2wear.postcomment.controller;
 import com.samyukgu.what2wear.common.controller.CustomModalController;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.member.Session.MemberSession;
-import com.samyukgu.what2wear.member.model.Member;
 import com.samyukgu.what2wear.member.service.MemberService;
 import com.samyukgu.what2wear.post.model.Post;
 import com.samyukgu.what2wear.postcomment.dao.PostCommentDAO;
@@ -12,15 +11,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import lombok.Setter;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -34,15 +30,15 @@ public class CommentItemController {
     @FXML private VBox commentBox;
 
     @FXML private javafx.scene.control.TextField editTextField;
-    @FXML private ImageView profileImageView;
 
     // 회원 세션
     private MemberService memberService;
     private MemberSession memberSession;
-    private Member member;
 
     private Post currentPost;
     private Long comment_id;
+
+
 
     public void setComment(Long id, String author, String date, String content) {
         this.comment_id = id;
@@ -58,7 +54,6 @@ public class CommentItemController {
     private void initialize() {
         // 회원 정보 불러오기
         setupDI();
-        loadMember();
 
         // 댓글 수정 필드 비활성화
         editTextField.setVisible(false);
@@ -70,23 +65,6 @@ public class CommentItemController {
         memberService = diContainer.resolve(MemberService.class);
         memberSession = diContainer.resolve(MemberSession.class);
     }
-
-    private void loadMember() {
-        member = memberSession.getMember();
-        if (member == null) return;
-
-        comment_author.setText(member.getNickname());
-
-        byte[] profileBytes = member.getProfile_img();
-        if (profileBytes != null) {
-            Image image = new Image(new ByteArrayInputStream(profileBytes));
-            profileImageView.setImage(image);
-        } else {
-            // 기본 이미지 경로로 대체
-            profileImageView.setImage(new Image(getClass().getResourceAsStream("/assets/icons/defaultProfile.png")));
-        }
-    }
-
 
     // 댓글 조회하기
     private void loadComments() {
