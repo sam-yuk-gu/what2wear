@@ -50,6 +50,7 @@ public class DetailPostController {
     @FXML private ImageView profileImg;
     @FXML private VBox container;
     @FXML private ScrollPane scrollPane;
+    @FXML private Label commentCountLabel;
 
     // 회원 세션
     private MemberService memberService;
@@ -126,7 +127,12 @@ public class DetailPostController {
 
         comment_vbox.getChildren().removeIf(node -> node instanceof HBox);
 
+        // 현재 로그인한 회원 아이디
         Long currentUserId = memberSession.getMember().getId();
+
+        // 댓글 갯수
+        List<PostComment> commentList = commentDAO.findByPostId(currentPost.getId());
+        commentCountLabel.setText("(" + commentList.size() + "개)");
 
         for (PostComment comment : comments) {
             try {
@@ -148,10 +154,9 @@ public class DetailPostController {
         }
     }
 
-
     private void displayPostContent(Post post) {
         byte[] imgByte = memberService.getMember(post.getMember_id()).getProfile_img();
-        CircularImageUtil.applyCircularImageToExistingImageView(profileImg, 64.0, imgByte);
+        CircularImageUtil.applyCircularImageToExistingImageView(profileImg, 48.0, imgByte);
         titleLabel.setText(post.getTitle());
         contentLabel.setText(post.getContent());
         authorLabel.setText(post.getWriter_name());
@@ -276,10 +281,10 @@ public class DetailPostController {
                     comment.getId(),
                     comment.getCreatedAt().toString(),
                     comment.getContent().toString(),
-                    comment.getMemberId()
+                    Long.valueOf("사용자" + comment.getMemberId())
             );
             comment_vbox.getChildren().add(commentItem);
-            Platform.runLater(() -> scrollPane.setVvalue(1.0));
+//            Platform.runLater(() -> scrollPane.setVvalue(1.0));
         } catch (IOException e) {
             e.printStackTrace();
         }

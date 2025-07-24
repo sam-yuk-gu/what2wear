@@ -1,6 +1,7 @@
 package com.samyukgu.what2wear.postcomment.controller;
 
 import com.samyukgu.what2wear.common.controller.CustomModalController;
+import com.samyukgu.what2wear.common.util.CircularImageUtil;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.member.Session.MemberSession;
 import com.samyukgu.what2wear.member.model.Member;
@@ -59,13 +60,8 @@ public class CommentItemController {
         Member writer = memberSession.getMember();
         if (writer != null) {
             comment_author.setText(writer.getNickname());
-            byte[] profileBytes = writer.getProfile_img();
-            if (profileBytes != null) {
-                Image image = new Image(new ByteArrayInputStream(profileBytes));
-                profileImageView.setImage(image);
-            } else {
-                profileImageView.setImage(new Image(getClass().getResourceAsStream("/assets/icons/defaultProfile.png")));
-            }
+            byte[] imgByte = writer.getProfile_img();
+            CircularImageUtil.applyCircularImageToExistingImageView(profileImageView, 48.0, imgByte);
         } else {
             comment_author.setText("알 수 없음");
             profileImageView.setImage(new Image(getClass().getResourceAsStream("/assets/icons/defaultProfile.png")));

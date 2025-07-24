@@ -3,10 +3,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
 <StackPane fx:id="root" prefHeight="768.0" prefWidth="1280.0" stylesheets="/com/samyukgu/what2wear/post/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.post.controller.DetailPostController">
-<!-- 동적 헤더 삽입을 위한 VBox-->
+    <!-- 동적 헤더 삽입을 위한 VBox-->
     <VBox fx:id="container">
         <HBox>
             <VBox fx:id="mainVBox" prefWidth="1030.0" spacing="20.0">
@@ -30,10 +29,7 @@
                                     <!-- 사용자 정보 -->
                                     <Pane fx:id="user_info_pane" prefWidth="950.0" styleClass="user-info">
                                         <HBox alignment="CENTER_LEFT" spacing="5" style="-fx-padding: 5 0 0 35">
-                                            <ImageView fitHeight="45" fitWidth="45">
-                                                <image>
-                                                    <Image url="@/assets/icons/defaultProfile.png"/>
-                                                </image>
+                                            <ImageView fx:id="profileImg" fitHeight="45" fitWidth="45">
                                             </ImageView>
                                             <VBox styleClass="inner-uer-info">
                                                 <Label fx:id="authorLabel" layoutX="14.0"
@@ -103,6 +99,7 @@
                             <!-- 댓글 영역 -->
                             <VBox fx:id="comment_vbox" spacing="20.0" styleClass="comment_section">
                                 <Label prefHeight="35.0" styleClass="comment_title_text" text="댓글"/>
+                                <Label fx:id="commentCountLabel" styleClass="comment_title_text" />
                             </VBox>
                         </VBox>
                     <!-- 댓글 입력창 -->

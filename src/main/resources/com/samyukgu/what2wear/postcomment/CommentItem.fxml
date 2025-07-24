@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 
 <StackPane fx:id="root" xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.samyukgu.what2wear.postcomment.controller.CommentItemController"
