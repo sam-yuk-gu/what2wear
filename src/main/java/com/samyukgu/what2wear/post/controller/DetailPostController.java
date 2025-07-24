@@ -1,5 +1,6 @@
 package com.samyukgu.what2wear.post.controller;
 
+import com.samyukgu.what2wear.common.controller.BasicHeaderController;
 import com.samyukgu.what2wear.common.controller.CustomModalController;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.common.controller.PostHeaderController;
@@ -27,11 +28,11 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class DetailPostController {
 
     @FXML private StackPane root;
-    @FXML private PostHeaderController header_paneController;
     @FXML private Label titleLabel;
     @FXML private Label contentLabel;
     @FXML private Label authorLabel;
@@ -43,6 +44,7 @@ public class DetailPostController {
     @FXML private Button editPostButton;
     @FXML private Button deletePostButton;
     @FXML private TextField commentField;
+    @FXML private VBox container;
 
     // 회원 세션
     private MemberService memberService;
@@ -59,10 +61,26 @@ public class DetailPostController {
 
         hideEditDeleteButtons();
 
-        header_paneController.setTitle("게시글 조회");
-        header_paneController.setOnBackAction(() ->
-                MainLayoutController.loadView("/com/samyukgu/what2wear/post/ListPost.fxml")
-        );
+        // 1. 헤더 동적 삽입
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/BasicHeader.fxml"));
+            HBox header = loader.load();
+
+            BasicHeaderController controller = loader.getController();
+            controller.setTitle("게시글 상세");
+            controller.setOnBackAction(() -> {
+                try {
+                    Parent view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/samyukgu/what2wear/post/ListPost.fxml")));
+                    root.getChildren().setAll(view);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+
+            container.getChildren().add(0, header); // StackPane 맨 위에 삽입
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         editPostButton.setOnAction(event -> handlePostEditClick());
         deletePostButton.setOnAction(event -> handlePostDeleteClick());
@@ -118,7 +136,7 @@ public class DetailPostController {
     private void displayPostContent(Post post) {
         titleLabel.setText(post.getTitle());
         contentLabel.setText(post.getContent());
-        authorLabel.setText(post.getMember_id().toString());
+        authorLabel.setText(post.getWriter_name());
         dateLabel.setText(post.getCreate_at().toString());
         likesLabel.setText(String.valueOf(post.getLike_count()));
     }
