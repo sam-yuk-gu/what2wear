@@ -25,7 +25,7 @@ public class OpenAiChatService {
         String closetDescription = buildClosetText(closet);
         String userPrompt = String.format(
                 "내일 %s에서 %s을(를) 위해 외출할 예정입니다. 아래 옷들 중에서만 코디를 추천해줘.\n\n%s\n\n" +
-                        "다음 형식으로만 대답해:\n상의: OOO\n하의: OOO\n신발: OOO\n악세사리: OOO",
+                        "다음 형식으로만 대답해:\n상의: OOO\n바지: OOO\n신발: OOO\n악세사리: OOO",
                 location, purpose, closetDescription
         );
 
@@ -40,7 +40,7 @@ public class OpenAiChatService {
         ArrayNode messages = objectMapper.createArrayNode();
         messages.add(objectMapper.createObjectNode()
                 .put("role", "system")
-                .put("content", "너는 패션 코디 전문가야. 유저가 가지고 있는 옷을 기반으로 코디를 제안해줘. 다음 형식으로만 대답해: '상의: OOO\\n하의: OOO\\n신발: OOO\\n악세사리: OOO'. 만약 해당 항목의 추천이 어렵거나 없는 경우 '없음'이라고 명확하게 써줘. 다른 말은 하지 마.")
+                .put("content", "너는 패션 코디 전문가야. 유저가 가지고 있는 옷을 기반으로 코디를 제안해줘. 다음 형식으로만 대답해: '상의: OOO\\n바지: OOO\\n신발: OOO\\n악세사리: OOO'. 만약 해당 항목의 추천이 어렵거나 없는 경우 '없음'이라고 명확하게 써줘. 다른 말은 하지 마.")
         );
         messages.add(objectMapper.createObjectNode()
                 .put("role", "user")
@@ -84,7 +84,7 @@ public class OpenAiChatService {
         StringBuilder sb = new StringBuilder();
         sb.append("내 옷 목록은 다음과 같아.\n");
 
-        for (String category : List.of("상의", "하의", "신발", "악세사리")) {
+        for (String category : List.of("상의", "바지", "신발", "악세사리")) {
             List<String> items = closet.getOrDefault(category, List.of());
             String joined = items.isEmpty() ? "없음" : String.join(", ", items);
             sb.append(category).append(": ").append(joined).append("\n");

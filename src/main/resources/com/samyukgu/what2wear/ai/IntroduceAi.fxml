@@ -28,7 +28,7 @@
         <VBox fx:id="content_vbox" alignment="CENTER_LEFT" maxWidth="Infinity" prefHeight="320.0" prefWidth="1030.0" spacing="20">
             <VBox>
                 <Label text="AI 코디 추천에서는 회원님의 옷장 속 아이템들을 분석해, 오늘 날씨와 어울리는 스타일을 제안해드려요." styleClass="description_text" />
-                <Label text="상의부터 하의, 신발까지, 실용성과 스타일을 모두 고려한 코디를 준비했답니다 :)" styleClass="description_text" />
+                <Label text="상의부터 바지, 신발까지, 실용성과 스타일을 모두 고려한 코디를 준비했답니다 :)" styleClass="description_text" />
             </VBox>
             <VBox>
                 <Label text="또 하나! 친구 코디 추천 기능도 있어요." styleClass="description_text" />

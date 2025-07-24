@@ -65,7 +65,7 @@
                         <VBox prefHeight="199.0" prefWidth="543.0" spacing="10">
                             <Label styleClass="description_text" text="이런 코디는 어떠세요?" fx:id="recommendLabel"/>
                             <Label styleClass="description_text" text="· 상의: OOO" fx:id="topLabel"/>
-                            <Label styleClass="description_text" text="· 하의: OOO" fx:id="bottomLabel"/>
+                            <Label styleClass="description_text" text="· 바지: OOO" fx:id="bottomLabel"/>
                             <Label styleClass="description_text" text="· 신발: OOO" fx:id="shoesLabel"/>
                             <Label styleClass="description_text" text="· 악세사리: OOO" fx:id="accLabel"/>
                         </VBox>

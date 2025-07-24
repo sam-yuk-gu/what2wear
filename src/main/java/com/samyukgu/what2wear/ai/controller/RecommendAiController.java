@@ -31,7 +31,6 @@ public class RecommendAiController {
     @FXML private Label introLabel2;
     @FXML private Label introLabel3;
     @FXML private Label introLabel4;
-    @FXML private Label introLabel5;
 
     @FXML private Label recommendLabel;
     @FXML private Label topLabel;
@@ -59,9 +58,13 @@ public class RecommendAiController {
         // categoryId → 카테고리명으로 변환
         Map<Long, String> categoryMap = Map.of(
                 1L, "상의",
-                2L, "하의",
-                3L, "신발",
-                4L, "악세사리"
+                2L, "바지",
+                3L, "원피스/스커트",
+                4L, "가방",
+                5L, "아우터",
+                6L, "신발",
+                7L, "악세사리",
+                8L, "기타"
         );
 
         // categoryId → 카테고리명으로 가공
@@ -102,7 +105,6 @@ public class RecommendAiController {
                     introLabel2.setText(purpose + "할 때 입을 옷을 추천해드릴게요 :)");
                     introLabel3.setText("오늘 " + location + "의 날씨 정보는");
                     introLabel4.setText("최고기온은 " + high + "°C, " + "최저기온은 " + low + "°C입니다.");
-                    introLabel5.setText("자외선 지수는 높음으로 외출 시 주의해주세요.");
                 });
 
             } catch (Exception e) {
@@ -125,7 +127,7 @@ public class RecommendAiController {
                 Platform.runLater(() -> {
                     recommendLabel.setText("AI 응답 실패 😥");
                     topLabel.setText("· 상의: 없음");
-                    bottomLabel.setText("· 하의: 없음");
+                    bottomLabel.setText("· 바지: 없음");
                     shoesLabel.setText("· 신발: 없음");
                     accLabel.setText("· 악세사리: 없음");
                 });
@@ -142,7 +144,7 @@ public class RecommendAiController {
 
         Pattern pattern = Pattern.compile(
                 "상의:\\s*(.*?)\\s*\\n" +
-                        "하의:\\s*(.*?)\\s*\\n" +
+                        "바지:\\s*(.*?)\\s*\\n" +
                         "신발:\\s*(.*?)\\s*\\n" +
                         "(?:악세사리|악세서리|액세서리):\\s*(.*)",
                 Pattern.DOTALL
@@ -157,7 +159,7 @@ public class RecommendAiController {
 
             Platform.runLater(() -> {
                 topLabel.setText("· 상의: " + top);
-                bottomLabel.setText("· 하의: " + bottom);
+                bottomLabel.setText("· 바지: " + bottom);
                 shoesLabel.setText("· 신발: " + shoes);
                 accLabel.setText("· 악세사리: " + acc);
                 recommendLabel.setText("회원님 옷 중 이런 코디는 어떠세요?");
@@ -166,7 +168,7 @@ public class RecommendAiController {
             Platform.runLater(() -> {
                 recommendLabel.setText("AI 응답 포맷을 이해하지 못했어요.");
                 topLabel.setText("· 상의: (확인 필요)");
-                bottomLabel.setText("· 하의: (확인 필요)");
+                bottomLabel.setText("· 바지: (확인 필요)");
                 shoesLabel.setText("· 신발: (확인 필요)");
                 accLabel.setText("· 악세사리: (확인 필요)");
             });
