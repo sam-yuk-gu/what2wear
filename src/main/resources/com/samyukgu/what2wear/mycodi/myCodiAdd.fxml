@@ -45,7 +45,8 @@
                   <children>
                      <HBox prefHeight="560.0" prefWidth="717.0">
                         <children>
-                           <GridPane prefHeight="523.0" prefWidth="684.0">
+                           <!-- GridPane에 fx:id 추가 - 스냅샷 촬영용 -->
+                           <GridPane fx:id="clothingGridPane" prefHeight="523.0" prefWidth="684.0">
                               <columnConstraints>
                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

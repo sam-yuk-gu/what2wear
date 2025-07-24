@@ -32,7 +32,7 @@ application {
 
 javafx {
     version = "21"
-    modules = listOf("javafx.controls", "javafx.fxml")
+    modules = listOf("javafx.controls", "javafx.fxml", "javafx.swing")
 }
 
 dependencies {
@@ -44,6 +44,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.38")
     implementation("com.sun.mail:jakarta.mail:2.0.1")
     implementation("com.sun.mail:jakarta.mail:2.0.1")
+    implementation("org.openjfx:javafx-swing:21")
 }
 
 tasks.withType<Test> {
