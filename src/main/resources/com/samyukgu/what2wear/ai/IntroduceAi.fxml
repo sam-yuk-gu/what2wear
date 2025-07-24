@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<StackPane fx:id="root" prefHeight="768.0" prefWidth="880.0" stylesheets="/com/samyukgu/what2wear/ai/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.ai.controller.IntroduceAiController">
+
+    <VBox fx:id="container_vbox" alignment="TOP_RIGHT" maxWidth="800" prefHeight="768.0" prefWidth="800.0" style="-fx-padding: 20;">
+
+        <!-- 상단 헤더 -->
+        <HBox fx:id="top_hbox" alignment="CENTER_LEFT" maxWidth="Infinity" prefHeight="81.0">
+            <fx:include source="/com/samyukgu/what2wear/common/PostHeader.fxml" />
+        </HBox>
+
+        <!-- 인사말 -->
+        <VBox fx:id="top_title_vbox" alignment="CENTER_LEFT" maxWidth="Infinity">
+            <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="1030.0" spacing="4">
+                <Label text="안녕하세요," styleClass="description_text" />
+                <Label text="OOO님! 😊" styleClass="description_text" />
+            </HBox>
+            <Label text="오늘도 어떤 옷을 입을지 고민되시죠?" styleClass="description_text" />
+        </VBox>
+
+        <!-- 기능 소개 -->
+        <VBox fx:id="content_vbox" alignment="CENTER_LEFT" maxWidth="Infinity" prefHeight="320.0" prefWidth="1030.0" spacing="20">
+            <VBox>
+                <Label text="AI 코디 추천에서는 회원님의 옷장 속 아이템들을 분석해, 오늘 날씨와 어울리는 스타일을 제안해드려요." styleClass="description_text" />
+                <Label text="상의부터 바지, 신발까지, 실용성과 스타일을 모두 고려한 코디를 준비했답니다 :)" styleClass="description_text" />
+            </VBox>
+            <VBox>
+                <Label text="또 하나! 친구 코디 추천 기능도 있어요." styleClass="description_text" />
+                <Label text="친구들의 옷장에서 마음에 드는 아이템을 하나씩 골라, 서로 다른 친구들의 스타일을 조합해보는 재미도 느껴보세요." styleClass="description_text" />
+            </VBox>
+            <VBox>
+                <Label text="참고로, 코디 추천 기능은 하루 최대 3회까지 이용하실 수 있어요." styleClass="description_text" />
+                <Label text="오늘 하루, 멋지고 특별한 스타일링으로 시작해볼까요?" styleClass="description_text" />
+            </VBox>
+        </VBox>
+
+        <!-- 선택란 -->
+        <HBox fx:id="closet_check_hbox" alignment="CENTER_LEFT" maxWidth="Infinity" prefHeight="139.0" prefWidth="1030.0" spacing="10">
+
+            <!-- 지역 선택 -->
+            <VBox prefHeight="100.0" prefWidth="243.0" spacing="20">
+                <HBox fx:id="location_hbox" alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="300.0" spacing="4">
+                    <Label styleClass="radio_title_text" text="외출 지역" />
+                    <Label styleClass="radio_star_title_text" text="*" />
+                </HBox>
+                <ComboBox fx:id="select_location_title" prefHeight="45.0" prefWidth="180.0" styleClass="select_title">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="서울시 종로구" />
+                            <String fx:value="서울시 강남구" />
+                            <String fx:value="경기도 성남시" />
+                            <String fx:value="경기도 수원시" />
+                            <String fx:value="부산시 해운대구" />
+                            <String fx:value="대구시 수성구" />
+                            <String fx:value="인천시 연수구" />
+                            <String fx:value="대전시 유성구" />
+                            <String fx:value="광주시 동구" />
+                            <String fx:value="울산시 남구" />
+                            <String fx:value="강원도 춘천시" />
+                            <String fx:value="충청북도 청주시" />
+                            <String fx:value="충청남도 천안시" />
+                            <String fx:value="전라북도 전주시" />
+                            <String fx:value="전라남도 순천시" />
+                            <String fx:value="경상북도 포항시" />
+                            <String fx:value="경상남도 창원시" />
+                            <String fx:value="제주특별자치도 제주시" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+            </VBox>
+
+            <!-- 외출 목적 -->
+            <VBox prefHeight="100.0" prefWidth="243.0" spacing="20">
+                <HBox fx:id="tpo_hbox" alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="300.0" spacing="4">
+                    <Label styleClass="radio_title_text" text="외출 목적" />
+                    <Label styleClass="radio_star_title_text" text="*" />
+                </HBox>
+                <ComboBox fx:id="select_title" layoutX="-1.0" layoutY="60.0" prefHeight="45.0" prefWidth="126.0" styleClass="select_title">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="공부" />
+                            <String fx:value="데이트" />
+                            <String fx:value="운동" />
+                            <String fx:value="쇼핑" />
+                            <String fx:value="출근" />
+                            <String fx:value="산책" />
+                            <String fx:value="파티" />
+                            <String fx:value="여행" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+            </VBox>
+
+            <!-- 옷장 범위 -->
+            <VBox fx:id="closet_vbox" maxWidth="Infinity" prefHeight="100.0" prefWidth="395.0" spacing="20">
+                <HBox fx:id="closet_title_hbox" alignment="CENTER_LEFT" prefHeight="45.0" spacing="4">
+                    <Label styleClass="radio_title_text" text="옷장 범위" />
+                    <Label styleClass="radio_star_title_text" text="*" />
+                </HBox>
+                <HBox fx:id="closet_range_hbox" alignment="CENTER_LEFT" spacing="20">
+                    <RadioButton fx:id="myClosetRadio" styleClass="radio_suTitle_text" text="나의 옷장" />
+                    <RadioButton fx:id="otherClosetRadio" styleClass="radio_suTitle_text" text="다른 사람 옷장" />
+                </HBox>
+            </VBox>
+        </HBox>
+
+        <!-- 하단 버튼 -->
+        <HBox fx:id="bottom_two_button_hbox" alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="1030.0" styleClass="bottom_two_button">
+            <children>
+                <Pane fx:id="bottom_two_button_pane" prefHeight="60.0" prefWidth="1030.0">
+                    <children>
+                        <Button fx:id="cancelButton" layoutX="676.0" layoutY="3.0" onAction="#handleCancelClick" prefHeight="55.0" prefWidth="150.0" styleClass="gray_stroke_button" text="취소하기">
+                            <font>
+                                <Font size="24.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="recommendBtn" layoutX="834.0" layoutY="3.0" onAction="#handleRecommendClick" prefHeight="55.0" prefWidth="150.0" styleClass="black_background_button" text="추천받기">
+                            <font>
+                                <Font size="24.0" />
+                            </font>
+                        </Button>
+                    </children>
+                </Pane>
+            </children>
+        </HBox>
+    </VBox>
+</StackPane>

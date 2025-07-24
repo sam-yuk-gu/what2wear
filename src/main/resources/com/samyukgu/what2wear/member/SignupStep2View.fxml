@@ -23,7 +23,7 @@
             <children>
                 <ImageView fx:id="signupBanner" fitHeight="663.0" fitWidth="407.0" layoutX="47.0" layoutY="53.0" pickOnBounds="true">
                     <image>
-                        <Image url="@../../../../assets/imgs/raccoon.jpg" />
+                        <Image url="@../../../../assets/images/raccoon.jpg" />
                     </image>
                 </ImageView>
             </children>

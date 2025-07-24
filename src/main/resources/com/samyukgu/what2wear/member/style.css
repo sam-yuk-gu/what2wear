@@ -17,6 +17,11 @@
     -fx-font-family: "Pretendard Bold";
 }
 
+.input-text {
+    -fx-font-size: 15;
+    -fx-font-family: "Pretendard Bold";
+}
+
 .semi-bold-text {
     -fx-font-family: "Pretendard SemiBold";
 }
@@ -31,6 +36,11 @@
     -fx-font-family: "Pretendard SemiBold";
 }
 
+.text-gray{
+    -fx-text-fill: #8F8F8F;
+    -fx-font-family: "Pretendard SemiBold";
+}
+
 .btn-black{
     -fx-background-color: "black";
     -fx-text-fill: "white";
@@ -39,7 +49,39 @@
     -fx-font-size: 24;
 }
 
+.btn-white{
+    -fx-background-color: "white";
+    -fx-text-fill: "black";
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+
+    -fx-border-color: #000000;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+}
+
+.btn-white-semi-bold{
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-background-color: "white";
+    -fx-text-fill: "black";
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+
+    -fx-border-color: #000000;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+}
+
 .btn-gray{
+    -fx-background-color: #8E8E8E;
+    -fx-text-fill: "white";
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 20;
+}
+
+.btn-gray-semi-bold{
+    -fx-font-family: "Pretendard SemiBold";
     -fx-background-color: #8E8E8E;
     -fx-text-fill: "white";
     -fx-background-radius: 10;
@@ -55,7 +97,25 @@
     -fx-font-size: 18;
 }
 
+.btn-red-semi-bold{
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-background-color: FF5F63;
+    -fx-text-fill: "white";
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 18;
+}
+
 .btn-green{
+    -fx-background-color: #79C998;
+    -fx-text-fill: "white";
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 20;
+}
+
+.btn-green-semi-bold{
+    -fx-font-family: "Pretendard SemiBold";
     -fx-background-color: #79C998;
     -fx-text-fill: "white";
     -fx-background-radius: 10;
@@ -66,10 +126,49 @@
 .input-field{
     -fx-background-radius: 10;
     -fx-border-radius: 10;
-    -fx-font-family: "Pretendard SemiBold";
-    -fx-font-size: 18;
+    -fx-font-family: "Pretendard Medium";
+    -fx-font-size: 15;
+    -fx-border-color: #C0C0C0;
+    -fx-padding: 0 15;
+}
+
+.input-field:focused {
+    -fx-border-color: #303030;
 }
 
 .label-clickable {
     -fx-cursor: hand;
+    -fx-font-size: 12;
+    -fx-font-family: "Pretendard Regular";
+    -fx-text-fill: #B0B0B0;
+}
+
+.label-inset {
+    -fx-text-fill: #B0B0B0;
+    -fx-padding: 0 4;
+}
+
+.sep-section {
+    -fx-border-color: transparent transparent #8f8f8f transparent;
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-style: none none solid none;
+}
+
+/* 추가 */
+
+/* LoginView.fxml */
+
+.description {
+    -fx-font-size: 14;
+    -fx-font-family: "Pretendard Medium";
+    -fx-text-fill: #6F6F6F;
+}
+
+.login-btn {
+    -fx-background-color: "black";
+    -fx-text-fill: "white";
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 20;
+    -fx-font-family: "Pretendard SemiBold";
 }

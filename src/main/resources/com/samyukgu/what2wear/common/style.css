@@ -1,20 +1,21 @@
 /* BasicHeader Start */
 
 .basic-header {
-    -fx-padding: 15 30;
-    -fx-background-color: #ffffff;
-    -fx-border-color: red;
-    -fx-border-width: 1;
+    -fx-padding: 15 20;
+    -fx-border-radius: 20 20 0 0;
+    -fx-background-radius: 20 20 0 0;
+    -fx-background-color: #F9FBFC;
+    -fx-border-color: #C0C0C0;
+    -fx-border-width: 0 0 1 0;
 }
 
 .header-title-text {
-    -fx-font-size: 16px;
+    -fx-font-size: 18;
+    -fx-font-family: "Pretendard SemiBold";
     -fx-text-fill: #333333;
 }
 
 .header-back-button {
-    -fx-border-color: red;
-    -fx-border-width: 1;
     -fx-background-color: transparent;
     -fx-cursor: hand;
 }
@@ -39,6 +40,13 @@
 /* Button 관련 */
 .two_button_hbox {
     -fx-padding: 20 0;
+}
+
+
+/* Modal Button 관련 */
+.close_button {
+    -fx-background-color: white;
+    -fx-cursor: hand;
 }
 
 .cancel_button {
@@ -82,3 +90,146 @@
     -fx-cursor: hand;
     -fx-font-family: "Pretendard SemiBold";
 }
+
+/* select outfit modal start */
+
+.modal-container {
+    -fx-background-color: #FFFFFF;
+    -fx-padding: 20 30;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.2, 0, 4);
+}
+
+.close-btn {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.toggle-tab {
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #EAEAEA;
+}
+
+.toggle-button {
+    -fx-pref-width: 200;
+    -fx-background-color: transparent;
+    -fx-border-radius: 0;
+    -fx-font-family: "Pretendard Medium";
+    -fx-font-size: 14;
+    -fx-text-fill: #747474;
+}
+
+.toggle-button:selected,
+.toggle-button:focused:selected {
+    -fx-font-family: "Pretendard Bold";
+    -fx-border-width: 0 0 1.5 0;
+    -fx-border-color: #FA7B7F;
+    -fx-text-fill: #FA7B7F;
+}
+
+.search-bar {
+    -fx-min-height: 40;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-border-color: #CCCCCC;
+    -fx-padding: 15;
+    -fx-font-size: 14;
+    -fx-font-family: "Pretendard Medium";
+}
+
+.search-bar:focused {
+    -fx-border-color: #454545;
+}
+
+.category-box {
+    -fx-padding: 2 0 0 0;
+}
+
+.category-button {
+    -fx-border-color: #EAEAEA;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-background-color: white;
+    -fx-font-size: 13;
+    -fx-font-family: "Pretendard Medium";
+    -fx-text-fill: #929292;
+}
+
+.category-button:focused {
+    -fx-border-color: #FA7B7F;
+    -fx-background-color: #FFE8E9;
+    -fx-text-fill: #2F2F2F;
+}
+
+.category-button-selected {
+    -fx-border-color: #FA7B7F;
+    -fx-background-color: #FFE8E9;
+    -fx-text-fill: #2F2F2F;
+}
+
+.wardrobe-scroll {
+    -fx-min-height: 249;
+    -fx-background-color: white;
+    -fx-fill: white;
+}
+
+.flow-pane {
+    -fx-background-color: white;
+    -fx-fill: white;
+}
+
+.clothing-box {
+    -fx-pref-height: 107;
+    -fx-pref-width: 107;
+}
+
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 6px;
+    -fx-opacity: 0.6;
+}
+
+.thumb {
+    -fx-background-insets: 0;
+    -fx-background-color: #CFCFCF;
+}
+
+.codi-scroll {
+    -fx-min-height: 288;
+    -fx-background-color: white;
+    -fx-fill: white;
+}
+
+.codi-box {
+    /*-fx-border-color: red;*/
+    /*-fx-border-width: 1;*/
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+}
+
+.codi-image {
+    -fx-border-color: blue;
+    -fx-border-width: 1;
+    -fx-fit-to-width: 130;
+    -fx-fit-to-height: 180;
+}
+.cancel-btn {
+    -fx-padding: 12 45;
+    -fx-text-fill: #000000;
+    -fx-font-size: 14px;
+    -fx-background-radius: 10;
+    -fx-background-color: #E6E6E6;
+    -fx-font-family: "Pretendard Medium";
+    -fx-cursor: hand;
+}
+
+.confirm-btn {
+    -fx-padding: 12 45;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 14px;
+    -fx-background-radius: 10;
+    -fx-background-color: #79C998;
+    -fx-font-family: "Pretendard Bold";
+    -fx-cursor: hand;
+}
+/* select outfit modal end */

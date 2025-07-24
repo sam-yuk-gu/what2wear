@@ -2,23 +2,23 @@
 
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
-<?import javafx.geometry.Insets?>
-
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.samyukgu.what2wear.codi.controller.CodiMainController"
-      spacing="50"
-      stylesheets="@/com/samyukgu/what2wear/codi/codi-main.css"
-      styleClass="container"
->
-    <VBox spacing="7">
-        <Label fx:id="welcomeTitle" text="안녕하세요, 코사님" styleClass="welcome-title"/>
-        <Label fx:id="welcomeSubtext" text="오늘 날씨는 외출하기 좋은 기온이에요!" styleClass="welcome-subtext"/>
-    </VBox>
+
+<StackPane prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.samyukgu.what2wear.codi.controller.CodiMainController"
+           stylesheets="@/com/samyukgu/what2wear/codi/codi-main.css"
+           styleClass="container">
+<VBox spacing="50">
+    <HBox>
+        <VBox spacing="7">
+            <Label fx:id="welcomeTitle" text="안녕하세요, 코사님" styleClass="welcome-title"/>
+            <Label fx:id="welcomeSubtext" text="오늘 날씨는 외출하기 좋은 기온이에요!" styleClass="welcome-subtext"/>
+        </VBox>
+        <Region VBox.vgrow="ALWAYS" />
+        <Button text="날씨 설정" onMouseClicked="#handleWeatherClick"/>
+    </HBox>
     <HBox>
         <!-- 좌측: 캘린더 영역 -->
         <VBox spacing="20">
@@ -42,7 +42,7 @@
                 </HBox>
                 <Region HBox.hgrow="ALWAYS" />
                 <HBox spacing="10">
-                    <Button fx:id="aiButton" styleClass="ai-btn">
+                    <Button fx:id="aiButton" onAction="#handleAiButtonClick" styleClass="ai-btn">
                         <graphic>
                             <HBox spacing="10" alignment="CENTER">
                                 <ImageView fitWidth="19" pickOnBounds="true" preserveRatio="true">
@@ -52,7 +52,7 @@
                             </HBox>
                         </graphic>
                     </Button>
-                    <Button fx:id="addButton" styleClass="add-btn" onAction="#handleClickAddCodi">
+                    <Button fx:id="addButton" style="-fx-fit-to-height: 35" styleClass="add-btn" onAction="#handleClickAddCodi">
                         <graphic>
                             <HBox spacing="10" alignment="CENTER">
                                 <ImageView fitWidth="16" pickOnBounds="true" preserveRatio="true">
@@ -82,3 +82,4 @@
         </VBox>
     </HBox>
 </VBox>
+</StackPane>
