@@ -99,7 +99,7 @@
                             <!-- 댓글 영역 -->
                             <VBox fx:id="comment_vbox" spacing="20.0" styleClass="comment_section">
                                 <Label prefHeight="35.0" styleClass="comment_title_text" text="댓글"/>
-                                <Label fx:id="commentCountLabel" styleClass="comment_title_text" />
+<!--                                <Label fx:id="commentCountLabel" styleClass="comment_title_text" />-->
                             </VBox>
                         </VBox>
                     <!-- 댓글 입력창 -->

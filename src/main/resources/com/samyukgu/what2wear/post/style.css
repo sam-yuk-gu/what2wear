@@ -95,7 +95,7 @@
     -fx-text-fill: #000000;
     -fx-font-size: 18px;
     -fx-font-family: "Pretendard SemiBold";
-    -fx-padding: 0 0 0 30;
+    -fx-padding: 5 0 10 30;
 }
 
 .comment_date {
@@ -413,8 +413,6 @@
 }
 
 .cmt-vbox {
-    -fx-border-width: 1;
-    -fx-border-color: red;
 }
 
 .comment_input {

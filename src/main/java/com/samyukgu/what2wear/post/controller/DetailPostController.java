@@ -50,7 +50,7 @@ public class DetailPostController {
     @FXML private ImageView profileImg;
     @FXML private VBox container;
     @FXML private ScrollPane scrollPane;
-    @FXML private Label commentCountLabel;
+//    @FXML private Label commentCountLabel;
 
     // 회원 세션
     private MemberService memberService;
@@ -132,7 +132,7 @@ public class DetailPostController {
 
         // 댓글 갯수
         List<PostComment> commentList = commentDAO.findByPostId(currentPost.getId());
-        commentCountLabel.setText("(" + commentList.size() + "개)");
+//        commentCountLabel.setText("(" + commentList.size() + "개)");
 
         for (PostComment comment : comments) {
             try {
