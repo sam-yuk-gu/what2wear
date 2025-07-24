@@ -396,7 +396,7 @@ public class ListWardrobeController {
         nameLabel.setPrefWidth(160);
         nameLabel.setMaxWidth(160);
         nameLabel.setMaxHeight(40); // 높이 제한
-        nameLabel.setStyle("-fx-font-size: 11px; -fx-text-alignment: center; -fx-text-fill: #333;");
+        nameLabel.setStyle("-fx-font-size: 11px; -fx-text-alignment: center; -fx-text-fill: #333; -fx-font-family: Pretendard SemiBold;");
         nameLabel.setWrapText(true);
 
         // 클릭 이벤트 추가
@@ -653,7 +653,7 @@ public class ListWardrobeController {
             emptyLabel.setText("등록된 옷이 없습니다.");
         }
 
-        emptyLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #666;");
+        emptyLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #666; -fx-font-family: Pretendard SemiBold;");
         VBox emptyBox = new VBox(emptyLabel);
         emptyBox.setAlignment(Pos.CENTER);
         emptyBox.setPrefHeight(200);
@@ -758,9 +758,9 @@ public class ListWardrobeController {
         if (button == null) return;
 
         if (selected) {
-            button.setStyle("-fx-text-fill: white; -fx-background-color: #007acc; -fx-border-color: #007acc;");
+            button.setStyle("-fx-text-fill: white; -fx-background-color: #007acc; -fx-border-color: #007acc; -fx-font-family: Pretendard SemiBold;");
         } else {
-            button.setStyle("-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;");
+            button.setStyle("-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent; -fx-font-family: Pretendard Regular;");
         }
     }
 
@@ -768,9 +768,9 @@ public class ListWardrobeController {
         if (favoriteButton == null) return;
 
         if (showFavoritesOnly) {
-            favoriteButton.setStyle("-fx-background-color: #007acc; -fx-border-color: #007acc; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: normal; -fx-background-radius: 4; -fx-border-radius: 4; -fx-padding: 6 12; -fx-cursor: hand;");
+            favoriteButton.setStyle(" -fx-border-color: #000; -fx-text-fill: black; -fx-font-size: 13px; -fx-font-family: Pretendard SemiBold; -fx-background-radius: 4; -fx-border-radius: 4; -fx-padding: 6 12; -fx-cursor: hand;");
         } else {
-            favoriteButton.setStyle("-fx-background-color: transparent; -fx-border-color: #cccccc; -fx-border-width: 1; -fx-text-fill: #000000; -fx-font-size: 13px; -fx-font-weight: normal; -fx-background-radius: 4; -fx-border-radius: 4; -fx-padding: 6 12; -fx-cursor: hand;");
+            favoriteButton.setStyle(" -fx-border-color: #C0C0C0; -fx-border-width: 1; -fx-text-fill: #C0C0C0; -fx-font-size: 13px; -fx-font-family: Pretendard Regular; -fx-background-radius: 4; -fx-border-radius: 4; -fx-padding: 6 12; -fx-cursor: hand;");
         }
     }
 

@@ -263,6 +263,7 @@ public class ListMyCodiController implements Initializable {
 
         itemBox.setSpacing(8);
         itemBox.setStyle(
+                "-fx-font-family: Pretendard Regular;" +
                 "-fx-background-color: #f8f8f8; " +
                         "-fx-border-color: #e0e0e0; " +
                         "-fx-border-width: 1; " +
@@ -290,7 +291,7 @@ public class ListMyCodiController implements Initializable {
         nameLabel.setPrefWidth(160);
         nameLabel.setMaxWidth(160);
         nameLabel.setMaxHeight(40); // 높이 제한
-        nameLabel.setStyle("-fx-font-size: 11px; -fx-text-alignment: center; -fx-text-fill: #333;");
+        nameLabel.setStyle("-fx-font-size: 11px; -fx-text-alignment: center; -fx-text-fill: #333; -fx-font-family: Pretendard SemiBold;");
         nameLabel.setWrapText(true);
 
         // 클릭 이벤트

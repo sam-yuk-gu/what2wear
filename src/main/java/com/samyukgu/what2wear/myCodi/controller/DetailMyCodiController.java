@@ -133,7 +133,7 @@ public class DetailMyCodiController implements Initializable {
 
                 // 제목 다시 추가
                 Label titleLabel = new Label("선택된 아이템 상세");
-                titleLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #333;");
+                titleLabel.setStyle("-fx-font-family: Pretendard Regular; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #333;");
                 detailVBox.getChildren().add(titleLabel);
             }
 
@@ -230,12 +230,12 @@ public class DetailMyCodiController implements Initializable {
         String categoryName = categoryNames.getOrDefault(categoryId, "기타");
 
         Label categoryLabel = new Label(categoryName + ":");
-        categoryLabel.setStyle("-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #495057; -fx-min-width: 80;");
+        categoryLabel.setStyle("-fx-font-family: Pretendard Regular;  -fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #495057; -fx-min-width: 80;");
 
         // 상세 정보
         String detailText = buildDetailText(wardrobe);
         Label detailLabel = new Label(detailText);
-        detailLabel.setStyle("-fx-font-size: 11px; -fx-text-fill: #333; -fx-wrap-text: true;");
+        detailLabel.setStyle("-fx-font-family: Pretendard Regular;  -fx-font-size: 11px; -fx-text-fill: #333; -fx-wrap-text: true;");
         HBox.setHgrow(detailLabel, javafx.scene.layout.Priority.ALWAYS);
 
         detailBox.getChildren().addAll(categoryLabel, detailLabel);

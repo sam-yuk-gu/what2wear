@@ -11,14 +11,19 @@
 
 /* 검색창 컨테이너 */
 #searchContainer {
-    -fx-background-color: #d9d9d9;
-    -fx-background-radius: 5;
+    -fx-border-color: #cccccc;        /* 회색 테두리 */
+    -fx-border-width: 1;              /* 테두리 두께 */
+    -fx-border-radius: 6;             /* 둥근 테두리 (옵션) */
+    -fx-padding: 4 8;                 /* 안쪽 여백 */
+    -fx-background-radius: 6;         /* 배경도 둥글게 */
+    -fx-background-color: white;      /* 배경 흰색 (선택) */
 }
 
 /* 검색 텍스트 필드 */
 #searchField {
-    -fx-background-color: transparent;
+    -fx-background-color: white;
     -fx-border-color: transparent;
+    -fx-font-family: "Pretendard Regular";
 }
 
 /* 검색 아이콘 라벨 */
@@ -56,12 +61,13 @@
 
 /* 메인 스크롤 패널 */
 #mainScrollPane {
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
+    -fx-background-color: white;
+    /*-fx-border-color: transparent;*/
 }
 
 /* 코디 그리드 컨테이너 */
 #codiGridContainer {
+    -fx-background-color: white;
     -fx-padding: 10;
     -fx-fill-width: true;
 }
@@ -90,5 +96,32 @@
     -fx-max-height: 0;
     -fx-padding: 0;
     -fx-font-size: 0;
+}
+
+
+.custom-combo {
+    -fx-background-color: white;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-font-family: "Pretendard Regular";
+    -fx-font-size: 13px;
+    -fx-padding: 4 8;
+    -fx-text-fill: #333333;
+    -fx-cursor: hand;
+}
+#observableArrayList {
+    -fx-font-family: "Pretendard Regular";
+}
+
+.pagination.no-page-info .page-information {
+    -fx-opacity: 0;
+    -fx-max-height: 0;
+    -fx-padding: 0;
+    -fx-font-size: 0;
+}
+.pagination {
+    -fx-background-color: white;
 }
 

@@ -558,7 +558,8 @@ public class CreateMyCodiController implements Initializable {
 
             // 선택 상태 스타일 적용
             if (topPane != null) {
-                topPane.setStyle("-fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
+                topPane.setStyle("-fx-cursor: hand; -fx-background-color: #e8f4ff;" +
+                        "-fx-font-family: Pretendard Regular;-fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
             }
         }
     }
@@ -577,7 +578,7 @@ public class CreateMyCodiController implements Initializable {
             if (bottomStatusLabel != null) bottomStatusLabel.setText(clothes.getName());
 
             if (bottomPane != null) {
-                bottomPane.setStyle("-fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
+                bottomPane.setStyle("-fx-font-family: Pretendard Regular; -fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
             }
         }
     }
@@ -596,7 +597,7 @@ public class CreateMyCodiController implements Initializable {
             if (shoesStatusLabel != null) shoesStatusLabel.setText(clothes.getName());
 
             if (shoesPane != null) {
-                shoesPane.setStyle("-fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
+                shoesPane.setStyle("-fx-font-family: Pretendard Regular; -fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
             }
         }
     }
@@ -615,7 +616,7 @@ public class CreateMyCodiController implements Initializable {
             if (bagStatusLabel != null) bagStatusLabel.setText(clothes.getName());
 
             if (bagPane != null) {
-                bagPane.setStyle("-fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
+                bagPane.setStyle("-fx-font-family: Pretendard Regular; -fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
             }
         }
     }
@@ -634,7 +635,7 @@ public class CreateMyCodiController implements Initializable {
             if (dressStatusLabel != null) dressStatusLabel.setText(clothes.getName());
 
             if (dressPane != null) {
-                dressPane.setStyle("-fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
+                dressPane.setStyle("-fx-font-family: Pretendard Regular; -fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
             }
         }
     }
@@ -653,7 +654,7 @@ public class CreateMyCodiController implements Initializable {
             if (outerStatusLabel != null) outerStatusLabel.setText(clothes.getName());
 
             if (outerPane != null) {
-                outerPane.setStyle("-fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
+                outerPane.setStyle("-fx-font-family: Pretendard Regular; -fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
             }
         }
     }
@@ -672,7 +673,7 @@ public class CreateMyCodiController implements Initializable {
             if (accessoryStatusLabel != null) accessoryStatusLabel.setText(clothes.getName());
 
             if (accessoryPane != null) {
-                accessoryPane.setStyle("-fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
+                accessoryPane.setStyle("-fx-font-family: Pretendard Regular; -fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
             }
         }
     }
@@ -691,7 +692,7 @@ public class CreateMyCodiController implements Initializable {
             if (etcStatusLabel != null) etcStatusLabel.setText(clothes.getName());
 
             if (etcPane != null) {
-                etcPane.setStyle("-fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
+                etcPane.setStyle("-fx-font-family: Pretendard Regular; -fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
             }
         }
     }
