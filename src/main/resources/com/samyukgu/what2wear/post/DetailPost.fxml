@@ -13,11 +13,11 @@
 
                 <!-- 게시글 본문 + 댓글 목록 스크롤 -->
                 <ScrollPane fx:id="scrollPane" fitToWidth="true" styleClass="board_scroll_pane" VBox.vgrow="ALWAYS">
-                    <VBox fx:id="board_vbox" prefHeight="768.0" styleClass="board_detail_vbox">
+                    <VBox fx:id="board_vbox" styleClass="board_detail_vbox">
                         <!-- 게시글 제목 -->
-                            <VBox prefHeight="59.0" prefWidth="1031.0" styleClass="board_title_box">
+                            <VBox styleClass="board_title_box">
                                 <children>
-                                    <Label fx:id="titleLabel" prefHeight="23.0"
+                                    <Label fx:id="titleLabel"
                                            styleClass="datail_title_text" text="제목">
                                     </Label>
                                 </children>
@@ -57,8 +57,8 @@
                                                 <Image url="@/assets/icons/defaultCodi.png"/>
                                             </ImageView>
                                         </VBox>
-                                        <HBox fx:id="like_pane" alignment="CENTER" prefHeight="41.0" prefWidth="120.0"
-                                              spacing="5.0">
+                                        <VBox fx:id="like_pane" alignment="CENTER" prefHeight="41.0" prefWidth="120.0"
+                                              spacing="2" styleClass="like-container">
                                             <Button fx:id="likeButton" onAction="#handleLikeClick"
                                                     styleClass="arrow_button">
                                                 <graphic>
@@ -71,16 +71,14 @@
                                                 </graphic>
                                             </Button>
                                             <Label fx:id="likesLabel" prefHeight="14.0" styleClass="like_text" text="0"/>
-                                        </HBox>
+                                        </VBox>
                                         <!-- 수정/삭제 버튼 -->
-                                        <HBox fx:id="title_two_button" alignment="CENTER" layoutX="25.0"
-                                              layoutY="180.0" prefHeight="65.0" prefWidth="900.0"
-                                              spacing="10.0">
+                                        <HBox fx:id="title_two_button" spacing="10.0" styleClass="btns-box">
                                             <Button fx:id="editPostButton"
                                                     onAction="#handlePostEditClick"
-                                                    styleClass="gray_stroke_button" text="수정하기">
+                                                    styleClass="edit-btn" text="수정하기">
                                                 <graphic>
-                                                    <ImageView fitHeight="24.0" fitWidth="24.0">
+                                                    <ImageView fitHeight="17" fitWidth="17">
                                                         <image>
                                                             <Image url="@/assets/icons/edit.png"/>
                                                         </image>
@@ -89,11 +87,11 @@
                                             </Button>
                                             <Button fx:id="deletePostButton"
                                                     onAction="#handlePostDeleteClick"
-                                                    styleClass="gray_stroke_button" text="삭제하기">
+                                                    styleClass="del-btn" text="삭제하기">
                                                 <graphic>
-                                                    <ImageView fitHeight="24.0" fitWidth="24.0">
+                                                    <ImageView fitHeight="17" fitWidth="17">
                                                         <image>
-                                                            <Image url="@/assets/icons/trash.png"/>
+                                                            <Image url="@/assets/icons/trash-white.png"/>
                                                         </image>
                                                     </ImageView>
                                                 </graphic>
@@ -103,18 +101,18 @@
                                 </VBox>
 
                             <!-- 댓글 영역 -->
-                            <VBox fx:id="comment_vbox" alignment="CENTER" spacing="20.0" styleClass="comment_section">
-                                <Label prefHeight="35.0" prefWidth="950.0" styleClass="comment_title_text" text="댓글"/>
+                            <VBox fx:id="comment_vbox" spacing="20.0" styleClass="comment_section">
+                                <Label prefHeight="35.0" styleClass="comment_title_text" text="댓글"/>
                             </VBox>
                         </VBox>
+                    <!-- 댓글 입력창 -->
+                    <HBox alignment="CENTER" prefHeight="70.0" prefWidth="1030.0" spacing="10.0">
+                        <TextField fx:id="commentField" prefHeight="50.0" prefWidth="883.0" promptText="댓글을 입력해주세요." styleClass="comment_input" />
+                        <Button fx:id="submitCommentButton" onAction="#handleRegisterCommentClick" styleClass="black_background_button" text="등록" />
+                    </HBox>
                     </VBox>
                 </ScrollPane>
 
-                <!-- 댓글 입력창 -->
-                <HBox alignment="CENTER" prefHeight="139.0" prefWidth="1030.0" spacing="10.0">
-                    <TextField fx:id="commentField" prefHeight="50.0" prefWidth="883.0" promptText="댓글을 입력해주세요." styleClass="comment_input" />
-                    <Button fx:id="submitCommentButton" onAction="#handleRegisterCommentClick" styleClass="black_background_button" text="확인" />
-                </HBox>
             </VBox>
         </HBox>
     </VBox>

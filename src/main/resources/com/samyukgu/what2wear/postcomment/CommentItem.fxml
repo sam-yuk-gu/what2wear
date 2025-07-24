@@ -6,59 +6,54 @@
 <?import javafx.scene.image.Image?>
 
 <StackPane fx:id="root" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.samyukgu.what2wear.postcomment.controller.CommentItemController"
-      stylesheets="/com/samyukgu/what2wear/post/style.css">
+           fx:controller="com.samyukgu.what2wear.postcomment.controller.CommentItemController"
+           stylesheets="/com/samyukgu/what2wear/post/style.css">
 
     <HBox spacing="8.0" alignment="CENTER" prefWidth="950.0">
 
-    <HBox alignment="TOP_CENTER" prefHeight="70.0" prefWidth="950.0" spacing="16.0">
-<!--        &lt;!&ndash; 프로필 이미지 &ndash;&gt;-->
-<!--        <ImageView fitHeight="48.0" fitWidth="48.0">-->
-<!--            <image>-->
-<!--                <Image url="@/assets/icons/defaultProfile.png"/>-->
-<!--            </image>-->
-<!--        </ImageView>-->
+        <HBox alignment="TOP_CENTER" prefHeight="70.0" prefWidth="950.0" spacing="5.0">
+            <ImageView fx:id="profileImageView" fitHeight="50" fitWidth="50"/>
 
-        <!-- 작성자 정보 및 댓글 내용 -->
-        <VBox fx:id="commentBox" alignment="TOP_LEFT" spacing="4.0" prefWidth="800.0">
-            <HBox spacing="8.0">
-                <Label fx:id="comment_author" styleClass="comment_author"/>
-                <Label fx:id="comment_date" styleClass="comment_date"/>
+            <!-- 작성자 정보 및 댓글 내용 -->
+            <VBox fx:id="commentBox" alignment="CENTER_LEFT" spacing="4.0" prefWidth="800.0">
+                <HBox spacing="8.0" alignment="CENTER_LEFT">
+                    <Label fx:id="comment_author" styleClass="comment_author"/>
+                    <Label fx:id="comment_date" styleClass="comment_date"/>
+                </HBox>
+                <Label fx:id="commentTextLabel" wrapText="true" maxWidth="800.0" styleClass="comment_text"/>
+                <TextField fx:id="editTextField" prefWidth="800.0" styleClass="comment_input" visible="false"/>
+            </VBox>
+
+
+            <!-- 수정/삭제 버튼 -->
+            <HBox alignment="CENTER_RIGHT" prefHeight="36.0">
+                <Pane fx:id="two_button_pane" prefHeight="64.0" prefWidth="76.0">
+                    <children>
+                        <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="84.0">
+                            <children>
+                                <Button fx:id="editButton" onAction="#handleEditClick" styleClass="option-btn">
+                                    <graphic>
+                                        <ImageView fitHeight="20" fitWidth="20">
+                                            <image>
+                                                <Image url="@/assets/icons/edit.png"/>
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                            </children>
+                        </HBox>
+                        <Button layoutX="40.0" onAction="#handleDeleteClick" styleClass="option-btn">
+                            <graphic>
+                                <ImageView fitHeight="20" fitWidth="20">
+                                    <image>
+                                        <Image url="@/assets/icons/trash.png"/>
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                    </children>
+                </Pane>
             </HBox>
-            <Label fx:id="commentTextLabel" wrapText="true" maxWidth="800.0" styleClass="comment_text"/>
-            <TextField fx:id="editTextField" prefWidth="800.0" styleClass="comment_input" visible="false"/>
-        </VBox>
-
-
-        <!-- 수정/삭제 버튼 -->
-        <HBox alignment="CENTER_RIGHT" prefHeight="36.0">
-            <Pane fx:id="two_button_pane" prefHeight="64.0" prefWidth="76.0">
-                <children>
-                    <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="84.0">
-                        <children>
-                            <Button fx:id="editButton" onAction="#handleEditClick" styleClass="arrow_button">
-                                <graphic>
-                                    <ImageView fitHeight="24.0" fitWidth="24.0">
-                                        <image>
-                                            <Image url="@/assets/icons/edit.png"/>
-                                        </image>
-                                    </ImageView>
-                                </graphic>
-                            </Button>
-                        </children>
-                    </HBox>
-                    <Button layoutX="40.0" onAction="#handleDeleteClick" styleClass="arrow_button">
-                        <graphic>
-                            <ImageView fitHeight="24.0" fitWidth="24.0">
-                                <image>
-                                    <Image url="@/assets/icons/trash.png"/>
-                                </image>
-                            </ImageView>
-                        </graphic>
-                    </Button>
-                </children>
-            </Pane>
         </HBox>
-    </HBox>
     </HBox>
 </StackPane>
