@@ -1,0 +1,111 @@
+/* 상단 바 스타일 */
+#topBar {
+    -fx-background-color: #eeeeee;
+}
+
+/* 뒤로가기 버튼 */
+#backButton {
+    -fx-cursor: hand;
+}
+
+/* 페이지 제목 */
+#pageTitle {
+    -fx-font-size: 18;
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-text-fill: #333;
+}
+
+/* 메인 스크롤 패널 */
+#mainScrollPane {
+    -fx-background-color: #fafafa;
+    -fx-border-color: transparent;
+}
+
+/* 이미지 컨테이너 */
+#imageContainer {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 2;
+    -fx-border-radius: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
+}
+
+/* 이미지 뷰 */
+#imageView {
+    -fx-background-radius: 10;
+}
+
+/* 정보 컨테이너 */
+#infoContainer {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1;
+    -fx-border-radius: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
+}
+
+/* 상품명 라벨 */
+#nameLabel {
+    -fx-font-size: 28;
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-text-fill: #333;
+}
+
+/* 정보 필드 라벨들 (회색 제목) */
+#categoryTitleLabel, #brandTitleLabel, #sizeTitleLabel, #colorTitleLabel, #keywordTitleLabel {
+    -fx-font-size: 14;
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-text-fill: #666;
+}
+
+/* 정보 값 라벨들 */
+#categoryLabel, #brandLabel, #sizeLabel, #colorLabel, #keywordLabel {
+    -fx-font-size: 18;
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-text-fill: #333;
+}
+
+/* 메모 제목 라벨 */
+#memoTitleLabel {
+    -fx-font-size: 16;
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-text-fill: #666;
+}
+
+/* 메모 스크롤 패널 */
+#memoScrollPane {
+    -fx-background-color: #f8f9fa;
+    -fx-background-radius: 8;
+    -fx-border-color: #e9ecef;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+}
+
+/* 메모 라벨 */
+#memoLabel {
+    -fx-font-size: 14;
+    -fx-text-fill: #495057;
+    -fx-padding: 12;
+}
+
+/* 수정 버튼 */
+#editButton {
+    -fx-background-color: #79C998;
+    -fx-text-fill: white;
+    -fx-font-size: 16;
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-background-radius: 22;
+    -fx-cursor: hand;
+}
+
+/* 삭제 버튼 */
+#deleteButton {
+    -fx-background-color: #FA7B7F;
+    -fx-text-fill: white;
+    -fx-font-size: 16;
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-background-radius: 22;
+    -fx-cursor: hand;
+}

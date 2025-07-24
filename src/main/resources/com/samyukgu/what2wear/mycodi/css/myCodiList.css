@@ -1,27 +1,12 @@
-/* 카테고리 필터 버튼들 */
-#allButton, #topButton, #pantsButton, #dressButton, #bagButton, #outerButton, #shoesButton, #accessoryButton, #etcButton {
-    -fx-text-fill: black;
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
+/* 상단 타이틀 HBox */
+#titleHBox {
+    -fx-padding: 10;
+    -fx-background-color: white;
 }
 
 /* 메인 콘텐츠 영역 */
 #mainContentArea {
     -fx-background-color: white;
-}
-
-/* 즐겨찾기 필터 버튼 */
-#favoriteButton {
-    -fx-background-color: transparent;
-    -fx-border-color: #cccccc;
-    -fx-border-width: 1;
-    -fx-text-fill: #000000;
-    -fx-font-size: 13px;
-    -fx-font-family: "Pretendard SemiBold";
-    -fx-background-radius: 4;
-    -fx-border-radius: 4;
-    -fx-padding: 6 12;
-    -fx-cursor: hand;
 }
 
 /* 검색창 컨테이너 */
@@ -43,28 +28,28 @@
     -fx-padding: 5;
 }
 
-/* 추가하기 버튼 */
+/* 코디 추가 버튼 */
 #addButton {
     -fx-background-color: #f2f2f2;
     -fx-background-radius: 10;
     -fx-cursor: hand;
 }
 
-/* 추가하기 라벨 */
+/* 코디 추가 라벨 */
 #addLabel {
     -fx-text-fill: black;
     -fx-font-size: 12;
 }
 
-/* 나만의 코디 버튼 */
-#myWardrobeButton {
+/* 옷장 버튼 */
+#wardrobeButton {
     -fx-background-color: #f2f2f2;
     -fx-background-radius: 10;
     -fx-cursor: hand;
 }
 
-/* 나만의 코디 라벨 */
-#myWardrobeLabel {
+/* 옷장 라벨 */
+#wardrobeLabel {
     -fx-text-fill: black;
     -fx-font-size: 12;
 }
@@ -75,8 +60,8 @@
     -fx-border-color: transparent;
 }
 
-/* 콘텐츠 컨테이너 */
-#contentContainer {
+/* 코디 그리드 컨테이너 */
+#codiGridContainer {
     -fx-padding: 10;
     -fx-fill-width: true;
 }
