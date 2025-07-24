@@ -181,36 +181,30 @@ public class CreateWardrobeController implements Initializable {
     }
 
     private boolean validateForm() {
-        // 필수 필드 검증
+        // 필수 필드 검증 - 사진, 이름, 카테고리만 필수
+
+        // 사진 검증
+        if (pictureData == null) {
+            showError("사진을 업로드해주세요.");
+            uploadButton.requestFocus();
+            return false;
+        }
+
+        // 이름 검증
         if (nameField.getText() == null || nameField.getText().trim().isEmpty()) {
             showError("옷 이름을 입력해주세요.");
             nameField.requestFocus();
             return false;
         }
 
+        // 카테고리 검증
         if (categoryField.getValue() == null) {
             showError("카테고리를 선택해주세요.");
             categoryField.requestFocus();
             return false;
         }
 
-        if (brandField.getText() == null || brandField.getText().trim().isEmpty()) {
-            showError("브랜드를 입력해주세요.");
-            brandField.requestFocus();
-            return false;
-        }
-
-        if (sizeField.getText() == null || sizeField.getText().trim().isEmpty()) {
-            showError("사이즈를 입력해주세요.");
-            sizeField.requestFocus();
-            return false;
-        }
-
-        if (colorField.getValue() == null) {
-            showError("색상을 선택해주세요.");
-            colorField.requestFocus();
-            return false;
-        }
+        // 선택 항목들은 검증하지 않음 (키워드, 브랜드, 사이즈, 색상, 메모)
 
         return true;
     }
@@ -223,11 +217,17 @@ public class CreateWardrobeController implements Initializable {
         wardrobe.setCategoryId(selectedCategory.getId());
         wardrobe.setName(nameField.getText().trim());
         wardrobe.setLike("N"); // 기본값은 즐겨찾기 없음
-        wardrobe.setKeyword(keywordField.getValue());
-        wardrobe.setColor(colorField.getValue());
-        wardrobe.setSize(sizeField.getText().trim());
-        wardrobe.setBrand(brandField.getText().trim());
-        wardrobe.setMemo(memoField.getText() != null ? memoField.getText().trim() : "");
+
+        // 선택 항목들 - null이거나 빈 값일 수 있음
+        wardrobe.setKeyword(keywordField.getValue()); // ComboBox는 null 가능
+        wardrobe.setColor(colorField.getValue()); // ComboBox는 null 가능
+        wardrobe.setSize(sizeField.getText() != null && !sizeField.getText().trim().isEmpty()
+                ? sizeField.getText().trim() : null);
+        wardrobe.setBrand(brandField.getText() != null && !brandField.getText().trim().isEmpty()
+                ? brandField.getText().trim() : null);
+        wardrobe.setMemo(memoField.getText() != null && !memoField.getText().trim().isEmpty()
+                ? memoField.getText().trim() : null);
+
         wardrobe.setDeleted("N"); // 옷 삭제시 "Y"로 변경
         wardrobe.setPicture(pictureData);
 
@@ -306,7 +306,7 @@ public class CreateWardrobeController implements Initializable {
 
 //            alert.showAndWait().ifPresent(result -> {
 //                if (result == ButtonType.YES) {
-                    MainLayoutController.loadView("/com/samyukgu/what2wear/wardrobe/wardrobeList.fxml");
+        MainLayoutController.loadView("/com/samyukgu/what2wear/wardrobe/wardrobeList.fxml");
 //                }
 //            });
 //        } else {

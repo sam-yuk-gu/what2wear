@@ -235,17 +235,24 @@ public class WardrobeService {
         if (wardrobe.getMemberId() == null || wardrobe.getMemberId() <= 0) {
             throw new IllegalArgumentException("유효한 회원 ID가 필요합니다.");
         }
+
+        // 필수 필드 검증 - 사진, 이름, 카테고리만 필수
+        if (wardrobe.getPicture() == null || wardrobe.getPicture().length == 0) {
+            throw new IllegalArgumentException("사진이 필요합니다.");
+        }
         if (wardrobe.getName() == null || wardrobe.getName().trim().isEmpty()) {
             throw new IllegalArgumentException("옷 이름이 필요합니다.");
-        }
-        if (wardrobe.getName().length() > 50) {
-            throw new IllegalArgumentException("옷 이름은 50자를 초과할 수 없습니다.");
         }
         if (wardrobe.getCategoryId() == null || wardrobe.getCategoryId() <= 0) {
             throw new IllegalArgumentException("유효한 카테고리가 필요합니다.");
         }
 
-        // 추가 필드 검증
+        // 길이 제한 검증
+        if (wardrobe.getName().length() > 50) {
+            throw new IllegalArgumentException("옷 이름은 50자를 초과할 수 없습니다.");
+        }
+
+        // 선택 필드들 검증 - null 허용, 값이 있을 때만 길이 검증
         if (wardrobe.getBrand() != null && wardrobe.getBrand().length() > 30) {
             throw new IllegalArgumentException("브랜드명은 30자를 초과할 수 없습니다.");
         }
