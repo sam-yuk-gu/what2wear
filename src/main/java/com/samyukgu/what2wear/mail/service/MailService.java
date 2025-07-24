@@ -15,7 +15,7 @@ public class MailService {
     private static String password;
     private static String fromName;
     
-    // 초기화시에 application.properties에서 값 읽어오기
+    // 초기화 시 application.properties에서 값 읽어오기
     public MailService() {
         Properties props = new Properties();
         try (InputStream is = ClassLoader.getSystemResourceAsStream("application.properties");

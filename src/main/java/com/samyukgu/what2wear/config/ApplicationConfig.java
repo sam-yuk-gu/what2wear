@@ -103,6 +103,6 @@ public class ApplicationConfig {
                 container.resolve(MemberDAO.class),
                 container.resolve(FriendDAO.class),
                 container.resolve(NotificationDAO.class)
-                ));
+        ));
     }
 }

@@ -27,15 +27,15 @@ public class DummyScheduleRepository {
         map.put(LocalDate.of(2025, 7, 15), List.of(
                 new DummyCodiDTO("외부 미팅", LocalDate.of(2025, 7, 15), List.of(
                         new CodiItem("상의", "하늘색 셔츠", "file:resources/assets/icons/logo.png"),
-                        new CodiItem("하의", "슬랙스", "file:resources/assets/icons/logo.png")
+                        new CodiItem("바지", "슬랙스", "file:resources/assets/icons/logo.png")
                 ), CodiScope.FRIENDS),
                 new DummyCodiDTO("팀 회의", LocalDate.of(2025, 7, 15), List.of(
-                        new CodiItem("하의", "슬랙스", "file:resources/assets/icons/logo.png"),
-                        new CodiItem("하의", "슬랙스", "file:resources/assets/icons/logo.png")
+                        new CodiItem("바지", "슬랙스", "file:resources/assets/icons/logo.png"),
+                        new CodiItem("바지", "슬랙스", "file:resources/assets/icons/logo.png")
                 ), CodiScope.PUBLIC),
                 new DummyCodiDTO("저녁 약속", LocalDate.of(2025, 7, 15), List.of(
                         new CodiItem("아우터", "자켓", "file:resources/assets/icons/logo.png"),
-                        new CodiItem("하의", "슬랙스", "file:resources/assets/icons/logo.png")
+                        new CodiItem("바지", "슬랙스", "file:resources/assets/icons/logo.png")
                 ), CodiScope.PRIVATE)
         ));
 

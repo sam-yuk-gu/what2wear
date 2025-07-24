@@ -13,6 +13,8 @@ public class Wardrobe {
     private String color;
     private String brand;
     private String deleted;
+    // 추가
+    private String imagePath;
 
     public Wardrobe() {}
 
@@ -72,5 +74,9 @@ public class Wardrobe {
         this.color = color;
         this.brand = brand;
         this.deleted = deleted;
+    }
+
+    public byte[] getImage() {
+        return picture;
     }
 }

@@ -15,7 +15,7 @@ public class ImageUtil {
             return tempFile.toURI().toString();
         } catch (IOException e) {
             e.printStackTrace();
-            return "/assets/images/dummy-1.png";
+            return "/assets/images/dummy_1.png";
         }
     }
 }

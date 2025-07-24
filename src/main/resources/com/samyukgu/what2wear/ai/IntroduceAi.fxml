@@ -8,8 +8,8 @@
 
 <StackPane fx:id="root" prefHeight="768.0" prefWidth="880.0" stylesheets="/com/samyukgu/what2wear/ai/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.ai.controller.IntroduceAiController">
 
-    <!-- 전체 여백 20px -->
     <VBox fx:id="container_vbox" alignment="TOP_RIGHT" maxWidth="800" prefHeight="768.0" prefWidth="800.0" style="-fx-padding: 20;">
+
         <!-- 상단 헤더 -->
         <HBox fx:id="top_hbox" alignment="CENTER_LEFT" maxWidth="Infinity" prefHeight="81.0">
             <fx:include source="/com/samyukgu/what2wear/common/PostHeader.fxml" />
@@ -28,7 +28,7 @@
         <VBox fx:id="content_vbox" alignment="CENTER_LEFT" maxWidth="Infinity" prefHeight="320.0" prefWidth="1030.0" spacing="20">
             <VBox>
                 <Label text="AI 코디 추천에서는 회원님의 옷장 속 아이템들을 분석해, 오늘 날씨와 어울리는 스타일을 제안해드려요." styleClass="description_text" />
-                <Label text="상의부터 하의, 신발까지, 실용성과 스타일을 모두 고려한 코디를 준비했답니다 :)" styleClass="description_text" />
+                <Label text="상의부터 바지, 신발까지, 실용성과 스타일을 모두 고려한 코디를 준비했답니다 :)" styleClass="description_text" />
             </VBox>
             <VBox>
                 <Label text="또 하나! 친구 코디 추천 기능도 있어요." styleClass="description_text" />
@@ -42,16 +42,37 @@
 
         <!-- 선택란 -->
         <HBox fx:id="closet_check_hbox" alignment="CENTER_LEFT" maxWidth="Infinity" prefHeight="139.0" prefWidth="1030.0" spacing="10">
-            <!-- 위치 동의 -->
-            <VBox fx:id="location_vbox" maxWidth="Infinity" prefHeight="100.0" prefWidth="241.0" spacing="20">
-                <HBox fx:id="location_title_hbox" alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="330.0" spacing="4">
-                    <Label styleClass="radio_title_text" text="위치 동의" />
+
+            <!-- 지역 선택 -->
+            <VBox prefHeight="100.0" prefWidth="243.0" spacing="20">
+                <HBox fx:id="location_hbox" alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="300.0" spacing="4">
+                    <Label styleClass="radio_title_text" text="외출 지역" />
                     <Label styleClass="radio_star_title_text" text="*" />
                 </HBox>
-                <HBox fx:id="location_range_hbox" alignment="CENTER_LEFT" spacing="20">
-                    <RadioButton fx:id="agreeLocationRadio" styleClass="radio_suTitle_text" text="동의" />
-                    <RadioButton fx:id="disagreeLocationRadio" styleClass="radio_suTitle_text" text="비동의" />
-                </HBox>
+                <ComboBox fx:id="select_location_title" prefHeight="45.0" prefWidth="180.0" styleClass="select_title">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="서울시 종로구" />
+                            <String fx:value="서울시 강남구" />
+                            <String fx:value="경기도 성남시" />
+                            <String fx:value="경기도 수원시" />
+                            <String fx:value="부산시 해운대구" />
+                            <String fx:value="대구시 수성구" />
+                            <String fx:value="인천시 연수구" />
+                            <String fx:value="대전시 유성구" />
+                            <String fx:value="광주시 동구" />
+                            <String fx:value="울산시 남구" />
+                            <String fx:value="강원도 춘천시" />
+                            <String fx:value="충청북도 청주시" />
+                            <String fx:value="충청남도 천안시" />
+                            <String fx:value="전라북도 전주시" />
+                            <String fx:value="전라남도 순천시" />
+                            <String fx:value="경상북도 포항시" />
+                            <String fx:value="경상남도 창원시" />
+                            <String fx:value="제주특별자치도 제주시" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
             </VBox>
 
             <!-- 외출 목적 -->
@@ -70,7 +91,7 @@
                             <String fx:value="출근" />
                             <String fx:value="산책" />
                             <String fx:value="파티" />
-                            <String fx:value="기타" />
+                            <String fx:value="여행" />
                         </FXCollections>
                     </items>
                 </ComboBox>

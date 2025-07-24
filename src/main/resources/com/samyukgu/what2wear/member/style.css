@@ -172,3 +172,10 @@
     -fx-font-size: 20;
     -fx-font-family: "Pretendard SemiBold";
 }
+
+.text-field, .text-area, .date-picker, .combo-box {
+    -fx-background-color: white;
+    -fx-effect: none;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}

@@ -12,4 +12,8 @@ public interface FriendDAO {
     List<Member> findPendingFriendRequests(Long memberId);
     boolean isFriend(Long member1Id, Long member2Id);
     boolean isRequestPending(Long member1Id, Long member2Id);
+
+
+    // 수락된 친구 ID 목록 조회
+    List<Long> getAcceptedFriendIds(Long myId);
 }

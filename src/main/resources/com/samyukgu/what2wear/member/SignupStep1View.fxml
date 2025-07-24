@@ -148,7 +148,7 @@
                      </children>
                   </Pane>
                   <Region layoutX="297.0" layoutY="176.0" prefHeight="34.0" prefWidth="379.0" />
-                  <HBox alignment="TOP_RIGHT" layoutX="227.0" layoutY="184.0" prefHeight="18.0" prefWidth="454.0">
+                  <HBox layoutX="156.0" layoutY="184.0" prefHeight="18.0" prefWidth="454.0">
                      <children>
                         <Label fx:id="duplicateResLabel" textAlignment="RIGHT">
                            <font>
@@ -157,8 +157,8 @@
                         </Label>
                      </children>
                   </HBox>
-                  <Region layoutX="357.0" layoutY="267.0" prefHeight="28.0" prefWidth="340.0" />
-                  <HBox alignment="TOP_RIGHT" layoutX="227.0" layoutY="272.0" prefHeight="18.0" prefWidth="454.0">
+                  <Region layoutX="154.0" layoutY="267.0" prefHeight="28.0" prefWidth="340.0" />
+                  <HBox layoutX="157.0" layoutY="272.0" prefHeight="18.0" prefWidth="454.0">
                      <children>
                         <Label fx:id="passwordRes" textAlignment="RIGHT">
                            <font>
@@ -168,7 +168,7 @@
                      </children>
                   </HBox>
                   <Region layoutX="202.0" layoutY="358.0" prefHeight="28.0" prefWidth="493.0" />
-                  <HBox alignment="TOP_RIGHT" layoutX="222.0" layoutY="363.0" prefHeight="18.0" prefWidth="454.0">
+                  <HBox layoutX="156.0" layoutY="363.0" prefHeight="18.0" prefWidth="454.0">
                      <children>
                         <Label fx:id="passwordCheckRes" textAlignment="RIGHT">
                            <font>

@@ -276,4 +276,9 @@ public class WardrobeService {
             throw new IllegalArgumentException("수정할 옷의 ID가 필요합니다.");
         }
     }
+
+    // 추가
+    public Wardrobe getWardrobeByName(String name, Long memberId) {
+        return wardrobeDAO.findByNameAndMember(name, memberId);
+    }
 }

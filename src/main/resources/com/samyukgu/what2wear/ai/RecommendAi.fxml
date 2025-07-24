@@ -7,73 +7,79 @@
 <StackPane fx:id="root" prefHeight="768" prefWidth="1280" stylesheets="/com/samyukgu/what2wear/ai/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.ai.controller.RecommendAiController">
 
     <VBox alignment="CENTER" style="-fx-padding: 20;" styleClass="ai_vbox">
-    <!-- 상단 헤더 -->
+
+        <!-- 상단 헤더 -->
         <HBox fx:id="top_hbox" prefHeight="68.0">
             <fx:include source="/com/samyukgu/what2wear/common/PostHeader.fxml" />
         </HBox>
 
         <!-- 하단 옷 정보 -->
         <HBox fx:id="bottom_hbox" alignment="CENTER" prefHeight="630.0" prefWidth="880.0" spacing="20">
+
             <!-- 왼쪽: 옷 이미지 리스트 -->
             <VBox fx:id="left_vbox" alignment="CENTER" spacing="10">
-                <ImageView fitHeight="140" fitWidth="100" preserveRatio="true">
+                <ImageView fx:id="topImage" fitHeight="140" fitWidth="100" preserveRatio="true">
                     <image>
                         <Image url="@/assets/images/dummy_cody.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="140" fitWidth="100">
+                <ImageView fx:id="bottomImage" fitHeight="140" fitWidth="100">
                     <image>
-                        <Image url="@/assets/images/dummy_top.png" />
+                        <Image url="@/assets/images/dummy_cody.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="140" fitWidth="100">
+                <ImageView fx:id="shoesImage" fitHeight="140" fitWidth="100">
                     <image>
-                        <Image url="@/assets/images/dummy_bottom.png" />
+                        <Image url="@/assets/images/dummy_cody.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="140" fitWidth="100">
+                <ImageView fx:id="accImage" fitHeight="140" fitWidth="100">
                     <image>
-                        <Image url="@/assets/images/dummy_shoes.png" />
+                        <Image url="@/assets/images/dummy_cody.png" />
                     </image>
                 </ImageView>
             </VBox>
 
             <!-- 오른쪽: 추천 설명 -->
-            <HBox fx:id="right_vbox" alignment="CENTER" prefHeight="630.0" prefWidth="830.0" spacing="20">
+            <HBox alignment="CENTER" prefHeight="630.0" prefWidth="830.0" spacing="20">
+
                 <!-- 코디 사진 -->
-                <ImageView>
+                <ImageView fx:id="mainImage" fitHeight="440" fitWidth="280">
                     <image>
                         <Image url="@/assets/images/dummy_cody.png" />
                     </image>
                 </ImageView>
+
                 <!-- 설명 + 버튼 -->
                 <VBox alignment="CENTER" prefHeight="630.0" prefWidth="550.0">
+
                     <!-- 설명 -->
                     <VBox alignment="CENTER_LEFT" spacing="40">
                         <VBox spacing="10">
-                            <Label styleClass="description_text" text="안녕하세요!" />
-                            <Label styleClass="description_text" text="오늘은 흐리고 선선한 날씨예요." />
-                            <Label styleClass="description_text" text="낮 최고기온은 25도 정도고, 아침에는 약간 쌀쌀할 수 있어요." />
+                            <Label styleClass="description_text" text="안녕하세요!" fx:id="introLabel1"/>
+                            <Label styleClass="description_text" text="오늘 00시 00도의 날씨 정보는" fx:id="introLabel2"/>
+                            <Label styleClass="description_text" text="최고 기온은 00도, 최저 기온은 00도 입니다." fx:id="introLabel3"/>
+                            <Label styleClass="description_text" text="자외선 지수는 높음으로 외출 시 주의해주요." fx:id="introLabel4"/>
                         </VBox>
 
                         <VBox prefHeight="199.0" prefWidth="543.0" spacing="10">
-                            <Label styleClass="description_text" text="회원님이 가지고 계신 옷들 중에서 이런 코디는 어떨까요?" />
-                            <Label styleClass="description_text" text="· 상의: OOO" />
-                            <Label styleClass="description_text" text="· 하의: OOO" />
-                            <Label styleClass="description_text" text="· 신발: OOO" />
-                            <Label styleClass="description_text" text="· 악세사리: OOO" />
+                            <Label styleClass="description_text" text="이런 코디는 어떠세요?" fx:id="recommendLabel"/>
+                            <Label styleClass="description_text" text="· 상의: OOO" fx:id="topLabel"/>
+                            <Label styleClass="description_text" text="· 바지: OOO" fx:id="bottomLabel"/>
+                            <Label styleClass="description_text" text="· 신발: OOO" fx:id="shoesLabel"/>
+                            <Label styleClass="description_text" text="· 악세사리: OOO" fx:id="accLabel"/>
                         </VBox>
 
                         <VBox prefHeight="105.0" prefWidth="550.0" spacing="10">
-                            <Label styleClass="description_text" text="아침저녁 기온 차에 대비해서," />
-                            <Label styleClass="description_text" text="가볍게 걸칠 수 있는 얇은 재킷이나 바람막이도 함께 챙기면 좋을 것 같아요." />
-                            <Label styleClass="description_text" text="오늘도 기분 좋은 하루 되세요!" />
+                            <Label styleClass="description_text" text="특히 더위가 심할 수 있으니," fx:id="endingLabel1"/>
+                            <Label styleClass="description_text" text="휴대용 선풍기나 얇은 쿨링 재킷도 챙겨보시면 좋을 것 같아요." fx:id="endingLabel2"/>
+                            <Label styleClass="description_text" text="시원하고 멋진 하루 코디로 건강하게 보내세요 🍀" fx:id="endingLabel3"/>
                         </VBox>
                     </VBox>
 
                     <!-- 버튼 영역 -->
                     <HBox alignment="CENTER_RIGHT" prefHeight="68.0" prefWidth="550.0" spacing="10">
-                        <Button onAction="#handleRetryClick" styleClass="gray_stroke_button" text="다시하기 (남은 횟수: n)" />
+                        <Button fx:id="recommendBtn" onAction="#handleRetryClick" styleClass="gray_stroke_button" text="다시하기" />
                         <Button onAction="#handleSaveClick" styleClass="black_background_button" text="저장하기" />
                     </HBox>
 
