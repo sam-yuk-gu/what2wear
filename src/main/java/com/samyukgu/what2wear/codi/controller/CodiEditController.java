@@ -201,7 +201,7 @@ public class CodiEditController {
             List<Wardrobe> wardrobeList = selectedOutfits.stream()
                     .map(item -> {
                         Wardrobe w = new Wardrobe();
-                        w.setId(item.getId()); // ✅ 이거 꼭 필요해!
+                        w.setId(item.getId());
                         w.setCategoryId(item.getCategoryId());
                         w.setName(item.getName());
                         try {
