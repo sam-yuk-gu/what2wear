@@ -291,7 +291,7 @@ public class CodiOracleDAO implements CodiDAO {
             FROM codi c
             LEFT JOIN codi_detail cd ON c.id = cd.codi_id
             LEFT JOIN clothes cl ON cd.clothes_id = cl.id AND cl.deleted = 'N'
-            WHERE c.member_id = ? AND c.deleted = 'N'
+            WHERE c.member_id = ? AND c.deleted = 'N' AND c.codi_type = 'W'
             ORDER BY c.id DESC
             """;
 

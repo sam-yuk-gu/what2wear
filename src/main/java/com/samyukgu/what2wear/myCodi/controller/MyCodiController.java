@@ -20,7 +20,7 @@
 //
 //    @FXML
 //    private void handleWardrobeClick() {
-//        MainLayoutController.loadView("/com/samyukgu/what2wear/wardrobe/wardrobeList.fxml");
+//        MainLayoutController.loadView("/com/samyukgu/what2wear/wardrobe/wardrobeList.css.fxml");
 //    }
 //
 //    @FXML

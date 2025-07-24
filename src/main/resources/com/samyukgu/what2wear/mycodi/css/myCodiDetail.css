@@ -1,0 +1,142 @@
+/* 메인 컨테이너 */
+#mainContainer {
+    -fx-background-color: white;
+}
+
+/* 상단 헤더 바 */
+#headerPane {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #e9ecef;
+    -fx-border-width: 0 0 1 0;
+}
+
+/* 뒤로가기 버튼 */
+#backButton {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
+}
+
+/* 페이지 제목 라벨 */
+#pageTitle {
+    -fx-font-size: 18px;
+    -fx-font-family: "Pretendard Bold";
+    -fx-text-fill: #333;
+}
+
+/* 메인 콘텐츠 HBox */
+#mainContentHBox {
+    -fx-padding: 15;
+}
+
+/* 코디 이름 제목 라벨 */
+#codiNameTitle {
+    -fx-font-size: 18px;
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-text-fill: #333;
+}
+
+/* 코디 이름 입력 필드 */
+#codiNameField {
+    -fx-font-size: 14px;
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #e9ecef;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 8;
+}
+
+/* 포함된 아이템 제목 라벨 */
+#itemsTitle {
+    -fx-font-size: 12px;
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-text-fill: #333;
+}
+
+/* 아이템 스크롤 패널 */
+#itemsScrollPane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+/* 코디 FlowPane */
+#codiFlowPane {
+    -fx-padding: 15;
+    -fx-background-color: #f8f9fa;
+    -fx-background-radius: 8;
+}
+
+/* 수정 버튼 */
+#editButton {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-font-size: 15px;
+    -fx-font-family: "Pretendard Bold";
+}
+
+/* 삭제 버튼 */
+#deleteButton {
+    -fx-background-color: #FA7B7F;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-font-family: "Pretendard Bold";
+}
+
+/* 오른쪽 상세 정보 VBox */
+#detailContainer {
+    -fx-padding: 10;
+    -fx-background-color: #f8f9fa;
+    -fx-background-radius: 8;
+}
+
+/* 상세 정보 스크롤 패널 */
+#detailScrollPane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+/* 상세 정보 VBox */
+#detailVBox {
+    -fx-padding: 5;
+}
+
+/* 상세 정보 제목 라벨 */
+#detailTitle {
+    -fx-font-size: 14px;
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-text-fill: #333;
+}
+
+/* 코디 통계 정보 컨테이너 */
+#statsContainer {
+    -fx-background-color: #e8f4ff;
+    -fx-background-radius: 6;
+    -fx-padding: 12;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,123,255,0.1), 2, 0, 0, 1);
+}
+
+/* 코디 정보 제목 라벨 */
+#statsTitle {
+    -fx-font-size: 12px;
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-text-fill: #007acc;
+}
+
+/* 통계 라벨들 (굵은 글씨) */
+#totalItemsTitle, #createdDateTitle {
+    -fx-font-size: 11px;
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-text-fill: #495057;
+}
+
+/* 통계 값 라벨들 */
+#totalItemsLabel, #createdDateLabel {
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-font-size: 11px;
+    -fx-text-fill: #007acc;
+}

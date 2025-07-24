@@ -14,13 +14,17 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
+import com.samyukgu.what2wear.common.controller.CustomModalController;
+
 
 import java.io.ByteArrayInputStream;
 import java.net.URL;
@@ -36,6 +40,7 @@ public class DetailWardrobeController implements Initializable {
     @FXML private Label colorLabel;
     @FXML private Label keywordLabel;
     @FXML private Label memoLabel;
+    @FXML private StackPane rootPane;
 
     private WardrobeService wardrobeService;
     private Wardrobe currentWardrobe;
@@ -49,14 +54,11 @@ public class DetailWardrobeController implements Initializable {
 
         // 하트 아이콘 클릭 이벤트 설정
         setupHeartIconClick();
-
         loadWardrobeDetail();
     }
 
     private void setupHeartIconClick() {
         if (heartIcon != null) {
-            System.out.println("하트 아이콘 클릭 이벤트 설정 완료");
-
             // ImageView의 투명한 부분도 클릭 가능하도록 설정
             heartIcon.setPickOnBounds(true);
 
@@ -71,9 +73,7 @@ public class DetailWardrobeController implements Initializable {
 
             // 호버 효과
             heartIcon.setOnMouseEntered(e -> {
-                System.out.println("하트 아이콘에 마우스 진입");
                 heartIcon.setOpacity(0.8);
-                // 호버시 살짝 확대
                 heartIcon.setScaleX(1.1);
                 heartIcon.setScaleY(1.1);
             });
@@ -385,38 +385,115 @@ public class DetailWardrobeController implements Initializable {
     }
 
     // 삭제 버튼
+// 수정된 삭제 버튼 메서드
     @FXML
     private void handleDelete() {
-        if (currentWardrobe == null) {
-            showError("삭제할 옷 정보가 없습니다.");
-            return;
-        }
-
-        if (memberSession == null) {
-            showError("로그인이 필요합니다.");
-            return;
-        }
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-                "정말 삭제하시겠습니까?", ButtonType.OK, ButtonType.CANCEL);
-        alert.setTitle("삭제 확인");
-        alert.setHeaderText(null);
-
-        alert.showAndWait().ifPresent(result -> {
-            if (result == ButtonType.OK) {
-                try {
-                    wardrobeService.deleteWardrobe(currentWardrobe.getId(), currentWardrobe.getMemberId());
-                    showAlert("삭제되었습니다.");
-                    // 데이터 정리
-                    WardrobeDetailData.clearSelectedWardrobe();
-                    // 목록 페이지로 돌아가기
-                    MainLayoutController.loadView("/com/samyukgu/what2wear/wardrobe/wardrobeList.fxml");
-
-                } catch (Exception e) {
-                    showError("삭제 중 오류가 발생했습니다: " + e.getMessage());
-                }
+        try {
+            if (currentWardrobe == null) {
+                showError("삭제할 옷 정보가 없습니다.");
+                return;
             }
-        });
+            if (memberSession == null) {
+                showError("로그인이 필요합니다.");
+                return;
+            }
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/CustomModal.fxml"));
+            StackPane modal = loader.load();
+
+            CustomModalController controller = loader.getController();
+            controller.configure(
+                    "삭제 확인", // 제목 수정
+                    "정말로 옷을 삭제하시겠습니까?",
+                    "/assets/icons/redCheck.png", // 아이콘 없음
+                    "#FA7B7F", // 빨간색으로 변경
+                    "취소",
+                    "삭제", // 버튼 텍스트 수정
+                    () -> rootPane.getChildren().remove(modal), // rootPane 사용
+                    () -> {
+                        rootPane.getChildren().remove(modal); // rootPane 사용
+                        performDeleteWardrobe(); // 별도 메서드로 분리
+                    }
+            );
+
+            rootPane.getChildren().add(modal); // rootPane 사용
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("모달을 불러오는 중 오류가 발생했습니다: " + e.getMessage());
+        }
+    }
+
+    // 실제 삭제 작업을 수행하는 메서드 (새로 추가)
+    private void performDeleteWardrobe() {
+        try {
+            // 백그라운드에서 삭제 작업 수행
+            Task<Void> deleteTask = new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+                    wardrobeService.deleteWardrobe(currentWardrobe.getId(), currentWardrobe.getMemberId());
+                    return null;
+                }
+
+                @Override
+                protected void succeeded() {
+                    Platform.runLater(() -> {
+                        showDeleteSuccessModal();
+                    });
+                }
+
+                @Override
+                protected void failed() {
+                    Platform.runLater(() -> {
+                        showError("삭제 중 오류가 발생했습니다: " + getException().getMessage());
+                    });
+                }
+            };
+
+            new Thread(deleteTask).start();
+
+        } catch (Exception e) {
+            showError("삭제 중 오류가 발생했습니다: " + e.getMessage());
+        }
+    }
+
+    // 삭제 성공 모달 (새로 추가)
+    private void showDeleteSuccessModal() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/CustomModal.fxml"));
+            StackPane modal = loader.load();
+
+            CustomModalController controller = loader.getController();
+            controller.configure(
+                    "삭제 완료",
+                    "옷이 성공적으로 삭제되었습니다.",
+                    "/assets/icons/greenCheck.png", // 아이콘 없음
+                    "#79C998", // 초록색
+                    null, // 취소 버튼 없음
+                    "확인",
+                    null, // 취소 액션 없음
+                    () -> {
+                        // 확인 버튼 클릭 시
+                        rootPane.getChildren().remove(modal);
+
+                        // 데이터 정리
+                        WardrobeDetailData.clearSelectedWardrobe();
+
+                        // 목록 페이지로 돌아가기
+                        MainLayoutController.loadView("/com/samyukgu/what2wear/wardrobe/wardrobeList.fxml");
+                    }
+            );
+
+            rootPane.getChildren().add(modal);
+
+        } catch (Exception e) {
+            System.err.println("성공 모달 로딩 실패: " + e.getMessage());
+
+            // 모달 실패 시 기본 Alert 사용
+            showAlert("삭제되었습니다.");
+            WardrobeDetailData.clearSelectedWardrobe();
+            MainLayoutController.loadView("/com/samyukgu/what2wear/wardrobe/wardrobeList.fxml");
+        }
     }
 
     @FXML

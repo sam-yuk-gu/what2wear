@@ -1,6 +1,7 @@
 package com.samyukgu.what2wear.myCodi.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Codi {
@@ -14,12 +15,15 @@ public class Codi {
     private byte[] picture;
     private String codiType;
     private String deleted;
+    private LocalDate createdAt;
     private List<Long> clothesIds; // 코디에 포함된 옷들의 ID 리스트
 
     public Codi() {}
 
+    // 기본 생성자 (createdAt 포함)
     public Codi(Long id, Long memberId, String name, String schedule, LocalDate scheduleDate,
-                Integer scope, String weather, byte[] picture, String codiType, String deleted) {
+                Integer scope, String weather, byte[] picture, String codiType, String deleted,
+                LocalDate createdAt) {
         this.id = id;
         this.memberId = memberId;
         this.name = name;
@@ -30,6 +34,13 @@ public class Codi {
         this.picture = picture;
         this.codiType = codiType;
         this.deleted = deleted;
+        this.createdAt = createdAt;
+    }
+
+    // 기존 생성자 (하위 호환성 유지)
+    public Codi(Long id, Long memberId, String name, String schedule, LocalDate scheduleDate,
+                Integer scope, String weather, byte[] picture, String codiType, String deleted) {
+        this(id, memberId, name, schedule, scheduleDate, scope, weather, picture, codiType, deleted, null);
     }
 
     // Getters and Setters
@@ -63,6 +74,28 @@ public class Codi {
     public String getDeleted() { return deleted; }
     public void setDeleted(String deleted) { this.deleted = deleted; }
 
+    // ⭐ 추가된 getter/setter
+    public LocalDate getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDate createdAt) { this.createdAt = createdAt; }
+
     public List<Long> getClothesIds() { return clothesIds; }
     public void setClothesIds(List<Long> clothesIds) { this.clothesIds = clothesIds; }
+
+    // toString 메서드 (디버깅용)
+    @Override
+    public String toString() {
+        return "Codi{" +
+                "id=" + id +
+                ", memberId=" + memberId +
+                ", name='" + name + '\'' +
+                ", schedule='" + schedule + '\'' +
+                ", scheduleDate=" + scheduleDate +
+                ", scope=" + scope +
+                ", weather='" + weather + '\'' +
+                ", codiType='" + codiType + '\'' +
+                ", deleted='" + deleted + '\'' +
+                ", createdAt=" + createdAt +
+                ", clothesCount=" + (clothesIds != null ? clothesIds.size() : 0) +
+                '}';
+    }
 }

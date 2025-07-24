@@ -137,7 +137,6 @@ public class CreateWardrobeController implements Initializable {
             // 옷 저장시 옷장 전체 조회 페이지로 이동
             @Override
             protected void succeeded() {
-                showAlert("옷이 저장되었습니다.");
                 MainLayoutController.loadView("/com/samyukgu/what2wear/wardrobe/wardrobeList.fxml");
             }
 

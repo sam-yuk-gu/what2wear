@@ -14,31 +14,34 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.wardrobe.controller.ListWardrobeController">
+<HBox prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.samyukgu.what2wear.wardrobe.controller.ListWardrobeController"
+      stylesheets="@css/wardrobeList.css">
    <children>
       <VBox prefHeight="768.0" prefWidth="1030.0">
-         <HBox layoutX="14.0" layoutY="6.0" spacing="10.0">
+         <HBox fx:id="categoryButtonContainer" layoutX="14.0" layoutY="6.0" spacing="10.0">
             <children>
-               <Button fx:id="allButton" onAction="#filterAll" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="전체" />
-               <Button fx:id="topButton" onAction="#filterTops" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="상의" />
-               <Button fx:id="pantsButton" onAction="#filterPants" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="바지" />
-               <Button fx:id="dressButton" onAction="#filterDress" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="원피스 / 스커트" />
-               <Button fx:id="bagButton" onAction="#filterBags" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="가방" />
-               <Button fx:id="outerButton" onAction="#filterOuter" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="아우터" />
-               <Button fx:id="shoesButton" onAction="#filterShoes" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="신발" />
-               <Button fx:id="accessoryButton" onAction="#filterAccessory" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="악세사리" />
-               <Button fx:id="etcButton" onAction="#filterEtc" style="-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;" text="기타" />
+               <Button fx:id="allButton" onAction="#filterAll" text="전체" />
+               <Button fx:id="topButton" onAction="#filterTops" text="상의" />
+               <Button fx:id="pantsButton" onAction="#filterPants" text="바지" />
+               <Button fx:id="dressButton" onAction="#filterDress" text="원피스 / 스커트" />
+               <Button fx:id="bagButton" onAction="#filterBags" text="가방" />
+               <Button fx:id="outerButton" onAction="#filterOuter" text="아우터" />
+               <Button fx:id="shoesButton" onAction="#filterShoes" text="신발" />
+               <Button fx:id="accessoryButton" onAction="#filterAccessory" text="악세사리" />
+               <Button fx:id="etcButton" onAction="#filterEtc" text="기타" />
             </children>
          </HBox>
 
          <!-- 하단 콘텐츠 영역 -->
-         <AnchorPane prefHeight="629.0" prefWidth="1030.0" style="-fx-background-color: white;">
+         <AnchorPane fx:id="mainContentArea" prefHeight="629.0" prefWidth="1030.0">
             <children>
 
                <!-- 오른쪽 상단 필터 및 검색창 -->
-               <HBox alignment="CENTER_RIGHT" layoutX="551.0" layoutY="26.0" prefHeight="30.0" prefWidth="445.0" spacing="10.0">
+               <HBox fx:id="filterSearchContainer" alignment="CENTER_RIGHT" layoutX="551.0" layoutY="26.0" prefHeight="30.0" prefWidth="445.0" spacing="10.0">
                   <children>
-                     <Button fx:id="favoriteButton" onAction="#filterFavorites" style="-fx-background-color: transparent; -fx-border-color: #cccccc; -fx-border-width: 1; -fx-text-fill: #000000; -fx-font-size: 13px; -fx-font-weight: normal; -fx-background-radius: 4; -fx-border-radius: 4; -fx-padding: 6 12; -fx-cursor: hand;" text="즐겨찾기" />
+                     <Button fx:id="favoriteButton" onAction="#filterFavorites" text="즐겨찾기" />
 
                      <!-- 수정된 정렬 ComboBox -->
                      <ComboBox fx:id="sortComboBox" onAction="#handleSortChange" prefWidth="120" promptText="정렬 방식">
@@ -51,44 +54,44 @@
                         </items>
                      </ComboBox>
 
-                     <HBox alignment="CENTER_LEFT" style="-fx-background-color: #d9d9d9; -fx-background-radius: 5;">
+                     <HBox fx:id="searchContainer" alignment="CENTER_LEFT">
                         <children>
-                           <TextField fx:id="searchField" focusTraversable="false" prefWidth="200" promptText="검색어를 입력하세요" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
-                           <Label style="-fx-font-size: 14px; -fx-text-fill: gray; -fx-padding: 5;" text="🔍" />
+                           <TextField fx:id="searchField" focusTraversable="false" prefWidth="200" promptText="검색어를 입력하세요" />
+                           <Label fx:id="searchIcon" text="🔍" />
                         </children>
                      </HBox>
                   </children>
                </HBox>
 
                <!-- 상단 버튼들 -->
-               <HBox layoutX="11.0" layoutY="5.0" prefHeight="81.0" prefWidth="200.0" spacing="5.0">
+               <HBox fx:id="actionButtonContainer" layoutX="11.0" layoutY="5.0" prefHeight="81.0" prefWidth="200.0" spacing="5.0">
                   <children>
-                     <VBox fx:id="addButton" alignment="CENTER" onMouseClicked="#handleAddWardrobeClick" prefHeight="70.0" prefWidth="70.0" spacing="5" style="-fx-background-color: #f2f2f2; -fx-background-radius: 10; -fx-cursor: hand;">
+                     <VBox fx:id="addButton" alignment="CENTER" onMouseClicked="#handleAddWardrobeClick" prefHeight="70.0" prefWidth="70.0" spacing="5">
                         <children>
-                           <ImageView fitHeight="40" fitWidth="40">
+                           <ImageView fx:id="addIcon" fitHeight="40" fitWidth="40">
                               <image>
                                  <Image preserveRatio="true" url="@images/plus2.png" />
                               </image>
                            </ImageView>
-                           <Label style="-fx-text-fill: black; -fx-font-size: 12;" text="추가하기" />
+                           <Label fx:id="addLabel" text="추가하기" />
                         </children>
                      </VBox>
-                     <VBox fx:id="myWardrobeButton" alignment="CENTER" onMouseClicked="#handleMyCodiClick" prefHeight="70.0" prefWidth="70.0" spacing="5" style="-fx-background-color: #f2f2f2; -fx-background-radius: 10; -fx-cursor: hand;">
+                     <VBox fx:id="myWardrobeButton" alignment="CENTER" onMouseClicked="#handleMyCodiClick" prefHeight="70.0" prefWidth="70.0" spacing="5">
                         <children>
-                           <ImageView fitHeight="40" fitWidth="40">
+                           <ImageView fx:id="myWardrobeIcon" fitHeight="40" fitWidth="40">
                               <image>
                                  <Image preserveRatio="true" url="@images/myCodiImg.png" />
                               </image>
                            </ImageView>
-                           <Label style="-fx-text-fill: black; -fx-font-size: 12;" text="나만의 코디" />
+                           <Label fx:id="myWardrobeLabel" text="나만의 코디" />
                         </children>
                      </VBox>
                   </children>
                </HBox>
 
-               <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutX="21.0" layoutY="93.0" prefHeight="590.0" prefWidth="988.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" vbarPolicy="AS_NEEDED">
+               <ScrollPane fx:id="mainScrollPane" fitToWidth="true" hbarPolicy="NEVER" layoutX="21.0" layoutY="93.0" prefHeight="590.0" prefWidth="988.0" vbarPolicy="AS_NEEDED">
                   <content>
-                     <VBox fx:id="contentContainer" maxWidth="988.0" prefWidth="988.0" spacing="1.0" style="-fx-padding: 10; -fx-fill-width: true;">
+                     <VBox fx:id="contentContainer" maxWidth="988.0" prefWidth="988.0" spacing="1.0">
                         <!-- 여기에 내가 넣은 옷들이 들어갈거야!!! -->
                      </VBox>
                   </content>
@@ -100,10 +103,9 @@
                <!-- 로딩 및 상태 표시 영역 -->
                <VBox fx:id="statusContainer" alignment="CENTER" layoutX="400.0" layoutY="300.0" prefHeight="100.0" prefWidth="200.0" visible="false">
                   <children>
-                     <Label fx:id="statusLabel" style="-fx-font-size: 16px; -fx-text-fill: #666;" text="로딩 중" />
+                     <Label fx:id="statusLabel" text="로딩 중" />
                   </children>
                </VBox>
-
             </children>
          </AnchorPane>
       </VBox>

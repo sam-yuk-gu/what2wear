@@ -67,12 +67,12 @@ public class CodiMainController {
         setupDI();
 
         // TODO: 코드 롤백 후 커밋 >> 삭제처리
-        Member member = memberService.login("chtoqur", "chtoqur1234");
-        memberSession.setMember(member);
-        com.samyukgu.what2wear.region.model.Region defaultRegion = new com.samyukgu.what2wear.region.model.Region(1L, "서울특별시", "", 60L, 127L);
-        regionWeatherSession.setRegion(defaultRegion);
-        Weather weather = weatherService.fetchWeatherFromApi(defaultRegion.getNx().intValue(), defaultRegion.getNy().intValue());
-        RegionWeatherSession.setWeather(weather);
+//        Member member = memberService.login("chtoqur", "chtoqur1234");
+//        memberSession.setMember(member);
+//        com.samyukgu.what2wear.region.model.Region defaultRegion = new com.samyukgu.what2wear.region.model.Region(1L, "서울특별시", "", 60L, 127L);
+//        regionWeatherSession.setRegion(defaultRegion);
+//        Weather weather = weatherService.fetchWeatherFromApi(defaultRegion.getNx().intValue(), defaultRegion.getNy().intValue());
+//        RegionWeatherSession.setWeather(weather);
 
 
         setupUser();
@@ -90,8 +90,8 @@ public class CodiMainController {
 
 
         // TODO: 코드 원복 후 커밋
-//        Weather weather = weatherSession.getWeather();
-        weather = weatherSession.getWeather();
+        Weather weather = weatherSession.getWeather();
+//        weather = weatherSession.getWeather();
 
 
 

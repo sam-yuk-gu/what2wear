@@ -16,9 +16,28 @@ public class CodiWithDetails {
     private byte[] picture;
     private String codiType;
     private String deleted;
+    private LocalDate createdAt; // ⭐ 추가된 필드
     private List<Wardrobe> clothes; // 코디에 포함된 옷들
 
     public CodiWithDetails() {
+    }
+
+    // 전체 생성자
+    public CodiWithDetails(Long id, Long memberId, String name, String schedule, LocalDate scheduleDate,
+                           Integer scope, String weather, byte[] picture, String codiType, String deleted,
+                           LocalDate createdAt, List<Wardrobe> clothes) {
+        this.id = id;
+        this.memberId = memberId;
+        this.name = name;
+        this.schedule = schedule;
+        this.scheduleDate = scheduleDate;
+        this.scope = scope;
+        this.weather = weather;
+        this.picture = picture;
+        this.codiType = codiType;
+        this.deleted = deleted;
+        this.createdAt = createdAt;
+        this.clothes = clothes;
     }
 
     // Getters and Setters
@@ -102,11 +121,47 @@ public class CodiWithDetails {
         this.deleted = deleted;
     }
 
+    // ⭐ 추가된 getter/setter
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public List<Wardrobe> getClothes() {
         return clothes;
     }
 
     public void setClothes(List<Wardrobe> clothes) {
         this.clothes = clothes;
+    }
+
+    // 편의 메서드들
+    public int getClothesCount() {
+        return clothes != null ? clothes.size() : 0;
+    }
+
+    public boolean hasClothes() {
+        return clothes != null && !clothes.isEmpty();
+    }
+
+    // toString 메서드 (디버깅용)
+    @Override
+    public String toString() {
+        return "CodiWithDetails{" +
+                "id=" + id +
+                ", memberId=" + memberId +
+                ", name='" + name + '\'' +
+                ", schedule='" + schedule + '\'' +
+                ", scheduleDate=" + scheduleDate +
+                ", scope=" + scope +
+                ", weather='" + weather + '\'' +
+                ", codiType='" + codiType + '\'' +
+                ", deleted='" + deleted + '\'' +
+                ", createdAt=" + createdAt +
+                ", clothesCount=" + getClothesCount() +
+                '}';
     }
 }

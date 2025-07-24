@@ -95,11 +95,10 @@ public class WardrobeService {
         }
     }
 
-    // 즐겨찾기 상태만 업데이트하는 전용 메서드 추가
+    // WardrobeService.java의 최적화된 toggleFavoriteStatus 메서드
     public void toggleFavoriteStatus(Long id, Long memberId) {
         try {
-            logger.info("=== 즐겨찾기 토글 시작 ===");
-            logger.info("옷 ID: " + id + ", 회원 ID: " + memberId);
+            logger.info("즐겨찾기 토글 - 옷 ID: " + id + ", 회원 ID: " + memberId);
 
             validateIds(id, memberId);
 
@@ -113,22 +112,21 @@ public class WardrobeService {
             boolean currentFavorite = "Y".equals(wardrobe.getLike());
             String newFavoriteStatus = currentFavorite ? "N" : "Y";
 
-            logger.info("현재 즐겨찾기: " + wardrobe.getLike() + " -> 새로운 상태: " + newFavoriteStatus);
+            logger.info("즐겨찾기 변경: " + wardrobe.getLike() + " -> " + newFavoriteStatus);
 
-            // 옷 모델 업데이트
-            wardrobe.setLike(newFavoriteStatus);
-
-            // DAO의 즐겨찾기 전용 메서드 사용
+            // ★ 최적화: 즐겨찾기 전용 업데이트 메서드 사용 ★
             if (wardrobeDAO instanceof WardrobeOracleDAO) {
+                // 즐겨찾기만 업데이트하는 빠른 쿼리 사용
                 ((WardrobeOracleDAO) wardrobeDAO).updateFavoriteStatus(id, memberId, newFavoriteStatus);
             } else {
-                // 일반 업데이트 메서드 사용
+                // 일반 업데이트 메서드 사용 (fallback)
+                wardrobe.setLike(newFavoriteStatus);
                 wardrobeDAO.update(wardrobe);
             }
 
-            logger.info("즐겨찾기 상태 변경 완료 - ID: " + id + ", 즐겨찾기: " + newFavoriteStatus);
+            logger.info("즐겨찾기 변경 완료 - ID: " + id);
         } catch (Exception e) {
-            logger.severe("즐겨찾기 상태 변경 실패 - ID: " + id + ", Error: " + e.getMessage());
+            logger.severe("즐겨찾기 변경 실패 - ID: " + id + ", Error: " + e.getMessage());
             throw new RuntimeException("즐겨찾기 상태를 변경하는데 실패했습니다: " + e.getMessage(), e);
         }
     }
