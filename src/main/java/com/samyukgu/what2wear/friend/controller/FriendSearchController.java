@@ -55,36 +55,6 @@ public class FriendSearchController {
         hideUserInfoArea();
     }
 
-    /**
-     * 테스트용 검색 결과 데이터를 생성하는 메서드
-     */
-    private void createTestSearchData() {
-        searchResults = new ArrayList<>();
-
-        // 테스트용 닉네임 배열
-        String[] testNicknames = {
-                "김검색", "이찾기", "박결과", "최유저", "정회원",
-                "한사용자", "서멤버", "임친구", "조동료", "윤버디",
-                "김테스트", "이샘플", "박데모", "최예시", "정시험",
-                "한실험", "서검증", "임확인", "조체크", "윤점검",
-                "김가나다", "이라마바", "박사아자", "최차카타", "정파하"
-        };
-
-        // 로컬 이미지 파일을 byte 배열로 변환
-//        byte[] testImageBytes = loadImageAsBytes("/assets/images/cute.jpg");
-        byte[] testImageBytes = loadImageAsBytes("/assets/icons/defaultProfile.png");
-
-        // 테스트 검색 결과 데이터 생성
-        int resultCount = testNicknames.length;
-        for (int i = 0; i < resultCount && i < testNicknames.length; i++) {
-            Member searchResult = new Member();
-            searchResult.setNickname(testNicknames[i]);
-            searchResult.setProfile_img(testImageBytes);
-
-            searchResults.add(searchResult);
-        }
-    }
-
     private void hideUserInfoArea() {
         selectedMemberProfileImg.setVisible(false);
         SelectedMemberNickname.setVisible(false);
@@ -101,38 +71,6 @@ public class FriendSearchController {
         SelectedMemberNickname.setVisible(true);
         addFriendButton.setVisible(true);
         SelectedMemberNickname.setStyle(""); // 기본 스타일로 복원
-    }
-
-    /**
-     * 리소스 경로의 이미지 파일을 byte 배열로 변환하는 메서드
-     */
-    private byte[] loadImageAsBytes(String resourcePath) {
-        try {
-            // 리소스에서 InputStream 얻기
-            InputStream inputStream = getClass().getResourceAsStream(resourcePath);
-            if (inputStream == null) {
-                System.err.println("이미지 리소스를 찾을 수 없습니다: " + resourcePath);
-                return null;
-            }
-
-            // InputStream을 byte 배열로 변환
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            byte[] buffer = new byte[1024];
-            int length;
-
-            while ((length = inputStream.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, length);
-            }
-
-            inputStream.close();
-            outputStream.close();
-
-            return outputStream.toByteArray();
-
-        } catch (IOException e) {
-            System.err.println("이미지 파일을 바이트 배열로 변환하는 중 오류 발생: " + e.getMessage());
-            return null;
-        }
     }
 
     /**
@@ -344,7 +282,10 @@ public class FriendSearchController {
                     "/assets/icons/greenCheck.png",
                     "#4CAF50",
                     "확인",
-                    () -> root.getChildren().remove(modal)
+                    () -> {
+                        root.getChildren().remove(modal);
+                        checkAndUpdateFriendButtonState(selectedMember);
+                    }
             );
 
             root.getChildren().add(modal);
