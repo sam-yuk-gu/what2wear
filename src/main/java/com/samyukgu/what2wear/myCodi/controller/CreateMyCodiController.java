@@ -521,7 +521,6 @@ public class CreateMyCodiController implements Initializable {
                 @Override
                 protected void succeeded() {
                     System.out.println("저장 성공");
-                    showSuccess("코디가 성공적으로 저장되었습니다!");
                     navigateToCodiList();
                 }
 
@@ -585,8 +584,6 @@ public class CreateMyCodiController implements Initializable {
 
     @FXML
     private void handleBackClick() {
-        System.out.println("뒤로가기 버튼 클릭됨");
-
         if (hasUnsavedChanges()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
                     "저장하지 않은 변경사항이 있습니다. 정말로 나가시겠습니까?",
@@ -629,8 +626,6 @@ public class CreateMyCodiController implements Initializable {
     }
 
     private Codi createCodiFromForm() {
-        System.out.println("Codi 객체 생성 시작");
-
         Codi codi = new Codi();
 
         if (memberSession == null) {

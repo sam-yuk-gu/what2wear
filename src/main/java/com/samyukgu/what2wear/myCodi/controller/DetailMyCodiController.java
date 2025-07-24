@@ -9,8 +9,12 @@ import com.samyukgu.what2wear.myCodi.dao.CodiOracleDAO;
 import com.samyukgu.what2wear.myCodi.model.CodiWithDetails;
 import com.samyukgu.what2wear.myCodi.service.CodiService;
 import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
+import com.samyukgu.what2wear.common.controller.CustomModalController;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -22,6 +26,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 
 import java.io.ByteArrayInputStream;
 import java.net.URL;
@@ -37,6 +42,9 @@ public class DetailMyCodiController implements Initializable {
     // 통계 정보 Label들
     @FXML private Label totalItemsLabel;
     @FXML private Label createdDateLabel;
+
+    // 추가: rootPane 필드
+    @FXML private StackPane rootPane;
 
     private CodiService codiService;
     private MemberSession memberSession;
@@ -221,6 +229,7 @@ public class DetailMyCodiController implements Initializable {
 
         return detailBox;
     }
+
     private String buildDetailText(Wardrobe wardrobe) {
         StringBuilder detail = new StringBuilder();
 
@@ -297,6 +306,7 @@ public class DetailMyCodiController implements Initializable {
         }
     }
 
+    // 수정된 handleDelete 메서드 - CustomModal 사용
     @FXML
     private void handleDelete() {
         System.out.println("삭제 버튼 클릭됨");
@@ -311,6 +321,113 @@ public class DetailMyCodiController implements Initializable {
             return;
         }
 
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/CustomModal.fxml"));
+            StackPane modal = loader.load();
+
+            CustomModalController controller = loader.getController();
+            controller.configure(
+                    "삭제 확인",
+                    "'" + currentCodi.getName() + "' 코디를 정말 삭제하시겠습니까?",
+                    "/assets/icons/redCheck.png", // 아이콘 없음
+                    "#FA7B7F", // 빨간색
+                    "취소",
+                    "삭제",
+                    () -> rootPane.getChildren().remove(modal), // 취소
+                    () -> {
+                        rootPane.getChildren().remove(modal);
+                        performDeleteCodi(); // 실제 삭제 실행
+                    }
+            );
+
+            rootPane.getChildren().add(modal);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("모달을 불러오는 중 오류가 발생했습니다: " + e.getMessage());
+        }
+    }
+
+    // 실제 삭제 작업을 수행하는 메서드 (새로 추가)
+    private void performDeleteCodi() {
+        try {
+            // 백그라운드에서 삭제 작업 수행
+            Task<Void> deleteTask = new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+                    System.out.println("코디 삭제 시작: " + currentCodi.getId());
+                    codiService.deleteCodi(currentCodi.getId(), currentCodi.getMemberId());
+                    System.out.println("코디 삭제 완료");
+                    return null;
+                }
+
+                @Override
+                protected void succeeded() {
+                    Platform.runLater(() -> {
+                        showDeleteSuccessModal();
+                    });
+                }
+
+                @Override
+                protected void failed() {
+                    Platform.runLater(() -> {
+                        System.err.println("코디 삭제 실패: " + getException().getMessage());
+                        getException().printStackTrace();
+                        showError("삭제 중 오류가 발생했습니다: " + getException().getMessage());
+                    });
+                }
+            };
+
+            new Thread(deleteTask).start();
+
+        } catch (Exception e) {
+            System.err.println("코디 삭제 실패: " + e.getMessage());
+            e.printStackTrace();
+            showError("삭제 중 오류가 발생했습니다: " + e.getMessage());
+        }
+    }
+
+    // 삭제 성공 모달 (새로 추가)
+    private void showDeleteSuccessModal() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/CustomModal.fxml"));
+            StackPane modal = loader.load();
+
+            CustomModalController controller = loader.getController();
+            controller.configure(
+                    "삭제 완료",
+                    "코디가 성공적으로 삭제되었습니다.",
+                    "/assets/icons/greenCheck.png", // 아이콘 없음
+                    "#4CAF50", // 초록색
+                    null, // 취소 버튼 없음
+                    "확인",
+                    null, // 취소 액션 없음
+                    () -> {
+                        // 확인 버튼 클릭 시
+                        rootPane.getChildren().remove(modal);
+
+                        // 데이터 정리
+                        MyCodiDetailData.clearSelectedCodi();
+
+                        // 목록 페이지로 돌아가기
+                        MainLayoutController.loadView("/com/samyukgu/what2wear/myCodi/myCodiList.fxml");
+                    }
+            );
+
+            rootPane.getChildren().add(modal);
+
+        } catch (Exception e) {
+            System.err.println("성공 모달 로딩 실패: " + e.getMessage());
+
+            // 모달 실패 시 기본 처리
+            showAlert("코디가 성공적으로 삭제되었습니다.");
+            MyCodiDetailData.clearSelectedCodi();
+            MainLayoutController.loadView("/com/samyukgu/what2wear/myCodi/myCodiList.fxml");
+        }
+    }
+
+    // 기존 Alert 방식 (백업용)
+    private void showDeleteConfirmationAlert() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
                 "'" + currentCodi.getName() + "' 코디를 정말 삭제하시겠습니까?\n삭제된 코디는 복구할 수 없습니다.",
                 ButtonType.YES, ButtonType.NO);
@@ -319,20 +436,7 @@ public class DetailMyCodiController implements Initializable {
 
         alert.showAndWait().ifPresent(result -> {
             if (result == ButtonType.YES) {
-                try {
-                    System.out.println("코디 삭제 시작: " + currentCodi.getId());
-                    codiService.deleteCodi(currentCodi.getId(), currentCodi.getMemberId());
-                    System.out.println("코디 삭제 완료");
-
-                    showAlert("코디가 성공적으로 삭제되었습니다.");
-                    MyCodiDetailData.clearSelectedCodi();
-                    MainLayoutController.loadView("/com/samyukgu/what2wear/myCodi/myCodiList.fxml");
-
-                } catch (Exception e) {
-                    System.err.println("코디 삭제 실패: " + e.getMessage());
-                    e.printStackTrace();
-                    showError("삭제 중 오류가 발생했습니다: " + e.getMessage());
-                }
+                performDeleteCodi();
             }
         });
     }

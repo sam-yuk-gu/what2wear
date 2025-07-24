@@ -6,373 +6,377 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<HBox prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.myCodi.controller.EditMyCodiController">
+<!-- 최상위를 StackPane으로 변경하고 fx:id 추가 -->
+<StackPane fx:id="rootPane" prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.myCodi.controller.EditMyCodiController">
     <children>
+        <!-- 기존 HBox를 StackPane 안에 넣기 -->
+        <HBox prefHeight="768.0" prefWidth="1280.0">
+            <children>
 
-        <!-- 오른쪽 전체 -->
-        <VBox prefHeight="768.0" prefWidth="1030.0">
-            <!-- 상단 바 -->
-            <AnchorPane prefHeight="42.0" prefWidth="1030.0" style="-fx-background-color: #eeeeee;">
-                <children>
-                    <HBox layoutX="14.0" layoutY="6.0" spacing="10.0">
+                <!-- 오른쪽 전체 -->
+                <VBox prefHeight="768.0" prefWidth="1030.0">
+                    <!-- 상단 바 -->
+                    <AnchorPane prefHeight="42.0" prefWidth="1030.0" style="-fx-background-color: #eeeeee;">
                         <children>
-                            <ImageView fitHeight="40" fitWidth="40" onMouseClicked="#handleBackClick" style="-fx-cursor: hand;">
-                                <image>
-                                    <Image preserveRatio="true" url="@../wardrobe/images/tabler_arrow-left.png" />
-                                </image>
-                            </ImageView>
-                        </children>
-                    </HBox>
-                </children>
-            </AnchorPane>
-
-            <AnchorPane prefHeight="723.0" prefWidth="1030.0">
-                <children>
-                    <Label layoutX="34.0" layoutY="20.0" text="나만의 코디 수정">
-                        <font>
-                            <Font name="System Bold" size="25.0" />
-                        </font>
-                    </Label>
-
-                    <!-- 코디 이름 입력 필드 -->
-                    <TextField fx:id="codiNameField" layoutX="34.0" layoutY="58.0" prefWidth="400.0" promptText="코디 이름을 입력하세요 (최대 255자)">
-                        <font>
-                            <Font name="System Bold" size="17.0" />
-                        </font>
-                    </TextField>
-
-                    <HBox layoutX="21.0" layoutY="111.0" prefHeight="523.0" prefWidth="979.0">
-                        <children>
-                            <HBox prefHeight="560.0" prefWidth="717.0">
+                            <HBox layoutX="14.0" layoutY="6.0" spacing="10.0">
                                 <children>
-                                    <GridPane prefHeight="523.0" prefWidth="684.0">
-                                        <columnConstraints>
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        </columnConstraints>
-                                        <rowConstraints>
-                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        </rowConstraints>
+                                    <ImageView fitHeight="40" fitWidth="40" onMouseClicked="#handleBackClick" style="-fx-cursor: hand;">
+                                        <image>
+                                            <Image preserveRatio="true" url="@../wardrobe/images/tabler_arrow-left.png" />
+                                        </image>
+                                    </ImageView>
+                                </children>
+                            </HBox>
+                        </children>
+                    </AnchorPane>
+
+                    <AnchorPane prefHeight="723.0" prefWidth="1030.0">
+                        <children>
+                            <Label layoutX="34.0" layoutY="20.0" text="나만의 코디 수정">
+                                <font>
+                                    <Font name="System Bold" size="25.0" />
+                                </font>
+                            </Label>
+
+                            <!-- 코디 이름 입력 필드 -->
+                            <TextField fx:id="codiNameField" layoutX="34.0" layoutY="58.0" prefWidth="400.0" promptText="코디 이름을 입력하세요 (최대 255자)">
+                                <font>
+                                    <Font name="System Bold" size="17.0" />
+                                </font>
+                            </TextField>
+
+                            <HBox layoutX="21.0" layoutY="111.0" prefHeight="523.0" prefWidth="979.0">
+                                <children>
+                                    <HBox prefHeight="560.0" prefWidth="717.0">
                                         <children>
-                                            <!-- 상의 -->
-                                            <AnchorPane fx:id="topPane" onMouseClicked="#handleTopClick" prefHeight="200.0" prefWidth="200.0"
-                                                        style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;">
+                                            <GridPane prefHeight="523.0" prefWidth="684.0">
+                                                <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                </columnConstraints>
+                                                <rowConstraints>
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                </rowConstraints>
                                                 <children>
-                                                    <!-- 선택된 옷 이미지 표시용 (초기에는 숨김) -->
-                                                    <ImageView fx:id="topImageView" fitHeight="90.0" fitWidth="90.0" layoutX="14.0" layoutY="43.0"
-                                                               pickOnBounds="true" preserveRatio="true" visible="false" />
-                                                    <!-- 선택 표시용 원과 플러스 아이콘 -->
-                                                    <Circle fx:id="topCircle" fill="#f0f0f0ef" layoutX="74.0" layoutY="84.0" radius="30.0" strokeType="INSIDE" />
-                                                    <ImageView fx:id="topPlusIcon" fitHeight="40.0" fitWidth="40.0" layoutX="54.0" layoutY="64.0">
-                                                        <image>
-                                                            <Image url="@../wardrobe/images/plus.png" />
-                                                        </image>
-                                                    </ImageView>
-                                                    <Label layoutX="113.0" layoutY="52.0" text="상의">
-                                                        <font>
-                                                            <Font name="System Bold" size="26.0" />
-                                                        </font>
-                                                    </Label>
-                                                    <Label fx:id="topStatusLabel" layoutX="113.0" layoutY="88.0" style="-fx-text-fill: #888888;" text="클릭하여 변경">
-                                                        <font>
-                                                            <Font size="13.0" />
-                                                        </font>
-                                                    </Label>
-                                                </children>
-                                            </AnchorPane>
+                                                    <!-- 상의 -->
+                                                    <AnchorPane fx:id="topPane" onMouseClicked="#handleTopClick" prefHeight="200.0" prefWidth="200.0"
+                                                                style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;">
+                                                        <children>
+                                                            <!-- 선택된 옷 이미지 표시용 (초기에는 숨김) -->
+                                                            <ImageView fx:id="topImageView" fitHeight="90.0" fitWidth="90.0" layoutX="14.0" layoutY="43.0"
+                                                                       pickOnBounds="true" preserveRatio="true" visible="false" />
+                                                            <!-- 선택 표시용 원과 플러스 아이콘 -->
+                                                            <Circle fx:id="topCircle" fill="#f0f0f0ef" layoutX="74.0" layoutY="84.0" radius="30.0" strokeType="INSIDE" />
+                                                            <ImageView fx:id="topPlusIcon" fitHeight="40.0" fitWidth="40.0" layoutX="54.0" layoutY="64.0">
+                                                                <image>
+                                                                    <Image url="@../wardrobe/images/plus.png" />
+                                                                </image>
+                                                            </ImageView>
+                                                            <Label layoutX="113.0" layoutY="52.0" text="상의">
+                                                                <font>
+                                                                    <Font name="System Bold" size="26.0" />
+                                                                </font>
+                                                            </Label>
+                                                            <Label fx:id="topStatusLabel" layoutX="113.0" layoutY="88.0" style="-fx-text-fill: #888888;" text="클릭하여 변경">
+                                                                <font>
+                                                                    <Font size="13.0" />
+                                                                </font>
+                                                            </Label>
+                                                        </children>
+                                                    </AnchorPane>
 
-                                            <!-- 바지 -->
-                                            <AnchorPane fx:id="bottomPane" onMouseClicked="#handleBottomClick" prefHeight="200.0" prefWidth="200.0"
-                                                        style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;"
-                                                        GridPane.columnIndex="1">
-                                                <children>
-                                                    <ImageView fx:id="bottomImageView" fitHeight="90.0" fitWidth="90.0" layoutX="15.0" layoutY="47.0"
-                                                               pickOnBounds="true" preserveRatio="true" visible="false" />
-                                                    <Circle fx:id="bottomCircle" fill="#f0f0f0ef" layoutX="63.0" layoutY="88.0" radius="30.0" strokeType="INSIDE" />
-                                                    <ImageView fx:id="bottomPlusIcon" fitHeight="40.0" fitWidth="40.0" layoutX="43.0" layoutY="68.0">
-                                                        <image>
-                                                            <Image url="@../wardrobe/images/plus.png" />
-                                                        </image>
-                                                    </ImageView>
-                                                    <Label layoutX="101.0" layoutY="62.0" text="바지">
-                                                        <font>
-                                                            <Font name="System Bold" size="26.0" />
-                                                        </font>
-                                                    </Label>
-                                                    <Label fx:id="bottomStatusLabel" layoutX="101.0" layoutY="98.0" style="-fx-text-fill: #888888;" text="클릭하여 변경">
-                                                        <font>
-                                                            <Font size="13.0" />
-                                                        </font>
-                                                    </Label>
-                                                </children>
-                                            </AnchorPane>
+                                                    <!-- 나머지 모든 카테고리들도 동일하게 유지... -->
+                                                    <!-- 바지 -->
+                                                    <AnchorPane fx:id="bottomPane" onMouseClicked="#handleBottomClick" prefHeight="200.0" prefWidth="200.0"
+                                                                style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;"
+                                                                GridPane.columnIndex="1">
+                                                        <children>
+                                                            <ImageView fx:id="bottomImageView" fitHeight="90.0" fitWidth="90.0" layoutX="15.0" layoutY="47.0"
+                                                                       pickOnBounds="true" preserveRatio="true" visible="false" />
+                                                            <Circle fx:id="bottomCircle" fill="#f0f0f0ef" layoutX="63.0" layoutY="88.0" radius="30.0" strokeType="INSIDE" />
+                                                            <ImageView fx:id="bottomPlusIcon" fitHeight="40.0" fitWidth="40.0" layoutX="43.0" layoutY="68.0">
+                                                                <image>
+                                                                    <Image url="@../wardrobe/images/plus.png" />
+                                                                </image>
+                                                            </ImageView>
+                                                            <Label layoutX="101.0" layoutY="62.0" text="바지">
+                                                                <font>
+                                                                    <Font name="System Bold" size="26.0" />
+                                                                </font>
+                                                            </Label>
+                                                            <Label fx:id="bottomStatusLabel" layoutX="101.0" layoutY="98.0" style="-fx-text-fill: #888888;" text="클릭하여 변경">
+                                                                <font>
+                                                                    <Font size="13.0" />
+                                                                </font>
+                                                            </Label>
+                                                        </children>
+                                                    </AnchorPane>
 
-                                            <!-- 신발 -->
-                                            <AnchorPane fx:id="shoesPane" onMouseClicked="#handleShoesClick" prefHeight="175.0" prefWidth="217.0"
-                                                        style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;"
-                                                        GridPane.columnIndex="2">
-                                                <children>
-                                                    <ImageView fx:id="shoesImageView" fitHeight="90.0" fitWidth="90.0" layoutX="26.0" layoutY="48.0"
-                                                               pickOnBounds="true" preserveRatio="true" visible="false" />
-                                                    <Circle fx:id="shoesCircle" fill="#f0f0f0ef" layoutX="87.0" layoutY="88.0" radius="30.0" strokeType="INSIDE" />
-                                                    <ImageView fx:id="shoesPlusIcon" fitHeight="40.0" fitWidth="40.0" layoutX="67.0" layoutY="68.0">
-                                                        <image>
-                                                            <Image url="@../wardrobe/images/plus.png" />
-                                                        </image>
-                                                    </ImageView>
-                                                    <Label layoutX="125.0" layoutY="57.0" text="신발">
-                                                        <font>
-                                                            <Font name="System Bold" size="26.0" />
-                                                        </font>
-                                                    </Label>
-                                                    <Label fx:id="shoesStatusLabel" layoutX="127.0" layoutY="91.0" style="-fx-text-fill: #888888;" text="클릭하여 변경">
-                                                        <font>
-                                                            <Font size="13.0" />
-                                                        </font>
-                                                    </Label>
-                                                </children>
-                                            </AnchorPane>
+                                                    <!-- 신발 -->
+                                                    <AnchorPane fx:id="shoesPane" onMouseClicked="#handleShoesClick" prefHeight="175.0" prefWidth="217.0"
+                                                                style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;"
+                                                                GridPane.columnIndex="2">
+                                                        <children>
+                                                            <ImageView fx:id="shoesImageView" fitHeight="90.0" fitWidth="90.0" layoutX="26.0" layoutY="48.0"
+                                                                       pickOnBounds="true" preserveRatio="true" visible="false" />
+                                                            <Circle fx:id="shoesCircle" fill="#f0f0f0ef" layoutX="87.0" layoutY="88.0" radius="30.0" strokeType="INSIDE" />
+                                                            <ImageView fx:id="shoesPlusIcon" fitHeight="40.0" fitWidth="40.0" layoutX="67.0" layoutY="68.0">
+                                                                <image>
+                                                                    <Image url="@../wardrobe/images/plus.png" />
+                                                                </image>
+                                                            </ImageView>
+                                                            <Label layoutX="125.0" layoutY="57.0" text="신발">
+                                                                <font>
+                                                                    <Font name="System Bold" size="26.0" />
+                                                                </font>
+                                                            </Label>
+                                                            <Label fx:id="shoesStatusLabel" layoutX="127.0" layoutY="91.0" style="-fx-text-fill: #888888;" text="클릭하여 변경">
+                                                                <font>
+                                                                    <Font size="13.0" />
+                                                                </font>
+                                                            </Label>
+                                                        </children>
+                                                    </AnchorPane>
 
-                                            <!-- 가방 -->
-                                            <AnchorPane fx:id="bagPane" onMouseClicked="#handleBagClick" prefHeight="200.0" prefWidth="200.0"
-                                                        style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;"
-                                                        GridPane.rowIndex="1">
-                                                <children>
-                                                    <ImageView fx:id="bagImageView" fitHeight="90.0" fitWidth="90.0" layoutX="20.0" layoutY="45.0"
-                                                               pickOnBounds="true" preserveRatio="true" visible="false" />
-                                                    <Circle fx:id="bagCircle" fill="#f0f0f0ef" layoutX="78.0" layoutY="86.0" radius="30.0" strokeType="INSIDE" />
-                                                    <ImageView fx:id="bagPlusIcon" fitHeight="40.0" fitWidth="40.0" layoutX="58.0" layoutY="66.0">
-                                                        <image>
-                                                            <Image url="@../wardrobe/images/plus.png" />
-                                                        </image>
-                                                    </ImageView>
-                                                    <Label layoutX="114.0" layoutY="62.0" text="가방">
-                                                        <font>
-                                                            <Font name="System Bold" size="26.0" />
-                                                        </font>
-                                                    </Label>
-                                                    <Label fx:id="bagStatusLabel" layoutX="114.0" layoutY="98.0" style="-fx-text-fill: #888888;" text="클릭하여 변경">
-                                                        <font>
-                                                            <Font size="13.0" />
-                                                        </font>
-                                                    </Label>
-                                                </children>
-                                            </AnchorPane>
+                                                    <!-- 가방 -->
+                                                    <AnchorPane fx:id="bagPane" onMouseClicked="#handleBagClick" prefHeight="200.0" prefWidth="200.0"
+                                                                style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;"
+                                                                GridPane.rowIndex="1">
+                                                        <children>
+                                                            <ImageView fx:id="bagImageView" fitHeight="90.0" fitWidth="90.0" layoutX="20.0" layoutY="45.0"
+                                                                       pickOnBounds="true" preserveRatio="true" visible="false" />
+                                                            <Circle fx:id="bagCircle" fill="#f0f0f0ef" layoutX="78.0" layoutY="86.0" radius="30.0" strokeType="INSIDE" />
+                                                            <ImageView fx:id="bagPlusIcon" fitHeight="40.0" fitWidth="40.0" layoutX="58.0" layoutY="66.0">
+                                                                <image>
+                                                                    <Image url="@../wardrobe/images/plus.png" />
+                                                                </image>
+                                                            </ImageView>
+                                                            <Label layoutX="114.0" layoutY="62.0" text="가방">
+                                                                <font>
+                                                                    <Font name="System Bold" size="26.0" />
+                                                                </font>
+                                                            </Label>
+                                                            <Label fx:id="bagStatusLabel" layoutX="114.0" layoutY="98.0" style="-fx-text-fill: #888888;" text="클릭하여 변경">
+                                                                <font>
+                                                                    <Font size="13.0" />
+                                                                </font>
+                                                            </Label>
+                                                        </children>
+                                                    </AnchorPane>
 
-                                            <!-- 원피스/스커트 -->
-                                            <AnchorPane fx:id="dressPane" onMouseClicked="#handleDressClick" prefHeight="200.0" prefWidth="200.0"
-                                                        style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;"
-                                                        GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                                <children>
-                                                    <ImageView fx:id="dressImageView" fitHeight="90.0" fitWidth="90.0" layoutX="15.0" layoutY="47.0"
-                                                               pickOnBounds="true" preserveRatio="true" visible="false" />
-                                                    <Circle fx:id="dressCircle" fill="#f0f0f0ef" layoutX="60.0" layoutY="88.0" radius="30.0" strokeType="INSIDE" />
-                                                    <ImageView fx:id="dressPlusIcon" fitHeight="40.0" fitWidth="40.0" layoutX="40.0" layoutY="68.0">
-                                                        <image>
-                                                            <Image url="@../wardrobe/images/plus.png" />
-                                                        </image>
-                                                    </ImageView>
-                                                    <Label layoutX="98.0" layoutY="69.0" text="원피스/스커트">
-                                                        <font>
-                                                            <Font size="18.0" />
-                                                        </font>
-                                                    </Label>
-                                                    <Label fx:id="dressStatusLabel" layoutX="98.0" layoutY="92.0" style="-fx-text-fill: #888888;" text="선택사항">
-                                                        <font>
-                                                            <Font size="12.0" />
-                                                        </font>
-                                                    </Label>
-                                                </children>
-                                            </AnchorPane>
+                                                    <!-- 원피스/스커트 -->
+                                                    <AnchorPane fx:id="dressPane" onMouseClicked="#handleDressClick" prefHeight="200.0" prefWidth="200.0"
+                                                                style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;"
+                                                                GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                        <children>
+                                                            <ImageView fx:id="dressImageView" fitHeight="90.0" fitWidth="90.0" layoutX="15.0" layoutY="47.0"
+                                                                       pickOnBounds="true" preserveRatio="true" visible="false" />
+                                                            <Circle fx:id="dressCircle" fill="#f0f0f0ef" layoutX="60.0" layoutY="88.0" radius="30.0" strokeType="INSIDE" />
+                                                            <ImageView fx:id="dressPlusIcon" fitHeight="40.0" fitWidth="40.0" layoutX="40.0" layoutY="68.0">
+                                                                <image>
+                                                                    <Image url="@../wardrobe/images/plus.png" />
+                                                                </image>
+                                                            </ImageView>
+                                                            <Label layoutX="98.0" layoutY="69.0" text="원피스/스커트">
+                                                                <font>
+                                                                    <Font size="18.0" />
+                                                                </font>
+                                                            </Label>
+                                                            <Label fx:id="dressStatusLabel" layoutX="98.0" layoutY="92.0" style="-fx-text-fill: #888888;" text="선택사항">
+                                                                <font>
+                                                                    <Font size="12.0" />
+                                                                </font>
+                                                            </Label>
+                                                        </children>
+                                                    </AnchorPane>
 
-                                            <!-- 아우터 -->
-                                            <AnchorPane fx:id="outerPane" onMouseClicked="#handleOuterClick" prefHeight="200.0" prefWidth="200.0"
-                                                        style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;"
-                                                        GridPane.columnIndex="2" GridPane.rowIndex="1">
-                                                <children>
-                                                    <ImageView fx:id="outerImageView" fitHeight="90.0" fitWidth="90.0" layoutX="26.0" layoutY="48.0"
-                                                               pickOnBounds="true" preserveRatio="true" visible="false" />
-                                                    <Circle fx:id="outerCircle" fill="#f0f0f0ef" layoutX="87.0" layoutY="88.0" radius="30.0" strokeType="INSIDE" />
-                                                    <ImageView fx:id="outerPlusIcon" fitHeight="40.0" fitWidth="40.0" layoutX="67.0" layoutY="68.0">
-                                                        <image>
-                                                            <Image url="@../wardrobe/images/plus.png" />
-                                                        </image>
-                                                    </ImageView>
-                                                    <Label layoutX="124.0" layoutY="70.0" text="아우터">
-                                                        <font>
-                                                            <Font size="18.0" />
-                                                        </font>
-                                                    </Label>
-                                                    <Label fx:id="outerStatusLabel" layoutX="124.0" layoutY="93.0" style="-fx-text-fill: #888888;" text="선택사항">
-                                                        <font>
-                                                            <Font size="12.0" />
-                                                        </font>
-                                                    </Label>
-                                                </children>
-                                            </AnchorPane>
+                                                    <!-- 아우터 -->
+                                                    <AnchorPane fx:id="outerPane" onMouseClicked="#handleOuterClick" prefHeight="200.0" prefWidth="200.0"
+                                                                style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;"
+                                                                GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                        <children>
+                                                            <ImageView fx:id="outerImageView" fitHeight="90.0" fitWidth="90.0" layoutX="26.0" layoutY="48.0"
+                                                                       pickOnBounds="true" preserveRatio="true" visible="false" />
+                                                            <Circle fx:id="outerCircle" fill="#f0f0f0ef" layoutX="87.0" layoutY="88.0" radius="30.0" strokeType="INSIDE" />
+                                                            <ImageView fx:id="outerPlusIcon" fitHeight="40.0" fitWidth="40.0" layoutX="67.0" layoutY="68.0">
+                                                                <image>
+                                                                    <Image url="@../wardrobe/images/plus.png" />
+                                                                </image>
+                                                            </ImageView>
+                                                            <Label layoutX="124.0" layoutY="70.0" text="아우터">
+                                                                <font>
+                                                                    <Font size="18.0" />
+                                                                </font>
+                                                            </Label>
+                                                            <Label fx:id="outerStatusLabel" layoutX="124.0" layoutY="93.0" style="-fx-text-fill: #888888;" text="선택사항">
+                                                                <font>
+                                                                    <Font size="12.0" />
+                                                                </font>
+                                                            </Label>
+                                                        </children>
+                                                    </AnchorPane>
 
-                                            <!-- 악세사리 -->
-                                            <AnchorPane fx:id="accessoryPane" onMouseClicked="#handleAccessoryClick" prefHeight="200.0" prefWidth="200.0"
-                                                        style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;"
-                                                        GridPane.rowIndex="2">
-                                                <children>
-                                                    <ImageView fx:id="accessoryImageView" fitHeight="90.0" fitWidth="90.0" layoutX="20.0" layoutY="45.0"
-                                                               pickOnBounds="true" preserveRatio="true" visible="false" />
-                                                    <Circle fx:id="accessoryCircle" fill="#f0f0f0ef" layoutX="78.0" layoutY="88.0" radius="30.0" strokeType="INSIDE" />
-                                                    <ImageView fx:id="accessoryPlusIcon" fitHeight="40.0" fitWidth="40.0" layoutX="58.0" layoutY="68.0">
-                                                        <image>
-                                                            <Image url="@../wardrobe/images/plus.png" />
-                                                        </image>
-                                                    </ImageView>
-                                                    <Label layoutX="119.0" layoutY="76.0" text="악세사리">
-                                                        <font>
-                                                            <Font size="18.0" />
-                                                        </font>
-                                                    </Label>
-                                                    <Label fx:id="accessoryStatusLabel" layoutX="119.0" layoutY="99.0" style="-fx-text-fill: #888888;" text="선택사항">
-                                                        <font>
-                                                            <Font size="12.0" />
-                                                        </font>
-                                                    </Label>
-                                                </children>
-                                            </AnchorPane>
+                                                    <!-- 악세사리 -->
+                                                    <AnchorPane fx:id="accessoryPane" onMouseClicked="#handleAccessoryClick" prefHeight="200.0" prefWidth="200.0"
+                                                                style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;"
+                                                                GridPane.rowIndex="2">
+                                                        <children>
+                                                            <ImageView fx:id="accessoryImageView" fitHeight="90.0" fitWidth="90.0" layoutX="20.0" layoutY="45.0"
+                                                                       pickOnBounds="true" preserveRatio="true" visible="false" />
+                                                            <Circle fx:id="accessoryCircle" fill="#f0f0f0ef" layoutX="78.0" layoutY="88.0" radius="30.0" strokeType="INSIDE" />
+                                                            <ImageView fx:id="accessoryPlusIcon" fitHeight="40.0" fitWidth="40.0" layoutX="58.0" layoutY="68.0">
+                                                                <image>
+                                                                    <Image url="@../wardrobe/images/plus.png" />
+                                                                </image>
+                                                            </ImageView>
+                                                            <Label layoutX="119.0" layoutY="76.0" text="악세사리">
+                                                                <font>
+                                                                    <Font size="18.0" />
+                                                                </font>
+                                                            </Label>
+                                                            <Label fx:id="accessoryStatusLabel" layoutX="119.0" layoutY="99.0" style="-fx-text-fill: #888888;" text="선택사항">
+                                                                <font>
+                                                                    <Font size="12.0" />
+                                                                </font>
+                                                            </Label>
+                                                        </children>
+                                                    </AnchorPane>
 
-                                            <!-- 기타 -->
-                                            <AnchorPane fx:id="etcPane" onMouseClicked="#handleEtcClick" prefHeight="200.0" prefWidth="200.0"
-                                                        style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;"
-                                                        GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                                <children>
-                                                    <ImageView fx:id="etcImageView" fitHeight="90.0" fitWidth="90.0" layoutX="15.0" layoutY="47.0"
-                                                               pickOnBounds="true" preserveRatio="true" visible="false" />
-                                                    <Circle fx:id="etcCircle" fill="#f0f0f0ef" layoutX="69.0" layoutY="88.0" radius="30.0" strokeType="INSIDE" />
-                                                    <ImageView fx:id="etcPlusIcon" fitHeight="40.0" fitWidth="40.0" layoutX="49.0" layoutY="68.0">
-                                                        <image>
-                                                            <Image url="@../wardrobe/images/plus.png" />
-                                                        </image>
-                                                    </ImageView>
-                                                    <Label layoutX="107.0" layoutY="69.0" text="기타">
-                                                        <font>
-                                                            <Font size="18.0" />
-                                                        </font>
-                                                    </Label>
-                                                    <Label fx:id="etcStatusLabel" layoutX="107.0" layoutY="92.0" style="-fx-text-fill: #888888;" text="선택사항">
-                                                        <font>
-                                                            <Font size="12.0" />
-                                                        </font>
-                                                    </Label>
-                                                </children>
-                                            </AnchorPane>
+                                                    <!-- 기타 -->
+                                                    <AnchorPane fx:id="etcPane" onMouseClicked="#handleEtcClick" prefHeight="200.0" prefWidth="200.0"
+                                                                style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8;"
+                                                                GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                        <children>
+                                                            <ImageView fx:id="etcImageView" fitHeight="90.0" fitWidth="90.0" layoutX="15.0" layoutY="47.0"
+                                                                       pickOnBounds="true" preserveRatio="true" visible="false" />
+                                                            <Circle fx:id="etcCircle" fill="#f0f0f0ef" layoutX="69.0" layoutY="88.0" radius="30.0" strokeType="INSIDE" />
+                                                            <ImageView fx:id="etcPlusIcon" fitHeight="40.0" fitWidth="40.0" layoutX="49.0" layoutY="68.0">
+                                                                <image>
+                                                                    <Image url="@../wardrobe/images/plus.png" />
+                                                                </image>
+                                                            </ImageView>
+                                                            <Label layoutX="107.0" layoutY="69.0" text="기타">
+                                                                <font>
+                                                                    <Font size="18.0" />
+                                                                </font>
+                                                            </Label>
+                                                            <Label fx:id="etcStatusLabel" layoutX="107.0" layoutY="92.0" style="-fx-text-fill: #888888;" text="선택사항">
+                                                                <font>
+                                                                    <Font size="12.0" />
+                                                                </font>
+                                                            </Label>
+                                                        </children>
+                                                    </AnchorPane>
 
-                                            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                                </children>
+                                            </GridPane>
                                         </children>
-                                    </GridPane>
+                                    </HBox>
+
+                                    <!-- 오른쪽 입력 필드들 -->
+                                    <AnchorPane prefHeight="523.0" prefWidth="262.0">
+                                        <children>
+                                            <Label layoutX="14.0" layoutY="39.0" text="상의">
+                                                <font>
+                                                    <Font size="18.0" />
+                                                </font>
+                                            </Label>
+                                            <TextField fx:id="topField" editable="false" layoutX="14.0" layoutY="70.0" prefHeight="32.0" prefWidth="115.0"
+                                                       promptText="미선택" style="-fx-background-color: #f8f8f8;" />
+
+                                            <Label layoutX="137.0" layoutY="39.0" text="바지">
+                                                <font>
+                                                    <Font size="18.0" />
+                                                </font>
+                                            </Label>
+                                            <TextField fx:id="bottomField" editable="false" layoutX="137.0" layoutY="70.0" prefHeight="32.0" prefWidth="115.0"
+                                                       promptText="미선택" style="-fx-background-color: #f8f8f8;" />
+
+                                            <Label layoutX="18.0" layoutY="134.0" text="신발">
+                                                <font>
+                                                    <Font size="18.0" />
+                                                </font>
+                                            </Label>
+                                            <TextField fx:id="shoesField" editable="false" layoutX="18.0" layoutY="165.0" prefHeight="32.0" prefWidth="115.0"
+                                                       promptText="미선택" style="-fx-background-color: #f8f8f8;" />
+
+                                            <Label layoutX="141.0" layoutY="134.0" text="가방">
+                                                <font>
+                                                    <Font size="18.0" />
+                                                </font>
+                                            </Label>
+                                            <TextField fx:id="bagField" editable="false" layoutX="141.0" layoutY="165.0" prefHeight="32.0" prefWidth="115.0"
+                                                       promptText="미선택" style="-fx-background-color: #f8f8f8;" />
+
+                                            <Label layoutX="18.0" layoutY="230.0" text="원피스/스커트">
+                                                <font>
+                                                    <Font size="18.0" />
+                                                </font>
+                                            </Label>
+                                            <TextField fx:id="dressField" editable="false" layoutX="18.0" layoutY="261.0" prefHeight="32.0" prefWidth="115.0"
+                                                       promptText="미선택" style="-fx-background-color: #f8f8f8;" />
+
+                                            <Label layoutX="141.0" layoutY="230.0" text="아우터">
+                                                <font>
+                                                    <Font size="18.0" />
+                                                </font>
+                                            </Label>
+                                            <TextField fx:id="outerField" editable="false" layoutX="141.0" layoutY="261.0" prefHeight="32.0" prefWidth="115.0"
+                                                       promptText="미선택" style="-fx-background-color: #f8f8f8;" />
+
+                                            <Label layoutX="18.0" layoutY="329.0" text="악세사리">
+                                                <font>
+                                                    <Font size="18.0" />
+                                                </font>
+                                            </Label>
+                                            <TextField fx:id="accessoryField" editable="false" layoutX="18.0" layoutY="360.0" prefHeight="32.0" prefWidth="115.0"
+                                                       promptText="미선택" style="-fx-background-color: #f8f8f8;" />
+
+                                            <Label layoutX="141.0" layoutY="329.0" text="기타">
+                                                <font>
+                                                    <Font size="18.0" />
+                                                </font>
+                                            </Label>
+                                            <TextField fx:id="etcField" editable="false" layoutX="141.0" layoutY="360.0" prefHeight="32.0" prefWidth="115.0"
+                                                       promptText="미선택" style="-fx-background-color: #f8f8f8;" />
+
+                                            <!-- 선택된 아이템 개수 표시 -->
+                                            <Label fx:id="selectedCountLabel" layoutX="18.0" layoutY="420.0" style="-fx-text-fill: #666666;" text="선택된 아이템: 0개">
+                                                <font>
+                                                    <Font size="14.0" />
+                                                </font>
+                                            </Label>
+
+                                            <!-- 도움말 텍스트 추가 -->
+                                            <Label layoutX="18.0" layoutY="450.0" style="-fx-text-fill: #999999;" text="※ 최소 1개 아이템 선택 필수" wrapText="true" prefWidth="220.0">
+                                                <font>
+                                                    <Font size="11.0" />
+                                                </font>
+                                            </Label>
+                                        </children>
+                                    </AnchorPane>
                                 </children>
                             </HBox>
 
-                            <!-- 오른쪽 입력 필드들 -->
-                            <AnchorPane prefHeight="523.0" prefWidth="262.0">
+                            <!-- 버튼들 -->
+                            <HBox alignment="CENTER" layoutX="350.0" layoutY="649.0" spacing="20.0">
                                 <children>
-                                    <Label layoutX="14.0" layoutY="39.0" text="상의">
-                                        <font>
-                                            <Font size="18.0" />
-                                        </font>
-                                    </Label>
-                                    <TextField fx:id="topField" editable="false" layoutX="14.0" layoutY="70.0" prefHeight="32.0" prefWidth="115.0"
-                                               promptText="미선택" style="-fx-background-color: #f8f8f8;" />
-
-                                    <Label layoutX="137.0" layoutY="39.0" text="바지">
-                                        <font>
-                                            <Font size="18.0" />
-                                        </font>
-                                    </Label>
-                                    <TextField fx:id="bottomField" editable="false" layoutX="137.0" layoutY="70.0" prefHeight="32.0" prefWidth="115.0"
-                                               promptText="미선택" style="-fx-background-color: #f8f8f8;" />
-
-                                    <Label layoutX="18.0" layoutY="134.0" text="신발">
-                                        <font>
-                                            <Font size="18.0" />
-                                        </font>
-                                    </Label>
-                                    <TextField fx:id="shoesField" editable="false" layoutX="18.0" layoutY="165.0" prefHeight="32.0" prefWidth="115.0"
-                                               promptText="미선택" style="-fx-background-color: #f8f8f8;" />
-
-                                    <Label layoutX="141.0" layoutY="134.0" text="가방">
-                                        <font>
-                                            <Font size="18.0" />
-                                        </font>
-                                    </Label>
-                                    <TextField fx:id="bagField" editable="false" layoutX="141.0" layoutY="165.0" prefHeight="32.0" prefWidth="115.0"
-                                               promptText="미선택" style="-fx-background-color: #f8f8f8;" />
-
-                                    <Label layoutX="18.0" layoutY="230.0" text="원피스/스커트">
-                                        <font>
-                                            <Font size="18.0" />
-                                        </font>
-                                    </Label>
-                                    <TextField fx:id="dressField" editable="false" layoutX="18.0" layoutY="261.0" prefHeight="32.0" prefWidth="115.0"
-                                               promptText="미선택" style="-fx-background-color: #f8f8f8;" />
-
-                                    <Label layoutX="141.0" layoutY="230.0" text="아우터">
-                                        <font>
-                                            <Font size="18.0" />
-                                        </font>
-                                    </Label>
-                                    <TextField fx:id="outerField" editable="false" layoutX="141.0" layoutY="261.0" prefHeight="32.0" prefWidth="115.0"
-                                               promptText="미선택" style="-fx-background-color: #f8f8f8;" />
-
-                                    <Label layoutX="18.0" layoutY="329.0" text="악세사리">
-                                        <font>
-                                            <Font size="18.0" />
-                                        </font>
-                                    </Label>
-                                    <TextField fx:id="accessoryField" editable="false" layoutX="18.0" layoutY="360.0" prefHeight="32.0" prefWidth="115.0"
-                                               promptText="미선택" style="-fx-background-color: #f8f8f8;" />
-
-                                    <Label layoutX="141.0" layoutY="329.0" text="기타">
-                                        <font>
-                                            <Font size="18.0" />
-                                        </font>
-                                    </Label>
-                                    <TextField fx:id="etcField" editable="false" layoutX="141.0" layoutY="360.0" prefHeight="32.0" prefWidth="115.0"
-                                               promptText="미선택" style="-fx-background-color: #f8f8f8;" />
-
-                                    <!-- 선택된 아이템 개수 표시 -->
-                                    <Label fx:id="selectedCountLabel" layoutX="18.0" layoutY="420.0" style="-fx-text-fill: #666666;" text="선택된 아이템: 0개">
-                                        <font>
-                                            <Font size="14.0" />
-                                        </font>
-                                    </Label>
-
-                                    <!-- 도움말 텍스트 추가 -->
-                                    <Label layoutX="18.0" layoutY="450.0" style="-fx-text-fill: #999999;" text="※ 최소 1개 아이템 선택 필수" wrapText="true" prefWidth="220.0">
-                                        <font>
-                                            <Font size="11.0" />
-                                        </font>
-                                    </Label>
+                                    <Button fx:id="cancelButton" onAction="#handleCancel" prefHeight="35.0" prefWidth="100.0"
+                                            style="-fx-background-color: #f8f9fa; -fx-text-fill: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5;"
+                                            text="취소" />
+                                    <Button fx:id="updateButton" onAction="#handleUpdate" prefHeight="35.0" prefWidth="127.0"
+                                            style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"
+                                            text="수정하기" />
                                 </children>
-                            </AnchorPane>
+                            </HBox>
                         </children>
-                    </HBox>
-
-                    <!-- 버튼들 -->
-                    <HBox alignment="CENTER" layoutX="350.0" layoutY="649.0" spacing="20.0">
-                        <children>
-                            <Button fx:id="resetButton" onAction="#handleResetClick" prefHeight="35.0" prefWidth="100.0"
-                                    style="-fx-background-color: #f8f9fa; -fx-text-fill: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5;"
-                                    text="초기화" />
-                            <Button fx:id="cancelButton" onAction="#handleCancel" prefHeight="35.0" prefWidth="100.0"
-                                    style="-fx-background-color: #f8f9fa; -fx-text-fill: #6c757d; -fx-font-weight: bold; -fx-background-radius: 5;"
-                                    text="취소" />
-                            <Button fx:id="updateButton" onAction="#handleUpdate" prefHeight="35.0" prefWidth="127.0"
-                                    style="-fx-background-color: #007acc; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"
-                                    text="수정하기" />
-                        </children>
-                    </HBox>
-                </children>
-            </AnchorPane>
-        </VBox>
+                    </AnchorPane>
+                </VBox>
+            </children>
+        </HBox>
     </children>
-</HBox>
+</StackPane>

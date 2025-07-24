@@ -12,14 +12,18 @@ import com.samyukgu.what2wear.myCodi.service.CodiService;
 import com.samyukgu.what2wear.wardrobe.dao.WardrobeOracleDAO;
 import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
 import com.samyukgu.what2wear.wardrobe.service.WardrobeService;
+import com.samyukgu.what2wear.common.controller.CustomModalController;
 
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
@@ -96,6 +100,9 @@ public class EditMyCodiController implements Initializable {
     @FXML private Button resetButton;
     @FXML private Button cancelButton;
     @FXML private Button updateButton;
+
+    // 추가: rootPane 필드
+    @FXML private StackPane rootPane;
 
     // 서비스 객체들
     private CodiService codiService;
@@ -671,6 +678,7 @@ public class EditMyCodiController implements Initializable {
         }
     }
 
+    // 수정된 handleUpdate 메서드 - CustomModal 사용
     @FXML
     private void handleUpdate() {
         System.out.println("수정 버튼 클릭됨");
@@ -687,41 +695,69 @@ public class EditMyCodiController implements Initializable {
                 return;
             }
 
-            // 수정 버튼 비활성화
-            if (updateButton != null) {
-                updateButton.setDisable(true);
+            // CustomModal로 확인창 표시
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/CustomModal.fxml"));
+            StackPane modal = loader.load();
+
+            CustomModalController controller = loader.getController();
+            controller.configure(
+                    "코디 수정 확인",
+                    "코디 정보를 수정하시겠습니까?",
+                    "/assets/icons/greenCheck.png", // 아이콘 없음
+                    "#4CAF50", // 파란색
+                    "취소",
+                    "수정",
+                    () -> rootPane.getChildren().remove(modal), // 취소
+                    () -> {
+                        rootPane.getChildren().remove(modal);
+                        performUpdate(); // 실제 수정 실행
+                    }
+            );
+
+            rootPane.getChildren().add(modal);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("모달을 불러오는 중 오류가 발생했습니다: " + e.getMessage());
+        }
+    }
+
+    // 실제 수정 작업을 수행하는 메서드 (새로 추가)
+    private void performUpdate() {
+        System.out.println("폼 검증 통과, 수정 작업 시작");
+
+        // 수정 버튼 비활성화
+        if (updateButton != null) {
+            updateButton.setDisable(true);
+        }
+
+        Task<Void> updateTask = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                System.out.println("백그라운드 수정 작업 시작");
+
+                Codi updatedCodi = createUpdatedCodi();
+                System.out.println("수정된 Codi 객체 생성 완료: " + updatedCodi.getName());
+
+                List<Long> clothesIds = collectSelectedClothesIds();
+                System.out.println("선택된 옷 ID 목록: " + clothesIds);
+
+                codiService.updateCodi(updatedCodi, clothesIds);
+                System.out.println("코디 수정 완료");
+
+                return null;
             }
 
-            System.out.println("폼 검증 통과, 수정 작업 시작");
+            @Override
+            protected void succeeded() {
+                Platform.runLater(() -> {
+                    showUpdateSuccessModal();
+                });
+            }
 
-            Task<Void> updateTask = new Task<Void>() {
-                @Override
-                protected Void call() throws Exception {
-
-                    System.out.println("백그라운드 수정 작업 시작");
-
-                    Codi updatedCodi = createUpdatedCodi();
-                    System.out.println("수정된 Codi 객체 생성 완료: " + updatedCodi.getName());
-
-                    List<Long> clothesIds = collectSelectedClothesIds();
-                    System.out.println("선택된 옷 ID 목록: " + clothesIds);
-
-                    codiService.updateCodi(updatedCodi, clothesIds);
-                    System.out.println("코디 수정 완료");
-
-                    return null;
-                }
-
-                @Override
-                protected void succeeded() {
-                    System.out.println("수정 성공");
-                    showSuccess("코디가 성공적으로 수정되었습니다!");
-                    MyCodiEditData.clearSelectedCodi();
-                    navigateToCodiList();
-                }
-
-                @Override
-                protected void failed() {
+            @Override
+            protected void failed() {
+                Platform.runLater(() -> {
                     System.err.println("수정 실패: " + getException().getMessage());
                     getException().printStackTrace();
 
@@ -731,30 +767,88 @@ public class EditMyCodiController implements Initializable {
                     }
 
                     showError("수정 중 오류가 발생했습니다: " + getException().getMessage());
-                }
-            };
+                });
+            }
+        };
 
-            Thread updateThread = new Thread(updateTask);
-            updateThread.setDaemon(true);
-            updateThread.start();
+        Thread updateThread = new Thread(updateTask);
+        updateThread.setDaemon(true);
+        updateThread.start();
+    }
+
+    // 수정 성공 모달 (새로 추가)
+    private void showUpdateSuccessModal() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/CustomModal.fxml"));
+            StackPane modal = loader.load();
+
+            CustomModalController controller = loader.getController();
+            controller.configure(
+                    "수정 완료",
+                    "코디가 성공적으로 수정되었습니다.",
+                    "/assets/icons/greenCheck.png", // 아이콘 없음
+                    "#4CAF50", // 초록색
+                    null, // 취소 버튼 없음
+                    "확인",
+                    null, // 취소 액션 없음
+                    () -> {
+                        // 확인 버튼 클릭 시
+                        rootPane.getChildren().remove(modal);
+
+                        // 데이터 정리하고 상세 페이지로 이동
+                        MyCodiEditData.clearSelectedCodi();
+                        MainLayoutController.loadView("/com/samyukgu/what2wear/myCodi/myCodiDetail.fxml");
+                    }
+            );
+
+            rootPane.getChildren().add(modal);
 
         } catch (Exception e) {
-            System.err.println("수정 준비 중 오류: " + e.getMessage());
-            e.printStackTrace();
+            System.err.println("성공 모달 로딩 실패: " + e.getMessage());
 
-            // 수정 버튼 재활성화
-            if (updateButton != null) {
-                updateButton.setDisable(false);
-            }
-
-            showError("수정 준비 중 오류가 발생했습니다: " + e.getMessage());
+            // 모달 실패 시 기본 처리
+            showSuccess("코디가 성공적으로 수정되었습니다!");
+            MyCodiEditData.clearSelectedCodi();
+            navigateToCodiList();
         }
     }
 
+    // 수정된 handleResetClick 메서드 - CustomModal 사용
     @FXML
     private void handleResetClick() {
         System.out.println("초기화 버튼 클릭됨");
 
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/CustomModal.fxml"));
+            StackPane modal = loader.load();
+
+            CustomModalController controller = loader.getController();
+            controller.configure(
+                    "초기화 확인",
+                    "원래 상태로 되돌리시겠습니까?",
+                    null, // 아이콘 없음
+                    "#ffc107", // 노란색
+                    "취소",
+                    "초기화",
+                    () -> rootPane.getChildren().remove(modal), // 취소
+                    () -> {
+                        rootPane.getChildren().remove(modal);
+                        populateForm(currentCodi); // 원래 데이터로 다시 로드
+                        System.out.println("폼 초기화 완료");
+                    }
+            );
+
+            rootPane.getChildren().add(modal);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            // 모달 실패 시 기존 Alert 사용
+            showResetConfirmationAlert();
+        }
+    }
+
+    // 기존 Alert 방식 (백업용)
+    private void showResetConfirmationAlert() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
                 "원래 상태로 되돌리시겠습니까?",
                 ButtonType.YES, ButtonType.NO);
@@ -769,25 +863,56 @@ public class EditMyCodiController implements Initializable {
         });
     }
 
+    // 수정된 handleCancel 메서드 - CustomModal 사용
     @FXML
     private void handleCancel() {
         System.out.println("취소 버튼 클릭됨");
 
         if (hasUnsavedChanges()) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-                    "저장하지 않은 변경사항이 있습니다. 정말로 취소하시겠습니까?",
-                    ButtonType.YES, ButtonType.NO);
-            alert.setTitle("확인");
-            alert.setHeaderText(null);
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/CustomModal.fxml"));
+                StackPane modal = loader.load();
 
-            alert.showAndWait().ifPresent(result -> {
-                if (result == ButtonType.YES) {
-                    handleBackClick();
-                }
-            });
+                CustomModalController controller = loader.getController();
+                controller.configure(
+                        "변경사항 확인",
+                        "저장하지 않은 변경사항이 있습니다.\n정말로 취소하시겠습니까?",
+                        null, // 아이콘 없음
+                        "#dc3545", // 빨간색
+                        "계속 수정",
+                        "취소하기",
+                        () -> rootPane.getChildren().remove(modal), // 계속 수정
+                        () -> {
+                            rootPane.getChildren().remove(modal);
+                            handleBackClick(); // 취소하고 뒤로가기
+                        }
+                );
+
+                rootPane.getChildren().add(modal);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                // 모달 실패 시 기존 Alert 사용
+                showCancelConfirmationAlert();
+            }
         } else {
             handleBackClick();
         }
+    }
+
+    // 기존 Alert 방식 (백업용)
+    private void showCancelConfirmationAlert() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                "저장하지 않은 변경사항이 있습니다. 정말로 취소하시겠습니까?",
+                ButtonType.YES, ButtonType.NO);
+        alert.setTitle("확인");
+        alert.setHeaderText(null);
+
+        alert.showAndWait().ifPresent(result -> {
+            if (result == ButtonType.YES) {
+                handleBackClick();
+            }
+        });
     }
 
     @FXML

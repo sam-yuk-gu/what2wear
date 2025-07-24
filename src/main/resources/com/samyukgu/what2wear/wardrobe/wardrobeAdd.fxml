@@ -22,17 +22,15 @@
         <!-- 오른쪽 전체 -->
         <VBox prefHeight="768.0" prefWidth="1030.0">
             <!-- 상단 바 -->
-            <AnchorPane prefHeight="50.0" prefWidth="1030.0" style="-fx-background-color: #eeeeee;">
+            <AnchorPane prefHeight="42.0" prefWidth="1030.0" style="-fx-background-color: #eeeeee;">
                 <children>
-                    <HBox layoutX="14.0" layoutY="10.0" spacing="20.0" alignment="CENTER_LEFT">
+                    <HBox layoutX="14.0" layoutY="6.0" spacing="10.0">
                         <children>
-                            <ImageView fitHeight="30" fitWidth="30" onMouseClicked="#handleBackClick"
-                                       style="-fx-cursor: hand;">
+                            <ImageView fitHeight="40" fitWidth="40" onMouseClicked="#handleBackClick" style="-fx-cursor: hand;">
                                 <image>
-                                    <Image preserveRatio="true" url="@images/tabler_arrow-left.png" />
+                                    <Image preserveRatio="true" url="@../wardrobe/images/tabler_arrow-left.png" />
                                 </image>
                             </ImageView>
-                            <Label text="새 옷 추가" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: #333;" />
                         </children>
                     </HBox>
                 </children>
@@ -65,7 +63,7 @@
                                                 </image>
                                             </ImageView>
                                             <Button fx:id="uploadButton" prefWidth="150.0" prefHeight="40.0"
-                                                    style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 20; -fx-cursor: hand;"
+                                                    style="-fx-background-color: #E6E6E6; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 20; -fx-cursor: hand;"
                                                     text="사진 선택" />
                                         </children>
                                     </VBox>
@@ -194,10 +192,10 @@
                                     <HBox spacing="15" alignment="CENTER" prefHeight="50">
                                         <children>
                                             <Button onAction="#handleReset" prefWidth="120" prefHeight="40"
-                                                    style="-fx-background-color: #f8f9fa; -fx-text-fill: #6c757d; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 20; -fx-border-color: #dee2e6; -fx-border-width: 1; -fx-border-radius: 20; -fx-cursor: hand;"
+                                                    style="-fx-background-color: #E6E6E6; -fx-text-fill: #6c757d; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 20; -fx-border-color: #dee2e6; -fx-border-width: 1; -fx-border-radius: 20; -fx-cursor: hand;"
                                                     text="초기화" />
                                             <Button fx:id="saveButton" prefWidth="120" prefHeight="40"
-                                                    style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 20; -fx-cursor: hand;"
+                                                    style="-fx-background-color: #79C998; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 20; -fx-cursor: hand;"
                                                     text="저장하기" />
                                         </children>
                                     </HBox>

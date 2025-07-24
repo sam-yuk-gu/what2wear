@@ -147,8 +147,8 @@ public class SelectOutfitModalController implements Initializable {
 
     private void loadWardrobeItemsFromService(Long memberId) {
 //        try {
-//            List<Wardrobe> wardrobeList = wardrobeService.getAllWardrobe(memberId);
-//            allWardrobeItems = wardrobeList.stream()
+//            List<Wardrobe> wardrobeList.css = wardrobeService.getAllWardrobe(memberId);
+//            allWardrobeItems = wardrobeList.css.stream()
 //                    .map(w -> new Clothing(
 //                            String.valueOf(w.getId()),
 //                            w.getName(),
