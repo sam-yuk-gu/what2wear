@@ -4,10 +4,12 @@ import com.samyukgu.what2wear.ai.service.OpenAiChatService;
 import com.samyukgu.what2wear.ai.service.WeatherAiService;
 import com.samyukgu.what2wear.common.controller.CustomModalController;
 import com.samyukgu.what2wear.config.ConfigUtil;
+import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.friend.dao.FriendDAO;
 import com.samyukgu.what2wear.friend.dao.FriendOracleDAO;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.member.Session.MemberSession;
+import com.samyukgu.what2wear.member.model.Member;
 import com.samyukgu.what2wear.wardrobe.dao.WardrobeDAO;
 import com.samyukgu.what2wear.wardrobe.dao.WardrobeOracleDAO;
 import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
@@ -59,10 +61,16 @@ public class RecommendAiController {
     private String location;
     private String purpose;
     private long selectedMemberId;
+    MemberSession memberSession;
+    Member member;
 
     @FXML
     public void initialize() {
-        long memberId = MemberSession.getLoginMember().getId();
+        memberSession = DIContainer.getInstance().resolve(MemberSession.class);
+        member = memberSession.getMember();
+
+        Long memberId = member.getId();
+
         this.location = IntroduceAiController.selectedLocation;
         this.purpose = IntroduceAiController.selectedPurpose;
 

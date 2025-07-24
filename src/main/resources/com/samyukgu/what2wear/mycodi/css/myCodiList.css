@@ -1,0 +1,73 @@
+/* 상단 타이틀 HBox */
+#titleHBox {
+    -fx-padding: 10;
+    -fx-background-color: white;
+}
+
+/* 메인 콘텐츠 영역 */
+#mainContentArea {
+    -fx-background-color: white;
+}
+
+/* 검색창 컨테이너 */
+#searchContainer {
+    -fx-background-color: #d9d9d9;
+    -fx-background-radius: 5;
+}
+
+/* 검색 텍스트 필드 */
+#searchField {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+/* 검색 아이콘 라벨 */
+#searchIcon {
+    -fx-font-size: 14px;
+    -fx-text-fill: gray;
+    -fx-padding: 5;
+}
+
+/* 코디 추가 버튼 */
+#addButton {
+    -fx-background-color: #f2f2f2;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+}
+
+/* 코디 추가 라벨 */
+#addLabel {
+    -fx-text-fill: black;
+    -fx-font-size: 12;
+}
+
+/* 옷장 버튼 */
+#wardrobeButton {
+    -fx-background-color: #f2f2f2;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+}
+
+/* 옷장 라벨 */
+#wardrobeLabel {
+    -fx-text-fill: black;
+    -fx-font-size: 12;
+}
+
+/* 메인 스크롤 패널 */
+#mainScrollPane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+/* 코디 그리드 컨테이너 */
+#codiGridContainer {
+    -fx-padding: 10;
+    -fx-fill-width: true;
+}
+
+/* 상태 라벨 */
+#statusLabel {
+    -fx-font-size: 16px;
+    -fx-text-fill: #666;
+}

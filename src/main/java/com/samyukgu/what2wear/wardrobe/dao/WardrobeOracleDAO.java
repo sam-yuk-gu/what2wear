@@ -243,16 +243,15 @@ public class WardrobeOracleDAO implements WardrobeDAO {
         }
     }
 
-    // 즐겨찾기만 업데이트하는 메서드 추가
+    // 즐겨찾기 업데이트
     public void updateFavoriteStatus(Long id, Long memberId, String liked) {
-        System.out.println("=== 즐겨찾기 상태만 업데이트 ===");
-        System.out.println("옷 ID: " + id + ", 회원 ID: " + memberId + ", 즐겨찾기: " + liked);
+        System.out.println("즐겨찾기만 업데이트 - 옷 ID: " + id + ", 즐겨찾기: " + liked);
 
         String sql = """
-    UPDATE clothes 
-    SET liked = ? 
-    WHERE id = ? AND member_id = ? AND deleted = 'N'
-    """;
+        UPDATE clothes 
+        SET liked = ? 
+        WHERE id = ? AND member_id = ? AND deleted = 'N'
+        """;
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -262,14 +261,14 @@ public class WardrobeOracleDAO implements WardrobeDAO {
             pstmt.setLong(3, memberId);
 
             int affectedRows = pstmt.executeUpdate();
-            System.out.println("즐겨찾기 업데이트된 행 수: " + affectedRows);
+            System.out.println("즐겨찾기 업데이트 완료 - 영향받은 행: " + affectedRows);
 
             if (affectedRows == 0) {
                 throw new RuntimeException("즐겨찾기 업데이트할 데이터가 없습니다. 옷 ID: " + id);
             }
 
         } catch (SQLException e) {
-            System.out.println("ERROR: 즐겨찾기 업데이트 실패 - " + e.getMessage());
+            System.err.println("즐겨찾기 업데이트 실패: " + e.getMessage());
             e.printStackTrace();
             throw new RuntimeException("Failed to update favorite status", e);
         }

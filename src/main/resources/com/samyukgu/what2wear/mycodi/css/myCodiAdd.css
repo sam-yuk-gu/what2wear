@@ -1,0 +1,71 @@
+/* 상단 바 스타일 */
+#topBar {
+    -fx-background-color: #eeeeee;
+}
+
+/* 뒤로가기 버튼 */
+#backButton {
+    -fx-cursor: hand;
+}
+
+/* 코디 이름 제목 라벨 */
+#codiNameTitle {
+    -fx-font-size: 20;
+    -fx-font-family: "Pretendard Bold";
+}
+
+/* 코디 이름 입력 필드 */
+#codiNameField {
+    -fx-font-size: 18;
+    -fx-font-family: "Pretendard SemiBold";
+}
+
+/* 의류 카테고리 패널들 공통 스타일 */
+#topPane, #bottomPane, #shoesPane, #bagPane, #dressPane, #outerPane, #accessoryPane, #etcPane {
+    -fx-cursor: hand;
+    -fx-background-color: transparent;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+/* 상태 라벨들 (회색 텍스트) */
+#topStatusLabel, #bottomStatusLabel, #shoesStatusLabel, #bagStatusLabel, #dressStatusLabel, #outerStatusLabel, #accessoryStatusLabel, #etcStatusLabel {
+    -fx-text-fill: #888888;
+}
+
+/* 오른쪽 입력 필드들 - 읽기 전용 */
+#topField, #bottomField, #shoesField, #bagField, #dressField, #outerField, #accessoryField, #etcField {
+    -fx-background-color: #f8f8f8;
+}
+
+/* 선택된 개수 라벨 */
+#selectedCountLabel {
+    -fx-text-fill: #666666;
+}
+
+/* 도움말 라벨 */
+#helpLabel {
+    -fx-text-fill: #999999;
+}
+
+/* 초기화 버튼 */
+#resetButton {
+    -fx-background-color: #f8f9fa;
+    -fx-text-fill: #6c757d;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+}
+
+/* 저장 버튼 */
+#saveButton {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+}
+
+/* 카테고리 라벨들 (오른쪽 패널) */
+#topLabel, #bottomLabel, #shoesLabel, #bagLabel, #dressLabel, #outerLabel, #accessoryLabel, #etcLabel {
+    -fx-font-size: 18;
+    -fx-font-family: "Pretendard SemiBold";
+}

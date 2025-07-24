@@ -85,7 +85,7 @@ public class ListWardrobeController {
         }
     }
 
-    // 정렬 기능 설정 (수정됨)
+    // 정렬 기능 설정
     private void setupSortFunctionality() {
         if (sortComboBox != null) {
             // 기본값 설정 (최신 순)
@@ -132,7 +132,7 @@ public class ListWardrobeController {
         }
     }
 
-    // 옷장 로딩 (수정됨)
+    // 옷장 로딩
     private void loadWardrobes() {
         showStatus("로딩 중...", true);
 
@@ -168,8 +168,7 @@ public class ListWardrobeController {
 
         new Thread(loadTask).start();
     }
-
-    // 정렬 메서드 (완전히 새로 작성)
+    // 정렬 메서드
     private void sortWardrobes() {
         if (sortComboBox == null || sortComboBox.getValue() == null) {
             System.out.println("sortComboBox가 null이거나 선택된 값이 없습니다.");
@@ -227,7 +226,7 @@ public class ListWardrobeController {
         sortWardrobes();
     }
 
-    // 필터링 메서드 (수정됨)
+    // 필터링 메서드
     private void filterAndDisplayWardrobes() {
         Stream<Wardrobe> stream = originalWardrobes.stream();
 
@@ -277,6 +276,7 @@ public class ListWardrobeController {
             default: return "기타";
         }
     }
+
     // 페이지네이션을 완전히 무시하고 contentContainer만 사용
     private void displayAllItems() {
         if (contentContainer == null) {
@@ -348,7 +348,6 @@ public class ListWardrobeController {
             }
         }
     }
-
     private VBox createWardrobeItem(Wardrobe wardrobe) {
         VBox itemBox = new VBox();
         itemBox.setAlignment(Pos.TOP_CENTER);
@@ -386,7 +385,7 @@ public class ListWardrobeController {
         // 이미지 설정
         setClothesImage(clothesImage, wardrobe);
 
-        // 하트 아이콘 (수정된 버전)
+        // 하트 아이콘 (개선된 버전)
         ImageView heartIcon = createHeartIcon(wardrobe);
 
         imageStack.getChildren().addAll(clothesImage, heartIcon);
@@ -458,22 +457,38 @@ public class ListWardrobeController {
         }
     }
 
-    // 하트 아이콘 생성 (likedY.png, likedN.png 사용)
+    // 개선된 하트 아이콘 생성 메서드
     private ImageView createHeartIcon(Wardrobe wardrobe) {
         ImageView heartIcon = new ImageView();
-        heartIcon.setFitHeight(20);
-        heartIcon.setFitWidth(20);
+        heartIcon.setFitHeight(25);  // 크기를 약간 키움
+        heartIcon.setFitWidth(25);
         heartIcon.setPreserveRatio(true);
         heartIcon.setPickOnBounds(true); // 투명한 부분도 클릭 가능
+        heartIcon.setSmooth(true);
 
         boolean isFavorite = "Y".equals(wardrobe.getLike());
 
-        // likedY.png, likedN.png 사용
+        // 하트 아이콘 이미지 설정
         setHeartIconImage(heartIcon, isFavorite);
 
+        // 클릭 이벤트 설정 (개선됨)
         heartIcon.setOnMouseClicked(event -> {
             event.consume(); // 부모 클릭 이벤트 방지
+            System.out.println("하트 아이콘 클릭됨 - 옷 ID: " + wardrobe.getId() + ", 현재 상태: " + wardrobe.getLike());
             toggleFavorite(wardrobe, heartIcon);
+        });
+
+        // 호버 효과 추가
+        heartIcon.setOnMouseEntered(e -> {
+            heartIcon.setOpacity(0.8);
+            heartIcon.setScaleX(1.1);
+            heartIcon.setScaleY(1.1);
+        });
+
+        heartIcon.setOnMouseExited(e -> {
+            heartIcon.setOpacity(1.0);
+            heartIcon.setScaleX(1.0);
+            heartIcon.setScaleY(1.0);
         });
 
         // 하트 아이콘 위치 조정
@@ -483,7 +498,7 @@ public class ListWardrobeController {
         return heartIcon;
     }
 
-    // 하트 아이콘 이미지 설정 메서드
+    // 개선된 하트 아이콘 이미지 설정 메서드
     private void setHeartIconImage(ImageView heartIcon, boolean isFavorite) {
         try {
             String iconPath = isFavorite ? "/images/likedY.png" : "/images/likedN.png";
@@ -542,37 +557,89 @@ public class ListWardrobeController {
         setHeartIconImage(heartIcon, isFavorite);
     }
 
+    // 최적화된 즐겨찾기 토글 메서드
     private void toggleFavorite(Wardrobe wardrobe, ImageView heartIcon) {
         try {
             boolean currentFavorite = "Y".equals(wardrobe.getLike());
             String newFavoriteStatus = currentFavorite ? "N" : "Y";
 
-            System.out.println("목록에서 즐겨찾기 토글 - 옷 ID: " + wardrobe.getId() +
+            System.out.println("즐겨찾기 토글 - 옷 ID: " + wardrobe.getId() +
                     ", 현재: " + wardrobe.getLike() + " -> 새로운: " + newFavoriteStatus);
 
-            // 모델 업데이트
+            // 1. 즉시 UI 업데이트 (사용자 반응성 향상)
             wardrobe.setLike(newFavoriteStatus);
-
-            // 서비스의 토글 메서드 사용
-            wardrobeService.toggleFavoriteStatus(wardrobe.getId(), wardrobe.getMemberId());
-
-            // 아이콘 업데이트
             updateHeartIcon(heartIcon, "Y".equals(newFavoriteStatus));
 
-            // 즐겨찾기 필터가 활성화된 경우 새로고침
-            if (showFavoritesOnly) {
-                filterAndDisplayWardrobes();
+            // 2. 즐겨찾기 필터가 활성화된 경우 아이템 숨기기/보이기 처리
+            if (showFavoritesOnly && "N".equals(newFavoriteStatus)) {
+                // 즐겨찾기가 해제되고 즐겨찾기 필터가 활성화된 경우
+                // 해당 아이템을 화면에서 제거
+                Platform.runLater(() -> {
+                    // filteredWardrobes 리스트에서 제거
+                    filteredWardrobes.remove(wardrobe);
+                    // 화면 새로고침
+                    displayAllItems();
+                });
             }
 
-        } catch (Exception e) {
-            System.err.println("목록에서 즐겨찾기 토글 실패: " + e.getMessage());
-            e.printStackTrace();
-            showAlert("즐겨찾기 업데이트에 실패했습니다: " + e.getMessage());
+            // 3. 백그라운드에서 서버 업데이트
+            Task<Void> updateTask = new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+                    wardrobeService.toggleFavoriteStatus(wardrobe.getId(), wardrobe.getMemberId());
+                    return null;
+                }
 
-            // 실패 시 원래 상태로 되돌림
-            String originalStatus = "Y".equals(wardrobe.getLike()) ? "N" : "Y";
-            wardrobe.setLike(originalStatus);
-            updateHeartIcon(heartIcon, "Y".equals(originalStatus));
+                @Override
+                protected void succeeded() {
+                    System.out.println("즐겨찾기 서버 업데이트 성공 - 옷 ID: " + wardrobe.getId());
+                    // originalWardrobes 리스트도 업데이트
+                    for (Wardrobe original : originalWardrobes) {
+                        if (original.getId().equals(wardrobe.getId())) {
+                            original.setLike(newFavoriteStatus);
+                            break;
+                        }
+                    }
+                }
+
+                @Override
+                protected void failed() {
+                    Platform.runLater(() -> {
+                        System.err.println("즐겨찾기 서버 업데이트 실패: " + getException().getMessage());
+
+                        // 실패 시 UI를 원래 상태로 되돌림
+                        String originalStatus = "Y".equals(newFavoriteStatus) ? "N" : "Y";
+                        wardrobe.setLike(originalStatus);
+                        updateHeartIcon(heartIcon, "Y".equals(originalStatus));
+
+                        // 즐겨찾기 필터가 활성화된 경우 목록 복원
+                        if (showFavoritesOnly) {
+                            if ("Y".equals(originalStatus)) {
+                                // 원래 즐겨찾기였다면 다시 추가
+                                if (!filteredWardrobes.contains(wardrobe)) {
+                                    filteredWardrobes.add(wardrobe);
+                                    displayAllItems();
+                                }
+                            }
+                        }
+
+                        showAlert("즐겨찾기 업데이트에 실패했습니다: " + getException().getMessage());
+                    });
+                }
+            };
+
+            // 데몬 스레드로 실행하여 빠른 응답성 확보
+            Thread updateThread = new Thread(updateTask);
+            updateThread.setDaemon(true);
+            updateThread.start();
+
+        } catch (Exception e) {
+            System.err.println("즐겨찾기 토글 실패: " + e.getMessage());
+            e.printStackTrace();
+
+            Platform.runLater(() -> {
+                showAlert("즐겨찾기 업데이트에 실패했습니다: " + e.getMessage());
+            });
         }
     }
 
