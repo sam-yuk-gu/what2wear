@@ -304,7 +304,6 @@ public class SelectOutfitModalController implements Initializable {
 //        }
 //    }
 
-    // TODO: 코디 연결 필요
     private VBox createCodiBox(CodiDetailDTO codi) {
         VBox box = new VBox();
         box.getStyleClass().add("codi-box");
@@ -313,7 +312,7 @@ public class SelectOutfitModalController implements Initializable {
         box.setPrefWidth(100);
 
         StackPane imageStack = new StackPane();
-        VBox imageArea = createCodiImageArea(codi); // 👈 아래 함수에서 정의
+        VBox imageArea = createCodiImageArea(codi);
         imageStack.getChildren().add(imageArea);
 
         // 오버레이
