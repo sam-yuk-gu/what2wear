@@ -2,11 +2,11 @@ package com.samyukgu.what2wear.post.controller;
 
 import com.samyukgu.what2wear.common.controller.BasicHeaderController;
 import com.samyukgu.what2wear.common.controller.CustomModalController;
+import com.samyukgu.what2wear.common.util.CircularImageUtil;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.common.controller.PostHeaderController;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.member.Session.MemberSession;
-import com.samyukgu.what2wear.member.model.Member;
 import com.samyukgu.what2wear.member.service.MemberService;
 import com.samyukgu.what2wear.post.dao.PostOracleDAO;
 import com.samyukgu.what2wear.post.model.Post;
@@ -26,7 +26,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -46,13 +45,12 @@ public class DetailPostController {
     @FXML private Button editPostButton;
     @FXML private Button deletePostButton;
     @FXML private TextField commentField;
-    @FXML private ImageView profileImageView;
+    @FXML private ImageView profileImg;
     @FXML private VBox container;
 
     // 회원 세션
     private MemberService memberService;
     private MemberSession memberSession;
-    private Member member;
 
     private int likeCount;
     private boolean isLiked = false;
@@ -62,14 +60,13 @@ public class DetailPostController {
     private void initialize() {
         // 회원 정보 불러오기
         setupDI();
-        loadMember();
 
         hideEditDeleteButtons();
 
         // 1. 헤더 동적 삽입
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/BasicHeader.fxml"));
-            HBox header = loader.load();
+            Parent header = loader.load();
 
             BasicHeaderController controller = loader.getController();
             controller.setTitle("게시글 상세");
@@ -94,23 +91,6 @@ public class DetailPostController {
         likeButton.setOnMouseExited(e -> likeButton.setStyle("-fx-scale-x: 1.0; -fx-scale-y: 1.0;"));
     }
 
-    private void loadMember() {
-        member = memberSession.getMember();
-        if (member == null) return;
-
-        authorLabel.setText(member.getNickname());
-
-        byte[] profileBytes = member.getProfile_img();
-        if (profileBytes != null) {
-            Image image = new Image(new ByteArrayInputStream(profileBytes));
-            profileImageView.setImage(image);
-        } else {
-            // 기본 이미지 경로로 대체
-            profileImageView.setImage(new Image(getClass().getResourceAsStream("/assets/icons/defaultProfile.png")));
-        }
-    }
-
-
     // 회원 정보 불러오기
     private void setupDI() {
         DIContainer diContainer = DIContainer.getInstance();
@@ -118,9 +98,13 @@ public class DetailPostController {
         memberSession = diContainer.resolve(MemberSession.class);
     }
 
-
     public void setPostData(Post post) {
         this.currentPost = post;
+        System.out.println("currentPost.getMember_id(): " + currentPost.getMember_id());
+        System.out.println("currentPost.getWriter_name(): " + currentPost.getWriter_name());
+        System.out.println("currentPost.getContent(): " + currentPost.getContent());
+
+
         displayPostContent(post);
         checkAndShowButtons(post);
         loadComments();
@@ -128,6 +112,12 @@ public class DetailPostController {
 
     // 댓글 조회하기
     private void loadComments() {
+        if (currentPost == null) {
+            System.err.println("loadComments: currentPost가 null입니다.");
+            return;
+        }
+
+
         PostCommentDAO commentDAO = DIContainer.getInstance().resolve(PostCommentDAO.class);
         List<PostComment> comments = commentDAO.findByPostId(currentPost.getId());
 
@@ -143,9 +133,9 @@ public class DetailPostController {
                 CommentItemController controller = loader.getController();
                 controller.setComment(
                         comment.getId(),
-                        "사용자" + comment.getMemberId(),
                         comment.getCreatedAt().toString(),
-                        comment.getContent()
+                        comment.getContent().toString(),
+                        comment.getMemberId()
                 );
 
                 comment_vbox.getChildren().add(commentItem);
@@ -155,8 +145,9 @@ public class DetailPostController {
         }
     }
 
-
     private void displayPostContent(Post post) {
+        byte[] imgByte = memberService.getMember(post.getMember_id()).getProfile_img();
+        CircularImageUtil.applyCircularImageToExistingImageView(profileImg, 64.0, imgByte);
         titleLabel.setText(post.getTitle());
         contentLabel.setText(post.getContent());
         authorLabel.setText(post.getWriter_name());
@@ -165,9 +156,9 @@ public class DetailPostController {
     }
 
     /*
-    * 게시글 수정하기/삭제하기 버튼 유무 확인
-    * 작성자와 로그인한 유저의 아이디가 동일할 경우 보임
-    */
+     * 게시글 수정하기/삭제하기 버튼 유무 확인
+     * 작성자와 로그인한 유저의 아이디가 동일할 경우 보임
+     */
     private void checkAndShowButtons(Post post) {
         if (post.getMember_id() != null && post.getMember_id() == memberSession.getMember().getId()) {
             showEditDeleteButtons();
@@ -198,10 +189,10 @@ public class DetailPostController {
         isLiked = !isLiked;
         if (isLiked) {
             likeCount++;
-            likeIcon.setImage(new Image(getClass().getResourceAsStream("/assets/icons/fillHeart.png")));
+            likeIcon.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/icons/fillHeart.png"))));
         } else {
             likeCount--;
-            likeIcon.setImage(new Image(getClass().getResourceAsStream("/assets/icons/emptyHeart.png")));
+            likeIcon.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/icons/emptyHeart.png"))));
         }
         likesLabel.setText(String.valueOf(likeCount));
     }
@@ -279,9 +270,9 @@ public class DetailPostController {
             CommentItemController controller = loader.getController();
             controller.setComment(
                     comment.getId(),
-                    "사용자" + comment.getMemberId(),
                     comment.getCreatedAt().toString(),
-                    comment.getContent()
+                    comment.getContent().toString(),
+                    Long.valueOf("사용자" + comment.getMemberId())
             );
             comment_vbox.getChildren().add(commentItem);
         } catch (IOException e) {

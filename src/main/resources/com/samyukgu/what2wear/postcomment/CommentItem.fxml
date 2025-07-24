@@ -12,12 +12,7 @@
     <HBox spacing="8.0" alignment="CENTER" prefWidth="950.0">
 
     <HBox alignment="TOP_CENTER" prefHeight="70.0" prefWidth="950.0" spacing="16.0">
-<!--        &lt;!&ndash; 프로필 이미지 &ndash;&gt;-->
-<!--        <ImageView fitHeight="48.0" fitWidth="48.0">-->
-<!--            <image>-->
-<!--                <Image url="@/assets/icons/defaultProfile.png"/>-->
-<!--            </image>-->
-<!--        </ImageView>-->
+        <ImageView fx:id="profileImageView" fitHeight="64" fitWidth="64"/>
 
         <!-- 작성자 정보 및 댓글 내용 -->
         <VBox fx:id="commentBox" alignment="TOP_LEFT" spacing="4.0" prefWidth="800.0">
