@@ -8,11 +8,9 @@ module com.samyukgu.what2wear {
     requires lombok;
     requires okhttp3;
 //    requires gradle.api;  // requires로 불러오는 대상 아니라서 주석 처리
-    requires com.fasterxml.jackson.databind;    // jackson.databind 모듈 오류 해결을 위해 추가
     requires java.net.http;
     requires com.google.gson; // http 추가
     requires org.json;
-    requires com.google.gson;
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.annotation;
