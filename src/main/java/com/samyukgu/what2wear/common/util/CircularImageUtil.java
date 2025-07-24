@@ -181,6 +181,18 @@ public class CircularImageUtil {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }else{
+            setDefaultImage(imageView);
+            imageView.setFitWidth(size);
+            imageView.setFitHeight(size);
+            imageView.setPreserveRatio(false);
+
+            // 원형 클립 적용
+            Circle clip = new Circle(size / 2);
+            clip.setCenterX(size / 2);
+            clip.setCenterY(size / 2);
+            imageView.setClip(clip);
+
         }
     }
 }
