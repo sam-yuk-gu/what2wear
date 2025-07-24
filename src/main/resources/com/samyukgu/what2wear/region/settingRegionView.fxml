@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<VBox spacing="20" alignment="CENTER" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.samyukgu.what2wear.region.controller.SettingRegionController">
+    <Label text="지역 선택" />
+    <ComboBox fx:id="parentComboBox" promptText="시/도 선택" prefWidth="200"/>
+    <ComboBox fx:id="childComboBox" promptText="구 선택" prefWidth="200"/>
+    <Button onMouseClicked="#handleSettingRegion">수정 테스트</Button>
+</VBox>

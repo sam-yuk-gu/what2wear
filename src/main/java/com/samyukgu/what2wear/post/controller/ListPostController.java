@@ -41,7 +41,7 @@ public class ListPostController implements Initializable {
 
     private PostService postService;
     private List<Post> allPosts;
-    private static final int ROWS_PER_PAGE = 10;
+    private static final int ROWS_PER_PAGE = 8;
     private static final int MAX_PAGE_BUTTONS = 7;
     private int currentPage = 1;
 

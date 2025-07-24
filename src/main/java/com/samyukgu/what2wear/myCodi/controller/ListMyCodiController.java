@@ -1,5 +1,6 @@
 package com.samyukgu.what2wear.myCodi.controller;
 
+import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.member.Session.MemberSession;
@@ -41,6 +42,7 @@ public class ListMyCodiController implements Initializable {
     private CodiService codiService;
     private MemberSession memberSession;
 
+
     // 데이터 저장
     private List<CodiWithDetails> originalCodis = new ArrayList<>();
     private List<CodiWithDetails> filteredCodis = new ArrayList<>();
@@ -81,31 +83,12 @@ public class ListMyCodiController implements Initializable {
         }
     }
 
-    // 정렬 기능 설정 (수정됨)
     private void setupSortFunctionality() {
         if (sortComboBox != null) {
-            // 기본값 설정 (최신 순)
-            sortComboBox.setValue("최신 순");
-
-            // 선택 변경 이벤트 리스너 추가
-            sortComboBox.setOnAction(e -> {
-                System.out.println("코디 ComboBox Action 이벤트 발생");
-                handleSortChange();
-            });
-
-            // 값 변경 리스너도 추가 (더 안전한 방법)
-            sortComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-                if (newValue != null && !newValue.equals(oldValue)) {
-                    System.out.println("코디 정렬 옵션 변경: " + oldValue + " -> " + newValue);
-                    Platform.runLater(() -> sortCodis());
-                }
-            });
-
-            System.out.println("코디 정렬 기능 설정 완료");
-        } else {
-            System.out.println("ERROR: sortComboBox가 null입니다!");
+            sortComboBox.setOnAction(e -> sortCodis());
         }
     }
+
 
     private void setupPagination() {
         if (pagination != null) {
@@ -119,122 +102,6 @@ public class ListMyCodiController implements Initializable {
             // 더미 팩토리 설정
             pagination.setPageFactory(pageIndex -> new VBox());
         }
-    }
-
-    // 코디 로딩 (수정됨)
-    private void loadCodis() {
-        showStatus("로딩 중...", true);
-
-        Task<List<CodiWithDetails>> loadTask = new Task<List<CodiWithDetails>>() {
-            @Override
-            protected List<CodiWithDetails> call() throws Exception {
-                if (memberSession == null) {
-                    throw new IllegalStateException("로그인된 사용자가 없습니다.");
-                }
-                return codiService.getAllCodiWithDetailsByMemberId(memberSession.getMember().getId());
-            }
-
-            @Override
-            protected void succeeded() {
-                originalCodis = getValue();
-                filteredCodis = new ArrayList<>(originalCodis);
-                Platform.runLater(() -> {
-                    hideStatus();
-                    // 초기 정렬 적용 후 화면 표시
-                    sortCodis(); // 기본 "최신 순" 정렬 적용
-                    filterAndDisplayCodis();
-                });
-            }
-
-            @Override
-            protected void failed() {
-                Platform.runLater(() -> {
-                    showStatus("코디 데이터를 불러오는데 실패했습니다.", true);
-                });
-            }
-        };
-
-        new Thread(loadTask).start();
-    }
-
-    // 정렬 메서드 (완전히 새로 작성)
-    private void sortCodis() {
-        if (sortComboBox == null || sortComboBox.getValue() == null) {
-            System.out.println("sortComboBox가 null이거나 선택된 값이 없습니다.");
-            return;
-        }
-
-        String selectedSort = sortComboBox.getValue();
-        System.out.println("선택된 코디 정렬 옵션: " + selectedSort);
-
-        switch (selectedSort) {
-            case "최신 순":
-                // 최신 등록된 코디부터 (ID가 높은 순서대로)
-                filteredCodis.sort(Comparator.comparing(CodiWithDetails::getId).reversed());
-                System.out.println("코디 최신 순으로 정렬 완료");
-                break;
-
-            case "오래된 순":
-                // 오래된 코디부터 (ID가 낮은 순서대로)
-                filteredCodis.sort(Comparator.comparing(CodiWithDetails::getId));
-                System.out.println("코디 오래된 순으로 정렬 완료");
-                break;
-
-            case "이름순":
-                // 가나다 순 (한글 정렬)
-                filteredCodis.sort(Comparator.comparing(codi -> {
-                    String name = codi.getName();
-                    // null이나 빈 문자열인 경우 맨 뒤로 보내기
-                    return name != null ? name.trim() : "zzz";
-                }));
-                System.out.println("코디 이름순(가나다순)으로 정렬 완료");
-                break;
-
-            default:
-                System.out.println("알 수 없는 코디 정렬 옵션: " + selectedSort);
-                // 기본값은 최신 순
-                filteredCodis.sort(Comparator.comparing(CodiWithDetails::getId).reversed());
-                break;
-        }
-
-        // 정렬 후 페이지네이션 업데이트
-        updatePagination();
-
-        // 첫 번째 페이지로 이동
-        if (pagination != null && pagination.getPageCount() > 0) {
-            pagination.setCurrentPageIndex(0);
-        }
-
-        // 화면 새로고침
-        Platform.runLater(() -> displayAllItems());
-    }
-
-    @FXML
-    private void handleSortChange() {
-        System.out.println("코디 정렬 옵션 변경됨");
-        sortCodis();
-    }
-
-    // 필터링 메서드 (수정됨)
-    private void filterAndDisplayCodis() {
-        // 검색 필터링
-        List<CodiWithDetails> filtered = originalCodis.stream()
-                .filter(codi -> {
-                    if (searchField != null && searchField.getText() != null && !searchField.getText().trim().isEmpty()) {
-                        String searchText = searchField.getText().toLowerCase().trim();
-                        return codi.getName() != null && codi.getName().toLowerCase().contains(searchText);
-                    }
-                    return true;
-                })
-                .collect(Collectors.toList());
-
-        filteredCodis = filtered;
-
-        // 필터링 후 현재 선택된 정렬 옵션 적용
-        sortCodis();
-
-        updatePagination();
-        Platform.runLater(this::displayAllItems);
     }
 
     // 페이지네이션을 완전히 무시하고 codiGridContainer만 사용
@@ -255,7 +122,7 @@ public class ListMyCodiController implements Initializable {
         int endIndex = Math.min(ITEMS_PER_PAGE, filteredCodis.size());
         List<CodiWithDetails> itemsToShow = filteredCodis.subList(0, endIndex);
         displayCodisOnPage(codiGridContainer, itemsToShow);
-        System.out.println("Displayed " + itemsToShow.size() + " codi items directly in codiGridContainer");
+        System.out.println("Displayed " + itemsToShow.size() + " items directly in codiGridContainer");
     }
 
     private void displaySpecificPage(int pageIndex) {
@@ -275,6 +142,82 @@ public class ListMyCodiController implements Initializable {
                 displayCodisOnPage(codiGridContainer, pageItems);
             }
         });
+    }
+
+    private void loadCodis() {
+        showStatus("로딩 중...", true);
+
+        Task<List<CodiWithDetails>> loadTask = new Task<List<CodiWithDetails>>() {
+            @Override
+            protected List<CodiWithDetails> call() throws Exception {
+                if (memberSession == null) {
+                    throw new IllegalStateException("로그인된 사용자가 없습니다.");
+                }
+                return codiService.getAllCodiWithDetailsByMemberId(memberSession.getMember().getId());
+            }
+
+            @Override
+            protected void succeeded() {
+                originalCodis = getValue();
+                filteredCodis = new ArrayList<>(originalCodis);
+                Platform.runLater(() -> {
+                    hideStatus();
+                    filterAndDisplayCodis();
+                });
+            }
+
+            @Override
+            protected void failed() {
+                Platform.runLater(() -> {
+                    showStatus("코디 데이터를 불러오는데 실패했습니다.", true);
+                });
+            }
+        };
+
+        new Thread(loadTask).start();
+    }
+
+    private void filterAndDisplayCodis() {
+        // 검색 필터링
+        List<CodiWithDetails> filtered = originalCodis.stream()
+                .filter(codi -> {
+                    if (searchField != null && searchField.getText() != null && !searchField.getText().trim().isEmpty()) {
+                        String searchText = searchField.getText().toLowerCase().trim();
+                        return codi.getName() != null && codi.getName().toLowerCase().contains(searchText);
+                    }
+                    return true;
+                })
+                .collect(Collectors.toList());
+
+        filteredCodis = filtered;
+        sortCodis();
+        updatePagination();
+        Platform.runLater(this::displayAllItems);
+    }
+
+    private void sortCodis() {
+        if (sortComboBox == null || sortComboBox.getValue() == null) return;
+
+        String selectedSort = sortComboBox.getValue();
+
+        switch (selectedSort) {
+            case "등록일 순":
+                filteredCodis.sort(Comparator.comparing(CodiWithDetails::getId).reversed());
+                break;
+            case "이름순":
+                filteredCodis.sort(Comparator.comparing(c ->
+                        c.getName() != null ? c.getName() : ""));
+                break;
+            case "인기순":
+                // 추후 인기순 정렬 로직 구현
+                filteredCodis.sort(Comparator.comparing(CodiWithDetails::getId).reversed());
+                break;
+        }
+
+        updatePagination();
+        if (pagination != null && pagination.getPageCount() > 0) {
+            pagination.setCurrentPageIndex(0);
+        }
     }
 
     private void updatePagination() {
@@ -308,6 +251,7 @@ public class ListMyCodiController implements Initializable {
             }
         }
     }
+
     private VBox createCodiItem(CodiWithDetails codi) {
         VBox itemBox = new VBox();
         itemBox.setAlignment(Pos.TOP_CENTER);
@@ -545,6 +489,11 @@ public class ListMyCodiController implements Initializable {
         } else {
             favoriteButton.setStyle("-fx-background-color: transparent; -fx-border-color: #cccccc; -fx-border-width: 1; -fx-text-fill: #000000; -fx-font-size: 13px; -fx-font-weight: normal; -fx-background-radius: 4; -fx-border-radius: 4; -fx-padding: 6 12; -fx-cursor: hand;");
         }
+    }
+
+    @FXML
+    private void handleSortChange() {
+        sortCodis();
     }
 
     @FXML

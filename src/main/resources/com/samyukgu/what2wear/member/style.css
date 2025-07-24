@@ -17,6 +17,11 @@
     -fx-font-family: "Pretendard Bold";
 }
 
+.input-text {
+    -fx-font-size: 15;
+    -fx-font-family: "Pretendard Bold";
+}
+
 .semi-bold-text {
     -fx-font-family: "Pretendard SemiBold";
 }
@@ -121,16 +126,49 @@
 .input-field{
     -fx-background-radius: 10;
     -fx-border-radius: 10;
-    -fx-font-family: "Pretendard SemiBold";
-    -fx-font-size: 18;
+    -fx-font-family: "Pretendard Medium";
+    -fx-font-size: 15;
+    -fx-border-color: #C0C0C0;
+    -fx-padding: 0 15;
+}
+
+.input-field:focused {
+    -fx-border-color: #303030;
 }
 
 .label-clickable {
     -fx-cursor: hand;
+    -fx-font-size: 12;
+    -fx-font-family: "Pretendard Regular";
+    -fx-text-fill: #B0B0B0;
+}
+
+.label-inset {
+    -fx-text-fill: #B0B0B0;
+    -fx-padding: 0 4;
 }
 
 .sep-section {
     -fx-border-color: transparent transparent #8f8f8f transparent;
     -fx-border-width: 0 0 1px 0;
     -fx-border-style: none none solid none;
+}
+
+/* 추가 */
+
+/* LoginView.fxml */
+
+.description {
+    -fx-font-size: 14;
+    -fx-font-family: "Pretendard Medium";
+    -fx-text-fill: #6F6F6F;
+}
+
+.login-btn {
+    -fx-background-color: "black";
+    -fx-text-fill: "white";
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 20;
+    -fx-font-family: "Pretendard SemiBold";
 }

@@ -11,10 +11,14 @@
            stylesheets="@/com/samyukgu/what2wear/codi/codi-main.css"
            styleClass="container">
 <VBox spacing="50">
-    <VBox spacing="7">
-        <Label fx:id="welcomeTitle" text="안녕하세요, 코사님" styleClass="welcome-title"/>
-        <Label fx:id="welcomeSubtext" text="오늘 날씨는 외출하기 좋은 기온이에요!" styleClass="welcome-subtext"/>
-    </VBox>
+    <HBox>
+        <VBox spacing="7">
+            <Label fx:id="welcomeTitle" text="안녕하세요, 코사님" styleClass="welcome-title"/>
+            <Label fx:id="welcomeSubtext" text="오늘 날씨는 외출하기 좋은 기온이에요!" styleClass="welcome-subtext"/>
+        </VBox>
+        <Region VBox.vgrow="ALWAYS" />
+        <Button text="날씨 설정" onMouseClicked="#handleWeatherClick"/>
+    </HBox>
     <HBox>
         <!-- 좌측: 캘린더 영역 -->
         <VBox spacing="20">
@@ -48,7 +52,7 @@
                             </HBox>
                         </graphic>
                     </Button>
-                    <Button fx:id="addButton" styleClass="add-btn" onAction="#handleClickAddCodi">
+                    <Button fx:id="addButton" style="-fx-fit-to-height: 35" styleClass="add-btn" onAction="#handleClickAddCodi">
                         <graphic>
                             <HBox spacing="10" alignment="CENTER">
                                 <ImageView fitWidth="16" pickOnBounds="true" preserveRatio="true">

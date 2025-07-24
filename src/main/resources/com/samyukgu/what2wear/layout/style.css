@@ -7,22 +7,36 @@
     -fx-padding: 55 40 55 40;
 }
 
+.menu-box {
+    -fx-padding: 0 20;
+    -fx-spacing: 15;
+    -fx-alignment: center-left;
+}
+
+.menu-box.selected {
+    -fx-background-color: #FFF9D9;
+    -fx-border-color: #C0C0C0;
+    -fx-border-width: 1;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
+
+.menu-button.selected {
+    /*-fx-background-color: #FFF9D9;*/
+    /*-fx-text-fill: #000000;*/
+    /*-fx-border-color: #C0C0C0;*/
+    /*-fx-border-width: 1;*/
+}
+
 .menu-button {
     -fx-font-family: "Pretendard Medium";
     -fx-background-color: transparent;
     -fx-text-fill: #5D5D5D;
     -fx-font-size: 16px;
     -fx-alignment: CENTER_LEFT;
-    -fx-padding: 0 20;
+    /*-fx-padding: 0 20;*/
     -fx-background-radius: 10;
     -fx-border-radius: 10;
-}
-
-.menu-button.selected {
-    -fx-background-color: #FFF9D9;
-    -fx-text-fill: #000000;
-    -fx-border-color: #C0C0C0;
-    -fx-border-width: 1;
 }
 
 .logo-button {
