@@ -47,6 +47,7 @@ public class DetailPostController {
     @FXML private TextField commentField;
     @FXML private ImageView profileImg;
     @FXML private VBox container;
+    @FXML private Label commentCountLabel;
 
     // 회원 세션
     private MemberService memberService;
@@ -122,8 +123,13 @@ public class DetailPostController {
         List<PostComment> comments = commentDAO.findByPostId(currentPost.getId());
 
         comment_vbox.getChildren().removeIf(node -> node instanceof HBox);
-
+        
+        // 현재 로그인한 회원 아이디
         Long currentUserId = memberSession.getMember().getId();
+
+        // 댓글 갯수
+        List<PostComment> commentList = commentDAO.findByPostId(currentPost.getId());
+        commentCountLabel.setText("(" + commentList.size() + "개)");
 
         for (PostComment comment : comments) {
             try {
@@ -147,7 +153,7 @@ public class DetailPostController {
 
     private void displayPostContent(Post post) {
         byte[] imgByte = memberService.getMember(post.getMember_id()).getProfile_img();
-        CircularImageUtil.applyCircularImageToExistingImageView(profileImg, 64.0, imgByte);
+        CircularImageUtil.applyCircularImageToExistingImageView(profileImg, 48.0, imgByte);
         titleLabel.setText(post.getTitle());
         contentLabel.setText(post.getContent());
         authorLabel.setText(post.getWriter_name());

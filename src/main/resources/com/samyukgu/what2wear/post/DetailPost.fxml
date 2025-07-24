@@ -25,11 +25,11 @@
                         <!-- 게시글 내용 -->
                         <VBox fx:id="content_hbox" prefWidth="1015.0"
                               styleClass="content_hbox">
-                            <VBox fx:id="content_pane" prefWidth="1030.0" styleClass="user-box">
+                            <VBox fx:id="content_pane" prefWidth="950.0" styleClass="user-box">
                                 <!-- 사용자 정보 -->
                                 <Pane fx:id="user_info_pane" prefWidth="950.0" styleClass="user-info">
-                                    <HBox alignment="CENTER_LEFT" spacing="5" style="-fx-padding: 5 0 0 35">
-                                        <ImageView fx:id="profileImg" fitHeight="45" fitWidth="45" />
+                                    <HBox alignment="CENTER_LEFT">
+                                        <ImageView fx:id="profileImg" fitHeight="48" fitWidth="48" />
                                         <VBox styleClass="inner-uer-info">
                                             <Label fx:id="authorLabel" layoutX="14.0"
                                                    layoutY="14.0" styleClass="author_text"
@@ -98,15 +98,16 @@
                             </VBox>
 
                             <!-- 댓글 영역 -->
-                            <VBox fx:id="comment_vbox" alignment="CENTER" spacing="20.0" styleClass="comment_section">
-                                <Label prefHeight="35.0" prefWidth="950.0" styleClass="comment_title_text" text="댓글"/>
+                            <VBox fx:id="comment_vbox" alignment="CENTER_LEFT" spacing="20.0" styleClass="comment_section">
+                                <Label prefHeight="35.0" styleClass="comment_title_text" text="댓글"/>
+                                <Label fx:id="commentCountLabel" styleClass="comment_title_text" />
                             </VBox>
                         </VBox>
                     </VBox>
                 </ScrollPane>
 
                 <!-- 댓글 입력창 -->
-                <HBox alignment="CENTER" prefHeight="139.0" prefWidth="1030.0" spacing="10.0">
+                <HBox alignment="CENTER" prefHeight="139.0" prefWidth="1030.0" spacing="20.0">
                     <TextField fx:id="commentField" prefHeight="50.0" prefWidth="883.0" promptText="댓글을 입력해주세요." styleClass="comment_input" />
                     <Button fx:id="submitCommentButton" onAction="#handleRegisterCommentClick" styleClass="black_background_button" text="확인" />
                 </HBox>
