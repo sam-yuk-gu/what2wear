@@ -61,7 +61,7 @@ public class CommentItemController {
         if (writer != null) {
             comment_author.setText(writer.getNickname());
             byte[] imgByte = writer.getProfile_img();
-            CircularImageUtil.applyCircularImageToExistingImageView(profileImageView, 64.0, imgByte);
+            CircularImageUtil.applyCircularImageToExistingImageView(profileImageView, 48.0, imgByte);
         } else {
             comment_author.setText("알 수 없음");
             profileImageView.setImage(new Image(getClass().getResourceAsStream("/assets/icons/defaultProfile.png")));

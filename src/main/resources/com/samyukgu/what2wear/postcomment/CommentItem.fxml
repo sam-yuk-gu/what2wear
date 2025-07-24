@@ -6,13 +6,13 @@
 
 <StackPane fx:id="root" stylesheets="/com/samyukgu/what2wear/post/style.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.12" fx:controller="com.samyukgu.what2wear.postcomment.controller.CommentItemController">
 
-    <HBox alignment="CENTER" prefWidth="950.0" spacing="8.0">
+    <HBox alignment="TOP_LEFT" prefWidth="950.0" spacing="8.0">
 
-    <HBox alignment="CENTER" prefHeight="70.0" prefWidth="950.0" spacing="20.0">
-        <ImageView fx:id="profileImageView" fitHeight="36" fitWidth="36" />
+    <HBox alignment="TOP_LEFT" prefHeight="70.0" prefWidth="950.0" spacing="20.0">
+        <ImageView fx:id="profileImageView" />
 
         <!-- 작성자 정보 및 댓글 내용 -->
-        <VBox fx:id="commentBox" alignment="CENTER" prefHeight="70.0" prefWidth="755.0" spacing="4.0">
+        <VBox fx:id="commentBox" alignment="TOP_LEFT" prefHeight="70.0" prefWidth="755.0" spacing="4.0">
             <HBox spacing="8.0">
                 <Label fx:id="comment_author" styleClass="comment_author" />
                 <Label fx:id="comment_date" styleClass="comment_date" />
@@ -22,7 +22,7 @@
         </VBox>
 
         <!-- 수정/삭제 버튼 -->
-        <HBox alignment="CENTER_RIGHT" prefHeight="36.0">
+        <HBox alignment="TOP_RIGHT" prefHeight="36.0">
             <Pane fx:id="two_button_pane" prefHeight="64.0" prefWidth="76.0">
                 <children>
                     <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="84.0">
