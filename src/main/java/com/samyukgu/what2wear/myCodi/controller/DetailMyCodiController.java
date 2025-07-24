@@ -1,10 +1,5 @@
 package com.samyukgu.what2wear.myCodi.controller;
 
-<<<<<<< HEAD
-=======
-import com.samyukgu.what2wear.layout.controller.MainLayoutController;
-import com.samyukgu.what2wear.di.DIContainer;
->>>>>>> dev
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.member.Session.MemberSession;
