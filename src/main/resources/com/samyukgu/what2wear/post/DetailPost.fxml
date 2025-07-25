@@ -102,11 +102,11 @@
 <!--                                <Label fx:id="commentCountLabel" styleClass="comment_title_text" />-->
                             </VBox>
                         </VBox>
-                    <!-- 댓글 입력창 -->
-                    <HBox alignment="CENTER" prefHeight="70.0" prefWidth="1030.0" spacing="10.0">
-                        <TextField fx:id="commentField" prefHeight="50.0" prefWidth="883.0" promptText="댓글을 입력해주세요." styleClass="comment_input" />
-                        <Button fx:id="submitCommentButton" onAction="#handleRegisterCommentClick" styleClass="black_background_button" text="등록" />
-                    </HBox>
+                        <!-- 댓글 입력창 -->
+                        <HBox alignment="CENTER" prefHeight="70.0" prefWidth="1030.0" spacing="10.0">
+                            <TextField fx:id="commentField" prefHeight="50.0" prefWidth="883.0" promptText="댓글을 입력해주세요." styleClass="comment_input" />
+                            <Button fx:id="submitCommentButton" onAction="#handleRegisterCommentClick" styleClass="black_background_button" text="등록" />
+                        </HBox>
                     </VBox>
                 </ScrollPane>
 

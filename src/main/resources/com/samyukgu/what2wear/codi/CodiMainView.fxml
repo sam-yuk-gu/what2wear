@@ -1,23 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
 
-<StackPane prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx"
-           xmlns:fx="http://javafx.com/fxml"
-           fx:controller="com.samyukgu.what2wear.codi.controller.CodiMainController"
-           stylesheets="@/com/samyukgu/what2wear/codi/codi-main.css"
-           styleClass="container">
+<StackPane prefHeight="768.0" prefWidth="1280.0" styleClass="container" stylesheets="@/com/samyukgu/what2wear/codi/codi-main.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.codi.controller.CodiMainController">
 <VBox spacing="50">
     <HBox>
         <VBox spacing="7">
-            <Label fx:id="welcomeTitle" text="안녕하세요, 코사님" styleClass="welcome-title"/>
-            <Label fx:id="welcomeSubtext" text="오늘 날씨는 외출하기 좋은 기온이에요!" styleClass="welcome-subtext"/>
+            <Label fx:id="welcomeTitle" styleClass="welcome-title" text="안녕하세요, 코사님" />
+            <Label fx:id="welcomeSubtext" styleClass="welcome-subtext" text="오늘의 일정은 어떻게 되시나요?" />
         </VBox>
-        <Region VBox.vgrow="ALWAYS" />
-        <Button text="날씨 설정" onMouseClicked="#handleWeatherClick"/>
+        <Region HBox.hgrow="ALWAYS" />
+        <HBox alignment="center" spacing="10">
+            <!-- 날씨 아이콘, 온도 -->
+            <HBox alignment="center">
+                <ImageView fx:id="weatherIcon" fitWidth="40" fitHeight="40">
+                    <image>
+                        <Image url="@/assets/icons/weather.png"/>
+                    </image>
+                </ImageView>
+                <Label fx:id="temperatureLabel" styleClass="temperature-label" text="22°C" />
+            </HBox>
+            <!-- 지역구, 날짜 -->
+            <VBox alignment="center_right">
+                <Label fx:id="regionLabel" styleClass="region-label" text="서울특별시" />
+                <Label fx:id="dateLabel" styleClass="date-label" text="7월 25일 (목)" />
+            </VBox>
+            <VBox alignment="center" onMouseClicked="#handleWeatherClick">
+                <SVGPath content="M11.7513 10.7701C12.2049 10.9297 12.6877 10.9894 13.1665 10.9449C13.6453 10.9004 14.1088 10.7528 14.5252 10.5123C14.9416 10.2718 15.3011 9.94408 15.5789 9.55157C15.8567 9.15907 16.0463 8.7111 16.1346 8.23842L16.668 5.37175C18.861 4.87218 21.1383 4.87218 23.3313 5.37175L23.868 8.23842C23.9563 8.7111 24.1459 9.15907 24.4237 9.55157C24.7015 9.94408 25.061 10.2718 25.4774 10.5123C25.8938 10.7528 26.3573 10.9004 26.8361 10.9449C27.3149 10.9894 27.7977 10.9297 28.2513 10.7701L30.9996 9.80342C32.5295 11.4514 33.6693 13.4222 34.3346 15.5701L32.118 17.4701C31.7529 17.783 31.4598 18.1712 31.2589 18.6081C31.058 19.0449 30.954 19.5201 30.954 20.0009C30.954 20.4818 31.058 20.9569 31.2589 21.3938C31.4598 21.8306 31.7529 22.2188 32.118 22.5318L34.3346 24.4301C33.6693 26.578 32.5295 28.5488 30.9996 30.1968L28.2496 29.2301C27.796 29.0704 27.3133 29.0108 26.8345 29.0553C26.3557 29.0998 25.8921 29.2473 25.4757 29.4878C25.0593 29.7283 24.6999 30.0561 24.4221 30.4486C24.1443 30.8411 23.9547 31.2891 23.8663 31.7617L23.3346 34.6284C21.1416 35.128 18.8643 35.128 16.6713 34.6284L16.1346 31.7617C16.0463 31.2891 15.8567 30.8411 15.5789 30.4486C15.3011 30.0561 14.9416 29.7283 14.5252 29.4878C14.1088 29.2473 13.6453 29.0998 13.1665 29.0553C12.6877 29.0108 12.2049 29.0704 11.7513 29.2301L9.00297 30.1968C7.47312 28.5488 6.33335 26.578 5.66797 24.4301L7.88464 22.5301C8.24943 22.2172 8.54224 21.829 8.74298 21.3923C8.94373 20.9556 9.04767 20.4807 9.04767 20.0001C9.04767 19.5195 8.94373 19.0445 8.74298 18.6078C8.54224 18.1711 8.24943 17.783 7.88464 17.4701L5.66797 15.5701C6.33286 13.4223 7.47206 11.4515 9.0013 9.80342L11.7513 10.7701ZM20.0013 15.0001C21.3274 15.0001 22.5992 15.5269 23.5368 16.4645C24.4745 17.4022 25.0013 18.674 25.0013 20.0001C25.0013 21.3262 24.4745 22.5979 23.5368 23.5356C22.5992 24.4733 21.3274 25.0001 20.0013 25.0001C18.6752 25.0001 17.4034 24.4733 16.4658 23.5356C15.5281 22.5979 15.0013 21.3262 15.0013 20.0001C15.0013 18.674 15.5281 17.4022 16.4658 16.4645C17.4034 15.5269 18.6752 15.0001 20.0013 15.0001Z" fill="TRANSPARENT" stroke="BLACK" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="2.0" />
+            </VBox>
+        </HBox>
     </HBox>
     <HBox>
         <!-- 좌측: 캘린더 영역 -->
@@ -27,15 +48,15 @@
                     <Button onAction="#handlePrevMonth" style="-fx-background-color: transparent; -fx-cursor: hand;">
                         <graphic>
                             <ImageView fitWidth="15" pickOnBounds="true" preserveRatio="true">
-                                <Image url="@/assets/icons/left-arrow.png"/>
+                                <Image url="@/assets/icons/left-arrow.png" />
                             </ImageView>
                         </graphic>
                     </Button>
-                    <Label fx:id="monthLabel" text="2025년 7월" styleClass="month-label" onMouseClicked="#handleMonthLabelClick"/>
+                    <Label fx:id="monthLabel" onMouseClicked="#handleMonthLabelClick" styleClass="month-label" text="2025년 7월" />
                     <Button onAction="#handleNextMonth" style="-fx-background-color: transparent; -fx-cursor: hand;">
                         <graphic>
                             <ImageView fitWidth="15" pickOnBounds="true" preserveRatio="true">
-                                <Image url="@/assets/icons/right-arrow.png"/>
+                                <Image url="@/assets/icons/right-arrow.png" />
                             </ImageView>
                         </graphic>
                     </Button>
@@ -44,7 +65,7 @@
                 <HBox spacing="10">
                     <Button fx:id="aiButton" onAction="#handleAiButtonClick" styleClass="ai-btn">
                         <graphic>
-                            <HBox spacing="10" alignment="CENTER">
+                            <HBox alignment="CENTER" spacing="10">
                                 <ImageView fitWidth="19" pickOnBounds="true" preserveRatio="true">
                                     <Image url="@/assets/icons/ai.png" />
                                 </ImageView>
@@ -52,9 +73,9 @@
                             </HBox>
                         </graphic>
                     </Button>
-                    <Button fx:id="addButton" style="-fx-fit-to-height: 35" styleClass="add-btn" onAction="#handleClickAddCodi">
+                    <Button fx:id="addButton" onAction="#handleClickAddCodi" style="-fx-fit-to-height: 35" styleClass="add-btn">
                         <graphic>
-                            <HBox spacing="10" alignment="CENTER">
+                            <HBox alignment="CENTER" spacing="10">
                                 <ImageView fitWidth="16" pickOnBounds="true" preserveRatio="true">
                                     <Image url="@/assets/icons/plus.png" />
                                 </ImageView>
@@ -64,21 +85,18 @@
                     </Button>
                 </HBox>
             </HBox>
-            <GridPane fx:id="calendarGrid" styleClass="calendar"/>
+            <GridPane fx:id="calendarGrid" styleClass="calendar" />
         </VBox>
         <Region HBox.hgrow="ALWAYS" />
         <!-- 우측: 일정 영역 -->
         <VBox styleClass="schedule">
-            <ScrollPane fx:id="scheduleScrollPane"
-                        fitToHeight="true" fitToWidth="true"
-                        hbarPolicy="NEVER" vbarPolicy="NEVER" styleClass="scroll-container">
+            <ScrollPane fx:id="scheduleScrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" styleClass="scroll-container" vbarPolicy="NEVER">
                 <VBox fx:id="scheduleWrapper" styleClass="scroll-content" VBox.vgrow="ALWAYS">
-                    <VBox fx:id="scheduleListContainer"/>
-                    <Label fx:id="emptyLabel" text="코디 일정을 추가하고 옷장을 관리해보세요."
-                           styleClass="empty-message" visible="false" managed="false" />
+                    <VBox fx:id="scheduleListContainer" />
+                    <Label fx:id="emptyLabel" managed="false" styleClass="empty-message" text="코디 일정을 추가하고 옷장을 관리해보세요." visible="false" />
                 </VBox>
             </ScrollPane>
-            <Region styleClass="scroll-corner-mask"/>
+            <Region styleClass="scroll-corner-mask" />
         </VBox>
     </HBox>
 </VBox>

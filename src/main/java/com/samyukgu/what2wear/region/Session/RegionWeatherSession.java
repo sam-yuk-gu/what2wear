@@ -21,12 +21,12 @@ public class RegionWeatherSession {
 
     // 기본 지역 정보 (로그인 시 초기화)
     static {
-        region = new Region(1L, "서울특별시", "", 60L, 127L);  // 초기 지역
+        region = new Region(2L, "서울특별시", "종로구", 60L, 127L);  // 초기 지역
         weather = null; // 날씨는 첫 호출 시에 갱신
     }
 
     public static void reset() {
-        region = new Region(1L, "서울특별시", "", 60L, 127L);
+        region = new Region(2L, "서울특별시", "종로구", 60L, 127L);
         weather = null;
     }
 }

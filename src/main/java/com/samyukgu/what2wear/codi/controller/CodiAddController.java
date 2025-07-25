@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static com.samyukgu.what2wear.common.util.CategoryUtil.getNameById;
+
 public class CodiAddController {
 
     @FXML private StackPane root;
@@ -35,7 +37,7 @@ public class CodiAddController {
 
     @FXML private TextField scheduleNameField;
     @FXML private DatePicker datePicker;
-    @FXML private Pane codiDisplayPane;
+    @FXML private StackPane codiDisplayPane;
     @FXML private Button submitButton;
 
     @FXML private ToggleButton btnAll;
@@ -172,8 +174,9 @@ public class CodiAddController {
 
     private void renderCodiDisplay() {
         codiDisplayPane.getChildren().clear();
+
         if ((selectedOutfits == null || selectedOutfits.isEmpty()) && selectedCodi == null) {
-            // Empty state 표시
+            // Empty 상태
             VBox emptyBox = new VBox();
             emptyBox.setSpacing(10);
             emptyBox.setAlignment(Pos.CENTER);
@@ -188,35 +191,54 @@ public class CodiAddController {
             emptyBox.getChildren().addAll(emptyImage, prompt);
             emptyBox.setPrefSize(400, 120);
             codiDisplayPane.getChildren().add(emptyBox);
-        } else {
-            GridPane grid = new GridPane();
-            grid.setHgap(15);
-            grid.setVgap(15);
-            int column = 3;
-
-            List<ImageView> items = new ArrayList<>();
-
-            if (selectedOutfits != null) {
-                for (Wardrobe w : selectedOutfits) {
-                    Image img = new Image(new ByteArrayInputStream(w.getPicture()));
-                    ImageView imgView = new ImageView(img);
-                    imgView.setFitWidth(60);
-                    imgView.setPreserveRatio(true);
-                    items.add(imgView);
-                }
-            } else if (selectedCodi != null) {
-//                ImageView img = new ImageView(new Image(getClass().getResourceAsStream(selectedCodi.getImagePath())));
-//                img.setFitWidth(100);
-//                img.setPreserveRatio(true);
-//                items.add(img);
-            }
-
-            for (int i = 0; i < items.size(); i++) {
-                grid.add(items.get(i), i % column, i / column);
-            }
-
-            codiDisplayPane.getChildren().add(grid);
+            return;
         }
+
+        // 1. 코디 옷 리스트 준비
+        List<Wardrobe> outfits = selectedOutfits;
+
+        // 2. GridPane 구성
+        GridPane grid = new GridPane();
+        grid.setHgap(30);
+        grid.setVgap(20);
+        grid.setAlignment(Pos.TOP_LEFT);
+
+        int columnCount = 3;
+
+        for (int i = 0; i < outfits.size(); i++) {
+            Wardrobe w = outfits.get(i);
+
+            // 바깥쪽 HBox
+            HBox itemBox = new HBox();
+            itemBox.getStyleClass().add("item-box");
+            itemBox.setAlignment(Pos.CENTER_LEFT);
+            itemBox.setSpacing(20); // 이미지와 텍스트 사이 간격 넉넉히
+
+            // 이미지
+            Image img = new Image(new ByteArrayInputStream(w.getPicture()));
+            ImageView imgView = new ImageView(img);
+            imgView.setFitWidth(80);
+            imgView.setPreserveRatio(true);
+
+            // 안쪽 VBox (카테고리 + 이름)
+            VBox textBox = new VBox(5); // 텍스트 간 간격
+            textBox.setAlignment(Pos.CENTER_LEFT);
+
+            Label categoryLabel = new Label(getNameById(w.getCategoryId()));
+            categoryLabel.setStyle("-fx-font-family: 'Pretendard SemiBold'; -fx-font-size: 16;");
+
+            Label nameLabel = new Label(w.getName());
+            nameLabel.setStyle("-fx-font-size: 13; -fx-font-family: 'Pretendard Regular'");
+            nameLabel.setWrapText(true);
+            nameLabel.setMaxWidth(100);
+
+            textBox.getChildren().addAll(categoryLabel, nameLabel);
+            itemBox.getChildren().addAll(imgView, textBox);
+
+            grid.add(itemBox, i % columnCount, i / columnCount);
+        }
+
+        codiDisplayPane.getChildren().add(grid);
     }
 
 
