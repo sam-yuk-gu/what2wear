@@ -46,8 +46,8 @@ public class ListWardrobeController {
     @FXML private Label statusLabel;
 
     // 카테고리 버튼들
-    @FXML private Button allButton, topButton, pantsButton, dressButton;
-    @FXML private Button bagButton, outerButton, shoesButton, accessoryButton, etcButton;
+    @FXML private ToggleButton allButton, topButton, pantsButton, dressButton;
+    @FXML private ToggleButton bagButton, outerButton, shoesButton, accessoryButton, etcButton;
     @FXML private Button favoriteButton;
 
     @FXML
@@ -56,7 +56,7 @@ public class ListWardrobeController {
         wardrobeService = diContainer.resolve(WardrobeService.class);
         memberSession = diContainer.resolve(MemberSession.class);
         setupUI();
-
+        setToggleGroup();
         // contentContainer 강제 크기 설정
         if (contentContainer != null) {
             contentContainer.setPrefWidth(988);
@@ -64,6 +64,19 @@ public class ListWardrobeController {
             contentContainer.setFillWidth(true);
         }
         loadWardrobes();
+    }
+
+    private void setToggleGroup() {
+        ToggleGroup group = new ToggleGroup();
+        allButton.setToggleGroup(group);
+        topButton.setToggleGroup(group);
+        pantsButton.setToggleGroup(group);
+        dressButton.setToggleGroup(group);
+        bagButton.setToggleGroup(group);
+        outerButton.setToggleGroup(group);
+        shoesButton.setToggleGroup(group);
+        accessoryButton.setToggleGroup(group);
+        etcButton.setToggleGroup(group);
     }
 
     private void setupUI() {
@@ -737,7 +750,7 @@ public class ListWardrobeController {
         filterAndDisplayWardrobes();
     }
 
-    private void updateCategoryFilter(String category, Button selectedButton) {
+    private void updateCategoryFilter(String category, ToggleButton selectedButton) {
         // 이전 버튼 스타일 리셋
         resetAllCategoryButtons();
         // 새 버튼 스타일 적용
@@ -747,23 +760,23 @@ public class ListWardrobeController {
     }
 
     private void resetAllCategoryButtons() {
-        Button[] buttons = {allButton, topButton, pantsButton, dressButton,
+        ToggleButton[] buttons = {allButton, topButton, pantsButton, dressButton,
                 bagButton, outerButton, shoesButton, accessoryButton, etcButton};
 
-        for (Button button : buttons) {
+        for (ToggleButton button : buttons) {
             if (button != null) {
                 updateCategoryButtonStyle(button, false);
             }
         }
     }
 
-    private void updateCategoryButtonStyle(Button button, boolean selected) {
+    private void updateCategoryButtonStyle(ToggleButton button, boolean selected) {
         if (button == null) return;
 
         if (selected) {
-            button.setStyle("-fx-text-fill: white; -fx-background-color: #007acc; -fx-border-color: #007acc; -fx-font-family: Pretendard SemiBold;");
+            button.setStyle("-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: black; -fx-border-width: 0 0 2 0; -fx-font-family: Pretendard Bold;");
         } else {
-            button.setStyle("-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent; -fx-font-family: Pretendard Regular;");
+            button.setStyle("-fx-text-fill: #acacac; -fx-background-color: transparent; -fx-border-color: transparent; -fx-font-family: Pretendard Regular;");
         }
     }
 

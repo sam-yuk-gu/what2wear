@@ -48,9 +48,9 @@
                             </HBox>
 
                     <!-- 상단 버튼들 -->
-                    <HBox fx:id="actionButtonContainer" layoutX="11.0" layoutY="5.0" prefHeight="81.0" prefWidth="200.0" spacing="5.0">
+                    <HBox fx:id="actionButtonContainer" layoutX="11.0" layoutY="5.0" prefHeight="60.0" prefWidth="200.0" spacing="5.0">
                         <children>
-                            <VBox fx:id="addButton" alignment="CENTER" onMouseClicked="#handleAddMyCodiClick" prefHeight="70.0" prefWidth="70.0" spacing="5">
+                            <HBox fx:id="addButton" style="-fx-padding: 10 0" alignment="CENTER" onMouseClicked="#handleAddMyCodiClick" prefHeight="70.0" prefWidth="100.0" spacing="5">
                                 <children>
                                     <ImageView fx:id="addIcon" fitHeight="40" fitWidth="40">
                                         <image>
@@ -59,8 +59,8 @@
                                     </ImageView>
                                     <Label fx:id="addLabel" text="코디 추가" />
                                 </children>
-                            </VBox>
-                            <VBox fx:id="wardrobeButton" alignment="CENTER" onMouseClicked="#handleWardrobeClick" prefHeight="70.0" prefWidth="70.0" spacing="5">
+                            </HBox>
+                            <HBox fx:id="wardrobeButton" alignment="CENTER" onMouseClicked="#handleWardrobeClick" prefHeight="70.0" prefWidth="100.0" spacing="5">
                                 <children>
                                     <ImageView fx:id="wardrobeIcon" fitHeight="40" fitWidth="40">
                                         <image>
@@ -69,7 +69,7 @@
                                     </ImageView>
                                     <Label fx:id="wardrobeLabel" text="옷장" />
                                 </children>
-                            </VBox>
+                            </HBox>
                         </children>
                     </HBox>
 
