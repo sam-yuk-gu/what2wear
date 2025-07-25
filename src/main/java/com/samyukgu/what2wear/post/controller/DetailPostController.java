@@ -14,11 +14,13 @@ import com.samyukgu.what2wear.post.service.PostService;
 import com.samyukgu.what2wear.postcomment.controller.CommentItemController;
 import com.samyukgu.what2wear.postcomment.dao.PostCommentDAO;
 import com.samyukgu.what2wear.postcomment.model.PostComment;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -47,7 +49,8 @@ public class DetailPostController {
     @FXML private TextField commentField;
     @FXML private ImageView profileImg;
     @FXML private VBox container;
-    @FXML private Label commentCountLabel;
+    @FXML private ScrollPane scrollPane;
+//    @FXML private Label commentCountLabel;
 
     // 회원 세션
     private MemberService memberService;
@@ -64,7 +67,7 @@ public class DetailPostController {
 
         hideEditDeleteButtons();
 
-        // 1. 헤더 동적 삽입
+        // 헤더 동적 삽입
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/BasicHeader.fxml"));
             Parent header = loader.load();
@@ -123,13 +126,13 @@ public class DetailPostController {
         List<PostComment> comments = commentDAO.findByPostId(currentPost.getId());
 
         comment_vbox.getChildren().removeIf(node -> node instanceof HBox);
-        
+
         // 현재 로그인한 회원 아이디
         Long currentUserId = memberSession.getMember().getId();
 
         // 댓글 갯수
         List<PostComment> commentList = commentDAO.findByPostId(currentPost.getId());
-        commentCountLabel.setText("(" + commentList.size() + "개)");
+//        commentCountLabel.setText("(" + commentList.size() + "개)");
 
         for (PostComment comment : comments) {
             try {
@@ -281,6 +284,7 @@ public class DetailPostController {
                     Long.valueOf("사용자" + comment.getMemberId())
             );
             comment_vbox.getChildren().add(commentItem);
+//            Platform.runLater(() -> scrollPane.setVvalue(1.0));
         } catch (IOException e) {
             e.printStackTrace();
         }
