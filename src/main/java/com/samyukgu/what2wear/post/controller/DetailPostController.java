@@ -281,7 +281,7 @@ public class DetailPostController {
                     comment.getId(),
                     comment.getCreatedAt().toString(),
                     comment.getContent().toString(),
-                    Long.valueOf("사용자" + comment.getMemberId())
+                    comment.getMemberId()
             );
             comment_vbox.getChildren().add(commentItem);
 //            Platform.runLater(() -> scrollPane.setVvalue(1.0));

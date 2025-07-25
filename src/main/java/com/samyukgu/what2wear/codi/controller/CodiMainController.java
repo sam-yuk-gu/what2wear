@@ -57,6 +57,7 @@ public class CodiMainController {
     @FXML private Button addButton;
 
     private Long memberId;
+    private Weather weather;
     private LocalDate currentDate;
     private LocalDate currentDateSelected;
     private Map<LocalDate, List<CodiSchedule>> dotScheduleMap; // 날짜별 일정 정보 저장
@@ -65,18 +66,7 @@ public class CodiMainController {
     @FXML
     public void initialize() {
         setupDI();
-
-        // TODO: 코드 롤백 후 커밋 >> 삭제처리
-        Member member = memberService.login("chtoqur", "chtoqur1234");
-        memberSession.setMember(member);
-        com.samyukgu.what2wear.region.model.Region defaultRegion = new com.samyukgu.what2wear.region.model.Region(1L, "서울특별시", "", 60L, 127L);
-        regionWeatherSession.setRegion(defaultRegion);
-//        Weather weather = weatherService.fetchWeatherFromApi(defaultRegion.getNx().intValue(), defaultRegion.getNy().intValue());
-//        RegionWeatherSession.setWeather(weather);
-
-
         setupUser();
-        setupWeather();
         currentDate = LocalDate.now();
         currentDateSelected = currentDate;
         loadScheduleForMonth(currentDate);
@@ -87,22 +77,19 @@ public class CodiMainController {
         applyHoverTransition(aiButton, Color.web("#FFFDF0"), Color.web("#FFF8DA"));
         applyHoverTransition(addButton, Color.web("#F2FBFF"), Color.web("#E0F6FF"));
 
-
-
-        // TODO: 코드 원복 후 커밋
-//        Weather weather = weatherSession.getWeather();
-//        weather = weatherSession.getWeather();
+//        Weather weather = RegionWeatherSession.getWeather();
+        weather = weatherSession.getWeather();
 
 
 
-//
-//        System.out.println("오늘의 기온: " + weather.getTemp());
-//        String parent = weatherSession.getRegion().getRegionParent();
-//        String child = weatherSession.getRegion().getRegionChild();
-//        int nx = weatherSession.getRegion().getNx().intValue();
-//        int ny = weatherSession.getRegion().getNy().intValue();
-//
-//        System.out.println("parent: " + parent + ", child: " + child + ", nx: " + nx + ", ny: " + ny);
+
+        System.out.println("오늘의 기온: " + weather.getTemp());
+        String parent = weatherSession.getRegion().getRegionParent();
+        String child = weatherSession.getRegion().getRegionChild();
+        int nx = weatherSession.getRegion().getNx().intValue();
+        int ny = weatherSession.getRegion().getNy().intValue();
+
+        System.out.println("parent: " + parent + ", child: " + child + ", nx: " + nx + ", ny: " + ny);
 
 
     }
@@ -125,10 +112,6 @@ public class CodiMainController {
         }
 
         memberId = memberSession.getMember().getId();
-    }
-
-    private void setupWeather() {
-//        weatherService.updateRegionWeather(1L, 61, 127);
     }
 
     private void loadScheduleForMonth(LocalDate month) {
