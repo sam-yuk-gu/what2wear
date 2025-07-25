@@ -26,27 +26,35 @@
 
 /* 검색창 컨테이너 */
 #searchContainer {
-    -fx-border-color: #cccccc;        /* 회색 테두리 */
-    -fx-border-width: 1;              /* 테두리 두께 */
-    -fx-border-radius: 6;             /* 둥근 테두리 (옵션) */
-    -fx-padding: 4 8;                 /* 안쪽 여백 */
-    -fx-background-radius: 6;         /* 배경도 둥글게 */
-    -fx-background-color: white;      /* 배경 흰색 (선택) */
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-background-color: white;
+    -fx-padding: 4 12 4 8; /* 상 우 하 좌 패딩 조정 */
 }
 
 
 /* 검색 텍스트 필드 */
 #searchField {
-    -fx-background-color: white;
-    -fx-border-color: transparent;
+    -fx-background-color: transparent; /* 투명 배경 */
+    -fx-border-color: transparent;     /* 테두리 제거 */
+    -fx-background-insets: 0;         /* 기본 inset 제거 */
+    -fx-background-radius: 0;         /* 기본 radius 제거 */
     -fx-font-family: "Pretendard Regular";
+    -fx-font-size: 13px;
+    -fx-text-fill: #333333;
+    -fx-prompt-text-fill: #999999;   /* placeholder 색상 */
+}
+#searchField:focused {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-effect: null; /* 기본 focus effect 제거 */
 }
 
 /* 검색 아이콘 라벨 */
 #searchIcon {
     -fx-font-size: 14px;
     -fx-text-fill: gray;
-    -fx-padding: 5;
 }
 
 /* 추가하기 버튼 */
@@ -135,4 +143,57 @@
 
 #sortComboBox {
     /*-fx-background-color: #FFF9D9;*/
+}
+
+.nav-bar {
+}
+
+.nav-btn {
+    -fx-min-width: 100;
+    -fx-min-height: 50;
+    -fx-padding: 10 0 0 0;
+    -fx-font-size: 16;
+    -fx-font-family: "Pretendard Medium";
+}
+
+.add-btn {
+    -fx-pref-width: 102;
+    -fx-pref-height: 35;
+    -fx-border-width: 1;
+    -fx-border-color: #D9D9D9;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-background-color: #FFFDF0;
+    -fx-font-family: "Pretendard Medium";
+    -fx-font-size: 14;
+    -fx-text-fill: #434343;
+    -fx-cursor: hand;
+}
+
+.wardrobe-btn {
+    -fx-pref-width: 102;
+    -fx-pref-height: 35;
+    -fx-border-width: 1;
+    -fx-border-color: #D9D9D9;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-background-color: #ffb7b9;
+    -fx-font-family: "Pretendard Medium";
+    -fx-font-size: 14;
+    -fx-text-fill: #434343;
+    -fx-cursor: hand;
+}
+
+/*.nav-btn:selected {*/
+/*    -fx-background-color: red;*/
+/*}*/
+
+
+/*.nav-btn:selected,*/
+/*.nav-btn:focused:selected {*/
+/*    -fx-background-color: #F6FDFF;*/
+/*}*/
+
+.bottom-container {
+    -fx-border-width: 1;
 }

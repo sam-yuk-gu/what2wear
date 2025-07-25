@@ -20,12 +20,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class SignupStep2Controller {
-    @FXML private ImageView signupBanner;
+    @FXML private HBox signupBanner;
     @FXML private TextField inputIdField;
     @FXML private ComboBox<String> domainCombobox;
     @FXML private Button sendMailButton;
@@ -299,10 +300,10 @@ public class SignupStep2Controller {
     // 초기 회원가입 배너의 사이즈와 모서리 설정
     private void setupUI() {
         int arcWidth = 30, arcHeight = 30;
-        Rectangle clip = new Rectangle(signupBanner.getFitWidth(), signupBanner.getFitHeight());
-        clip.setArcWidth(arcWidth);
-        clip.setArcHeight(arcHeight);
-        signupBanner.setClip(clip);
+//        Rectangle clip = new Rectangle(signupBanner.getFitWidth(), signupBanner.getFitHeight());
+//        clip.setArcWidth(arcWidth);
+//        clip.setArcHeight(arcHeight);
+//        signupBanner.setClip(clip);
     }
 
     // 이메일 리스트가 가질 수 있는 값
