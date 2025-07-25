@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.collections.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<HBox prefHeight="768.0" prefWidth="1280.0" stylesheets="@css/myCodiList.css" style="-fx-background-color: white" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.myCodi.controller.ListMyCodiController">
+<HBox prefHeight="768.0" prefWidth="1280.0" style="-fx-background-color: white" stylesheets="@css/myCodiList.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.myCodi.controller.ListMyCodiController">
     <children>
         <VBox prefHeight="768.0" prefWidth="1030.0">
             <!-- 상단 타이틀 -->
@@ -18,7 +25,7 @@
                 <children>
 
                             <!-- 오른쪽 상단 필터 및 검색창 -->
-                            <HBox fx:id="filterSearchContainer" alignment="CENTER_RIGHT" layoutX="499.0" layoutY="46.0" prefHeight="34.0" prefWidth="509.0" spacing="10.0">
+                            <HBox fx:id="filterSearchContainer" alignment="CENTER_RIGHT" layoutX="463.0" layoutY="46.0" prefHeight="34.0" prefWidth="509.0" spacing="10.0">
                                 <children>
                                     <!-- 수정된 정렬 ComboBox -->
                                     <ComboBox fx:id="sortComboBox" onAction="#handleSortChange" prefHeight="30.0" prefWidth="120" promptText="최신 순" styleClass="custom-combo">
