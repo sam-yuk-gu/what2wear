@@ -123,5 +123,8 @@
 }
 .pagination {
     -fx-background-color: white;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-border-style: none;
 }
 
