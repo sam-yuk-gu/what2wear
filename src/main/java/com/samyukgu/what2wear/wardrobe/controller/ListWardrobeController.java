@@ -355,9 +355,9 @@ public class ListWardrobeController {
         itemBox.setAlignment(Pos.TOP_CENTER);
 
         // 박스 크기를 줄임 (176x260 -> 160x240)
-        itemBox.setPrefSize(160, 240);
-        itemBox.setMaxSize(160, 240);
-        itemBox.setMinSize(160, 240);
+        itemBox.setPrefSize(176, 240);
+        itemBox.setMaxSize(176, 240);
+        itemBox.setMinSize(176, 240);
 
         itemBox.setSpacing(8);
         itemBox.setStyle(
@@ -374,14 +374,14 @@ public class ListWardrobeController {
         StackPane imageStack = new StackPane();
         imageStack.setAlignment(Pos.CENTER);
         // 이미지 크기도 비례적으로 줄임 (160x200 -> 144x180)
-        imageStack.setPrefSize(144, 180);
-        imageStack.setMaxSize(144, 180);
-        imageStack.setMinSize(144, 180);
+        imageStack.setPrefSize(160, 200);
+        imageStack.setMaxSize(160, 200);
+        imageStack.setMinSize(160, 200);
 
         // 옷 이미지
         ImageView clothesImage = new ImageView();
-        clothesImage.setFitHeight(180);  // 200 -> 180
-        clothesImage.setFitWidth(144);   // 160 -> 144
+        clothesImage.setFitHeight(200);  // 200 -> 180
+        clothesImage.setFitWidth(160);   // 160 -> 144
         clothesImage.setPreserveRatio(true);
         clothesImage.setSmooth(true);
 
@@ -396,7 +396,7 @@ public class ListWardrobeController {
         // 상품명 라벨
         Label nameLabel = new Label(wardrobe.getName() != null ? wardrobe.getName() : "이름 없음");
         nameLabel.setAlignment(Pos.CENTER);
-        nameLabel.setPrefWidth(144);   // 160 -> 144
+        nameLabel.setPrefWidth(160);   // 160 -> 144
         nameLabel.setMaxWidth(144);
         nameLabel.setMaxHeight(40); // 높이 제한
         nameLabel.setStyle("-fx-font-size: 11px; -fx-text-alignment: center; -fx-text-fill: #333; -fx-font-family: Pretendard SemiBold;");
