@@ -77,12 +77,7 @@ public class CodiMainController {
         applyHoverTransition(aiButton, Color.web("#FFFDF0"), Color.web("#FFF8DA"));
         applyHoverTransition(addButton, Color.web("#F2FBFF"), Color.web("#E0F6FF"));
 
-//        Weather weather = RegionWeatherSession.getWeather();
         weather = weatherSession.getWeather();
-
-
-
-
         System.out.println("오늘의 기온: " + weather.getTemp());
         String parent = weatherSession.getRegion().getRegionParent();
         String child = weatherSession.getRegion().getRegionChild();
@@ -90,8 +85,7 @@ public class CodiMainController {
         int ny = weatherSession.getRegion().getNy().intValue();
 
         System.out.println("parent: " + parent + ", child: " + child + ", nx: " + nx + ", ny: " + ny);
-
-
+        System.out.println("parent: " + parent + ", child: " + child + ", nx: " + nx + ", ny: " + ny);
     }
 
     private void setupDI() {
@@ -107,8 +101,8 @@ public class CodiMainController {
     private void setupUser() {
         if (memberSession == null || memberSession.getMember() == null) {
         // TODO: 코드 롤백 후 커밋 >> 주석 해제
-//            System.err.println("로그인 정보가 없습니다.");
-//            return;
+            System.err.println("로그인 정보가 없습니다.");
+            return;
         }
 
         memberId = memberSession.getMember().getId();

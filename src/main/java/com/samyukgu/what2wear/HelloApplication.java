@@ -18,6 +18,7 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        // TODO: 코드 롤백 후 커밋
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/samyukgu/what2wear/member/LoginView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1280, 768);
 

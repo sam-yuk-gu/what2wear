@@ -65,6 +65,7 @@
 /* 키워드 콤보박스 */
 #keywordField {
     -fx-font-size: 14;
+    -fx-font-family: "Pretendard SemiBold";
 }
 
 /* 폼 컨테이너 */
@@ -80,14 +81,14 @@
 /* 폼 제목 */
 #formTitle {
     -fx-font-size: 20;
-    -fx-font-weight: bold;
+    -fx-font-family: "Pretendard SemiBold";
     -fx-text-fill: #333;
 }
 
 /* 입력 필드 라벨들 */
 #nameLabel, #categoryLabel, #brandLabel, #sizeLabel, #colorLabel, #memoLabel {
     -fx-font-size: 14;
-    -fx-font-weight: bold;
+    -fx-font-family: "Pretendard SemiBold";
     -fx-text-fill: #555;
 }
 
@@ -123,4 +124,15 @@
     -fx-font-family: "Pretendard SemiBold";
     -fx-background-radius: 20;
     -fx-cursor: hand;
+}
+.text-field, .text-area, .date-picker, .combo-box {
+    -fx-background-color: white;
+    -fx-effect: none;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-border-width: 1;
+    -fx-border-color: #E6E6E6;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-font-family: "Pretendard SemiBold";
 }

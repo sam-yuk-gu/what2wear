@@ -17,8 +17,8 @@
 
 /* 메인 스크롤 패널 */
 #mainScrollPane {
-    -fx-background-color: #fafafa;
-    -fx-border-color: transparent;
+    -fx-background-color: white;
+    /*-fx-border-color: transparent;*/
 }
 
 /* 이미지 컨테이너 */

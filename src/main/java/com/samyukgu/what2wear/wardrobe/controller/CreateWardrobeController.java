@@ -1,5 +1,6 @@
 package com.samyukgu.what2wear.wardrobe.controller;
 
+import com.samyukgu.what2wear.common.controller.BasicHeaderController;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.member.Session.MemberSession;
@@ -13,20 +14,29 @@ import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class CreateWardrobeController implements Initializable {
 
+    @FXML private HBox root;
+    @FXML private VBox container;
     @FXML private TextField nameField;
     @FXML private ComboBox<Category> categoryField;
     @FXML private ComboBox<String> keywordField;
@@ -52,6 +62,26 @@ public class CreateWardrobeController implements Initializable {
         memberSession = diContainer.resolve(MemberSession.class);
         setupUI();
         loadCategories();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/BasicHeader.fxml"));
+            HBox header = loader.load();
+
+            BasicHeaderController controller = loader.getController();
+            controller.setTitle("옷 추가");
+            controller.setOnBackAction(() -> {
+                try {
+                    Parent view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/samyukgu/what2wear/wardrobe/wardrobeList.fxml")));
+                    root.getChildren().setAll(view);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+
+            container.getChildren().add(0, header); // StackPane 맨 위에 삽입
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void setupUI() {
@@ -151,36 +181,30 @@ public class CreateWardrobeController implements Initializable {
     }
 
     private boolean validateForm() {
-        // 필수 필드 검증
+        // 필수 필드 검증 - 사진, 이름, 카테고리만 필수
+
+        // 사진 검증
+        if (pictureData == null) {
+            showError("사진을 업로드해주세요.");
+            uploadButton.requestFocus();
+            return false;
+        }
+
+        // 이름 검증
         if (nameField.getText() == null || nameField.getText().trim().isEmpty()) {
             showError("옷 이름을 입력해주세요.");
             nameField.requestFocus();
             return false;
         }
 
+        // 카테고리 검증
         if (categoryField.getValue() == null) {
             showError("카테고리를 선택해주세요.");
             categoryField.requestFocus();
             return false;
         }
 
-        if (brandField.getText() == null || brandField.getText().trim().isEmpty()) {
-            showError("브랜드를 입력해주세요.");
-            brandField.requestFocus();
-            return false;
-        }
-
-        if (sizeField.getText() == null || sizeField.getText().trim().isEmpty()) {
-            showError("사이즈를 입력해주세요.");
-            sizeField.requestFocus();
-            return false;
-        }
-
-        if (colorField.getValue() == null) {
-            showError("색상을 선택해주세요.");
-            colorField.requestFocus();
-            return false;
-        }
+        // 선택 항목들은 검증하지 않음 (키워드, 브랜드, 사이즈, 색상, 메모)
 
         return true;
     }
@@ -193,11 +217,17 @@ public class CreateWardrobeController implements Initializable {
         wardrobe.setCategoryId(selectedCategory.getId());
         wardrobe.setName(nameField.getText().trim());
         wardrobe.setLike("N"); // 기본값은 즐겨찾기 없음
-        wardrobe.setKeyword(keywordField.getValue());
-        wardrobe.setColor(colorField.getValue());
-        wardrobe.setSize(sizeField.getText().trim());
-        wardrobe.setBrand(brandField.getText().trim());
-        wardrobe.setMemo(memoField.getText() != null ? memoField.getText().trim() : "");
+
+        // 선택 항목들 - null이거나 빈 값일 수 있음
+        wardrobe.setKeyword(keywordField.getValue()); // ComboBox는 null 가능
+        wardrobe.setColor(colorField.getValue()); // ComboBox는 null 가능
+        wardrobe.setSize(sizeField.getText() != null && !sizeField.getText().trim().isEmpty()
+                ? sizeField.getText().trim() : null);
+        wardrobe.setBrand(brandField.getText() != null && !brandField.getText().trim().isEmpty()
+                ? brandField.getText().trim() : null);
+        wardrobe.setMemo(memoField.getText() != null && !memoField.getText().trim().isEmpty()
+                ? memoField.getText().trim() : null);
+
         wardrobe.setDeleted("N"); // 옷 삭제시 "Y"로 변경
         wardrobe.setPicture(pictureData);
 
@@ -244,7 +274,7 @@ public class CreateWardrobeController implements Initializable {
                     Image image = new Image(selectedFile.toURI().toString());
                     if (!image.isError()) {
                         pictureView.setImage(image);
-                        showAlert("이미지가 성공적으로 업로드되었습니다.");
+//                        showAlert("이미지가 성공적으로 업로드되었습니다.");
                     } else {
                         throw new Exception("이미지 파일이 손상되었거나 지원하지 않는 형식입니다.");
                     }
@@ -267,21 +297,21 @@ public class CreateWardrobeController implements Initializable {
     @FXML
     private void handleBackClick() {
         // 변경사항이 있다면 확인 대화상자 표시
-        if (hasUnsavedChanges()) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-                    "저장하지 않은 변경사항이 있습니다. 정말로 나가시겠습니까?",
-                    ButtonType.YES, ButtonType.NO);
-            alert.setTitle("확인");
-            alert.setHeaderText(null);
+//        if (hasUnsavedChanges()) {
+//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+//                    "저장하지 않은 변경사항이 있습니다. 정말로 나가시겠습니까?",
+//                    ButtonType.YES, ButtonType.NO);
+//            alert.setTitle("확인");
+//            alert.setHeaderText(null);
 
-            alert.showAndWait().ifPresent(result -> {
-                if (result == ButtonType.YES) {
-                    MainLayoutController.loadView("/com/samyukgu/what2wear/wardrobe/wardrobeList.fxml");
-                }
-            });
-        } else {
-            MainLayoutController.loadView("/com/samyukgu/what2wear/wardrobe/wardrobeList.fxml");
-        }
+//            alert.showAndWait().ifPresent(result -> {
+//                if (result == ButtonType.YES) {
+        MainLayoutController.loadView("/com/samyukgu/what2wear/wardrobe/wardrobeList.fxml");
+//                }
+//            });
+//        } else {
+//            MainLayoutController.loadView("/com/samyukgu/what2wear/wardrobe/wardrobeList.fxml");
+//        }
     }
 
     private boolean hasUnsavedChanges() {

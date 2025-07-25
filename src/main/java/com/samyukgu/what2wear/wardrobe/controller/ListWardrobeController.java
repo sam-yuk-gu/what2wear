@@ -328,8 +328,8 @@ public class ListWardrobeController {
         HBox currentRow = null;
 
         double containerWidth = 988.0; // ScrollPane 너비
-        double itemWidth = 190.0; // 옷 너비 + 여백
-        int itemsPerRow = Math.max(1, (int)(containerWidth / itemWidth));
+        double itemWidth = 175.0; // 줄어든 옷 너비(160) + 여백(15) = 175
+        int itemsPerRow = Math.max(1, (int)(containerWidth / itemWidth)); // 약 5-6개 정도
 
         for (int i = 0; i < wardrobes.size(); i++) {
             if (i % itemsPerRow == 0) {
@@ -348,14 +348,16 @@ public class ListWardrobeController {
             }
         }
     }
+
+
     private VBox createWardrobeItem(Wardrobe wardrobe) {
         VBox itemBox = new VBox();
         itemBox.setAlignment(Pos.TOP_CENTER);
 
-        // 고정 크기 설정
-        itemBox.setPrefSize(176, 260);
-        itemBox.setMaxSize(176, 260);
-        itemBox.setMinSize(176, 260);
+        // 박스 크기를 줄임 (176x260 -> 160x240)
+        itemBox.setPrefSize(160, 240);
+        itemBox.setMaxSize(160, 240);
+        itemBox.setMinSize(160, 240);
 
         itemBox.setSpacing(8);
         itemBox.setStyle(
@@ -371,21 +373,22 @@ public class ListWardrobeController {
         // 이미지와 하트 아이콘을 담을 StackPane
         StackPane imageStack = new StackPane();
         imageStack.setAlignment(Pos.CENTER);
-        imageStack.setPrefSize(160, 200);
-        imageStack.setMaxSize(160, 200);
-        imageStack.setMinSize(160, 200);
+        // 이미지 크기도 비례적으로 줄임 (160x200 -> 144x180)
+        imageStack.setPrefSize(144, 180);
+        imageStack.setMaxSize(144, 180);
+        imageStack.setMinSize(144, 180);
 
         // 옷 이미지
         ImageView clothesImage = new ImageView();
-        clothesImage.setFitHeight(200);
-        clothesImage.setFitWidth(160);
+        clothesImage.setFitHeight(180);  // 200 -> 180
+        clothesImage.setFitWidth(144);   // 160 -> 144
         clothesImage.setPreserveRatio(true);
         clothesImage.setSmooth(true);
 
         // 이미지 설정
         setClothesImage(clothesImage, wardrobe);
 
-        // 하트 아이콘 (개선된 버전)
+        // 하트 아이콘 (크기는 그대로 유지)
         ImageView heartIcon = createHeartIcon(wardrobe);
 
         imageStack.getChildren().addAll(clothesImage, heartIcon);
@@ -393,10 +396,10 @@ public class ListWardrobeController {
         // 상품명 라벨
         Label nameLabel = new Label(wardrobe.getName() != null ? wardrobe.getName() : "이름 없음");
         nameLabel.setAlignment(Pos.CENTER);
-        nameLabel.setPrefWidth(160);
-        nameLabel.setMaxWidth(160);
+        nameLabel.setPrefWidth(144);   // 160 -> 144
+        nameLabel.setMaxWidth(144);
         nameLabel.setMaxHeight(40); // 높이 제한
-        nameLabel.setStyle("-fx-font-size: 11px; -fx-text-alignment: center; -fx-text-fill: #333;");
+        nameLabel.setStyle("-fx-font-size: 11px; -fx-text-alignment: center; -fx-text-fill: #333; -fx-font-family: Pretendard SemiBold;");
         nameLabel.setWrapText(true);
 
         // 클릭 이벤트 추가
@@ -653,7 +656,7 @@ public class ListWardrobeController {
             emptyLabel.setText("등록된 옷이 없습니다.");
         }
 
-        emptyLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #666;");
+        emptyLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #666; -fx-font-family: Pretendard SemiBold;");
         VBox emptyBox = new VBox(emptyLabel);
         emptyBox.setAlignment(Pos.CENTER);
         emptyBox.setPrefHeight(200);
@@ -758,9 +761,9 @@ public class ListWardrobeController {
         if (button == null) return;
 
         if (selected) {
-            button.setStyle("-fx-text-fill: white; -fx-background-color: #007acc; -fx-border-color: #007acc;");
+            button.setStyle("-fx-text-fill: white; -fx-background-color: #007acc; -fx-border-color: #007acc; -fx-font-family: Pretendard SemiBold;");
         } else {
-            button.setStyle("-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent;");
+            button.setStyle("-fx-text-fill: black; -fx-background-color: transparent; -fx-border-color: transparent; -fx-font-family: Pretendard Regular;");
         }
     }
 
@@ -768,9 +771,9 @@ public class ListWardrobeController {
         if (favoriteButton == null) return;
 
         if (showFavoritesOnly) {
-            favoriteButton.setStyle("-fx-background-color: #007acc; -fx-border-color: #007acc; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: normal; -fx-background-radius: 4; -fx-border-radius: 4; -fx-padding: 6 12; -fx-cursor: hand;");
+            favoriteButton.setStyle(" -fx-border-color: #000; -fx-text-fill: black; -fx-font-size: 13px; -fx-font-family: Pretendard SemiBold; -fx-background-radius: 4; -fx-border-radius: 4; -fx-padding: 6 12; -fx-cursor: hand;");
         } else {
-            favoriteButton.setStyle("-fx-background-color: transparent; -fx-border-color: #cccccc; -fx-border-width: 1; -fx-text-fill: #000000; -fx-font-size: 13px; -fx-font-weight: normal; -fx-background-radius: 4; -fx-border-radius: 4; -fx-padding: 6 12; -fx-cursor: hand;");
+            favoriteButton.setStyle(" -fx-border-color: #C0C0C0; -fx-border-width: 1; -fx-text-fill: #C0C0C0; -fx-font-size: 13px; -fx-font-family: Pretendard Regular; -fx-background-radius: 4; -fx-border-radius: 4; -fx-padding: 6 12; -fx-cursor: hand;");
         }
     }
 
