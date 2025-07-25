@@ -7,7 +7,7 @@ module com.samyukgu.what2wear {
     requires jakarta.mail;
     requires java.desktop;
     requires lombok;
-//    requires okhttp3;
+    requires okhttp3;
 //    requires gradle.api;  // requires로 불러오는 대상 아니라서 주석 처리
     requires java.net.http;
     requires com.google.gson; // http 추가

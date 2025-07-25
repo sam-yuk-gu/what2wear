@@ -40,7 +40,6 @@ public class ListMyCodiController implements Initializable {
     private CodiService codiService;
     private MemberSession memberSession;
 
-
     // 데이터 저장
     private List<CodiWithDetails> originalCodis = new ArrayList<>();
     private List<CodiWithDetails> filteredCodis = new ArrayList<>();
@@ -87,7 +86,6 @@ public class ListMyCodiController implements Initializable {
         }
     }
 
-
     private void setupPagination() {
         if (pagination != null) {
             // 페이지 변경 시에만 codiGridContainer 업데이트
@@ -101,7 +99,6 @@ public class ListMyCodiController implements Initializable {
             pagination.setPageFactory(pageIndex -> new VBox());
         }
     }
-
     // 페이지네이션을 완전히 무시하고 codiGridContainer만 사용
     private void displayAllItems() {
         if (codiGridContainer == null) {
@@ -224,7 +221,6 @@ public class ListMyCodiController implements Initializable {
         int totalPages = Math.max(1, (int) Math.ceil((double) filteredCodis.size() / ITEMS_PER_PAGE));
         pagination.setPageCount(totalPages);
     }
-
     private void displayCodisOnPage(VBox pageContent, List<CodiWithDetails> codis) {
         HBox currentRow = null;
 
@@ -262,7 +258,7 @@ public class ListMyCodiController implements Initializable {
         itemBox.setSpacing(8);
         itemBox.setStyle(
                 "-fx-font-family: Pretendard Regular;" +
-                "-fx-background-color: #f8f8f8; " +
+                        "-fx-background-color: #f8f8f8; " +
                         "-fx-border-color: #e0e0e0; " +
                         "-fx-border-width: 1; " +
                         "-fx-border-radius: 8; " +
@@ -324,22 +320,73 @@ public class ListMyCodiController implements Initializable {
         itemBox.getChildren().addAll(imageStack, nameLabel);
         return itemBox;
     }
-
     private VBox createCodiImageArea(CodiWithDetails codi) {
         VBox imageArea = new VBox();
         imageArea.setAlignment(Pos.CENTER);
         imageArea.setPrefSize(160, 200);
         imageArea.setMaxSize(160, 200);
-        imageArea.setSpacing(3); // 행 간격을 좀 더 줄임
+        imageArea.setSpacing(3);
+
+        // 코디 테이블의 picture 컬럼에서 이미지 가져오기
+        ImageView codiImageView = new ImageView();
+        codiImageView.setFitHeight(180); // 전체 영역을 거의 차지하도록
+        codiImageView.setFitWidth(150);
+        codiImageView.setPreserveRatio(true);
+        codiImageView.setSmooth(true);
+
+        try {
+            // 코디의 picture 데이터가 있는 경우
+            if (codi.getPicture() != null && codi.getPicture().length > 0) {
+                ByteArrayInputStream bis = new ByteArrayInputStream(codi.getPicture());
+                Image image = new Image(bis);
+                if (!image.isError()) {
+                    codiImageView.setImage(image);
+                    imageArea.getChildren().add(codiImageView);
+                    return imageArea;
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("코디 이미지 로딩 실패: " + e.getMessage());
+        }
+
+        // 코디 이미지가 없는 경우 옷 조합으로 표시
+        if (codi.getClothes() != null && !codi.getClothes().isEmpty()) {
+            return createClothesComboImageArea(codi);
+        }
+
+        // 옷도 없는 경우 기본 이미지 표시
+        try {
+            Image defaultImage = new Image(getClass().getResourceAsStream("/images/default_codi.png"));
+            if (defaultImage != null && !defaultImage.isError()) {
+                codiImageView.setImage(defaultImage);
+                imageArea.getChildren().add(codiImageView);
+                return imageArea;
+            }
+        } catch (Exception e) {
+            System.err.println("기본 코디 이미지 로딩 실패: " + e.getMessage());
+        }
+
+        // 모든 것이 실패한 경우 텍스트로 표시
+        Label emptyLabel = new Label("이미지 없음");
+        emptyLabel.setStyle("-fx-text-fill: #999; -fx-font-size: 12px;");
+        imageArea.getChildren().add(emptyLabel);
+        return imageArea;
+    }
+
+    // 옷 조합 이미지 생성 로직 (코디 이미지가 없을 때 사용)
+    private VBox createClothesComboImageArea(CodiWithDetails codi) {
+        VBox imageArea = new VBox();
+        imageArea.setAlignment(Pos.CENTER);
+        imageArea.setPrefSize(160, 200);
+        imageArea.setMaxSize(160, 200);
+        imageArea.setSpacing(3);
 
         if (codi.getClothes() == null || codi.getClothes().isEmpty()) {
-            Label emptyLabel = new Label("옷이 선택되지 않음");
-            emptyLabel.setStyle("-fx-text-fill: #999; -fx-font-size: 12px;");
-            imageArea.getChildren().add(emptyLabel);
+            // 옷이 없는 경우에도 빈 VBox 반환 (기본 이미지는 상위 메서드에서 처리)
             return imageArea;
         }
 
-        // 옷들을 3행으로 배치
+        // 옷들을 3행으로 배치 (기존 로직)
         HBox topRow = new HBox();
         HBox middleRow = new HBox();
         HBox bottomRow = new HBox();
@@ -355,14 +402,13 @@ public class ListMyCodiController implements Initializable {
         List<Wardrobe> clothes = codi.getClothes();
         int totalItems = clothes.size();
 
-        // 3행에 균등하게 배분하기 위한 계산
         int itemsPerRow;
         if (totalItems <= 3) {
-            itemsPerRow = 1; // 아이템이 3개 이하면 한 행에 1개씩
+            itemsPerRow = 1;
         } else if (totalItems <= 6) {
-            itemsPerRow = 2; // 4-6개면 한 행에 2개씩
+            itemsPerRow = 2;
         } else {
-            itemsPerRow = Math.min(3, (int) Math.ceil(totalItems / 3.0)); // 7개 이상이면 한 행에 최대 3개
+            itemsPerRow = Math.min(3, (int) Math.ceil(totalItems / 3.0));
         }
 
         for (int i = 0; i < clothes.size(); i++) {
@@ -375,10 +421,8 @@ public class ListMyCodiController implements Initializable {
             } else if (i < itemsPerRow * 3) {
                 bottomRow.getChildren().add(clothesImage);
             }
-            // 9개 이상인 경우는 처음 9개만 표시
         }
 
-        // 비어있지 않은 행만 추가
         if (!topRow.getChildren().isEmpty()) {
             imageArea.getChildren().add(topRow);
         }
@@ -424,7 +468,6 @@ public class ListMyCodiController implements Initializable {
 
         return imageView;
     }
-
     private void showEmptyState(VBox container) {
         Label emptyLabel = new Label();
         if (showFavoritesOnly) {

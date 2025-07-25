@@ -1133,10 +1133,10 @@ public class EditMyCodiController implements Initializable {
                 controller.configure(
                         "변경사항 확인",
                         "저장하지 않은 변경사항이 있습니다.",
-                        null, // 아이콘 없음
+                        "/assets/icons/redCheck.png", // 아이콘 없음
                         "#dc3545", // 빨간색
-                        "계속 수정",
-                        "취소하기",
+                        "계속",
+                        "취소",
                         () -> rootPane.getChildren().remove(modal), // 계속 수정
                         () -> {
                             rootPane.getChildren().remove(modal);

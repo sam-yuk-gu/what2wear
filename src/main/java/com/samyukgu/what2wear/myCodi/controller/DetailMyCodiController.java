@@ -337,7 +337,7 @@ public class DetailMyCodiController implements Initializable {
             CustomModalController controller = loader.getController();
             controller.configure(
                     "삭제 확인",
-                    "'" + currentCodi.getName() + "' 코디를 정말 삭제하시겠습니까?",
+                    "코디를 정말 삭제하시겠습니까?",
                     "/assets/icons/redCheck.png", // 아이콘 없음
                     "#FA7B7F", // 빨간색
                     "취소",

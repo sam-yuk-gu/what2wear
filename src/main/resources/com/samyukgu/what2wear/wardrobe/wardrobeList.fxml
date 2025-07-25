@@ -78,9 +78,14 @@
                   </children>
                </HBox>
 
-               <ScrollPane fx:id="mainScrollPane" fitToWidth="true" hbarPolicy="NEVER" layoutX="21.0" layoutY="93.0" prefHeight="590.0" prefWidth="988.0" vbarPolicy="AS_NEEDED">
+               <ScrollPane fx:id="mainScrollPane" fitToWidth="true" fitToHeight="false"
+                           hbarPolicy="NEVER" layoutX="21.0" layoutY="93.0"
+                           prefHeight="590.0" prefWidth="988.0" vbarPolicy="AS_NEEDED"
+                           style="-fx-background-color: transparent; -fx-background: transparent;">
                   <content>
-                     <VBox fx:id="contentContainer" maxWidth="988.0" prefWidth="988.0" spacing="1.0">
+                     <VBox fx:id="contentContainer" maxWidth="988.0" prefWidth="988.0"
+                           spacing="15.0" style="-fx-background-color: transparent;"
+                           fillWidth="true">
                         <!-- 여기에 내가 넣은 옷들이 들어갈거야!!! -->
                      </VBox>
                   </content>
