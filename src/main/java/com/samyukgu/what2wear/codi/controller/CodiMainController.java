@@ -57,6 +57,7 @@ public class CodiMainController {
     @FXML private Button addButton;
 
     private Long memberId;
+    private Weather weather;
     private LocalDate currentDate;
     private LocalDate currentDateSelected;
     private Map<LocalDate, List<CodiSchedule>> dotScheduleMap; // 날짜별 일정 정보 저장
@@ -89,12 +90,7 @@ public class CodiMainController {
 
 
 
-        // TODO: 코드 원복 후 커밋
-        Weather weather = weatherSession.getWeather();
-//        weather = weatherSession.getWeather();
-
-
-
+        weather = weatherSession.getWeather();
 
         System.out.println("오늘의 기온: " + weather.getTemp());
         String parent = weatherSession.getRegion().getRegionParent();
@@ -120,8 +116,8 @@ public class CodiMainController {
     private void setupUser() {
         if (memberSession == null || memberSession.getMember() == null) {
         // TODO: 코드 롤백 후 커밋 >> 주석 해제
-//            System.err.println("로그인 정보가 없습니다.");
-//            return;
+            System.err.println("로그인 정보가 없습니다.");
+            return;
         }
 
         memberId = memberSession.getMember().getId();
