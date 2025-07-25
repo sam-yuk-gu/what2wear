@@ -55,6 +55,9 @@ public class CodiMainController {
     @FXML private VBox scheduleListContainer;
     @FXML private Button aiButton;
     @FXML private Button addButton;
+    @FXML private Label temperatureLabel;
+    @FXML private Label regionLabel;
+    @FXML private Label dateLabel;
 
     private Long memberId;
     private Weather weather;
@@ -62,6 +65,9 @@ public class CodiMainController {
     private LocalDate currentDateSelected;
     private Map<LocalDate, List<CodiSchedule>> dotScheduleMap; // 날짜별 일정 정보 저장
     private Map<LocalDate, List<CodiSchedule>> detailScheduleMap;
+    private String parent;
+    private String child;
+    private com.samyukgu.what2wear.region.model.Region region;
 
     @FXML
     public void initialize() {
@@ -69,6 +75,9 @@ public class CodiMainController {
         setupUser();
         currentDate = LocalDate.now();
         currentDateSelected = currentDate;
+        weather = weatherSession.getWeather();
+        region = weatherSession.getRegion();
+        setupWeather();
         loadScheduleForMonth(currentDate);
         loadScheduleForDay(currentDateSelected);
         renderCalendar(currentDate);
@@ -77,15 +86,19 @@ public class CodiMainController {
         applyHoverTransition(aiButton, Color.web("#FFFDF0"), Color.web("#FFF8DA"));
         applyHoverTransition(addButton, Color.web("#F2FBFF"), Color.web("#E0F6FF"));
 
-        weather = weatherSession.getWeather();
         System.out.println("오늘의 기온: " + weather.getTemp());
-        String parent = weatherSession.getRegion().getRegionParent();
-        String child = weatherSession.getRegion().getRegionChild();
+        parent = weatherSession.getRegion().getRegionParent();
+        child = weatherSession.getRegion().getRegionChild();
         int nx = weatherSession.getRegion().getNx().intValue();
         int ny = weatherSession.getRegion().getNy().intValue();
+        System.out.println("parent: " + parent + ", child: " + child + ", nx: " + nx + ", ny: " + ny);
+    }
 
-        System.out.println("parent: " + parent + ", child: " + child + ", nx: " + nx + ", ny: " + ny);
-        System.out.println("parent: " + parent + ", child: " + child + ", nx: " + nx + ", ny: " + ny);
+
+    private void setupWeather() {
+        temperatureLabel.setText(weather.getTemp().toString() + "°C");
+        regionLabel.setText(region.getRegionParent() + " " + region.getRegionChild());
+        dateLabel.setText(formatKoreanDate(currentDate));
     }
 
     private void setupDI() {
@@ -107,6 +120,7 @@ public class CodiMainController {
 
         memberId = memberSession.getMember().getId();
     }
+
 
     private void loadScheduleForMonth(LocalDate month) {
         List<CodiSchedule> scheduleList = codiService.getMonthlyCodiSchedules(memberId, month);
@@ -354,7 +368,7 @@ public class CodiMainController {
             Integer selectedMonth = monthCombo.getValue();
             if (selectedYear != null && selectedMonth != null) {
                 LocalDate selectedDate = LocalDate.of(selectedYear, selectedMonth, 1);
-                changeMonthAndRender(selectedDate);  // ✅ 여기도 재사용
+                changeMonthAndRender(selectedDate);
             }
             popupStage.close();
         });

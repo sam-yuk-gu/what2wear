@@ -6,10 +6,19 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Button?>
-<VBox spacing="20" alignment="CENTER" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.samyukgu.what2wear.region.controller.SettingRegionController">
-    <Label text="지역 선택" />
-    <ComboBox fx:id="parentComboBox" promptText="시/도 선택" prefWidth="200"/>
-    <ComboBox fx:id="childComboBox" promptText="구 선택" prefWidth="200"/>
-    <Button onMouseClicked="#handleSettingRegion">수정 테스트</Button>
-</VBox>
+<?import javafx.scene.layout.HBox?>
+<StackPane fx:id="root" stylesheets="/com/samyukgu/what2wear/codi/add-codi.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.samyukgu.what2wear.region.controller.SettingRegionController">
+    <VBox fx:id="container">
+        <VBox styleClass="setting-container">
+            <Label text="지역 선택" styleClass="region-title"/>
+            <HBox spacing="20" style="-fx-padding: 20 0 0 0">
+                <ComboBox fx:id="parentComboBox" promptText="시/도 선택" prefWidth="200" styleClass="custom-combobox"/>
+                <ComboBox fx:id="childComboBox" promptText="구 선택" prefWidth="200" styleClass="custom-combobox"/>
+            </HBox>
+            <VBox alignment="center_right" styleClass="btn-vbox">
+                <Button onMouseClicked="#handleSettingRegion" styleClass="btn-setting">수정하기</Button>
+            </VBox>
+        </VBox>
+    </VBox>
+</StackPane>

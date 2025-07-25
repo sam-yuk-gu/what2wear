@@ -154,7 +154,7 @@
     -fx-min-height: 50;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
-    -fx-background-color: #FA7B7F;
+    -fx-background-color: #79c998;
     -fx-text-fill: white;
     -fx-font-family: "Pretendard Bold";
     -fx-font-size: 16;
@@ -165,7 +165,7 @@
     -fx-min-height: 50;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
-    -fx-background-color: #FA7B7F;
+    -fx-background-color: #6e6e6e;
     -fx-text-fill: white;
     -fx-font-family: "Pretendard Bold";
     -fx-font-size: 16;
@@ -174,4 +174,46 @@
 .item-box {
     -fx-pref-width: 300;
     -fx-padding: 10 30;
+}
+.region-title{
+    -fx-font-size: 34;
+    -fx-font-family: "Pretendard SemiBold";
+}
+
+.setting-container {
+    -fx-padding: 50;
+}
+
+.btn-setting {
+    -fx-background-color: black;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-text-fill: white;
+    -fx-font-size: 15;
+    -fx-font-family: "Pretendard SemiBold";
+    -fx-padding: 10;
+}
+
+.custom-combobox {
+    -fx-background-color: white;
+    -fx-border-color: #c0c0c0;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 2 6 2 6;
+    -fx-font-size: 15;
+    -fx-font-family: "Pretendard Medium";
+}
+
+.custom-combobox .arrow-button {
+    -fx-background-color: white;
+    -fx-border-color: transparent;
+}
+
+.custom-combobox .list-cell {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+.btn-vbox {
+    -fx-padding: 30 0 0 0;
 }
