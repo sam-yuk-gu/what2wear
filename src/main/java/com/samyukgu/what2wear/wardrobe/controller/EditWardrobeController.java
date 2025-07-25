@@ -1,5 +1,6 @@
 package com.samyukgu.what2wear.wardrobe.controller;
 
+import com.samyukgu.what2wear.common.controller.BasicHeaderController;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.member.Session.MemberSession;
@@ -16,17 +17,22 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class EditWardrobeController implements Initializable {
@@ -44,6 +50,7 @@ public class EditWardrobeController implements Initializable {
 
     // 추가: rootPane 필드
     @FXML private StackPane rootPane;
+    @FXML private VBox container;
 
     private byte[] pictureData;
     private Wardrobe currentWardrobe;
@@ -61,7 +68,30 @@ public class EditWardrobeController implements Initializable {
         setupUI();
         loadCurrentWardrobeData();
         loadCategories();
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/BasicHeader.fxml"));
+            HBox header = loader.load();
+
+            BasicHeaderController controller = loader.getController();
+            controller.setTitle("옷 수정");
+            controller.setOnBackAction(() -> {
+                try {
+                    Parent view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/samyukgu/what2wear/wardrobe/wardrobeList.fxml")));
+                    rootPane.getChildren().setAll(view);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+
+            container.getChildren().add(0, header); // StackPane 맨 위에 삽입
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
+
+
 
     private void setupUI() {
         // 업로드 버튼 연결
@@ -126,13 +156,17 @@ public class EditWardrobeController implements Initializable {
             sizeField.setText(wardrobe.getSize() != null ? wardrobe.getSize() : "");
             brandField.setText(wardrobe.getBrand() != null ? wardrobe.getBrand() : "");
             memoField.setText(wardrobe.getMemo() != null ? wardrobe.getMemo() : "");
-            // 키워드 설정
+            // 키워드 설정 - null일 수 있음
             if (wardrobe.getKeyword() != null) {
                 keywordField.setValue(wardrobe.getKeyword());
+            } else {
+                keywordField.setValue(null);
             }
-            // 색상 설정
+            // 색상 설정 - null일 수 있음
             if (wardrobe.getColor() != null) {
                 colorField.setValue(wardrobe.getColor());
+            } else {
+                colorField.setValue(null);
             }
             // 이미지 설정
             setWardrobeImage(wardrobe);
@@ -290,7 +324,7 @@ public class EditWardrobeController implements Initializable {
                         WardrobeEditData.clearSelectedWardrobe();
 
                         // 상세 페이지로 돌아가기
-                        MainLayoutController.loadView("/com/samyukgu/what2wear/wardrobe/wardrobeDetail.fxml");
+                        MainLayoutController.loadView("/com/samyukgu/what2wear/wardrobe/wardrobeList.fxml");
                     }
             );
 
@@ -306,32 +340,31 @@ public class EditWardrobeController implements Initializable {
     }
 
     private boolean validateForm() {
-        // 필수 필드 검증
+        // 필수 필드 검증 - 사진, 이름, 카테고리만 필수
+
+        // 사진 검증
+        if (pictureData == null) {
+            showError("사진을 업로드해주세요.");
+            uploadButton.requestFocus();
+            return false;
+        }
+
+        // 이름 검증
         if (nameField.getText() == null || nameField.getText().trim().isEmpty()) {
             showError("옷 이름을 입력해주세요.");
             nameField.requestFocus();
             return false;
         }
+
+        // 카테고리 검증
         if (categoryField.getValue() == null) {
             showError("카테고리를 선택해주세요.");
             categoryField.requestFocus();
             return false;
         }
-        if (brandField.getText() == null || brandField.getText().trim().isEmpty()) {
-            showError("브랜드를 입력해주세요.");
-            brandField.requestFocus();
-            return false;
-        }
-        if (sizeField.getText() == null || sizeField.getText().trim().isEmpty()) {
-            showError("사이즈를 입력해주세요.");
-            sizeField.requestFocus();
-            return false;
-        }
-        if (colorField.getValue() == null) {
-            showError("색상을 선택해주세요.");
-            colorField.requestFocus();
-            return false;
-        }
+
+        // 선택 항목들은 검증하지 않음 (키워드, 브랜드, 사이즈, 색상, 메모)
+
         return true;
     }
 
@@ -352,11 +385,17 @@ public class EditWardrobeController implements Initializable {
         Category selectedCategory = categoryField.getValue();
         updatedWardrobe.setCategoryId(selectedCategory.getId());
         updatedWardrobe.setName(nameField.getText().trim());
-        updatedWardrobe.setKeyword(keywordField.getValue());
-        updatedWardrobe.setColor(colorField.getValue());
-        updatedWardrobe.setSize(sizeField.getText().trim());
-        updatedWardrobe.setBrand(brandField.getText().trim());
-        updatedWardrobe.setMemo(memoField.getText() != null ? memoField.getText().trim() : "");
+
+        // 선택 항목들 - null이거나 빈 값일 수 있음
+        updatedWardrobe.setKeyword(keywordField.getValue()); // ComboBox는 null 가능
+        updatedWardrobe.setColor(colorField.getValue()); // ComboBox는 null 가능
+        updatedWardrobe.setSize(sizeField.getText() != null && !sizeField.getText().trim().isEmpty()
+                ? sizeField.getText().trim() : null);
+        updatedWardrobe.setBrand(brandField.getText() != null && !brandField.getText().trim().isEmpty()
+                ? brandField.getText().trim() : null);
+        updatedWardrobe.setMemo(memoField.getText() != null && !memoField.getText().trim().isEmpty()
+                ? memoField.getText().trim() : null);
+
         updatedWardrobe.setPicture(pictureData);
 
         return updatedWardrobe;

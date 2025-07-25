@@ -14,26 +14,11 @@
            stylesheets="@css/wardrobeModify.css">
     <children>
         <!-- 기존 HBox를 StackPane 안에 넣기 -->
-        <HBox prefHeight="768.0" prefWidth="1280.0">
+        <VBox prefHeight="768.0" prefWidth="1280.0">
             <children>
 
                 <!-- 오른쪽 전체 -->
-                <VBox prefHeight="768.0" prefWidth="1030.0">
-                    <!-- 상단 바 -->
-                    <AnchorPane fx:id="topBar" prefHeight="50.0" prefWidth="1030.0">
-                        <children>
-                            <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="10.0" spacing="20.0">
-                                <children>
-                                    <ImageView fx:id="backButton" fitHeight="30" fitWidth="30" onMouseClicked="#handleBackClick">
-                                        <image>
-                                            <Image preserveRatio="true" url="@images/tabler_arrow-left.png" />
-                                        </image>
-                                    </ImageView>
-                                    <Label fx:id="pageTitle" text="옷 정보 수정" />
-                                </children>
-                            </HBox>
-                        </children>
-                    </AnchorPane>
+                <VBox fx:id="container" prefHeight="768.0" prefWidth="1030.0">
 
                     <!-- 메인 콘텐츠 -->
                     <AnchorPane fx:id="mainContent" prefHeight="718.0" prefWidth="1030.0">
@@ -55,7 +40,7 @@
                                                 </padding>
                                                 <children>
                                                     <ImageView fx:id="pictureView" fitHeight="300.0" fitWidth="300.0" preserveRatio="true" />
-                                                    <Button fx:id="uploadButton" prefHeight="40.0" prefWidth="150.0" text="사진 변경" />
+                                                    <Button fx:id="uploadButton" prefHeight="40.0" prefWidth="150.0" text="사진 변경 *" />
                                                 </children>
                                             </VBox>
 
@@ -65,7 +50,7 @@
                                                     <Insets bottom="25" left="30" right="30" top="25" />
                                                 </padding>
                                                 <children>
-                                                    <Label fx:id="keywordLabel" text="스타일 키워드" />
+                                                    <Label fx:id="keywordLabel" text="스타일 키워드 (선택)" />
                                                     <ComboBox fx:id="keywordField" prefHeight="35" prefWidth="200">
                                                         <items>
                                                             <FXCollections fx:factory="observableArrayList">
@@ -83,9 +68,6 @@
                                                                 <String fx:value="레트로" />
                                                             </FXCollections>
                                                         </items>
-                                                        <value>
-                                                            <String fx:value="캐주얼" />
-                                                        </value>
                                                     </ComboBox>
                                                 </children>
                                             </VBox>
@@ -106,7 +88,7 @@
                                             <VBox spacing="8">
                                                 <children>
                                                     <Label fx:id="nameLabel" text="이름 *" />
-                                                    <TextField fx:id="nameField" prefHeight="35" text="크록스" />
+                                                    <TextField fx:id="nameField" prefHeight="35" />
                                                 </children>
                                             </VBox>
 
@@ -114,47 +96,30 @@
                                             <VBox spacing="8">
                                                 <children>
                                                     <Label fx:id="categoryLabel" text="카테고리 *" />
-                                                    <ComboBox fx:id="categoryField" prefHeight="35" prefWidth="380">
-                                                        <items>
-                                                            <FXCollections fx:factory="observableArrayList">
-                                                                <String fx:value="전체" />
-                                                                <String fx:value="상의" />
-                                                                <String fx:value="바지" />
-                                                                <String fx:value="원피스/스커트" />
-                                                                <String fx:value="가방" />
-                                                                <String fx:value="아우터" />
-                                                                <String fx:value="신발" />
-                                                                <String fx:value="악세사리" />
-                                                                <String fx:value="기타" />
-                                                            </FXCollections>
-                                                        </items>
-                                                        <value>
-                                                            <String fx:value="신발" />
-                                                        </value>
-                                                    </ComboBox>
+                                                    <ComboBox fx:id="categoryField" prefHeight="35" prefWidth="380" />
                                                 </children>
                                             </VBox>
 
                                             <!-- 브랜드 -->
                                             <VBox spacing="8">
                                                 <children>
-                                                    <Label fx:id="brandLabel" text="브랜드 *" />
-                                                    <TextField fx:id="brandField" prefHeight="35" text="크록스" />
+                                                    <Label fx:id="brandLabel" text="브랜드 (선택)" />
+                                                    <TextField fx:id="brandField" prefHeight="35" />
                                                 </children>
                                             </VBox>
 
                                             <!-- 사이즈 -->
                                             <VBox spacing="8">
                                                 <children>
-                                                    <Label fx:id="sizeLabel" text="사이즈 *" />
-                                                    <TextField fx:id="sizeField" prefHeight="35" text="270" />
+                                                    <Label fx:id="sizeLabel" text="사이즈 (선택)" />
+                                                    <TextField fx:id="sizeField" prefHeight="35" />
                                                 </children>
                                             </VBox>
 
                                             <!-- 색상 -->
                                             <VBox spacing="8">
                                                 <children>
-                                                    <Label fx:id="colorLabel" text="색상 *" />
+                                                    <Label fx:id="colorLabel" text="색상 (선택)" />
                                                     <ComboBox fx:id="colorField" prefHeight="35" prefWidth="380">
                                                         <items>
                                                             <FXCollections fx:factory="observableArrayList">
@@ -171,9 +136,6 @@
                                                                 <String fx:value="브라운" />
                                                             </FXCollections>
                                                         </items>
-                                                        <value>
-                                                            <String fx:value="블랙" />
-                                                        </value>
                                                     </ComboBox>
                                                 </children>
                                             </VBox>
@@ -181,8 +143,8 @@
                                             <!-- 메모 -->
                                             <VBox spacing="8">
                                                 <children>
-                                                    <Label fx:id="memoLabel" text="메모" />
-                                                    <TextField fx:id="memoField" prefHeight="60" text="비와서 혜화역에 있는 abc 마트에서 구매함" />
+                                                    <Label fx:id="memoLabel" text="메모 (선택)" />
+                                                    <TextField fx:id="memoField" prefHeight="60" />
                                                 </children>
                                             </VBox>
 
@@ -201,6 +163,6 @@
                     </AnchorPane>
                 </VBox>
             </children>
-        </HBox>
+        </VBox>
     </children>
 </StackPane>
