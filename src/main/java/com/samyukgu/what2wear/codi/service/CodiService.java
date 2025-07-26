@@ -6,6 +6,7 @@ import com.samyukgu.what2wear.codi.dto.CodiListDTO;
 import com.samyukgu.what2wear.codi.model.Codi;
 import com.samyukgu.what2wear.codi.model.CodiSchedule;
 import com.samyukgu.what2wear.myCodi.dao.CodiDetailDAO;
+import com.samyukgu.what2wear.myCodi.model.CodiWithDetails;
 import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
 
 import java.time.LocalDate;
@@ -16,7 +17,6 @@ public class CodiService {
     private final CodiDAO dao;
 
     public CodiService(CodiDAO dao) { this.dao = dao; }
-
 
     // 월별 코디 반환
     public List<CodiSchedule> getMonthlyCodiSchedules(Long memberId, LocalDate date){
@@ -60,5 +60,14 @@ public class CodiService {
 
     public List<Codi> getAllCodi(Long memberId) {
         return dao.findAll(memberId);
+    }
+
+    public List<CodiDetailDTO> getAllCodiDetail(Long memberId) {
+        try {
+            List<CodiDetailDTO> codis = dao.findAllWithDetails(memberId);
+            return codis;
+        } catch (Exception e) {
+            throw new RuntimeException("코디 상세 목록을 조회하는데 실패했습니다: " + e.getMessage(), e);
+        }
     }
 }

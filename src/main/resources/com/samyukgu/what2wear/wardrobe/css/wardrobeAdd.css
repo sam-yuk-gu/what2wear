@@ -40,6 +40,7 @@
 
 /* 키워드 선택 컨테이너 */
 #keywordContainer {
+    -fx-font-family: "Pretendard SemiBold";
     -fx-background-color: white;
     -fx-background-radius: 15;
     -fx-border-color: #e0e0e0;
@@ -86,6 +87,7 @@
 
 /* 텍스트 필드들 */
 #nameField, #brandField, #sizeField, #memoField {
+    -fx-font-family: "Pretendard SemiBold";
     -fx-font-size: 14;
     -fx-background-radius: 5;
     -fx-border-color: #ddd;
@@ -118,4 +120,16 @@
     -fx-font-family: "Pretendard SemiBold";
     -fx-background-radius: 20;
     -fx-cursor: hand;
+}
+
+.text-field, .text-area, .date-picker, .combo-box {
+    -fx-background-color: white;
+    -fx-effect: none;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-border-width: 1;
+    -fx-border-color: #E6E6E6;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-font-family: "Pretendard SemiBold";
 }

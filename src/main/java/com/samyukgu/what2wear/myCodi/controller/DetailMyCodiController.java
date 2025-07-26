@@ -1,5 +1,6 @@
 package com.samyukgu.what2wear.myCodi.controller;
 
+import com.samyukgu.what2wear.common.controller.BasicHeaderController;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.member.Session.MemberSession;
@@ -14,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -26,6 +28,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -42,6 +45,7 @@ public class DetailMyCodiController implements Initializable {
 
     // 추가: rootPane 필드
     @FXML private StackPane rootPane;
+    @FXML private VBox mainContainer;
 
     private CodiService codiService;
     private MemberSession memberSession;
@@ -76,6 +80,26 @@ public class DetailMyCodiController implements Initializable {
         }
 
         loadCodiDetail();
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/BasicHeader.fxml"));
+            HBox header = loader.load();
+
+            BasicHeaderController controller = loader.getController();
+            controller.setTitle("나만의 코디 상세");
+            controller.setOnBackAction(() -> {
+                try {
+                    Parent view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/samyukgu/what2wear/myCodi/myCodiList.fxml")));
+                    rootPane.getChildren().setAll(view);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+
+            mainContainer.getChildren().add(0, header); // StackPane 맨 위에 삽입
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void loadCodiDetail() {
@@ -105,7 +129,7 @@ public class DetailMyCodiController implements Initializable {
 
                 // 제목 다시 추가
                 Label titleLabel = new Label("선택된 아이템 상세");
-                titleLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #333;");
+                titleLabel.setStyle("-fx-font-family: Pretendard Regular; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #333;");
                 detailVBox.getChildren().add(titleLabel);
             }
 
@@ -202,12 +226,12 @@ public class DetailMyCodiController implements Initializable {
         String categoryName = categoryNames.getOrDefault(categoryId, "기타");
 
         Label categoryLabel = new Label(categoryName + ":");
-        categoryLabel.setStyle("-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #495057; -fx-min-width: 80;");
+        categoryLabel.setStyle("-fx-font-family: Pretendard Regular;  -fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #495057; -fx-min-width: 80;");
 
         // 상세 정보
         String detailText = buildDetailText(wardrobe);
         Label detailLabel = new Label(detailText);
-        detailLabel.setStyle("-fx-font-size: 11px; -fx-text-fill: #333; -fx-wrap-text: true;");
+        detailLabel.setStyle("-fx-font-family: Pretendard Regular;  -fx-font-size: 11px; -fx-text-fill: #333; -fx-wrap-text: true;");
         HBox.setHgrow(detailLabel, javafx.scene.layout.Priority.ALWAYS);
 
         detailBox.getChildren().addAll(categoryLabel, detailLabel);
@@ -313,7 +337,7 @@ public class DetailMyCodiController implements Initializable {
             CustomModalController controller = loader.getController();
             controller.configure(
                     "삭제 확인",
-                    "'" + currentCodi.getName() + "' 코디를 정말 삭제하시겠습니까?",
+                    "코디를 정말 삭제하시겠습니까?",
                     "/assets/icons/redCheck.png", // 아이콘 없음
                     "#FA7B7F", // 빨간색
                     "취소",

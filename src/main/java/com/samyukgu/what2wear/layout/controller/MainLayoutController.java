@@ -208,7 +208,7 @@ public class MainLayoutController {
             int buttonIndex = hbox.getChildren().indexOf(notificationButton);
             hbox.getChildren().add(buttonIndex + 1, notificationBadge);
             // 위치 미세 조정
-            notificationBadge.setTranslateX(-15); // 버튼과 겹치게
+            notificationBadge.setTranslateX(0); // 버튼과 겹치게
             notificationBadge.setTranslateY(15);  // 위쪽으로
 
             System.out.println("알림 배지 이미지 초기화 완료");

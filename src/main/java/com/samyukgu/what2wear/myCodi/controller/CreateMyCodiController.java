@@ -1,5 +1,6 @@
 package com.samyukgu.what2wear.myCodi.controller;
 
+import com.samyukgu.what2wear.common.controller.BasicHeaderController;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.member.Session.MemberSession;
@@ -11,22 +12,19 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
@@ -103,6 +101,8 @@ public class CreateMyCodiController implements Initializable {
     @FXML private ImageView outerPlusIcon;
     @FXML private ImageView accessoryPlusIcon;
     @FXML private ImageView etcPlusIcon;
+    @FXML private HBox root;
+    @FXML private VBox container;
 
     // 버튼들
     @FXML private Button resetButton;
@@ -134,6 +134,27 @@ public class CreateMyCodiController implements Initializable {
             e.printStackTrace();
             showError("초기화 중 오류가 발생했습니다: " + e.getMessage());
         }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/BasicHeader.fxml"));
+            HBox header = loader.load();
+
+            BasicHeaderController controller = loader.getController();
+            controller.setTitle("나만의 코디 추가");
+            controller.setOnBackAction(() -> {
+                try {
+                    Parent view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/samyukgu/what2wear/myCodi/myCodiList.fxml")));
+                    root.getChildren().setAll(view);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+
+            container.getChildren().add(0, header); // StackPane 맨 위에 삽입
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     private void setupUI() {
@@ -533,7 +554,8 @@ public class CreateMyCodiController implements Initializable {
 
             // 선택 상태 스타일 적용
             if (topPane != null) {
-                topPane.setStyle("-fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
+                topPane.setStyle("-fx-cursor: hand; -fx-background-color: #e8f4ff;" +
+                        "-fx-font-family: Pretendard Regular;-fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
             }
         }
     }
@@ -552,7 +574,7 @@ public class CreateMyCodiController implements Initializable {
             if (bottomStatusLabel != null) bottomStatusLabel.setText(clothes.getName());
 
             if (bottomPane != null) {
-                bottomPane.setStyle("-fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
+                bottomPane.setStyle("-fx-font-family: Pretendard Regular; -fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
             }
         }
     }
@@ -571,7 +593,7 @@ public class CreateMyCodiController implements Initializable {
             if (shoesStatusLabel != null) shoesStatusLabel.setText(clothes.getName());
 
             if (shoesPane != null) {
-                shoesPane.setStyle("-fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
+                shoesPane.setStyle("-fx-font-family: Pretendard Regular; -fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
             }
         }
     }
@@ -590,7 +612,7 @@ public class CreateMyCodiController implements Initializable {
             if (bagStatusLabel != null) bagStatusLabel.setText(clothes.getName());
 
             if (bagPane != null) {
-                bagPane.setStyle("-fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
+                bagPane.setStyle("-fx-font-family: Pretendard Regular; -fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
             }
         }
     }
@@ -609,7 +631,7 @@ public class CreateMyCodiController implements Initializable {
             if (dressStatusLabel != null) dressStatusLabel.setText(clothes.getName());
 
             if (dressPane != null) {
-                dressPane.setStyle("-fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
+                dressPane.setStyle("-fx-font-family: Pretendard Regular; -fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
             }
         }
     }
@@ -628,7 +650,7 @@ public class CreateMyCodiController implements Initializable {
             if (outerStatusLabel != null) outerStatusLabel.setText(clothes.getName());
 
             if (outerPane != null) {
-                outerPane.setStyle("-fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
+                outerPane.setStyle("-fx-font-family: Pretendard Regular; -fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
             }
         }
     }
@@ -647,7 +669,7 @@ public class CreateMyCodiController implements Initializable {
             if (accessoryStatusLabel != null) accessoryStatusLabel.setText(clothes.getName());
 
             if (accessoryPane != null) {
-                accessoryPane.setStyle("-fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
+                accessoryPane.setStyle("-fx-font-family: Pretendard Regular; -fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
             }
         }
     }
@@ -666,7 +688,7 @@ public class CreateMyCodiController implements Initializable {
             if (etcStatusLabel != null) etcStatusLabel.setText(clothes.getName());
 
             if (etcPane != null) {
-                etcPane.setStyle("-fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
+                etcPane.setStyle("-fx-font-family: Pretendard Regular; -fx-cursor: hand; -fx-background-color: #e8f4ff; -fx-border-color: #007acc; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
             }
         }
     }

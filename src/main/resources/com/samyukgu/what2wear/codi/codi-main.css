@@ -328,3 +328,16 @@
     -fx-font-family: "Pretendard SemiBold";
     -fx-font-size: 10;
 }
+
+.temperature-label {
+    -fx-font-size: 33;
+    -fx-font-family: "Pretendard SemiBold";
+}
+.region-label {
+    -fx-font-size: 14;
+    -fx-font-family: "Pretendard SemiBold";
+}
+.date-label {
+    -fx-font-size: 11;
+    -fx-font-family: "Pretendard Medium";
+}

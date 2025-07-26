@@ -33,21 +33,21 @@ public class LoginController {
     @FXML private Label signupLabel;
     @FXML private Label findIdLabel;
     @FXML private Label findPasswordLabel;
-    @FXML ImageView loginBanner;
+//    @FXML ImageView loginBanner;
 
     private MemberService memberService;
     private MemberSession memberSession;
     private RegionWeatherSession  regionWeatherSession;
     private WeatherService  weatherService;
 
-     // 초기화할때 UI 및 DI Container 세팅
+    // 초기화할때 UI 및 DI Container 세팅
     @FXML
     public void initialize(){
         setupUI();
         setupDI();
     }
 
-     // 로그인 버튼 클릭시 회원 검증 후 메인 페이지 이동
+    // 로그인 버튼 클릭시 회원 검증 후 메인 페이지 이동
     @FXML
     private void handleClickLoginButton(){
         Member member = memberService.login(inputIdField.getText(), inputPasswordField.getText());
@@ -96,20 +96,21 @@ public class LoginController {
     // 초기 로그인 배너 크기 및 모서리 처리
     private void setupUI() {
         int arcWidth = 30, arcHeight = 30;
-        Rectangle clip = new Rectangle(loginBanner.getFitWidth(), loginBanner.getFitHeight());
-        clip.setArcWidth(arcWidth);
-        clip.setArcHeight(arcHeight);
-        loginBanner.setClip(clip);
+//        Rectangle clip = new Rectangle(loginBanner.getFitWidth(), loginBanner.getFitHeight());
+//        clip.setArcWidth(arcWidth);
+//        clip.setArcHeight(arcHeight);
+//        loginBanner.setClip(clip);
     }
 
     // scene 이동 메서드
     private void switchScene(String fxmlPath, String title){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Parent root = loader.load();
+            Parent newRoot = loader.load();
 
-            Stage stage = (Stage) loginBanner.getScene().getWindow();
-            Scene scene = new Scene(root, 1280, 768);
+            // loginBanner 대신 다른 컴포넌트를 사용해서 Stage 가져오기
+            Stage stage = (Stage) root.getScene().getWindow();  // root StackPane 사용
+            Scene scene = new Scene(newRoot, 1280, 768);
             stage.setScene(scene);
             stage.setTitle(title);
             stage.setResizable(false);
@@ -119,7 +120,6 @@ public class LoginController {
         }
     }
 
-    // todo: 버튼 하나있는 모달로 바꾸기
     private void showConfirmationModal() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/CustomModal.fxml"));
@@ -131,12 +131,8 @@ public class LoginController {
                     "아이디와 비밀번호를 다시 확인해주세요.",
                     "/assets/icons/redCheck.png",
                     "#FA7B7F",
-                    "취소",
                     "확인",
-                    () -> root.getChildren().remove(modal),
-                    () -> {
-                        root.getChildren().remove(modal);
-                    }
+                    () -> root.getChildren().remove(modal)
             );
 
             root.getChildren().add(modal);

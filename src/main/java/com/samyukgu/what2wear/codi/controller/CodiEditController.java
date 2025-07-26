@@ -214,7 +214,7 @@ public class CodiEditController {
                     .collect(Collectors.toList());
 
             controller.configure(
-                    wardrobeList,
+                    selectedOutfits,
                     selectedCodi,
                     scheduleNameField.getText(),
                     datePicker.getValue(),
@@ -222,7 +222,7 @@ public class CodiEditController {
                     result -> {
                         root.getChildren().remove(modal);
                         this.selectedOutfits = result.getOutfits();
-//                        this.selectedCodi = result.getCodi();
+                        this.selectedCodi = result.getCodi();
                         renderCodiDisplay();
                     },
                     () -> root.getChildren().remove(modal),
@@ -254,30 +254,46 @@ public class CodiEditController {
             emptyBox.setPrefSize(400, 120);
             codiDisplayPane.getChildren().add(emptyBox);
         } else {
+            List<Wardrobe> outfits = selectedOutfits;
+
             GridPane grid = new GridPane();
-            grid.setHgap(15);
-            grid.setVgap(15);
-            int column = 3;
+            grid.setHgap(30);
+            grid.setVgap(20);
+            grid.setAlignment(Pos.TOP_LEFT);
 
-            List<ImageView> items = new ArrayList<>();
+            int columnCount = 3;
 
-            if (selectedOutfits != null) {
-                for (Wardrobe w : selectedOutfits) {
-                    Image img = new Image(new ByteArrayInputStream(w.getPicture()));
-                    ImageView imgView = new ImageView(img);
-                    imgView.setFitWidth(60);
-                    imgView.setPreserveRatio(true);
-                    items.add(imgView);
-                }
-            } else if (selectedCodi != null) {
-//                ImageView img = new ImageView(new Image(getClass().getResourceAsStream(selectedCodi.getImagePath())));
-//                img.setFitWidth(100);
-//                img.setPreserveRatio(true);
-//                items.add(img);
-            }
+            for (int i = 0; i < outfits.size(); i++) {
+                Wardrobe w = outfits.get(i);
 
-            for (int i = 0; i < items.size(); i++) {
-                grid.add(items.get(i), i % column, i / column);
+                // 바깥쪽 HBox
+                HBox itemBox = new HBox();
+                itemBox.getStyleClass().add("item-box");
+                itemBox.setAlignment(Pos.CENTER_LEFT);
+                itemBox.setSpacing(20); // 이미지와 텍스트 사이 간격 넉넉히
+
+                // 이미지
+                Image img = new Image(new ByteArrayInputStream(w.getPicture()));
+                ImageView imgView = new ImageView(img);
+                imgView.setFitWidth(80);
+                imgView.setPreserveRatio(true);
+
+                // 안쪽 VBox (카테고리 + 이름)
+                VBox textBox = new VBox(5); // 텍스트 간 간격
+                textBox.setAlignment(Pos.CENTER_LEFT);
+
+                Label categoryLabel = new Label(getNameById(w.getCategoryId()));
+                categoryLabel.setStyle("-fx-font-family: 'Pretendard SemiBold'; -fx-font-size: 16;");
+
+                Label nameLabel = new Label(w.getName());
+                nameLabel.setStyle("-fx-font-size: 13; -fx-font-family: 'Pretendard Regular'");
+                nameLabel.setWrapText(true);
+                nameLabel.setMaxWidth(100);
+
+                textBox.getChildren().addAll(categoryLabel, nameLabel);
+                itemBox.getChildren().addAll(imgView, textBox);
+
+                grid.add(itemBox, i % columnCount, i / columnCount);
             }
 
             codiDisplayPane.getChildren().add(grid);

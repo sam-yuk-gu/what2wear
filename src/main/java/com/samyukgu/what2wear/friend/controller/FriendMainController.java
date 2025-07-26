@@ -266,8 +266,10 @@ public class FriendMainController {
     private VBox createFriendBoxWithBytes(Member friend, byte[] imageBytes) {
         VBox friendBox = new VBox();
         friendBox.setAlignment(Pos.CENTER);
-        friendBox.setPrefHeight(150.0);
         friendBox.setPrefWidth(70.0);
+//        friendBox.setPrefHeight(100.0);
+//        friendBox.setSpacing(5.0);
+//        friendBox.setPadding(new Insets(5.0, 0.0, 5.0, 0.0));
         // 기본 스타일 클래스 제거 - 클릭 시에만 추가
 
         // 프로필 이미지 생성 (바이트 배열 사용)
@@ -277,6 +279,7 @@ public class FriendMainController {
 
         // 닉네임 라벨 생성
         Label nicknameLabel = new Label(friend.getNickname());
+        nicknameLabel.setStyle("-fx-font-size: 13; -fx-font-family: 'Pretendard Medium';");
 
         // VBox에 요소들 추가
         friendBox.getChildren().addAll(profileImage, nicknameLabel);

@@ -2,7 +2,6 @@
 
 <?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Pagination?>
@@ -14,10 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.samyukgu.what2wear.myCodi.controller.ListMyCodiController"
-      stylesheets="@css/myCodiList.css">
+<HBox prefHeight="768.0" prefWidth="1280.0" style="-fx-background-color: white" stylesheets="@css/myCodiList.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.myCodi.controller.ListMyCodiController">
     <children>
         <VBox prefHeight="768.0" prefWidth="1030.0">
             <!-- 상단 타이틀 -->
@@ -28,33 +24,33 @@
             <AnchorPane fx:id="mainContentArea" prefHeight="629.0" prefWidth="1030.0">
                 <children>
 
-                    <!-- 오른쪽 상단 필터 및 검색창 -->
-                    <HBox fx:id="filterSearchContainer" alignment="CENTER_RIGHT" layoutX="551.0" layoutY="26.0" prefHeight="30.0" prefWidth="445.0" spacing="10.0">
-                        <children>
-                            <!-- 수정된 정렬 ComboBox -->
-                            <ComboBox fx:id="sortComboBox" onAction="#handleSortChange" prefWidth="120" promptText="정렬 방식">
-                                <items>
-                                    <FXCollections fx:factory="observableArrayList">
-                                        <String fx:value="최신 순" />
-                                        <String fx:value="오래된 순" />
-                                        <String fx:value="이름순" />
-                                    </FXCollections>
-                                </items>
-                            </ComboBox>
-
-                            <HBox fx:id="searchContainer" alignment="CENTER_LEFT">
+                            <!-- 오른쪽 상단 필터 및 검색창 -->
+                            <HBox fx:id="filterSearchContainer" alignment="CENTER_RIGHT" layoutX="463.0" layoutY="46.0" prefHeight="34.0" prefWidth="509.0" spacing="10.0">
                                 <children>
-                                    <TextField fx:id="searchField" focusTraversable="false" prefWidth="200" promptText="코디 이름 검색" />
-                                    <Label fx:id="searchIcon" text="🔍" />
+                                    <!-- 수정된 정렬 ComboBox -->
+                                    <ComboBox fx:id="sortComboBox" onAction="#handleSortChange" prefHeight="30.0" prefWidth="120" promptText="최신 순" styleClass="custom-combo">
+                                        <items>
+                                            <FXCollections fx:id="observableArrayList" fx:factory="observableArrayList">
+                                                <String fx:value="최신 순" />
+                                                <String fx:value="오래된 순" />
+                                                <String fx:value="이름순" />
+                                            </FXCollections>
+                                        </items>
+                                    </ComboBox>
+
+                                    <HBox fx:id="searchContainer" alignment="CENTER_LEFT">
+                                        <children>
+                                            <TextField fx:id="searchField" focusTraversable="false" prefHeight="30.0" prefWidth="200" promptText="코디를 입력하세요" />
+                                            <Label fx:id="searchIcon" text="🔍" />
+                                        </children>
+                                    </HBox>
                                 </children>
                             </HBox>
-                        </children>
-                    </HBox>
 
                     <!-- 상단 버튼들 -->
-                    <HBox fx:id="actionButtonContainer" layoutX="11.0" layoutY="5.0" prefHeight="81.0" prefWidth="200.0" spacing="5.0">
+                    <HBox fx:id="actionButtonContainer" layoutX="11.0" layoutY="5.0" prefHeight="60.0" prefWidth="200.0" spacing="5.0">
                         <children>
-                            <VBox fx:id="addButton" alignment="CENTER" onMouseClicked="#handleAddMyCodiClick" prefHeight="70.0" prefWidth="70.0" spacing="5">
+                            <HBox fx:id="addButton" style="-fx-padding: 10 0" alignment="CENTER" onMouseClicked="#handleAddMyCodiClick" prefHeight="70.0" prefWidth="100.0" spacing="5">
                                 <children>
                                     <ImageView fx:id="addIcon" fitHeight="40" fitWidth="40">
                                         <image>
@@ -63,8 +59,8 @@
                                     </ImageView>
                                     <Label fx:id="addLabel" text="코디 추가" />
                                 </children>
-                            </VBox>
-                            <VBox fx:id="wardrobeButton" alignment="CENTER" onMouseClicked="#handleWardrobeClick" prefHeight="70.0" prefWidth="70.0" spacing="5">
+                            </HBox>
+                            <HBox fx:id="wardrobeButton" alignment="CENTER" onMouseClicked="#handleWardrobeClick" prefHeight="70.0" prefWidth="100.0" spacing="5">
                                 <children>
                                     <ImageView fx:id="wardrobeIcon" fitHeight="40" fitWidth="40">
                                         <image>
@@ -73,7 +69,7 @@
                                     </ImageView>
                                     <Label fx:id="wardrobeLabel" text="옷장" />
                                 </children>
-                            </VBox>
+                            </HBox>
                         </children>
                     </HBox>
 
@@ -85,8 +81,7 @@
                         </content>
                     </ScrollPane>
 
-                    <!-- 페이지네이션 -->
-                    <Pagination fx:id="pagination" layoutX="361.0" layoutY="627.0" prefHeight="53.0" prefWidth="305.0" />
+                    <Pagination fx:id="pagination" layoutX="6.0" layoutY="627.0" prefHeight="53.0" prefWidth="1021.0" styleClass="no-page-info" />
 
                     <!-- 로딩 및 상태 표시 영역 -->
                     <VBox fx:id="statusContainer" alignment="CENTER" layoutX="400.0" layoutY="300.0" prefHeight="100.0" prefWidth="200.0" visible="false">

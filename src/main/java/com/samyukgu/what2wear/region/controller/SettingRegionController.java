@@ -1,5 +1,6 @@
 package com.samyukgu.what2wear.region.controller;
 
+import com.samyukgu.what2wear.common.controller.BasicHeaderController;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.region.Session.RegionWeatherSession;
@@ -7,10 +8,15 @@ import com.samyukgu.what2wear.region.model.Region;
 import com.samyukgu.what2wear.weather.model.Weather;
 import com.samyukgu.what2wear.weather.service.WeatherService;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +27,8 @@ import java.util.stream.Collectors;
 public class SettingRegionController {
     @FXML private ComboBox<Region> parentComboBox;
     @FXML private ComboBox<Region> childComboBox;
+    @FXML private StackPane root;
+    @FXML private VBox container;
 
     private List<Region> regionList = new ArrayList<>();
     private RegionWeatherSession regionWeatherSession;
@@ -35,6 +43,26 @@ public class SettingRegionController {
     @FXML
     public void initialize() throws IOException {
         setupDI();
+        // 1. 헤더 동적 삽입
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/BasicHeader.fxml"));
+            HBox header = loader.load();
+
+            BasicHeaderController controller = loader.getController();
+            controller.setTitle("지역 설정");
+            controller.setOnBackAction(() -> {
+                try {
+                    Parent view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/samyukgu/what2wear/codi/CodiMainView.fxml")));
+                    root.getChildren().setAll(view);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+
+            container.getChildren().add(0, header); // StackPane 맨 위에 삽입
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         try {
             InputStream inputStream = getClass().getResourceAsStream("/data/region.json");
             ObjectMapper mapper = new ObjectMapper();

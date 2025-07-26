@@ -78,14 +78,19 @@ public class ClothesSelectionModalController implements Initializable {
     private void setupUI() {
         // 검색 필드 설정
         if (searchField != null) {
-            searchField.setPromptText("옷 이름으로 검색...");
+            searchField.setPromptText("옷 이름으로 검색");
         }
 
-        // 컨테이너 설정
+        // 컨테이너 설정 - 정렬 추가
         if (clothesContainer != null) {
             clothesContainer.setHgap(10);
             clothesContainer.setVgap(10);
             clothesContainer.setPadding(new Insets(10));
+
+            // 위에서부터 채워지도록 정렬 설정
+            clothesContainer.setAlignment(Pos.TOP_LEFT);
+            // 또는 가운데 정렬을 원한다면:
+            // clothesContainer.setAlignment(Pos.TOP_CENTER);
         }
 
         // 확인 버튼 초기 비활성화

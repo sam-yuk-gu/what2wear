@@ -95,7 +95,7 @@
 
 .modal-container {
     -fx-background-color: #FFFFFF;
-    -fx-padding: 20 30;
+    -fx-padding: 15 25;
     -fx-background-radius: 20;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.2, 0, 4);
 }

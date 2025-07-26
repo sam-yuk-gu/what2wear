@@ -8,6 +8,8 @@ import com.samyukgu.what2wear.codi.model.Codi;
 import com.samyukgu.what2wear.codi.model.CodiSchedule;
 import com.samyukgu.what2wear.codi.model.CodiScope;
 import com.samyukgu.what2wear.common.util.CategoryUtil;
+import com.samyukgu.what2wear.myCodi.model.CodiDetail;
+import com.samyukgu.what2wear.myCodi.model.CodiWithDetails;
 import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
 
 import java.io.InputStream;
@@ -200,6 +202,7 @@ public class CodiOracleDAO implements CodiDAO {
         WHERE c.member_id = ?
           AND c.id = ?
           AND c.deleted = 'N'
+        ORDER BY c.id DESC, cl.category_id
     """;
 
         try (Connection conn = getConnection();
@@ -440,4 +443,99 @@ public class CodiOracleDAO implements CodiDAO {
         return List.of();
     }
 
+    private Wardrobe mapResultSetToWardrobe(ResultSet rs) throws SQLException {
+        Wardrobe wardrobe = new Wardrobe();
+        wardrobe.setId(rs.getLong("clothes_id"));
+        wardrobe.setMemberId(rs.getLong("member_id"));
+        wardrobe.setCategoryId(rs.getLong("category_id"));
+        wardrobe.setName(rs.getString("clothes_name"));
+        wardrobe.setMemo(rs.getString("memo"));
+        wardrobe.setLike(rs.getString("liked"));
+        wardrobe.setPicture(rs.getBytes("clothes_picture"));
+        wardrobe.setKeyword(rs.getString("keyword"));
+        wardrobe.setSize(rs.getString("item_size"));
+        wardrobe.setColor(rs.getString("color"));
+        wardrobe.setBrand(rs.getString("brand"));
+        wardrobe.setDeleted("N");
+
+        return wardrobe;
+    }
+
+
+    private void mapResultSetToCodiWithDetails(ResultSet rs, CodiDetailDTO codiWithDetails) throws SQLException {
+        codiWithDetails.setCodiId(rs.getLong("id"));
+        codiWithDetails.setScheduleName(rs.getString("schedule"));
+        codiWithDetails.setCodiName(rs.getString("codi_name"));
+
+        Date scheduleDate = rs.getDate("schedule_date");
+        if (scheduleDate != null) {
+            codiWithDetails.setCodiName(rs.getString("name"));
+            codiWithDetails.setScheduleDate(scheduleDate.toLocalDate());
+        }
+
+        int scope = rs.getInt("scope");
+        if (!rs.wasNull()) {
+            codiWithDetails.setScope(scope);
+        }
+    }
+
+    @Override
+    public List<CodiDetailDTO> findAllWithDetails(Long memberId) {
+        String sql = """
+            SELECT c.*, c.name AS codi_name, cl.id as clothes_id, cl.name as clothes_name, cl.category_id, 
+                   cl.memo, cl.liked, cl.picture as clothes_picture, cl.keyword, 
+                   cl.item_size, cl.color, cl.brand
+            FROM codi c
+            LEFT JOIN codi_detail cd ON c.id = cd.codi_id
+            LEFT JOIN clothes cl ON cd.clothes_id = cl.id AND cl.deleted = 'N'
+            WHERE c.member_id = ? AND c.deleted = 'N' AND c.codi_type = 'W'
+            ORDER BY c.id, cl.category_id DESC
+            """;
+        List<CodiDetailDTO> result = new ArrayList<>();
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setLong(1, memberId);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                CodiDetailDTO current = null;
+                List<Wardrobe> currentClothes = new ArrayList<>();
+
+                while (rs.next()) {
+                    Long codiId = rs.getLong("id");
+
+                    // 새로운 코디인 경우
+                    if (current == null || !current.getCodiId().equals(codiId)) {
+                        // 이전 코디가 있다면 결과에 추가
+                        if (current != null) {
+                            current.setClothes(new ArrayList<>(currentClothes));
+                            result.add(current);
+                        }
+
+                        // 새로운 코디 생성
+                        current = new CodiDetailDTO();
+                        mapResultSetToCodiWithDetails(rs, current);
+                        currentClothes.clear();
+                    }
+
+                    // 옷 정보가 있는 경우 추가
+                    Long clothesId = rs.getLong("clothes_id");
+                    if (clothesId > 0) {
+                        Wardrobe wardrobe = mapResultSetToWardrobe(rs);
+                        currentClothes.add(wardrobe);
+                    }
+                }
+
+                // 마지막 코디 추가
+                if (current != null) {
+                    current.setClothes(new ArrayList<>(currentClothes));
+                    result.add(current);
+                }
+            }
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("코디 목록 조회 중 오류", e);
+        }
+    }
 }

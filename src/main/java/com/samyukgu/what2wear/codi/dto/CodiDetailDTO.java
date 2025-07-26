@@ -20,4 +20,13 @@ public class CodiDetailDTO {
     int scope;
     String scheduleName;
     List<Wardrobe> clothes;
+    String codiName;
+
+    public CodiDetailDTO(Long codiId, LocalDate scheduleDate, int scope, String scheduleName, List<Wardrobe> clothes) {
+        this.codiId = codiId;
+        this.scheduleDate = scheduleDate;
+        this.scope = scope;
+        this.scheduleName = scheduleName;
+        this.clothes = clothes;
+    }
 }

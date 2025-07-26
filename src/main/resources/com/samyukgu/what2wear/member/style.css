@@ -2,6 +2,11 @@
     -fx-background-color: "white";
 }
 
+.root-signup{
+    -fx-background-color: "white";
+    -fx-padding: 0 50;
+}
+
 .content-area{
     -fx-background-color: "white";
     -fx-background-radius: 10;
@@ -159,7 +164,7 @@
 /* LoginView.fxml */
 
 .description {
-    -fx-font-size: 14;
+    -fx-font-size: 16;
     -fx-font-family: "Pretendard Medium";
     -fx-text-fill: #6F6F6F;
 }
@@ -171,4 +176,11 @@
     -fx-border-radius: 10;
     -fx-font-size: 20;
     -fx-font-family: "Pretendard SemiBold";
+}
+
+.text-field, .text-area, .date-picker, .combo-box {
+    -fx-background-color: white;
+    -fx-effect: none;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
 }

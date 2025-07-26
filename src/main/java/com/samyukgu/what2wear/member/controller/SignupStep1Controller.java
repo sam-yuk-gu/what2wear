@@ -14,13 +14,14 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class SignupStep1Controller {
     @FXML private Label passwordRes;
     @FXML private Label passwordCheckRes;
-    @FXML private ImageView signupBanner;
+    @FXML private HBox signupBanner;
     @FXML private TextField inputIdField;
     @FXML private PasswordField inputPasswordField;
     @FXML private PasswordField inputPasswordCheckField;
@@ -76,10 +77,10 @@ public class SignupStep1Controller {
     // 초기 회원가입 배너 사이즈 조정 및 css 적용
     private void setupUI() {
         int arcWidth = 30, arcHeight = 30;
-        Rectangle clip = new Rectangle(signupBanner.getFitWidth(), signupBanner.getFitHeight());
-        clip.setArcWidth(arcWidth);
-        clip.setArcHeight(arcHeight);
-        signupBanner.setClip(clip);
+//        Rectangle clip = new Rectangle(signupBanner.getFitWidth(), signupBanner.getFitHeight());
+//        clip.setArcWidth(arcWidth);
+//        clip.setArcHeight(arcHeight);
+//        signupBanner.setClip(clip);
     }
 
     // id, password, password check 필드에 이벤트 할당

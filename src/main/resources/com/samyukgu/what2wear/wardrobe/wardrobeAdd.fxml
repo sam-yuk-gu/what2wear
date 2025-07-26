@@ -16,27 +16,11 @@
 <HBox prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21.0.8"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.samyukgu.what2wear.wardrobe.controller.CreateWardrobeController"
-      stylesheets="@css/wardrobeAdd.css">
+      stylesheets="@css/wardrobeAdd.css" fx:id="root">
     <children>
 
-
         <!-- 오른쪽 전체 -->
-        <VBox prefHeight="768.0" prefWidth="1030.0">
-            <!-- 상단 바 -->
-            <AnchorPane fx:id="topBar" prefHeight="42.0" prefWidth="1030.0">
-                <children>
-                    <HBox layoutX="14.0" layoutY="6.0" spacing="10.0">
-                        <children>
-                            <ImageView fx:id="backButton" fitHeight="40" fitWidth="40" onMouseClicked="#handleBackClick">
-                                <image>
-                                    <Image preserveRatio="true" url="@../wardrobe/images/tabler_arrow-left.png" />
-                                </image>
-                            </ImageView>
-                        </children>
-                    </HBox>
-                </children>
-            </AnchorPane>
-
+        <VBox fx:id="container" prefHeight="768.0" prefWidth="1030.0">
             <!-- 메인 콘텐츠 -->
             <AnchorPane fx:id="mainContent" prefHeight="718.0" prefWidth="1030.0">
                 <children>
@@ -63,7 +47,7 @@
                                                 </image>
                                             </ImageView>
                                             <Button fx:id="uploadButton" prefWidth="150.0" prefHeight="40.0"
-                                                    text="사진 선택" />
+                                                    text="사진 선택 *" />
                                         </children>
                                     </VBox>
 
@@ -73,7 +57,7 @@
                                             <Insets top="25" bottom="25" left="30" right="30" />
                                         </padding>
                                         <children>
-                                            <Label fx:id="keywordLabel" text="스타일 키워드" />
+                                            <Label fx:id="keywordLabel" text="스타일 키워드 (선택)" />
                                             <ComboBox fx:id="keywordField" prefWidth="200" prefHeight="35"
                                                       promptText="키워드를 선택하세요">
                                                 <items>
@@ -129,7 +113,7 @@
                                     <!-- 브랜드 -->
                                     <VBox spacing="8">
                                         <children>
-                                            <Label fx:id="brandLabel" text="브랜드 *" />
+                                            <Label fx:id="brandLabel" text="브랜드 (선택)" />
                                             <TextField fx:id="brandField" prefHeight="35"
                                                        promptText="예: 유니클로" />
                                         </children>
@@ -138,7 +122,7 @@
                                     <!-- 사이즈 -->
                                     <VBox spacing="8">
                                         <children>
-                                            <Label fx:id="sizeLabel" text="사이즈 *" />
+                                            <Label fx:id="sizeLabel" text="사이즈 (선택)" />
                                             <TextField fx:id="sizeField" prefHeight="35"
                                                        promptText="예: M, 95, 270" />
                                         </children>
@@ -147,7 +131,7 @@
                                     <!-- 색상 -->
                                     <VBox spacing="8">
                                         <children>
-                                            <Label fx:id="colorLabel" text="색상 *" />
+                                            <Label fx:id="colorLabel" text="색상 (선택)" />
                                             <ComboBox fx:id="colorField" prefHeight="35" prefWidth="380"
                                                       promptText="색상을 선택하세요">
                                                 <items>
@@ -172,9 +156,9 @@
                                     <!-- 메모 -->
                                     <VBox spacing="8">
                                         <children>
-                                            <Label fx:id="memoLabel" text="메모" />
+                                            <Label fx:id="memoLabel" text="메모 (선택)" />
                                             <TextField fx:id="memoField" prefHeight="60"
-                                                       promptText="자유롭게 메모를 작성하세요 (선택사항)" />
+                                                       promptText="자유롭게 메모를 작성하세요" />
                                         </children>
                                     </VBox>
 

@@ -1,19 +1,22 @@
 package com.samyukgu.what2wear.post.controller;
 
+import com.samyukgu.what2wear.common.controller.BasicHeaderController;
 import com.samyukgu.what2wear.common.controller.CustomModalController;
-import com.samyukgu.what2wear.layout.controller.MainLayoutController;
-import com.samyukgu.what2wear.common.controller.PostHeaderController;
 import com.samyukgu.what2wear.di.DIContainer;
+import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.post.model.Post;
 import com.samyukgu.what2wear.post.service.PostService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+
+import java.io.IOException;
+import java.util.Objects;
 
 public class EditPostController {
 
@@ -31,14 +34,20 @@ public class EditPostController {
         this.postService = DIContainer.getInstance().resolve(PostService.class);
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/PostHeader.fxml"));
-            HBox headerNode = loader.load();
-            PostHeaderController controller = loader.getController();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/BasicHeader.fxml"));
+            Parent header = loader.load();
+            BasicHeaderController controller = loader.getController();
+            controller.setTitle("게시글 상세");
+            controller.setOnBackAction(() -> {
+                try {
+                    Parent view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/samyukgu/what2wear/post/ListPost.fxml")));
+                    root.getChildren().setAll(view);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
 
-            controller.setTitle("게시글 수정");
-            controller.setBackButtonVisible(false);
-
-            mainVBox.getChildren().add(0, headerNode);
+            mainVBox.getChildren().add(0, header); // St
         } catch (Exception e) {
             e.printStackTrace();
         }

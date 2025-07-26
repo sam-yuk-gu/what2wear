@@ -8,27 +8,13 @@
 
 <HBox prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.12"
       xmlns:fx="http://javafx.com/fxml/1"
+      fx:id="root"
       fx:controller="com.samyukgu.what2wear.myCodi.controller.CreateMyCodiController"
       stylesheets="@css/myCodiAdd.css">
    <children>
 
       <!-- 오른쪽 전체 -->
-      <VBox prefHeight="768.0" prefWidth="1030.0">
-         <!-- 상단 바 -->
-         <AnchorPane fx:id="topBar" prefHeight="42.0" prefWidth="1030.0">
-            <children>
-               <HBox fx:id="topBarContainer" layoutX="14.0" layoutY="6.0" spacing="10.0">
-                  <children>
-                     <ImageView fx:id="backButton" fitHeight="40" fitWidth="40" onMouseClicked="#handleBackClick">
-                        <image>
-                           <Image preserveRatio="true" url="@../wardrobe/images/tabler_arrow-left.png" />
-                        </image>
-                     </ImageView>
-                  </children>
-               </HBox>
-            </children>
-         </AnchorPane>
-
+      <VBox fx:id="container" prefHeight="768.0" prefWidth="1030.0">
          <AnchorPane fx:id="mainContentPane" prefHeight="723.0" prefWidth="1030.0">
             <children>
                <Label fx:id="codiNameTitle" layoutX="34.0" layoutY="20.0" text="나만의 코디 이름">

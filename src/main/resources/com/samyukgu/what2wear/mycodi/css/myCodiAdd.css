@@ -26,6 +26,7 @@
     -fx-background-color: transparent;
     -fx-border-radius: 8;
     -fx-background-radius: 8;
+    -fx-font-family: "Pretendard SemiBold";
 }
 
 /* 상태 라벨들 (회색 텍스트) */
