@@ -275,7 +275,7 @@ public class FriendMainController {
         // 프로필 이미지 생성 (바이트 배열 사용)
 //        ImageView profileImage = createProfileImageFromBytes(imageBytes);
 //        ImageView profileImage = ImgToImageView.createProfileImageFromBytes(45.0, imageBytes);
-        ImageView profileImage = CircularImageUtil.createCircularImageFromBytes(55.0, imageBytes);
+        ImageView profileImage = CircularImageUtil.createCircularImageFromBytes(45.0, imageBytes);
 
         // 닉네임 라벨 생성
         Label nicknameLabel = new Label(friend.getNickname());
