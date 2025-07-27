@@ -1,3 +1,4 @@
+// 작성자 : 김동현
 package com.samyukgu.what2wear.myCodi.controller;
 
 import com.samyukgu.what2wear.di.DIContainer;
@@ -16,7 +17,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 

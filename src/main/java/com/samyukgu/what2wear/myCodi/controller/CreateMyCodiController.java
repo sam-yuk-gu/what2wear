@@ -1,3 +1,4 @@
+// 작성자 : 김동현
 package com.samyukgu.what2wear.myCodi.controller;
 
 import com.samyukgu.what2wear.common.controller.BasicHeaderController;
@@ -153,18 +154,14 @@ public class CreateMyCodiController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     private void setupUI() {
         System.out.println("UI 설정 시작");
-
         // 코디 이름 필드 설정
         if (codiNameField != null) {
             codiNameField.setPromptText("코디 이름을 입력하세요 (최대 255자)");
         }
-
         // 초기 카운터 설정
         updateSelectedCount();
         System.out.println("UI 설정 완료");
@@ -378,7 +375,7 @@ public class CreateMyCodiController implements Initializable {
     // 스냅샷 전용 GridPane 생성
     private GridPane createSnapshotGridPane(List<Wardrobe> selectedClothes) {
         try {
-            // 적절한 그리드 크기 계산 (옷 개수에 따라)
+            // 그리드 크기 계산 (옷 개수에 따라)
             int itemCount = selectedClothes.size();
             int cols = Math.min(itemCount, 3); // 최대 3열
             int rows = (int) Math.ceil((double) itemCount / cols); // 필요한 행 수
@@ -442,18 +439,6 @@ public class CreateMyCodiController implements Initializable {
 
         // 이미지 설정
         setSnapshotClothesImage(imageView, clothes);
-
-//        // 라벨 생성 (옷 이름)
-//        Label nameLabel = new Label(clothes.getName());
-//        nameLabel.setStyle("-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-alignment: center;");
-//        nameLabel.setMaxWidth(110);
-//        nameLabel.setWrapText(true);
-//        nameLabel.setTextAlignment(TextAlignment.CENTER);
-
-//        // 카테고리 라벨 생성
-//        String categoryName = getCategoryName(clothes.getCategoryId());
-//        Label categoryLabel = new Label(categoryName);
-//        categoryLabel.setStyle("-fx-font-size: 10px; -fx-text-fill: #666666; -fx-text-alignment: center;");
 
         box.getChildren().addAll(imageView);
 

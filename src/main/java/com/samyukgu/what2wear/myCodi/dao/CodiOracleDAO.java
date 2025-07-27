@@ -1,3 +1,4 @@
+// 작성자 : 김동현
 package com.samyukgu.what2wear.myCodi.dao;
 
 import com.samyukgu.what2wear.myCodi.model.Codi;
@@ -8,7 +9,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;

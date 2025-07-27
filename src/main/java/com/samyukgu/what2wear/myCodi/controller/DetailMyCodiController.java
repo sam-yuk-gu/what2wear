@@ -1,3 +1,4 @@
+// 작성자 : 김동현
 package com.samyukgu.what2wear.myCodi.controller;
 
 import com.samyukgu.what2wear.common.controller.BasicHeaderController;
@@ -17,7 +18,6 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -396,7 +396,7 @@ public class DetailMyCodiController implements Initializable {
         }
     }
 
-    // 삭제 성공 모달 (새로 추가)
+    // 삭제 성공 모달
     private void showDeleteSuccessModal() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/CustomModal.fxml"));
@@ -427,27 +427,7 @@ public class DetailMyCodiController implements Initializable {
 
         } catch (Exception e) {
             System.err.println("성공 모달 로딩 실패: " + e.getMessage());
-
-            // 모달 실패 시 기본 처리
-            showAlert("코디가 성공적으로 삭제되었습니다.");
-            MyCodiDetailData.clearSelectedCodi();
-            MainLayoutController.loadView("/com/samyukgu/what2wear/myCodi/myCodiList.fxml");
         }
-    }
-
-    // 기존 Alert 방식 (백업용)
-    private void showDeleteConfirmationAlert() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-                "'" + currentCodi.getName() + "' 코디를 정말 삭제하시겠습니까?\n삭제된 코디는 복구할 수 없습니다.",
-                ButtonType.YES, ButtonType.NO);
-        alert.setTitle("삭제 확인");
-        alert.setHeaderText(null);
-
-        alert.showAndWait().ifPresent(result -> {
-            if (result == ButtonType.YES) {
-                performDeleteCodi();
-            }
-        });
     }
 
     @FXML
@@ -455,15 +435,6 @@ public class DetailMyCodiController implements Initializable {
         System.out.println("뒤로가기 버튼 클릭됨");
         MyCodiDetailData.clearSelectedCodi();
         MainLayoutController.loadView("/com/samyukgu/what2wear/myCodi/myCodiList.fxml");
-    }
-
-    private void showAlert(String message) {
-        System.out.println("알림: " + message);
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("알림");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 
     private void showError(String message) {

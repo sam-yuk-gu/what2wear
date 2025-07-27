@@ -1,13 +1,11 @@
+// 작성자 : 김동현
 package com.samyukgu.what2wear.wardrobe.controller;
 
 import com.samyukgu.what2wear.common.controller.BasicHeaderController;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.member.Session.MemberSession;
-import com.samyukgu.what2wear.member.model.Member;
-import com.samyukgu.what2wear.wardrobe.dao.WardrobeOracleDAO;
 import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
-import com.samyukgu.what2wear.wardrobe.service.CategoryService;
 import com.samyukgu.what2wear.wardrobe.service.WardrobeService;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -19,7 +17,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -28,8 +25,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import com.samyukgu.what2wear.common.controller.CustomModalController;
-
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -333,7 +328,7 @@ public class DetailWardrobeController implements Initializable {
         }
     }
 
-    // 기존 하트 아이콘 업데이트 메서드 (호환성 유지)
+    // 기존 하트 아이콘 업데이트 메서드
     private void updateHeartIcon(Wardrobe wardrobe) {
         updateHeartIconImmediately(wardrobe.getLike());
     }
@@ -412,7 +407,6 @@ public class DetailWardrobeController implements Initializable {
         }
     }
 
-    // 삭제 버튼
 // 수정된 삭제 버튼 메서드
     @FXML
     private void handleDelete() {
@@ -452,7 +446,7 @@ public class DetailWardrobeController implements Initializable {
         }
     }
 
-    // 실제 삭제 작업을 수행하는 메서드 (새로 추가)
+    // 실제 삭제 작업을 수행하는 메서드
     private void performDeleteWardrobe() {
         try {
             // 백그라운드에서 삭제 작업 수행
@@ -516,11 +510,6 @@ public class DetailWardrobeController implements Initializable {
 
         } catch (Exception e) {
             System.err.println("성공 모달 로딩 실패: " + e.getMessage());
-
-            // 모달 실패 시 기본 Alert 사용
-            showAlert("삭제되었습니다.");
-            WardrobeDetailData.clearSelectedWardrobe();
-            MainLayoutController.loadView("/com/samyukgu/what2wear/wardrobe/wardrobeList.fxml");
         }
     }
 
@@ -529,13 +518,6 @@ public class DetailWardrobeController implements Initializable {
         // 데이터 정리
         WardrobeDetailData.clearSelectedWardrobe();
         MainLayoutController.loadView("/com/samyukgu/what2wear/wardrobe/wardrobeList.fxml");
-    }
-
-    private void showAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 
     private void showError(String message) {

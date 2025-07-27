@@ -1,7 +1,7 @@
+// 작성자 : 김동현
 package com.samyukgu.what2wear.myCodi.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class Codi {

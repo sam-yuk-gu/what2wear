@@ -1,9 +1,9 @@
+// 작성자 : 김동현
 package com.samyukgu.what2wear.wardrobe.controller;
 
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.member.Session.MemberSession;
-import com.samyukgu.what2wear.member.model.Member;
 import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
 import com.samyukgu.what2wear.wardrobe.service.WardrobeService;
 import javafx.application.Platform;

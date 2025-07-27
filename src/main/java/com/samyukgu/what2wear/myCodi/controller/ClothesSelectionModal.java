@@ -1,3 +1,4 @@
+// 작성자 : 김동현
 package com.samyukgu.what2wear.myCodi.controller;
 
 import javafx.fxml.FXMLLoader;
