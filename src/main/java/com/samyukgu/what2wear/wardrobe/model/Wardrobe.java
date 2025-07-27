@@ -13,8 +13,6 @@ public class Wardrobe {
     private String color;
     private String brand;
     private String deleted;
-    // 추가
-    private String imagePath;
 
     public Wardrobe() {}
 
