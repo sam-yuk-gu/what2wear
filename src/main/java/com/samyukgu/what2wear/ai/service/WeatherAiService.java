@@ -5,7 +5,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.samyukgu.what2wear.config.ConfigUtil;
-
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
@@ -15,6 +14,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
+// 작성자 : 오수경
 public class WeatherAiService {
     private final String SERVICE_KEY;
     public WeatherAiService() {

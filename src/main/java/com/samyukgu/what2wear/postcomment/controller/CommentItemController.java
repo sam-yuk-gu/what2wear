@@ -1,6 +1,5 @@
 package com.samyukgu.what2wear.postcomment.controller;
 
-import com.samyukgu.what2wear.common.controller.CustomModalController;
 import com.samyukgu.what2wear.common.util.CircularImageUtil;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.member.Session.MemberSession;
@@ -17,21 +16,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import lombok.Setter;
-import java.io.ByteArrayInputStream;
+import java.text.SimpleDateFormat;
 
+// 작성자 : 오수경
 public class CommentItemController {
 
     @FXML private StackPane root;
-    @FXML private VBox commentBox;
     @FXML private Label comment_author;
     @FXML private Label comment_date;
     @FXML private Label commentTextLabel;
     @FXML private TextField editTextField;
     @FXML private ImageView profileImageView;
-
-    @Setter private Long commentId;
 
     private MemberService memberService;
     private MemberSession memberSession;
@@ -69,13 +64,18 @@ public class CommentItemController {
     }
 
     public void setComment(PostComment comment) {
+        // java.util.Date일 경우
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String formattedDate = formatter.format(comment.getCreatedAt());
+
         setComment(
                 comment.getId(),
-                comment.getCreatedAt().toString(),
+                formattedDate,
                 comment.getContent(),
                 comment.getMemberId()
         );
     }
+
 
     private void applyEdit() {
         String newText = editTextField.getText();

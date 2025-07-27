@@ -4,8 +4,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.Rectangle?>
-
 <?import javafx.scene.image.Image?>
+
+<!-- 작성자 : 오수경 -->
 <StackPane fx:id="modalOverlay"
            xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.samyukgu.what2wear.common.controller.CustomModalController"
