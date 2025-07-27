@@ -24,10 +24,10 @@
                   <children>
                      <VBox alignment="CENTER" layoutX="19.0" layoutY="66.0" prefHeight="635.0" prefWidth="454.0" spacing="20.0">
                         <children>
-                           <HBox spacing="5.0">
+                           <HBox spacing="10.0" alignment="center">
                               <children>
                                  <TextField fx:id="searchField" prefHeight="40.0" prefWidth="380.0" promptText="사용자를 찾아보세요!" styleClass="input-field" />
-                                 <ImageView fitHeight="40.0" fitWidth="40.0" onMouseClicked="#handleSearchAction" style="-fx-cursor: hand;">
+                                 <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#handleSearchAction" style="-fx-cursor: hand;">
                                     <image>
                                        <Image url="@../../../../assets/icons/search_100x100.png" />
                                     </image>
