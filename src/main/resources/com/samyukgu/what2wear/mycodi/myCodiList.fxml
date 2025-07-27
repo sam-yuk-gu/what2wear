@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 작성자 : 김동현 -->
 
-<?import java.lang.String?>
-<?import javafx.collections.FXCollections?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Pagination?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 
-<HBox prefHeight="768.0" prefWidth="1280.0" style="-fx-background-color: white" stylesheets="@css/myCodiList.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.myCodi.controller.ListMyCodiController">
+<HBox prefHeight="768.0" prefWidth="1280.0" style="-fx-background-color: white" stylesheets="@css/myCodiList.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.myCodi.controller.ListMyCodiController">
     <children>
         <VBox prefHeight="768.0" prefWidth="1030.0">
             <!-- 상단 타이틀 -->
@@ -50,14 +44,14 @@
                     <!-- 상단 버튼들 -->
                     <HBox fx:id="actionButtonContainer" layoutX="11.0" layoutY="5.0" prefHeight="60.0" prefWidth="200.0" spacing="5.0">
                         <children>
-                            <HBox fx:id="addButton" style="-fx-padding: 10 0" alignment="CENTER" onMouseClicked="#handleAddMyCodiClick" prefHeight="70.0" prefWidth="100.0" spacing="5">
+                            <HBox fx:id="addButton" alignment="CENTER" onMouseClicked="#handleAddMyCodiClick" prefHeight="60.0" prefWidth="109.0" spacing="5" style="-fx-padding: 10 0">
                                 <children>
                                     <ImageView fx:id="addIcon" fitHeight="40" fitWidth="40">
                                         <image>
                                             <Image preserveRatio="true" url="@images/plus.png" />
                                         </image>
                                     </ImageView>
-                                    <Label fx:id="addLabel" text="코디 추가" />
+                                    <Label fx:id="addLabel" prefHeight="14.0" prefWidth="63.0" text="코디 추가" />
                                 </children>
                             </HBox>
                             <HBox fx:id="wardrobeButton" alignment="CENTER" onMouseClicked="#handleWardrobeClick" prefHeight="70.0" prefWidth="100.0" spacing="5">

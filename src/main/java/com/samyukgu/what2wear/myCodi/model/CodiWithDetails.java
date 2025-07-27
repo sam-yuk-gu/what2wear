@@ -1,3 +1,4 @@
+// 작성자 : 김동현
 package com.samyukgu.what2wear.myCodi.model;
 
 import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
@@ -16,7 +17,7 @@ public class CodiWithDetails {
     private byte[] picture;
     private String codiType;
     private String deleted;
-    private LocalDate createdAt; // ⭐ 추가된 필드
+    private LocalDate createdAt; //
     private List<Wardrobe> clothes; // 코디에 포함된 옷들
 
     public CodiWithDetails() {

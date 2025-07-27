@@ -1,10 +1,10 @@
+// 작성자 : 김동현
 package com.samyukgu.what2wear.wardrobe.controller;
 
 import com.samyukgu.what2wear.common.controller.BasicHeaderController;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.member.Session.MemberSession;
-import com.samyukgu.what2wear.member.model.Member;
 import com.samyukgu.what2wear.wardrobe.model.Category;
 import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
 import com.samyukgu.what2wear.wardrobe.service.CategoryService;
@@ -48,7 +48,6 @@ public class EditWardrobeController implements Initializable {
     @FXML private Button uploadButton;
     @FXML private Button updateButton;
 
-    // 추가: rootPane 필드
     @FXML private StackPane rootPane;
     @FXML private VBox container;
 
@@ -462,51 +461,6 @@ public class EditWardrobeController implements Initializable {
     @FXML
     private void handleCancel() {
         handleBackClick();
-//        // 변경사항이 있다면 확인 모달 표시
-//        if (hasUnsavedChanges()) {
-//            try {
-//                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/CustomModal.fxml"));
-//                StackPane modal = loader.load();
-//
-//                CustomModalController controller = loader.getController();
-//                controller.configure(
-//                        "변경사항 확인",
-//                        "저장하지 않은 변경사항이 있습니다.",
-//                        "/assets/icons/greenCheck.png", // 아이콘 없음
-//                        "#dc3545", // 빨간색
-//                        "계속수정",
-//                        "취소하기",
-//                        () -> rootPane.getChildren().remove(modal), // 계속 수정
-//                        () -> {
-//                            rootPane.getChildren().remove(modal);
-//                            handleBackClick(); // 취소하고 뒤로가기
-//                        }
-//                );
-//
-//                rootPane.getChildren().add(modal);
-//
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                // 모달 실패 시 기본 Alert 사용
-//                showCancelConfirmationAlert();
-//            }
-//        } else {
-//            handleBackClick();
-//        }
-    }
-
-    // 기존 Alert 방식 (백업용)
-    private void showCancelConfirmationAlert() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-                "저장하지 않은 변경사항이 있습니다. 정말로 취소하시겠습니까?",
-                ButtonType.YES, ButtonType.NO);
-        alert.setTitle("확인");
-        alert.setHeaderText(null);
-        alert.showAndWait().ifPresent(result -> {
-            if (result == ButtonType.YES) {
-                handleBackClick();
-            }
-        });
     }
 
     @FXML
@@ -516,51 +470,44 @@ public class EditWardrobeController implements Initializable {
         MainLayoutController.loadView("/com/samyukgu/what2wear/wardrobe/wardrobeDetail.fxml");
     }
 
-    private boolean hasUnsavedChanges() {
-        if (currentWardrobe == null) return false;
-
-        // 각 필드의 변경사항 확인
-        String currentName = currentWardrobe.getName() != null ? currentWardrobe.getName() : "";
-        String currentBrand = currentWardrobe.getBrand() != null ? currentWardrobe.getBrand() : "";
-        String currentSize = currentWardrobe.getSize() != null ? currentWardrobe.getSize() : "";
-        String currentMemo = currentWardrobe.getMemo() != null ? currentWardrobe.getMemo() : "";
-
-        boolean nameChanged = !nameField.getText().equals(currentName);
-        boolean brandChanged = !brandField.getText().equals(currentBrand);
-        boolean sizeChanged = !sizeField.getText().equals(currentSize);
-        boolean memoChanged = !memoField.getText().equals(currentMemo);
-
-        boolean keywordChanged = false;
-        if (keywordField.getValue() != null) {
-            keywordChanged = !keywordField.getValue().equals(currentWardrobe.getKeyword());
-        } else if (currentWardrobe.getKeyword() != null) {
-            keywordChanged = true;
-        }
-
-        boolean colorChanged = false;
-        if (colorField.getValue() != null) {
-            colorChanged = !colorField.getValue().equals(currentWardrobe.getColor());
-        } else if (currentWardrobe.getColor() != null) {
-            colorChanged = true;
-        }
-
-        boolean categoryChanged = false;
-        if (categoryField.getValue() != null && currentWardrobe.getCategoryId() != null) {
-            categoryChanged = !categoryField.getValue().getId().equals(currentWardrobe.getCategoryId());
-        }
-
-        boolean imageChanged = (pictureData != currentWardrobe.getPicture());
-
-        return nameChanged || brandChanged || sizeChanged || memoChanged ||
-                keywordChanged || colorChanged || categoryChanged || imageChanged;
-    }
-
-    private void showAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
+//    private boolean hasUnsavedChanges() {
+//        if (currentWardrobe == null) return false;
+//
+//        // 각 필드의 변경사항 확인
+//        String currentName = currentWardrobe.getName() != null ? currentWardrobe.getName() : "";
+//        String currentBrand = currentWardrobe.getBrand() != null ? currentWardrobe.getBrand() : "";
+//        String currentSize = currentWardrobe.getSize() != null ? currentWardrobe.getSize() : "";
+//        String currentMemo = currentWardrobe.getMemo() != null ? currentWardrobe.getMemo() : "";
+//
+//        boolean nameChanged = !nameField.getText().equals(currentName);
+//        boolean brandChanged = !brandField.getText().equals(currentBrand);
+//        boolean sizeChanged = !sizeField.getText().equals(currentSize);
+//        boolean memoChanged = !memoField.getText().equals(currentMemo);
+//
+//        boolean keywordChanged = false;
+//        if (keywordField.getValue() != null) {
+//            keywordChanged = !keywordField.getValue().equals(currentWardrobe.getKeyword());
+//        } else if (currentWardrobe.getKeyword() != null) {
+//            keywordChanged = true;
+//        }
+//
+//        boolean colorChanged = false;
+//        if (colorField.getValue() != null) {
+//            colorChanged = !colorField.getValue().equals(currentWardrobe.getColor());
+//        } else if (currentWardrobe.getColor() != null) {
+//            colorChanged = true;
+//        }
+//
+//        boolean categoryChanged = false;
+//        if (categoryField.getValue() != null && currentWardrobe.getCategoryId() != null) {
+//            categoryChanged = !categoryField.getValue().getId().equals(currentWardrobe.getCategoryId());
+//        }
+//
+//        boolean imageChanged = (pictureData != currentWardrobe.getPicture());
+//
+//        return nameChanged || brandChanged || sizeChanged || memoChanged ||
+//                keywordChanged || colorChanged || categoryChanged || imageChanged;
+//    }
 
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

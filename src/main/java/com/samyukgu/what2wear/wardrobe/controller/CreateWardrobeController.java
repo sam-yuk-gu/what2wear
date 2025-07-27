@@ -1,3 +1,4 @@
+// 작성자 : 김동현
 package com.samyukgu.what2wear.wardrobe.controller;
 
 import com.samyukgu.what2wear.common.controller.BasicHeaderController;
@@ -293,27 +294,6 @@ public class CreateWardrobeController implements Initializable {
         new Thread(imageTask).start();
     }
 
-    // 뒤로가기 버튼
-    @FXML
-    private void handleBackClick() {
-        // 변경사항이 있다면 확인 대화상자 표시
-//        if (hasUnsavedChanges()) {
-//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-//                    "저장하지 않은 변경사항이 있습니다. 정말로 나가시겠습니까?",
-//                    ButtonType.YES, ButtonType.NO);
-//            alert.setTitle("확인");
-//            alert.setHeaderText(null);
-
-//            alert.showAndWait().ifPresent(result -> {
-//                if (result == ButtonType.YES) {
-        MainLayoutController.loadView("/com/samyukgu/what2wear/wardrobe/wardrobeList.fxml");
-//                }
-//            });
-//        } else {
-//            MainLayoutController.loadView("/com/samyukgu/what2wear/wardrobe/wardrobeList.fxml");
-//        }
-    }
-
     private boolean hasUnsavedChanges() {
         return (nameField.getText() != null && !nameField.getText().trim().isEmpty()) ||
                 categoryField.getValue() != null ||
@@ -358,13 +338,6 @@ public class CreateWardrobeController implements Initializable {
         } catch (Exception e) {
             pictureView.setImage(null);
         }
-    }
-
-    private void showAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 
     private void showError(String message) {
