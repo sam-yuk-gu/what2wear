@@ -75,7 +75,6 @@
                                      <children>
                                        <ImageView fx:id="selectedMemberProfileImg" fitHeight="150.0" fitWidth="150.0">
                                           <image>
-                                             <Image url="@../../../../assets/images/cute.jpg" />
                                           </image>
                                        </ImageView>
                                      </children>
