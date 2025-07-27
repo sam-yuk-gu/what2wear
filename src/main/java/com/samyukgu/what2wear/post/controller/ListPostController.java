@@ -1,6 +1,5 @@
 package com.samyukgu.what2wear.post.controller;
 
-import com.samyukgu.what2wear.common.controller.CustomModalController;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
 import com.samyukgu.what2wear.member.Session.MemberSession;
@@ -10,18 +9,17 @@ import com.samyukgu.what2wear.post.service.PostService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+// 작성자 : 오수경
 public class ListPostController implements Initializable {
     @FXML private StackPane root;
 

@@ -14,10 +14,10 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-
 import java.io.IOException;
 import java.util.Objects;
 
+// 작성자 : 오수경
 public class EditPostController {
 
     @FXML private StackPane root;

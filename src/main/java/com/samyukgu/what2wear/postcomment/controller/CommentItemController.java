@@ -16,21 +16,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import lombok.Setter;
 import java.text.SimpleDateFormat;
 
+// 작성자 : 오수경
 public class CommentItemController {
 
     @FXML private StackPane root;
-    @FXML private VBox commentBox;
     @FXML private Label comment_author;
     @FXML private Label comment_date;
     @FXML private Label commentTextLabel;
     @FXML private TextField editTextField;
     @FXML private ImageView profileImageView;
-
-    @Setter private Long commentId;
 
     private MemberService memberService;
     private MemberSession memberSession;

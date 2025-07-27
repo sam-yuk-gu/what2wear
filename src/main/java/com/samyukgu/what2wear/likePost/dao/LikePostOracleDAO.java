@@ -6,8 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.util.Properties;
 
-import static java.sql.DriverManager.getConnection;
-
+// 작성자 : 오수경
 public class LikePostOracleDAO implements LikePostDAO {
     private static String url;
     private static String dbUser;

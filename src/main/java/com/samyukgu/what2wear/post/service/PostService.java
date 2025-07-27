@@ -3,11 +3,9 @@ package com.samyukgu.what2wear.post.service;
 import com.samyukgu.what2wear.likePost.dao.LikePostDAO;
 import com.samyukgu.what2wear.post.dao.PostDAO;
 import com.samyukgu.what2wear.post.model.Post;
-import javafx.geometry.Pos;
-
-import java.util.ArrayList;
 import java.util.List;
 
+// 작성자 : 오수경
 public class PostService {
     private final PostDAO dao;
     private final LikePostDAO likePostDAO;
@@ -15,10 +13,6 @@ public class PostService {
     public PostService(PostDAO postDAO, LikePostDAO likePostDAO) {
         this.dao = postDAO;
         this.likePostDAO = likePostDAO;
-    }
-
-    public Post getPost(Long id) {
-        return dao.findById(id);
     }
 
     public List<Post> getAllPosts(Long currentMemberId) {

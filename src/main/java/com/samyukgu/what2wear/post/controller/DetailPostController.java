@@ -4,36 +4,33 @@ import com.samyukgu.what2wear.common.controller.BasicHeaderController;
 import com.samyukgu.what2wear.common.controller.CustomModalController;
 import com.samyukgu.what2wear.common.util.CircularImageUtil;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
-import com.samyukgu.what2wear.common.controller.PostHeaderController;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.member.Session.MemberSession;
 import com.samyukgu.what2wear.member.service.MemberService;
-import com.samyukgu.what2wear.post.dao.PostOracleDAO;
 import com.samyukgu.what2wear.post.model.Post;
 import com.samyukgu.what2wear.post.service.PostService;
 import com.samyukgu.what2wear.postcomment.controller.CommentItemController;
 import com.samyukgu.what2wear.postcomment.dao.PostCommentDAO;
 import com.samyukgu.what2wear.postcomment.model.PostComment;
-import javafx.application.Platform;
+import com.samyukgu.what2wear.postcomment.service.PostCommentService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+// 작성자 : 오수경
 public class DetailPostController {
 
     @FXML private StackPane root;
@@ -50,14 +47,17 @@ public class DetailPostController {
     @FXML private TextField commentField;
     @FXML private ImageView profileImg;
     @FXML private VBox container;
+    @FXML private Label commentCountLabel;
 
     // 회원 세션
     private MemberService memberService;
     private MemberSession memberSession;
 
+    private Long postId;
     private int likeCount;
     private boolean isLiked = false;
     private Post currentPost;
+    private final PostCommentService commentService = new PostCommentService();
 
     @FXML
     private void initialize() {
@@ -102,12 +102,15 @@ public class DetailPostController {
 
     public void setPostData(Post post) {
         this.currentPost = post;
+        this.postId = post.getId(); // postId 저장
         this.isLiked = post.isLiked();  // 초기 좋아요 상태 가져오기
         this.likeCount = post.getLike_count(); // 초기 좋아요 수 가져오기
 
         displayPostContent(post);
         checkAndShowButtons(post);
         loadComments();
+
+        updateCommentCountLabel(postId);    // 댓글 갯수 카운트
 
         updateLikeIcon();   // 초기 좋아요 아이콘 설정
     }
@@ -183,12 +186,6 @@ public class DetailPostController {
         deletePostButton.setManaged(false);
     }
 
-    // 뒤로가기
-    @FXML
-    private void handleBack() {
-        MainLayoutController.loadView("/com/samyukgu/what2wear/post/ListPost.fxml");
-    }
-
     // 내가 쓴 게시글 수정하기 버튼 클릭 시
     public void handlePostEditClick() {
         // 데이터 불러와서 수정 화면으로 전환
@@ -246,6 +243,12 @@ public class DetailPostController {
         commentDAO.create(newComment);
         commentField.clear();
         addCommentToUI(newComment);
+        updateCommentCountLabel(currentPost.getId());   //  댓글 등록 후 댓글 수 갱신
+    }
+
+    private void updateCommentCountLabel(Long postId) {
+        int count = commentService.countByPostId(postId);
+        commentCountLabel.setText("댓글(" + count + ")");
     }
 
     // 댓글 추가 후 바로 업데이트
@@ -306,5 +309,4 @@ public class DetailPostController {
         currentPost.setLike_count(likeCount);
         currentPost.setLiked(isLiked);
     }
-
 }

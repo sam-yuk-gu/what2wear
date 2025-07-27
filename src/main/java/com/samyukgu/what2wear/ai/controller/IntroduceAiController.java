@@ -7,6 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 
+// 작성자 : 오수경
 public class IntroduceAiController {
     @FXML private ComboBox<String> select_location_title;
     @FXML private ComboBox<String> select_title;

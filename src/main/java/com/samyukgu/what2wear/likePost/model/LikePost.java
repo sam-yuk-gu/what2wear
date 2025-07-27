@@ -1,9 +1,8 @@
 package com.samyukgu.what2wear.likePost.model;
 
 import com.samyukgu.what2wear.post.model.Post;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 
+// 작성자 : 오수경
 public class LikePost {
     private Post post;
 

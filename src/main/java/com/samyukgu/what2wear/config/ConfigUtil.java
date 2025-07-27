@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+// 작성자 : 오수경
 public class ConfigUtil {
     private static final Properties properties = new Properties();
 

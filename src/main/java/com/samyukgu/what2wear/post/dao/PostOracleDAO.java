@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+// 작성자 : 오수경
 public class PostOracleDAO implements PostDAO {
     private static String url;
     private static String dbUser;

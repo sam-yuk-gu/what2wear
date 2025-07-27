@@ -2,9 +2,9 @@ package com.samyukgu.what2wear.post.model;
 
 import lombok.Getter;
 import lombok.Setter;
-
 import java.util.Date;
 
+// 작성자 : 오수경
 @Getter
 @Setter
 public class Post {
