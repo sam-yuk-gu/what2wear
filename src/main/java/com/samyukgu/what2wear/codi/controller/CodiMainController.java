@@ -96,6 +96,12 @@ public class CodiMainController {
 
 
     private void setupWeather() {
+        // null 체크 추가
+        if (weather == null) {
+            System.out.println("날씨 데이터가 아직 로드되지 않았습니다.");
+            return;
+        }
+
         temperatureLabel.setText(weather.getTemp().toString() + "°C");
         regionLabel.setText(region.getRegionParent() + " " + region.getRegionChild());
         dateLabel.setText(formatKoreanDate(currentDate));

@@ -4,6 +4,8 @@ import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.friend.dao.FriendDAO;
 import com.samyukgu.what2wear.friend.dao.FriendOracleDAO;
 import com.samyukgu.what2wear.friend.service.FriendService;
+import com.samyukgu.what2wear.likePost.dao.LikePostDAO;
+import com.samyukgu.what2wear.likePost.dao.LikePostOracleDAO;
 import com.samyukgu.what2wear.mail.service.AuthService;
 import com.samyukgu.what2wear.mail.service.MailService;
 import com.samyukgu.what2wear.member.Session.MemberSession;
@@ -55,13 +57,19 @@ public class ApplicationConfig {
         container.registerSingleton(com.samyukgu.what2wear.codi.dao.CodiDAO.class,
                 new com.samyukgu.what2wear.codi.dao.CodiOracleDAO());
         container.registerSingleton(PostDAO.class, new PostOracleDAO());
+        container.registerSingleton(LikePostDAO.class, new LikePostOracleDAO());
         container.registerSingleton(PostCommentDAO.class, new PostCommentOracleDAO());
         container.registerSingleton(NotificationDAO.class, new NotificationOracleDAO());
         container.registerSingleton(RegionDAO.class, new RegionOracleDAO());
 
         // Service
         container.registerSingleton(MemberService.class, new MemberService(container.resolve(MemberDAO.class)));
-        container.registerSingleton(PostService.class, new PostService(container.resolve(PostDAO.class)));
+        container.registerSingleton(PostService.class,
+                new PostService(
+                        container.resolve(PostDAO.class),
+                        container.resolve(LikePostDAO.class)
+                ));
+        container.registerSingleton(LikePostDAO.class, new LikePostOracleDAO());
         container.registerSingleton(com.samyukgu.what2wear.codi.service.CodiService.class,
                 new com.samyukgu.what2wear.codi.service.CodiService(
                         container.resolve(com.samyukgu.what2wear.codi.dao.CodiDAO.class)

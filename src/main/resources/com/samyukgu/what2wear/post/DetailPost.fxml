@@ -55,7 +55,7 @@
                                         </VBox>
                                         <VBox fx:id="like_pane" alignment="CENTER" prefHeight="41.0" prefWidth="120.0"
                                               spacing="2" styleClass="like-container">
-                                            <Button fx:id="likeButton" onAction="#handleLikeClick"
+                                            <Button fx:id="likeButton" onAction="#handleLikeButtonClick"
                                                     styleClass="arrow_button">
                                                 <graphic>
                                                     <ImageView fx:id="likeIcon" fitHeight="24.0" fitWidth="24.0"

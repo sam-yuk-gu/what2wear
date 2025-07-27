@@ -74,7 +74,7 @@
                            <TableColumn fx:id="colDate" prefWidth="220.0" styleClass="colDate" text="작성일" />
                            <TableColumn fx:id="colLikes" prefWidth="110.0" text="좋아요">
                               <cellValueFactory>
-                                 <PropertyValueFactory property="likeCount" />
+                                 <PropertyValueFactory property="like_count" />
                               </cellValueFactory>
                            </TableColumn>
                         </columns>

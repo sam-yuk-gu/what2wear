@@ -3,6 +3,8 @@ package com.samyukgu.what2wear.post.controller;
 import com.samyukgu.what2wear.common.controller.CustomModalController;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
+import com.samyukgu.what2wear.member.Session.MemberSession;
+import com.samyukgu.what2wear.member.service.MemberService;
 import com.samyukgu.what2wear.post.model.Post;
 import com.samyukgu.what2wear.post.service.PostService;
 import javafx.collections.FXCollections;
@@ -38,6 +40,9 @@ public class ListPostController implements Initializable {
     @FXML private TextField search_title;
     @FXML private ImageView search_icon;
 
+    // 회원 세션
+    private MemberService memberService;
+    private MemberSession memberSession;
 
     private PostService postService;
     private List<Post> allPosts;
@@ -47,8 +52,11 @@ public class ListPostController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // 회원 정보 불러오기
+        setupDI();
+
         this.postService = DIContainer.getInstance().resolve(PostService.class);
-        allPosts = postService.getAllPosts();
+        allPosts = postService.getAllPosts(memberSession.getMember().getId());
 
         search_icon.setOnMouseClicked(event -> handleSearch());
         search_title.setOnAction(event -> handleSearch()); // 엔터 키도 가능하게
@@ -78,6 +86,13 @@ public class ListPostController implements Initializable {
         });
     }
 
+    // 회원 정보 불러오기
+    private void setupDI() {
+        DIContainer diContainer = DIContainer.getInstance();
+        memberService = diContainer.resolve(MemberService.class);
+        memberSession = diContainer.resolve(MemberSession.class);
+    }
+
     // 게시글 정보 검색
     private void handleSearch() {
         boolean isFilterSelected = checkIfFilterIsSelected(); // 필터 선택 여부 검사
@@ -86,7 +101,7 @@ public class ListPostController implements Initializable {
         String type = select_title.getValue();
 
         if (keyword == null || keyword.isBlank() || type == null) {
-            allPosts = postService.getAllPosts(); // 전체 조회
+            allPosts = postService.getAllPosts(memberSession.getMember().getId()); // 전체 조회
         } else {
             allPosts = postService.searchPost(keyword, type); // 조건 검색
         }
@@ -152,4 +167,20 @@ public class ListPostController implements Initializable {
     private void openPostDetail(Post selectedPost) {
         MainLayoutController.loadPostDetailView(selectedPost);
     }
+
+    // 좋아요 등록
+    @FXML private void handleLikeButtonClick() {
+        Post selected = table_board.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            Long postId = selected.getId();
+            Long memberId = memberSession.getMember().getId();
+
+            postService.likePost(postId, memberId); // 좋아요 삽입
+
+            // 좋아요 수 갱신
+            allPosts = postService.getAllPosts(memberId);
+            showPage(currentPage);
+        }
+    }
+
 }

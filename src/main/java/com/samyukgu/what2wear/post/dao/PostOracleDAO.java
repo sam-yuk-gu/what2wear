@@ -67,37 +67,58 @@ public class PostOracleDAO implements PostDAO {
     }
 
     @Override
-    public List<Post> findAll() {
+    public List<Post> findAll(Long currentMemberId) {
         String sql = """
-            SELECT p.*, m.name AS writer_name
-            FROM post p
-            LEFT OUTER JOIN member m ON p.member_id = m.id
-            ORDER BY p.id DESC
-        """;
+        SELECT p.id, p.title, p.member_id, p.cody_id, p.content,
+            p.create_at, p.last_updated,
+            m.name AS writer_name,
+            (SELECT COUNT(*) FROM like_post l WHERE l.post_id = p.id) AS like_count
+        FROM post p
+            LEFT JOIN member m ON p.member_id = m.id
+        ORDER BY p.id DESC
+    """;
 
-        try (Connection conn  = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)
-        ) {
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
             ResultSet rs = pstmt.executeQuery();
             List<Post> posts = new ArrayList<>();
 
             while (rs.next()) {
-                posts.add (
-                        new Post (
-                        rs.getLong("id"),
+                Long postId = rs.getLong("id");
+
+                Post post = new Post(
+                        postId,
                         rs.getLong("member_id"),
                         rs.getLong("cody_id"),
                         rs.getString("title"),
                         rs.getString("content"),
                         rs.getDate("create_at"),
                         rs.getDate("last_updated"),
-                                rs.getInt("like_count"),
-                                rs.getString("writer_name")
-
-                        )
+                        rs.getInt("like_count"),
+                        rs.getString("writer_name")
                 );
+
+                // 로그인한 유저가 이 게시글에 좋아요를 눌렀는지 확인
+                String likeCheckSql = """
+                SELECT COUNT(*) FROM like_post
+                WHERE post_id = ? AND member_id = ?
+            """;
+                try (PreparedStatement likeStmt = conn.prepareStatement(likeCheckSql)) {
+                    likeStmt.setLong(1, postId);
+                    likeStmt.setLong(2, currentMemberId);
+                    try (ResultSet likeRs = likeStmt.executeQuery()) {
+                        if (likeRs.next()) {
+                            post.setLiked(likeRs.getInt(1) > 0); // true if 좋아요 누름
+                        }
+                    }
+                }
+
+                posts.add(post);
             }
+
             return posts;
+
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Error By Select Post");
@@ -180,12 +201,12 @@ public class PostOracleDAO implements PostDAO {
 
     public List<Post> search(String keyword, String type) {
         String sqlBase = """
-        SELECT p.*, m.name AS writer_name
-        FROM post p
-        LEFT OUTER JOIN member m ON p.member_id = m.id
-        WHERE LOWER(%s) LIKE ?
-        ORDER BY p.id DESC
-    """;
+                    SELECT p.*, m.name AS writer_name
+                    FROM post p
+                    LEFT OUTER JOIN member m ON p.member_id = m.id
+                    WHERE LOWER(%s) LIKE ?
+                    ORDER BY p.id DESC
+                """;
 
         String column;
         switch (type) {
@@ -225,5 +246,30 @@ public class PostOracleDAO implements PostDAO {
         }
     }
 
+    // 좋아요 등록
+    @Override
+    public void likePost(Long postId, Long memberId) {
+        String sql = """
+        INSERT INTO like_post (id, post_id, member_id, created_at)
+        VALUES (SEQ_LIKE_POST.NEXTVAL, ?, ?, SYSDATE)
+    """;
 
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setLong(1, postId);
+            pstmt.setLong(2, memberId);
+            int rowsInserted = pstmt.executeUpdate();
+
+            if (rowsInserted > 0) {
+                System.out.println("좋아요 삽입 성공! post_id=" + postId + ", member_id=" + memberId);
+            } else {
+                System.out.println("좋아요 삽입 실패 ㅠㅠ");
+            }
+
+        } catch (SQLException e) {
+            System.err.println("좋아요 삽입 중 오류 발생 ㅠㅠ");
+            e.printStackTrace();
+        }
+    }
 }

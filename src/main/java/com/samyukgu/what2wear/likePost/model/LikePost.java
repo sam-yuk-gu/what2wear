@@ -6,11 +6,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class LikePost {
     private Post post;
-    private IntegerProperty likeCount;
 
     public LikePost(Post post, int likeCount) {
         this.post = post;
-        this.likeCount = new SimpleIntegerProperty(likeCount);
     }
 
     public String getTitle() {
@@ -23,9 +21,5 @@ public class LikePost {
 
     public Long getWriter() {
         return post.getMember_id();
-    }
-
-    public  IntegerProperty getLikeCount() {
-        return likeCount;
     }
 }
