@@ -421,6 +421,7 @@
 
 .comment_input {
     -fx-font-size: 14;
+    -fx-font-family: "Pretendard Medium";
 }
 
 .content-vbox {
@@ -431,6 +432,7 @@
     -fx-alignment: center-left;
     -fx-padding: 10;
     -fx-font-size: 14;
+    -fx-font-family: "Pretendard Medium";
 }
 
 .textarea-box {
@@ -448,4 +450,14 @@
     -fx-border-color: #404040;
     -fx-border-radius: 5;
 
+}
+
+.input-box {
+    -fx-font-size: 14;
+    -fx-font-family: "Pretendard Medium";
+}
+
+.textarea-box {
+    -fx-font-size: 14;
+    -fx-font-family: "Pretendard Medium";
 }

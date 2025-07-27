@@ -71,32 +71,34 @@
                   </font></Label>
             </children>
          </HBox>
-         <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="430.0" spacing="60.0">
-            <children>
-               <Label fx:id="fixMemberInfoLabel" onMouseClicked="#handleClickFixMemberInfoLabel" text="회원정보 변경">
-                  <styleClass>
-                     <String fx:value="text-gray" />
-                     <String fx:value="sep-section" />
-                  </styleClass></Label>
-            </children>
-         </HBox>
-         <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="430.0" spacing="60.0">
-            <children>
-               <Label fx:id="fixMemberPasswordLabel" onMouseClicked="#handleClickFixPasswordLabel" text="비밀번호 변경">
-                  <styleClass>
-                     <String fx:value="text-gray" />
-                     <String fx:value="sep-section" />
-                  </styleClass></Label>
-            </children>
-         </HBox>
-         <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="430.0" spacing="60.0">
-            <children>
-               <Label fx:id="unregisterLabel" onMouseClicked="#handleClickUnregisterLabel" text="회원탈퇴">
-                  <styleClass>
-                     <String fx:value="text-gray" />
-                     <String fx:value="sep-section" />
-                  </styleClass></Label>
-            </children>
+         <HBox spacing="15" alignment="center_right">
+            <HBox alignment="CENTER_LEFT" prefHeight="34.0" spacing="60.0">
+               <children>
+                  <Label fx:id="fixMemberInfoLabel" onMouseClicked="#handleClickFixMemberInfoLabel" text="회원정보 변경">
+                     <styleClass>
+                        <String fx:value="text-gray" />
+                        <String fx:value="sep-section" />
+                     </styleClass></Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="34.0" spacing="60.0">
+               <children>
+                  <Label fx:id="fixMemberPasswordLabel" onMouseClicked="#handleClickFixPasswordLabel" text="비밀번호 변경">
+                     <styleClass>
+                        <String fx:value="text-gray" />
+                        <String fx:value="sep-section" />
+                     </styleClass></Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="34.0" spacing="60.0">
+               <children>
+                  <Label fx:id="unregisterLabel" onMouseClicked="#handleClickUnregisterLabel" text="회원탈퇴">
+                     <styleClass>
+                        <String fx:value="text-gray" />
+                        <String fx:value="sep-section" />
+                     </styleClass></Label>
+               </children>
+            </HBox>
          </HBox>
       </children>
    </VBox>

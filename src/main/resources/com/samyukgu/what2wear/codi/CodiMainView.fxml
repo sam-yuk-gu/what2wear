@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<!-- 작성자 : 최이서 -->
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -16,13 +16,13 @@
 <VBox spacing="50">
     <HBox>
         <VBox spacing="7">
-            <Label fx:id="welcomeTitle" styleClass="welcome-title" text="안녕하세요, 코사님" />
+            <Label fx:id="welcomeTitle" styleClass="welcome-title" text="안녕하세요, " />
             <Label fx:id="welcomeSubtext" styleClass="welcome-subtext" text="오늘의 일정은 어떻게 되시나요?" />
         </VBox>
         <Region HBox.hgrow="ALWAYS" />
         <HBox alignment="center" spacing="10">
             <!-- 날씨 아이콘, 온도 -->
-            <HBox alignment="center">
+            <HBox alignment="center" spacing="5">
                 <ImageView fx:id="weatherIcon" fitWidth="40" fitHeight="40">
                     <image>
                         <Image url="@/assets/icons/weather.png"/>
@@ -31,7 +31,7 @@
                 <Label fx:id="temperatureLabel" styleClass="temperature-label" text="22°C" />
             </HBox>
             <!-- 지역구, 날짜 -->
-            <VBox alignment="center_right">
+            <VBox styleClass="region-box" alignment="center_right">
                 <Label fx:id="regionLabel" styleClass="region-label" text="서울특별시" />
                 <Label fx:id="dateLabel" styleClass="date-label" text="7월 25일 (목)" />
             </VBox>

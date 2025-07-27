@@ -16,8 +16,8 @@
 
 <!-- 작성자 : 백승준 -->
 <StackPane fx:id="root" styleClass="bg-white" stylesheets="@/com/samyukgu/what2wear/layout/style.css, @/com/samyukgu/what2wear/friend/friend-main.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.friend.controller.FriendMainController">
-    <VBox prefHeight="760.0" spacing="50" styleClass="container">
-        <VBox prefHeight="113.0" spacing="7">
+    <VBox prefHeight="760.0" spacing="20" styleClass="container">
+        <VBox prefHeight="140.0" spacing="9">
           <HBox prefHeight="20.0" prefWidth="1280.0">
              <children>
                   <Label fx:id="welcomeTitle" styleClass="welcome-title" text="친구" />
@@ -25,15 +25,15 @@
                 <Button fx:id="searchButton" mnemonicParsing="false" onAction="#handleClickSearchButton" styleClass="search-btn" text="사용자 검색" />
              </children>
           </HBox>
-            <ScrollPane fitToHeight="true" hbarPolicy="AS_NEEDED" prefHeight="85.0" prefWidth="1280.0" styleClass="bg-friend-area" vbarPolicy="NEVER">
-                <HBox fx:id="friendListArea" prefHeight="76.0" styleClass="bg-friend-area">
+            <ScrollPane fitToHeight="true" hbarPolicy="AS_NEEDED" prefHeight="105.0" prefWidth="1280.0" styleClass="bg-friend-area" vbarPolicy="NEVER">
+                <HBox fx:id="friendListArea" prefHeight="105.0" styleClass="bg-friend-area">
                 </HBox>
             </ScrollPane>
         </VBox>
         <HBox prefHeight="500.0" prefWidth="800.0">
             <!-- 좌측: 캘린더 영역 -->
             <VBox prefHeight="500.0" prefWidth="569.0" spacing="20">
-                <HBox styleClass="bold-text">
+                <HBox styleClass="bold-text" alignment="center">
                     <HBox alignment="CENTER_LEFT" spacing="10">
                         <Button onAction="#handlePrevMonth" style="-fx-background-color: transparent; -fx-cursor: hand;">
                             <graphic>
@@ -52,26 +52,29 @@
                         </Button>
                     </HBox>
                     <Region HBox.hgrow="ALWAYS" />
-                <TextFlow prefHeight="22.0" prefWidth="158.0">
-                   <children>
-                      <Label fx:id="friendNickname" styleClass="bold-text" text="">
-                         <font>
-                            <Font size="14.0" />
-                         </font>
-                      </Label>
-                      <Label styleClass="semi-bold-text" text="캘린더">
-                         <opaqueInsets>
-                            <Insets />
-                         </opaqueInsets>
-                         <padding>
-                            <Insets left="5.0" />
-                         </padding>
-                         <font>
-                            <Font size="14.0" />
-                         </font>
-                      </Label>
-                   </children>
-                </TextFlow>
+                    <TextFlow prefHeight="22.0" prefWidth="158.0" textAlignment="center">
+                       <children>
+                          <Label fx:id="friendNickname" styleClass="bold-text" text="">
+                              <padding>
+                                  <Insets top="8.0" />
+                              </padding>
+                             <font>
+                                <Font size="14.0" />
+                             </font>
+                          </Label>
+                          <Label styleClass="semi-bold-text" text="캘린더">
+                             <opaqueInsets>
+                                <Insets />
+                             </opaqueInsets>
+                             <padding>
+                                <Insets left="5.0" />
+                             </padding>
+                             <font>
+                                <Font size="14.0" />
+                             </font>
+                          </Label>
+                       </children>
+                    </TextFlow>
                     <HBox spacing="10">
                         <Button fx:id="addButton" onAction="#handleClickFriendDeleteButton" styleClass="add-btn" text="친구 삭제" />
                     </HBox>

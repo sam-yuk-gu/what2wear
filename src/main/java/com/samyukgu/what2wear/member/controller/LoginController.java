@@ -20,13 +20,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 // 작성자 : 백승준
 public class LoginController {
-    @FXML private StackPane root;
+    @FXML private HBox root;
     @FXML private static LoginController instance;
     @FXML private TextField inputIdField;
     @FXML private PasswordField inputPasswordField;
@@ -56,7 +57,7 @@ public class LoginController {
         if(member!=null){
             memberSession.setMember(member);
 
-            Region defaultRegion = new Region(1L, "서울특별시", "", 60L, 127L);
+            Region defaultRegion = new Region(1L, "서울특별시", "종로구", 60L, 127L);
             regionWeatherSession.setRegion(defaultRegion);
             Weather weather = weatherService.fetchWeatherFromApi(defaultRegion.getNx().intValue(), defaultRegion.getNy().intValue());
             RegionWeatherSession.setWeather(weather);

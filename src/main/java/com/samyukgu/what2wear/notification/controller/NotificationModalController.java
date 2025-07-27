@@ -92,7 +92,7 @@ public class NotificationModalController {
 
         // 요청자 정보 라벨
         Label requesterLabel = new Label(requester.getNickname());
-        requesterLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
+        requesterLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-font-family: 'Pretendard Medium'");
         requesterLabel.setPrefWidth(200);
 
         // 수락 버튼

@@ -85,6 +85,7 @@ public class WardrobeOracleDAO implements WardrobeDAO {
             FROM clothes
             WHERE deleted = 'N'
               AND member_id = ?
+            ORDER BY category_id, id
             """;
 
         List<Wardrobe> wardrobes = new ArrayList<>();

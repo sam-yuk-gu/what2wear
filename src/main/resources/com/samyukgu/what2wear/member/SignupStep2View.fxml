@@ -18,17 +18,17 @@
 <?import javafx.scene.text.TextFlow?>
 
 <!-- 작성자 : 백승준 -->
-<HBox fx:id="signupBanner" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1280.0" styleClass="root-signup" stylesheets="@/com/samyukgu/what2wear/layout/style.css, @/com/samyukgu/what2wear/member/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.member.controller.SignupStep2Controller">
+<HBox fx:id="signupBanner" spacing="60" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1280.0" styleClass="root-signup" stylesheets="@/com/samyukgu/what2wear/layout/style.css, @/com/samyukgu/what2wear/member/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.member.controller.SignupStep2Controller">
     <children>
-<!--        <AnchorPane prefHeight="768.0" prefWidth="500.0">-->
-<!--            <children>-->
-<!--                <ImageView  fitHeight="663.0" fitWidth="407.0" layoutX="47.0" layoutY="53.0" pickOnBounds="true">-->
-<!--                    <image>-->
-<!--                        <Image url="@../../../../assets/images/raccoon.jpg" />-->
-<!--                    </image>-->
-<!--                </ImageView>-->
-<!--            </children>-->
-<!--        </AnchorPane>-->
+        <AnchorPane prefHeight="768.0" prefWidth="500.0">
+            <children>
+                <ImageView fitHeight="703" fitWidth="407.0" layoutY="30.0" preserveRatio="true" pickOnBounds="true">
+                    <image>
+                        <Image url="@/assets/images/signup_mock.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </AnchorPane>
         <AnchorPane prefHeight="768.0" prefWidth="564.0">
             <children>
                 <Pane layoutY="53.0" prefHeight="663.0" prefWidth="779.0">

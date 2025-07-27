@@ -1,3 +1,4 @@
+// 작성자 : 최이서
 package com.samyukgu.what2wear.common.controller;
 
 import com.samyukgu.what2wear.codi.dto.CodiDetailDTO;
@@ -523,10 +524,15 @@ public class EditOutfitModalController implements Initializable {
                         .filter(c -> c.getCodiId().equals(selectedCodi.getId()))
                         .findFirst()
                         .map(CodiDetailDTO::getClothes)
-                        .orElse(Collections.emptyList());
+                        .orElse(Collections.emptyList())
+                        .stream()
+                        .sorted(Comparator.comparing(Wardrobe::getCategoryId))
+                        .toList();
             } else {
                 // 옷장 탭에서 선택된 경우
-                outfits = new ArrayList<>(selectedClothes.values());
+                outfits = selectedClothes.values().stream()
+                        .sorted(Comparator.comparing(Wardrobe::getCategoryId)) // 정렬 추가
+                        .toList();
             }
 
             onConfirm.accept(new SelectionResult(outfits, selectedCodi));

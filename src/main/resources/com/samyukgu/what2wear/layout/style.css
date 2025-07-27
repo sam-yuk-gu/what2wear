@@ -1,3 +1,4 @@
+/* 작성자 : 최이서 */
 #mainLayout {
     -fx-background-color: #F9FBFC;
 }
@@ -5,6 +6,18 @@
 .sidebar {
     -fx-background-color: #F9FBFC;
     -fx-padding: 55 40 55 40;
+}
+
+.logo-box {
+    -fx-padding: 0 20;
+    -fx-spacing: 8;
+    -fx-alignment: center;
+}
+
+.noti-box {
+    -fx-padding: 0 16;
+    -fx-spacing: 15;
+    -fx-alignment: center-left;
 }
 
 .menu-box {
@@ -37,6 +50,14 @@
     /*-fx-padding: 0 20;*/
     -fx-background-radius: 10;
     -fx-border-radius: 10;
+}
+
+.menu-box.selected SVGPath {
+    -fx-stroke: black;
+}
+
+.menu-box.selected .menu-button {
+    -fx-text-fill: black;
 }
 
 .logo-button {

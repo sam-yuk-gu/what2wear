@@ -1,3 +1,4 @@
+// 작성자 : 최이서
 package com.samyukgu.what2wear.codi.controller;
 
 import com.samyukgu.what2wear.codi.dto.CodiListDTO;
@@ -49,6 +50,7 @@ public class CodiMainController {
     private MemberService memberService;
     private RegionWeatherSession regionWeatherSession;
 
+    @FXML private Label welcomeTitle;
     @FXML private Label monthLabel;
     @FXML private GridPane calendarGrid;
     @FXML private Label emptyLabel;
@@ -60,6 +62,7 @@ public class CodiMainController {
     @FXML private Label dateLabel;
 
     private Long memberId;
+    private String memberName;
     private Weather weather;
     private LocalDate currentDate;
     private LocalDate currentDateSelected;
@@ -126,6 +129,8 @@ public class CodiMainController {
         }
 
         memberId = memberSession.getMember().getId();
+        memberName = memberSession.getMember().getName();
+        welcomeTitle.textProperty().setValue("안녕하세요, " + memberName + "님");
     }
 
 

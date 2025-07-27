@@ -1,3 +1,4 @@
+// 작성자 : 최이서
 package com.samyukgu.what2wear.codi.controller;
 
 import com.samyukgu.what2wear.codi.dto.CodiDetailDTO;
@@ -70,7 +71,7 @@ public class CodiEditController {
             HBox header = loader.load();
 
             BasicHeaderController controller = loader.getController();
-            controller.setTitle("일정 추가");
+            controller.setTitle("일정 변경");
             controller.setOnBackAction(() -> {
                 try {
                     Parent view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/samyukgu/what2wear/codi/CodiMainView.fxml")));

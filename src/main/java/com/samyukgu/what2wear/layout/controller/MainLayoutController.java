@@ -1,3 +1,4 @@
+// 작성자 : 최이서
 package com.samyukgu.what2wear.layout.controller;
 
 import com.samyukgu.what2wear.codi.controller.CodiAddController;
@@ -39,8 +40,9 @@ public class MainLayoutController {
     @FXML private Button friendButton;
     @FXML private Button boardButton;
     @FXML private Button mypageButton;
+    @FXML private ImageView notificationIcon;
 
-    private ImageView notificationBadge;
+//    private ImageView notificationBadge;
 
     // MainLayoutController.getInstance() 접근을 위한 getInstance() 정의
     @Getter
@@ -67,7 +69,7 @@ public class MainLayoutController {
         );
 
         loadView("/com/samyukgu/what2wear/codi/CodiMainView.fxml");
-        initializeNotificationBadge();
+//        initializeNotificationBadge();
         updateNotificationBadge();
         VBox.setVgrow(spacer, Priority.ALWAYS);     // 최대 여백 설정
     }
@@ -192,56 +194,56 @@ public class MainLayoutController {
     // 알림 배지 초기화
     // 알림 배지 초기화 (이미지 버전) - 더 간단한 방법
     private void initializeNotificationBadge() {
-        try {
-            // 빨간 점 이미지 로드
-            Image redDotImage = new javafx.scene.image.Image(
-                    Objects.requireNonNull(getClass().getResourceAsStream("/assets/icons/redDot.png"))
-            );
-
-            notificationBadge = new ImageView(redDotImage);
-            notificationBadge.setVisible(false); // 초기에는 숨김
-
-            // 부모 컨테이너 확인
-            javafx.scene.Parent parent = notificationButton.getParent();
-
-            javafx.scene.layout.HBox hbox = (javafx.scene.layout.HBox) parent;
-            int buttonIndex = hbox.getChildren().indexOf(notificationButton);
-            hbox.getChildren().add(buttonIndex + 1, notificationBadge);
-            // 위치 미세 조정
-            notificationBadge.setTranslateX(0); // 버튼과 겹치게
-            notificationBadge.setTranslateY(15);  // 위쪽으로
-
-            System.out.println("알림 배지 이미지 초기화 완료");
-        } catch (Exception e) {
-            System.out.println("알림 배지 이미지 로드 실패: " + e.getMessage());
-            e.printStackTrace();
-        }
+//        try {
+//            // 빨간 점 이미지 로드
+//            Image redDotImage = new javafx.scene.image.Image(
+//                    Objects.requireNonNull(getClass().getResourceAsStream("/assets/icons/redDot.png"))
+//            );
+//
+//            notificationBadge = new ImageView(redDotImage);
+//            notificationBadge.setVisible(false); // 초기에는 숨김
+//
+//            // 부모 컨테이너 확인
+//            javafx.scene.Parent parent = notificationButton.getParent();
+//
+//            javafx.scene.layout.HBox hbox = (javafx.scene.layout.HBox) parent;
+//            int buttonIndex = hbox.getChildren().indexOf(notificationButton);
+//            hbox.getChildren().add(buttonIndex + 1, notificationBadge);
+//            // 위치 미세 조정
+//            notificationBadge.setTranslateX(0); // 버튼과 겹치게
+//            notificationBadge.setTranslateY(15);  // 위쪽으로
+//
+//            System.out.println("알림 배지 이미지 초기화 완료");
+//        } catch (Exception e) {
+//            System.out.println("알림 배지 이미지 로드 실패: " + e.getMessage());
+//            e.printStackTrace();
+//        }
     }
 
     // 알림 버튼을 StackPane으로 감싸는 메서드 (이미지 버전)
     private void wrapNotificationButtonWithStackPane() {
-        javafx.scene.Parent parent = notificationButton.getParent();
-
-        if (parent instanceof javafx.scene.layout.HBox) {
-            javafx.scene.layout.HBox hbox = (javafx.scene.layout.HBox) parent;
-            int buttonIndex = hbox.getChildren().indexOf(notificationButton);
-
-            // 기존 버튼 제거
-            hbox.getChildren().remove(notificationButton);
-
-            // StackPane으로 감싸기
-            javafx.scene.layout.StackPane stackPane = new javafx.scene.layout.StackPane();
-            stackPane.getChildren().add(notificationButton);
-            stackPane.getChildren().add(notificationBadge);
-
-            // 배지 위치 설정
-            javafx.scene.layout.StackPane.setAlignment(notificationBadge, javafx.geometry.Pos.TOP_RIGHT);
-            notificationBadge.setTranslateX(-3);
-            notificationBadge.setTranslateY(3);
-
-            // StackPane을 원래 위치에 추가
-            hbox.getChildren().add(buttonIndex, stackPane);
-        }
+//        javafx.scene.Parent parent = notificationButton.getParent();
+//
+//        if (parent instanceof javafx.scene.layout.HBox) {
+//            javafx.scene.layout.HBox hbox = (javafx.scene.layout.HBox) parent;
+//            int buttonIndex = hbox.getChildren().indexOf(notificationButton);
+//
+//            // 기존 버튼 제거
+//            hbox.getChildren().remove(notificationButton);
+//
+//            // StackPane으로 감싸기
+//            javafx.scene.layout.StackPane stackPane = new javafx.scene.layout.StackPane();
+//            stackPane.getChildren().add(notificationButton);
+//            stackPane.getChildren().add(notificationBadge);
+//
+//            // 배지 위치 설정
+//            javafx.scene.layout.StackPane.setAlignment(notificationBadge, javafx.geometry.Pos.TOP_RIGHT);
+//            notificationBadge.setTranslateX(-3);
+//            notificationBadge.setTranslateY(3);
+//
+//            // StackPane을 원래 위치에 추가
+//            hbox.getChildren().add(buttonIndex, stackPane);
+//        }
     }
 
     // 알림 배지 업데이트 메서드
@@ -249,15 +251,23 @@ public class MainLayoutController {
         try {
             List<Member> currentRequests = notificationService.getRequests(memberSession.getMember().getId());
             boolean hasNotifications = currentRequests != null && !currentRequests.isEmpty();
+            String iconPath = hasNotifications
+                    ? "/assets/icons/alert_25x22.png"
+                    : "/assets/icons/alert_off_25x22.png";
 
-            if (notificationBadge != null) {
-                notificationBadge.setVisible(hasNotifications);
+            if (notificationIcon != null) {
+                notificationIcon.setImage(new Image(
+                        Objects.requireNonNull(getClass().getResourceAsStream(iconPath))
+                ));
             }
+//            if (notificationBadge != null) {
+//                notificationBadge.setVisible(hasNotifications);
+//            }
         } catch (Exception e) {
             e.printStackTrace();
-            if (notificationBadge != null) {
-                notificationBadge.setVisible(false);
-            }
+//            if (notificationBadge != null) {
+//                notificationBadge.setVisible(false);
+//            }
         }
     }
 

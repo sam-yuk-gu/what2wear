@@ -101,13 +101,14 @@ public class FriendSearchController {
         userBox.getStyleClass().add("search-user-info-area");
 
         // 패딩 설정
-        userBox.setStyle("-fx-padding: 0 20 0 20;");
+        userBox.setStyle("-fx-padding: 0 10 0 10;");
 
         // 프로필 이미지 생성
         ImageView profileImage = CircularImageUtil.createCircularImageFromBytes(30, imageBytes);
 
         // 닉네임 라벨 생성
         Label nicknameLabel = new Label(member.getNickname());
+        nicknameLabel.setStyle("-fx-font-size: 15; -fx-font-family: 'Pretendard Medium'");
 
         // HBox에 요소들 추가
         userBox.getChildren().addAll(profileImage, nicknameLabel);
