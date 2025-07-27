@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+// 작성자 : 백승준
 public class FriendSearchController {
 
     @FXML public StackPane root;

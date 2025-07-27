@@ -20,6 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
+// 작성자 : 백승준
 public class MemberEmailFixController {
     @FXML public StackPane root;
 

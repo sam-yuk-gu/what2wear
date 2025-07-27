@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 
 import java.util.List;
 
+// 작성자 : 백승준
 public class NotificationModalController {
 
     @FXML private StackPane modalOverlay;

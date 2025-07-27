@@ -32,6 +32,7 @@ import com.samyukgu.what2wear.region.dao.RegionDAO;
 import com.samyukgu.what2wear.region.dao.RegionOracleDAO;
 import com.samyukgu.what2wear.weather.service.WeatherService;
 
+// 작성자 : 백승준
 public class ApplicationConfig {
     public static void configure() {
         DIContainer container = DIContainer.getInstance();

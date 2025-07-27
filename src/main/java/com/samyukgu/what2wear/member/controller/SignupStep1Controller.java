@@ -18,6 +18,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+// 작성자 : 백승준
 public class SignupStep1Controller {
     @FXML private Label passwordRes;
     @FXML private Label passwordCheckRes;

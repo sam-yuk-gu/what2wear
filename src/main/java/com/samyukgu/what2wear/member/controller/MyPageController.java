@@ -23,6 +23,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+// 작성자 : 백승준
 public class MyPageController {
     @FXML public StackPane root;
     @FXML ImageView profileImg;

@@ -3,6 +3,7 @@ package com.samyukgu.what2wear.member.Session;
 import com.samyukgu.what2wear.member.model.Member;
 import com.samyukgu.what2wear.post.model.Post;
 
+// 작성자 : 백승준
 public class MemberSession {
     private Member member;
 

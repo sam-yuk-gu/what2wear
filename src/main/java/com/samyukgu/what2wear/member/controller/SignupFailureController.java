@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
+// 작성자 : 백승준
 public class SignupFailureController {
     @FXML
     private Button prevButton;

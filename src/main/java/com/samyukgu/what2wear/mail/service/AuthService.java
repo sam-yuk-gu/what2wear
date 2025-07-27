@@ -2,6 +2,7 @@ package com.samyukgu.what2wear.mail.service;
 
 import com.samyukgu.what2wear.mail.common.MailConstants;
 
+import com.samyukgu.what2wear.mail.service.MailService;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Random;
@@ -10,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
+// 작성자 : 백승준
 public class AuthService{
     private final Map<String, AuthCodeData> authCodes = new ConcurrentHashMap<>();
     private final MailService mailService;

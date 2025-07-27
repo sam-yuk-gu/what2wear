@@ -24,6 +24,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+// 작성자 : 백승준
 public class LoginController {
     @FXML private StackPane root;
     @FXML private static LoginController instance;

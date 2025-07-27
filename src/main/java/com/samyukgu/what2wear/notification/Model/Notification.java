@@ -11,6 +11,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+// 작성자 : 백승준
 public class Notification {
     Long id;
     Long receiverId;

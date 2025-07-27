@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 /**
  * UI 컴포넌트에 호버 효과를 추가하는 유틸리티 클래스
  */
+// 작성자 : 백승준
 public class HoverEffectUtil {
 
     // 색상 상수
