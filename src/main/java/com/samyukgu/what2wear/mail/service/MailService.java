@@ -81,25 +81,27 @@ public class MailService {
                         return new PasswordAuthentication(address, password);
                     }
                 });
+        new Thread(() -> {
+            try {
+                MimeMessage message = new MimeMessage(mailSession);
 
-        try {
-            MimeMessage message = new MimeMessage(mailSession);
+                message.setFrom(new InternetAddress(address, MimeUtility.encodeText(fromName, "UTF-8", "B"))); // 한글의 경우 encoding 필요
+                message.setRecipients(
+                        Message.RecipientType.TO,
+                        InternetAddress.parse(toMail)
+                );
+                message.setSubject(subject);
+                message.setContent(contents.toString(), "text/html;charset=UTF-8"); // 내용 설정 (HTML 형식)
+                message.setSentDate(new java.util.Date());
 
-            message.setFrom(new InternetAddress(address, MimeUtility.encodeText(fromName, "UTF-8", "B"))); // 한글의 경우 encoding 필요
-            message.setRecipients(
-                    Message.RecipientType.TO,
-                    InternetAddress.parse(toMail)
-            );
-            message.setSubject(subject);
-            message.setContent(contents.toString(), "text/html;charset=UTF-8"); // 내용 설정 (HTML 형식)
-            message.setSentDate(new java.util.Date());
+                Transport t = mailSession.getTransport("smtp");
+                t.connect(address, password);
+                t.sendMessage(message, message.getAllRecipients());
+                t.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
 
-            Transport t = mailSession.getTransport("smtp");
-            t.connect(address, password);
-            t.sendMessage(message, message.getAllRecipients());
-            t.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

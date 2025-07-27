@@ -15,9 +15,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-
 import java.util.Date;
 
+// 작성자 : 오수경
 public class CreatePostController {
 
     @FXML private StackPane root;

@@ -4,6 +4,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
+<!-- 작성자 : 오수경 -->
 <StackPane fx:id="root" xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.samyukgu.what2wear.postcomment.controller.CommentItemController"
            stylesheets="/com/samyukgu/what2wear/post/style.css">

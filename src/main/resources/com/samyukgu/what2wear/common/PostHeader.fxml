@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<!-- 작성자 : 오수경 -->
 <HBox prefHeight="81.0" prefWidth="1030.0"
       minHeight="81.0" minWidth="1030.0"
       alignment="CENTER"

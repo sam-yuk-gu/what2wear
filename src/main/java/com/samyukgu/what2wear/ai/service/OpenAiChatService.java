@@ -4,13 +4,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.samyukgu.what2wear.wardrobe.model.Wardrobe;
 import okhttp3.*;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+// 작성자 : 오수경
 public class OpenAiChatService {
     private static final String API_URL = "https://api.openai.com/v1/chat/completions";
     private final OkHttpClient client = new OkHttpClient();
