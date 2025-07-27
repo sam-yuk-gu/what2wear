@@ -250,66 +250,116 @@ public class CodiOracleDAO implements CodiDAO {
         }
     }
 
+//    @Override
+//    public void create(Codi codi, Collection<Wardrobe> selectedOutfits) {
+//        String insertCodiSql  = """
+//            INSERT INTO codi (
+//                id, member_id, schedule, schedule_date, scope, codi_type, deleted
+//            ) VALUES (
+//                seq_codi.NEXTVAL, ?, ?, ?, ?, ?, 'N'
+//            )
+//        """;
+//        String getIdSql = "SELECT SEQ_CODI.CURRVAL FROM dual";
+//        String insertDetailSql = "INSERT INTO codi_detail (codi_id, clothes_id) VALUES (?, ?)";
+//
+//        try (Connection conn = getConnection()) {
+//            conn.setAutoCommit(false); // 트랜잭션 시작
+//
+//            Long codiId;
+//            // 코디 저장 > 코디 옷상세정보 순서대로 처리
+//            // 1. 코디 INSERT
+//            try (PreparedStatement pstmt = conn.prepareStatement(insertCodiSql)) {
+//                pstmt.setLong(1, codi.getMemberId());
+//                pstmt.setString(2, codi.getSchedule());
+//                pstmt.setDate(3, java.sql.Date.valueOf(codi.getScheduleDate()));
+//                pstmt.setLong(4, codi.getScope());
+//                pstmt.setString(5, codi.getCodiType());
+//
+//                int result = pstmt.executeUpdate();
+//                if (result == 0) {
+//                    conn.rollback();
+//                    throw new SQLException("코디 일정 등록 실패");
+//                }
+//            }
+//
+//            // 2. 코디 ID 조회
+//            try (PreparedStatement idStmt = conn.prepareStatement(getIdSql);
+//                 ResultSet rs = idStmt.executeQuery()) {
+//                if (rs.next()) {
+//                    codiId = rs.getLong(1);
+//                    codi.setId(codiId);
+//                } else {
+//                    conn.rollback();
+//                    throw new SQLException("코디 ID 조회 실패");
+//                }
+//            }
+//
+//            if (selectedOutfits != null && !selectedOutfits.isEmpty()) {
+//                // 3. 코디옷상세정보 INSERT
+//                try (PreparedStatement detailStmt = conn.prepareStatement(insertDetailSql)) {
+//                    for (Wardrobe outfit : selectedOutfits) {
+//                        detailStmt.setLong(1, codiId);
+//                        detailStmt.setLong(2, outfit.getId());
+//                        detailStmt.addBatch();
+//                    }
+//                    detailStmt.executeBatch();
+//                }
+//            }
+//
+//            conn.commit(); // 전체 성공 시 커밋
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            throw new RuntimeException("코디 생성 중 오류 발생", e);
+//        }
+//    }
+
     @Override
     public void create(Codi codi, Collection<Wardrobe> selectedOutfits) {
-        String insertCodiSql  = """
-            INSERT INTO codi (
-                id, member_id, schedule, schedule_date, scope, codi_type, deleted
-            ) VALUES (
-                seq_codi.NEXTVAL, ?, ?, ?, ?, ?, 'N'
-            )
-        """;
-        String getIdSql = "SELECT SEQ_CODI.CURRVAL FROM dual";
-        String insertDetailSql = "INSERT INTO codi_detail (codi_id, clothes_id) VALUES (?, ?)";
+        String insertCodiSql = "INSERT INTO codi (id, member_id, schedule, schedule_date, scope, codi_type) VALUES (?, ?, ?, ?, ?, ?)";
+        String insertCodiClothesSql = "INSERT INTO codi_detail (codi_id, clothes_id) VALUES (?, ?)";
 
         try (Connection conn = getConnection()) {
             conn.setAutoCommit(false); // 트랜잭션 시작
 
-            Long codiId;
-            // 코디 저장 > 코디 옷상세정보 순서대로 처리
-            // 1. 코디 INSERT
+            // 1. 코디 일정 저장
             try (PreparedStatement pstmt = conn.prepareStatement(insertCodiSql)) {
-                pstmt.setLong(1, codi.getMemberId());
-                pstmt.setString(2, codi.getSchedule());
-                pstmt.setDate(3, java.sql.Date.valueOf(codi.getScheduleDate()));
-                pstmt.setLong(4, codi.getScope());
-                pstmt.setString(5, codi.getCodiType());
-
-                int result = pstmt.executeUpdate();
-                if (result == 0) {
-                    conn.rollback();
-                    throw new SQLException("코디 일정 등록 실패");
-                }
+                Long codiId = getNextCodiId(conn); // 시퀀스에서 id 받아오기
+                pstmt.setLong(1, codiId);
+                pstmt.setLong(2, codi.getMemberId());
+                pstmt.setString(3, codi.getSchedule());
+                pstmt.setDate(4, java.sql.Date.valueOf(codi.getScheduleDate()));
+                pstmt.setLong(5, codi.getScope());
+                pstmt.setString(6, codi.getCodiType());
+                pstmt.executeUpdate();
+                codi.setId(codiId);
             }
 
-            // 2. 코디 ID 조회
-            try (PreparedStatement idStmt = conn.prepareStatement(getIdSql);
-                 ResultSet rs = idStmt.executeQuery()) {
-                if (rs.next()) {
-                    codiId = rs.getLong(1);
-                    codi.setId(codiId);
-                } else {
-                    conn.rollback();
-                    throw new SQLException("코디 ID 조회 실패");
+            // 2. 코디-옷 연결 저장 (중요!)
+            try (PreparedStatement pstmt2 = conn.prepareStatement(insertCodiClothesSql)) {
+                for (Wardrobe outfit : selectedOutfits) {
+                    pstmt2.setLong(1, codi.getId());
+                    pstmt2.setLong(2, outfit.getId()); // wardrobe_id or clothes_id
+                    pstmt2.addBatch();
                 }
+                pstmt2.executeBatch();
             }
 
-            if (selectedOutfits != null && !selectedOutfits.isEmpty()) {
-                // 3. 코디옷상세정보 INSERT
-                try (PreparedStatement detailStmt = conn.prepareStatement(insertDetailSql)) {
-                    for (Wardrobe outfit : selectedOutfits) {
-                        detailStmt.setLong(1, codiId);
-                        detailStmt.setLong(2, outfit.getId());
-                        detailStmt.addBatch();
-                    }
-                    detailStmt.executeBatch();
-                }
-            }
+            conn.commit(); // 트랜잭션 커밋
+        } catch (Exception e) {
+            throw new RuntimeException("코디 생성 실패: " + e.getMessage(), e);
+        }
+    }
 
-            conn.commit(); // 전체 성공 시 커밋
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("코디 생성 중 오류 발생", e);
+    // ai 추천 코디 저장 (새로운 코디 ID를 가져오기)
+    private Long getNextCodiId(Connection conn) throws SQLException {
+        String sql = "SELECT seq_codi.NEXTVAL FROM dual";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            if (rs.next()) {
+                return rs.getLong(1);
+            } else {
+                throw new SQLException("Failed to retrieve next codi ID from sequence.");
+            }
         }
     }
 
