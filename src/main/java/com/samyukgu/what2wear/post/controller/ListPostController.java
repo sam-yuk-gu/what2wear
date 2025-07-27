@@ -95,8 +95,6 @@ public class ListPostController implements Initializable {
 
     // 게시글 정보 검색
     private void handleSearch() {
-        boolean isFilterSelected = checkIfFilterIsSelected(); // 필터 선택 여부 검사
-
         String keyword = search_title.getText();
         String type = select_title.getValue();
 
@@ -108,12 +106,6 @@ public class ListPostController implements Initializable {
 
         // 검색 결과 표시
         showPage(1);
-    }
-
-
-    // 필터 선택 여부 검사
-    private boolean checkIfFilterIsSelected() {
-        return select_title.getValue() != null && !select_title.getValue().isBlank();
     }
 
     private void setupPagination() {
@@ -167,20 +159,4 @@ public class ListPostController implements Initializable {
     private void openPostDetail(Post selectedPost) {
         MainLayoutController.loadPostDetailView(selectedPost);
     }
-
-    // 좋아요 등록
-    @FXML private void handleLikeButtonClick() {
-        Post selected = table_board.getSelectionModel().getSelectedItem();
-        if (selected != null) {
-            Long postId = selected.getId();
-            Long memberId = memberSession.getMember().getId();
-
-            postService.likePost(postId, memberId); // 좋아요 삽입
-
-            // 좋아요 수 갱신
-            allPosts = postService.getAllPosts(memberId);
-            showPage(currentPage);
-        }
-    }
-
 }

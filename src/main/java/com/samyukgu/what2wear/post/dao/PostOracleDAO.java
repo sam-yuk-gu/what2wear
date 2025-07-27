@@ -71,7 +71,7 @@ public class PostOracleDAO implements PostDAO {
         String sql = """
         SELECT p.id, p.title, p.member_id, p.cody_id, p.content,
             p.create_at, p.last_updated,
-            m.name AS writer_name,
+            m.nickname AS writer_name,
             (SELECT COUNT(*) FROM like_post l WHERE l.post_id = p.id) AS like_count
         FROM post p
             LEFT JOIN member m ON p.member_id = m.id
