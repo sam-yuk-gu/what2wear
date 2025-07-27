@@ -201,7 +201,7 @@ public class PostOracleDAO implements PostDAO {
 
     public List<Post> search(String keyword, String type) {
         String sqlBase = """
-                    SELECT p.*, m.name AS writer_name
+                    SELECT p.*, m.nickname AS writer_name
                     FROM post p
                     LEFT OUTER JOIN member m ON p.member_id = m.id
                     WHERE LOWER(%s) LIKE ?
@@ -212,7 +212,7 @@ public class PostOracleDAO implements PostDAO {
         switch (type) {
             case "제목" -> column = "p.title";
             case "내용" -> column = "p.content";
-            case "작성자" -> column = "m.name";
+            case "작성자" -> column = "m.nickname";
             default -> throw new IllegalArgumentException("Invalid search type: " + type);
         }
 
