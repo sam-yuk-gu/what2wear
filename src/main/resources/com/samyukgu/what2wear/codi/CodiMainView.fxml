@@ -22,7 +22,7 @@
         <Region HBox.hgrow="ALWAYS" />
         <HBox alignment="center" spacing="10">
             <!-- 날씨 아이콘, 온도 -->
-            <HBox alignment="center">
+            <HBox alignment="center" spacing="5">
                 <ImageView fx:id="weatherIcon" fitWidth="40" fitHeight="40">
                     <image>
                         <Image url="@/assets/icons/weather.png"/>

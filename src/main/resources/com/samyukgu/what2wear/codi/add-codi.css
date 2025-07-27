@@ -24,6 +24,18 @@
     -fx-padding: 0 15;
     -fx-font-size: 14;
     -fx-font-family: "Pretendard Medium";
+
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+
+
+    -fx-effect: none; /* 그림자 제거 */
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.input-text:focused {
+    -fx-border-color: #303030;
 }
 
 /* date picker start */
@@ -36,6 +48,12 @@
     -fx-pref-height: 47;
     -fx-padding: 0 25;
     -fx-font-family: "Pretendard Medium";
+
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-effect: none;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
 }
 
 .date-picker .arrow-button {

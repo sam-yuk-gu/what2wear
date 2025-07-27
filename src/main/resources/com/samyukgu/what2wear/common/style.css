@@ -232,4 +232,17 @@
     -fx-font-family: "Pretendard Bold";
     -fx-cursor: hand;
 }
+
+.search-input {
+    -fx-effect: none; /* 그림자 제거 */
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
 /* select outfit modal end */
