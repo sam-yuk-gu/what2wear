@@ -10,7 +10,7 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
+// 작성자 : 백승준
 public class FindAccountIdStep2Controller {
 
     @FXML private Button prevButton;

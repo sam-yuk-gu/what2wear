@@ -17,6 +17,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+// 작성자 : 백승준
 public class MemberUnregisterController {
     @FXML private StackPane root;
     @FXML private PasswordField curPassword;

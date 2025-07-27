@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 
+// 작성자 : 백승준
 public class MemberNameFixController {
     @FXML public StackPane root;
     @FXML private TextField memberInputName;

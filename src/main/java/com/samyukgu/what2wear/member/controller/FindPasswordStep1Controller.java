@@ -15,7 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
+// 작성자 : 백승준
 public class FindPasswordStep1Controller {
     @FXML private TextField inputIdField;
     @FXML private Button nextButton;

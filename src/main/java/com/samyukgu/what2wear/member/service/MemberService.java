@@ -9,6 +9,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+// 작성자 : 백승준
 public class MemberService {
     private final MemberDAO dao;
 

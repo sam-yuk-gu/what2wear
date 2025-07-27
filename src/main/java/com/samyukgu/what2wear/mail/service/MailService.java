@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
+// 작성자 : 백승준
 public class MailService {
     private static String address;
     private static String password;

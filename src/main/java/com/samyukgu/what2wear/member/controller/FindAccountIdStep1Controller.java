@@ -15,7 +15,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
+// 작성자 : 백승준
 public class FindAccountIdStep1Controller {
     @FXML private Label nameCheckResLabel;
     @FXML private Label emailCheckResLabel;

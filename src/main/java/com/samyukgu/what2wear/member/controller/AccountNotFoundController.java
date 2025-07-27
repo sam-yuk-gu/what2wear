@@ -6,9 +6,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
+// 작성자 : 백승준
 public class AccountNotFoundController {
     @FXML private Button prevButton;
     // 이전 버튼 클릭하면 로그인으로 이동

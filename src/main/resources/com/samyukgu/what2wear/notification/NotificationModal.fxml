@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 
+<!-- 작성자 : 백승준 -->
 <StackPane fx:id="modalOverlay" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="768" prefWidth="1280" styleClass="modal_overlay" stylesheets="/com/samyukgu/what2wear/common/style.css, /com/samyukgu/what2wear/notification/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.notification.controller.NotificationModalController">
 
     <!-- 회색 반투명 배경 -->

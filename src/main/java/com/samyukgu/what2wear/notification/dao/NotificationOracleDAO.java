@@ -1,11 +1,9 @@
 package com.samyukgu.what2wear.notification.dao;
 
-import com.samyukgu.what2wear.member.model.Member;
 import com.samyukgu.what2wear.notification.Model.Notification;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -15,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+// 작성자 : 백승준
 public class NotificationOracleDAO implements NotificationDAO{
     private static String url;
     private static String dbUser;
@@ -41,7 +40,7 @@ public class NotificationOracleDAO implements NotificationDAO{
         return DriverManager.getConnection(url, dbUser, dbPassword);
     }
 
-
+    // 친구 요청 알림 최신순으로 조회
     @Override
     public List<Notification> findAllByReceiverIdOrderByDesc(Long receiverId) {
         String sql = """
@@ -90,7 +89,8 @@ public class NotificationOracleDAO implements NotificationDAO{
             throw new RuntimeException("Can't save notification : Check input receiverId senderId", e);
         }
     }
-
+    
+    // 요청 삭제
     @Override
     public void delete(Long receiverId, Long senderId) {
         String sql = """

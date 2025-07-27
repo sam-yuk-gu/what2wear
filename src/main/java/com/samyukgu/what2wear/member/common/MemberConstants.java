@@ -1,5 +1,6 @@
 package com.samyukgu.what2wear.member.common;
 
+// 작성자 : 백승준
 public class MemberConstants {
     public static final int ID_MIN_LENGTH = 5;
     public static final int ID_MAX_LENGTH = 20;

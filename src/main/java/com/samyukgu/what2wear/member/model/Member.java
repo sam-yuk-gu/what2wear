@@ -11,6 +11,7 @@ import lombok.ToString;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+// 작성자 : 백승준
 public class Member {
     Long id;
     String account_id;

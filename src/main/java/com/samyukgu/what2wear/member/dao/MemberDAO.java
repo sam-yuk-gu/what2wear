@@ -3,6 +3,7 @@ package com.samyukgu.what2wear.member.dao;
 import com.samyukgu.what2wear.member.model.Member;
 import java.util.List;
 
+// 작성자 : 백승준
 public interface MemberDAO {
     void save(Member member); // 회원 저장
     Member findById(Long id); // 회원 단일 조회 (id)

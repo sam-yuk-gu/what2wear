@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+// 작성자 : 백승준
 public class FriendOracleDAO implements FriendDAO{
     private static String url;
     private static String dbUser;
