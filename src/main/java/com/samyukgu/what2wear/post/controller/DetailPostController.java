@@ -248,7 +248,7 @@ public class DetailPostController {
 
     private void updateCommentCountLabel(Long postId) {
         int count = commentService.countByPostId(postId);
-        commentCountLabel.setText("댓글(" + count + ")");
+        commentCountLabel.setText("댓글 (" + count + ")");
     }
 
     // 댓글 추가 후 바로 업데이트
