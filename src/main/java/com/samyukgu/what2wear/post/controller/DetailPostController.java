@@ -4,35 +4,33 @@ import com.samyukgu.what2wear.common.controller.BasicHeaderController;
 import com.samyukgu.what2wear.common.controller.CustomModalController;
 import com.samyukgu.what2wear.common.util.CircularImageUtil;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
-import com.samyukgu.what2wear.common.controller.PostHeaderController;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.member.Session.MemberSession;
 import com.samyukgu.what2wear.member.service.MemberService;
-import com.samyukgu.what2wear.post.dao.PostOracleDAO;
 import com.samyukgu.what2wear.post.model.Post;
 import com.samyukgu.what2wear.post.service.PostService;
 import com.samyukgu.what2wear.postcomment.controller.CommentItemController;
 import com.samyukgu.what2wear.postcomment.dao.PostCommentDAO;
 import com.samyukgu.what2wear.postcomment.model.PostComment;
-import javafx.application.Platform;
+import com.samyukgu.what2wear.postcomment.service.PostCommentService;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+// 작성자 : 오수경
 public class DetailPostController {
 
     @FXML private StackPane root;
@@ -49,22 +47,22 @@ public class DetailPostController {
     @FXML private TextField commentField;
     @FXML private ImageView profileImg;
     @FXML private VBox container;
-    @FXML private ScrollPane scrollPane;
-//    @FXML private Label commentCountLabel;
+    @FXML private Label commentCountLabel;
 
     // 회원 세션
     private MemberService memberService;
     private MemberSession memberSession;
 
+    private Long postId;
     private int likeCount;
     private boolean isLiked = false;
     private Post currentPost;
+    private final PostCommentService commentService = new PostCommentService();
 
     @FXML
     private void initialize() {
         // 회원 정보 불러오기
         setupDI();
-
         hideEditDeleteButtons();
 
         // 헤더 동적 삽입
@@ -104,14 +102,17 @@ public class DetailPostController {
 
     public void setPostData(Post post) {
         this.currentPost = post;
-        System.out.println("currentPost.getMember_id(): " + currentPost.getMember_id());
-        System.out.println("currentPost.getWriter_name(): " + currentPost.getWriter_name());
-        System.out.println("currentPost.getContent(): " + currentPost.getContent());
-
+        this.postId = post.getId(); // postId 저장
+        this.isLiked = post.isLiked();  // 초기 좋아요 상태 가져오기
+        this.likeCount = post.getLike_count(); // 초기 좋아요 수 가져오기
 
         displayPostContent(post);
         checkAndShowButtons(post);
         loadComments();
+
+        updateCommentCountLabel(postId);    // 댓글 갯수 카운트
+
+        updateLikeIcon();   // 초기 좋아요 아이콘 설정
     }
 
     // 댓글 조회하기
@@ -121,19 +122,12 @@ public class DetailPostController {
             return;
         }
 
-
         PostCommentDAO commentDAO = DIContainer.getInstance().resolve(PostCommentDAO.class);
         List<PostComment> comments = commentDAO.findByPostId(currentPost.getId());
 
         comment_vbox.getChildren().removeIf(node -> node instanceof HBox);
 
-        // 현재 로그인한 회원 아이디
-        Long currentUserId = memberSession.getMember().getId();
-
         // 댓글 갯수
-        List<PostComment> commentList = commentDAO.findByPostId(currentPost.getId());
-//        commentCountLabel.setText("(" + commentList.size() + "개)");
-
         for (PostComment comment : comments) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/postcomment/CommentItem.fxml"));
@@ -192,26 +186,6 @@ public class DetailPostController {
         deletePostButton.setManaged(false);
     }
 
-    // 좋아요 클릭 시 색상 및 숫자 변화
-    @FXML
-    private void handleLikeClick() {
-        isLiked = !isLiked;
-        if (isLiked) {
-            likeCount++;
-            likeIcon.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/icons/fillHeart.png"))));
-        } else {
-            likeCount--;
-            likeIcon.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/icons/emptyHeart.png"))));
-        }
-        likesLabel.setText(String.valueOf(likeCount));
-    }
-
-    // 뒤로가기
-    @FXML
-    private void handleBack() {
-        MainLayoutController.loadView("/com/samyukgu/what2wear/post/ListPost.fxml");
-    }
-
     // 내가 쓴 게시글 수정하기 버튼 클릭 시
     public void handlePostEditClick() {
         // 데이터 불러와서 수정 화면으로 전환
@@ -235,7 +209,7 @@ public class DetailPostController {
                     "확인",
                     () -> root.getChildren().remove(modal),
                     () -> {
-                        PostService postService = new PostService(new PostOracleDAO());
+                        PostService postService = DIContainer.getInstance().resolve(PostService.class);
                         postService.deletePost(currentPost.getId());
                         root.getChildren().remove(modal);
                         MainLayoutController.loadView("/com/samyukgu/what2wear/post/ListPost.fxml");
@@ -269,8 +243,15 @@ public class DetailPostController {
         commentDAO.create(newComment);
         commentField.clear();
         addCommentToUI(newComment);
+        updateCommentCountLabel(currentPost.getId());   //  댓글 등록 후 댓글 수 갱신
     }
 
+    private void updateCommentCountLabel(Long postId) {
+        int count = commentService.countByPostId(postId);
+        commentCountLabel.setText("댓글 (" + count + ")");
+    }
+
+    // 댓글 추가 후 바로 업데이트
     private void addCommentToUI(PostComment comment) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/postcomment/CommentItem.fxml"));
@@ -284,10 +265,48 @@ public class DetailPostController {
                     comment.getMemberId()
             );
             comment_vbox.getChildren().add(commentItem);
-//            Platform.runLater(() -> scrollPane.setVvalue(1.0));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+
+    // 좋아요 아이콘 UI 업데이트
+    private void updateLikeIcon() {
+        String iconPath = !isLiked
+                ? "/assets/icons/emptyHeart.png"
+                : "/assets/icons/fillHeart.png";
+        likeIcon.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(iconPath))));
+    }
+
+    // 좋아요 클릭 시 색상 및 숫자 변화
+    @FXML
+    public void handleLikeButtonClick(ActionEvent actionEvent) {
+        if (currentPost == null || memberSession.getMember() == null) return;
+
+        Long postId = currentPost.getId();
+        Long memberId = memberSession.getMember().getId();
+
+        // 상태 전환
+        isLiked = !isLiked; // 초기값: false
+
+        // 좋아요 클릭 시 1 증가
+        if (isLiked) {
+            likeCount++;
+        } else {    // 그렇지 않은 경우 1 감소
+            likeCount--;
+        }
+
+        // UI 반영
+        updateLikeIcon();
+        likesLabel.setText(String.valueOf(likeCount));
+
+        // DB 반영
+        PostService postService = DIContainer.getInstance().resolve(PostService.class);
+        postService.likePost(postId, memberId);
+
+        // Post 객체에도 업데이트
+        currentPost.setLike_count(likeCount);
+        currentPost.setLiked(isLiked);
+    }
 }

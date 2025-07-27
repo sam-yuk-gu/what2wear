@@ -8,6 +8,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
+// 작성자 : 오수경
 public class LoadingAiController {
 
     @FXML StackPane root;

@@ -4,8 +4,8 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
+<!-- 작성자 : 오수경 -->
 <StackPane fx:id="root" prefHeight="768" prefWidth="1280" stylesheets="/com/samyukgu/what2wear/ai/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.ai.controller.RecommendAiController">
-
     <VBox alignment="CENTER" style="-fx-padding: 20;" styleClass="ai_vbox">
 
         <!-- 상단 헤더 -->
