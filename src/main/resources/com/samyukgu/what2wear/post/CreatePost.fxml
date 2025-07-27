@@ -29,7 +29,7 @@
                                  <Font size="18.0" />
                               </font>
                            </Label>
-                           <TextField fx:id="input_title" layoutX="152.0" layoutY="23.0" prefHeight="50.0" prefWidth="810.0" promptText="제목을 입력해주세요." />
+                           <TextField fx:id="input_title" layoutX="152.0" layoutY="23.0" prefHeight="50.0" prefWidth="810.0" promptText="제목을 입력해주세요." styleClass="input-box" />
                         </children>
                      </Pane>
                      </children>
@@ -46,7 +46,7 @@
                                  </font>
                               </Label>
                               <!-- wrapText 으로 자동으로 줄 바꿈 !-->
-                              <TextArea fx:id="content_title" layoutX="152.0" layoutY="22.0" prefHeight="50.0" prefWidth="810.0" wrapText="true" promptText="내용을 입력해주세요." />
+                              <TextArea fx:id="content_title" layoutX="152.0" layoutY="22.0" prefHeight="50.0" prefWidth="810.0" wrapText="true" styleClass="textarea-box" promptText="내용을 입력해주세요." />
                            </children>
                         </Pane>
                      </children>

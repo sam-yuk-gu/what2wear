@@ -70,7 +70,7 @@ public class CodiEditController {
             HBox header = loader.load();
 
             BasicHeaderController controller = loader.getController();
-            controller.setTitle("일정 추가");
+            controller.setTitle("일정 변경");
             controller.setOnBackAction(() -> {
                 try {
                     Parent view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/samyukgu/what2wear/codi/CodiMainView.fxml")));

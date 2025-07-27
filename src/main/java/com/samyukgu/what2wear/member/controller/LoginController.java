@@ -20,12 +20,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class LoginController {
-    @FXML private StackPane root;
+    @FXML private HBox root;
     @FXML private static LoginController instance;
     @FXML private TextField inputIdField;
     @FXML private PasswordField inputPasswordField;
