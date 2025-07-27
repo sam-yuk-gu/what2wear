@@ -31,7 +31,7 @@
                 <Label fx:id="temperatureLabel" styleClass="temperature-label" text="22°C" />
             </HBox>
             <!-- 지역구, 날짜 -->
-            <VBox alignment="center_right">
+            <VBox styleClass="region-box" alignment="center_right">
                 <Label fx:id="regionLabel" styleClass="region-label" text="서울특별시" />
                 <Label fx:id="dateLabel" styleClass="date-label" text="7월 25일 (목)" />
             </VBox>
