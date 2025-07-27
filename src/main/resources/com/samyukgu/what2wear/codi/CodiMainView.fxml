@@ -16,7 +16,7 @@
 <VBox spacing="50">
     <HBox>
         <VBox spacing="7">
-            <Label fx:id="welcomeTitle" styleClass="welcome-title" text="안녕하세요, 코사님" />
+            <Label fx:id="welcomeTitle" styleClass="welcome-title" text="안녕하세요, " />
             <Label fx:id="welcomeSubtext" styleClass="welcome-subtext" text="오늘의 일정은 어떻게 되시나요?" />
         </VBox>
         <Region HBox.hgrow="ALWAYS" />
