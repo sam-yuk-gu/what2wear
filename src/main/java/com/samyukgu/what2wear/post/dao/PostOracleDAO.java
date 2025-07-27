@@ -184,20 +184,44 @@ public class PostOracleDAO implements PostDAO {
 
     @Override
     public void delete(Long id) {
-        String sql = """
-                    DELETE FROM post WHERE id = ?
-                """;
+        String deleteCommentsSql = "DELETE FROM post_comment WHERE post_id = ?";
+        String deleteLikesSql = "DELETE FROM like_post WHERE post_id = ?";
+        String deletePostSql = "DELETE FROM post WHERE id = ?";
 
-        try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection()) {
+            // 트랜잭션 시작
+            conn.setAutoCommit(false);
 
-            pstmt.setLong(1, id);
-            pstmt.executeUpdate();
+            try (
+                    PreparedStatement deleteCommentsStmt = conn.prepareStatement(deleteCommentsSql);
+                    PreparedStatement deleteLikesStmt = conn.prepareStatement(deleteLikesSql);
+                    PreparedStatement deletePostStmt = conn.prepareStatement(deletePostSql)
+            ) {
+                // 댓글 삭제
+                deleteCommentsStmt.setLong(1, id);
+                deleteCommentsStmt.executeUpdate();
+
+                // 좋아요 삭제
+                deleteLikesStmt.setLong(1, id);
+                deleteLikesStmt.executeUpdate();
+
+                // 게시글 삭제
+                deletePostStmt.setLong(1, id);
+                deletePostStmt.executeUpdate();
+
+                // 커밋
+                conn.commit();
+            } catch (SQLException e) {
+                conn.rollback();
+                e.printStackTrace();
+                throw new RuntimeException("Error while deleting post and related data");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Error By Delete Post");
         }
     }
+
 
     public List<Post> search(String keyword, String type) {
         String sqlBase = """
