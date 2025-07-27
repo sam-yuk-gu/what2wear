@@ -1,3 +1,4 @@
+// 작성자 : 최이서
 package com.samyukgu.what2wear.common.util;
 
 import com.google.gson.Gson;

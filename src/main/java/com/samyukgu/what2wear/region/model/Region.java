@@ -1,3 +1,4 @@
+// 작성자 : 최이서
 package com.samyukgu.what2wear.region.model;
 
 import lombok.AllArgsConstructor;

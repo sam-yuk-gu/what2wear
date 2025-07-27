@@ -1,3 +1,4 @@
+// 작성자 : 최이서
 package com.samyukgu.what2wear.common.controller;
 
 import com.samyukgu.what2wear.codi.dto.CodiDetailDTO;
