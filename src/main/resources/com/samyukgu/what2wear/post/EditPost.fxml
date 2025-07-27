@@ -21,19 +21,6 @@
                     </Label>
                     <TextArea styleClass="textarea-box" fx:id="content_input" layoutX="165.0" layoutY="26.0" prefHeight="218.0" prefWidth="820.0" promptText="내용을 입력해주세요." />
                 </HBox>
-
-                <HBox spacing="20" alignment="TOP_LEFT" style="-fx-padding: 20 0 0 0">
-                    <Label fx:id="codi_text" layoutX="31.0" styleClass="title_text" text="코디">
-                        <font><Font size="18.0" /></font>
-                    </Label>
-                    <Button fx:id="codi_button" layoutX="165.0" prefHeight="60.0" prefWidth="224.0" styleClass="gray_stroke_button" text="내 코디 불러오기">
-                        <graphic>
-                            <ImageView fitHeight="24" fitWidth="24">
-                                <image><Image url="@/assets/icons/blackLogo.png" /></image>
-                            </ImageView>
-                        </graphic>
-                    </Button>
-                </HBox>
         </VBox>
 
         <HBox fx:id="bottom_two_button_hbox" alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="1030.0" styleClass="bottom_two_button">
