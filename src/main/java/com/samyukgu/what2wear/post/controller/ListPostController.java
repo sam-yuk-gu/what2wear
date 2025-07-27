@@ -1,25 +1,25 @@
 package com.samyukgu.what2wear.post.controller;
 
-import com.samyukgu.what2wear.common.controller.CustomModalController;
 import com.samyukgu.what2wear.di.DIContainer;
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
+import com.samyukgu.what2wear.member.Session.MemberSession;
+import com.samyukgu.what2wear.member.service.MemberService;
 import com.samyukgu.what2wear.post.model.Post;
 import com.samyukgu.what2wear.post.service.PostService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+// 작성자 : 오수경
 public class ListPostController implements Initializable {
     @FXML private StackPane root;
 
@@ -38,6 +38,9 @@ public class ListPostController implements Initializable {
     @FXML private TextField search_title;
     @FXML private ImageView search_icon;
 
+    // 회원 세션
+    private MemberService memberService;
+    private MemberSession memberSession;
 
     private PostService postService;
     private List<Post> allPosts;
@@ -47,8 +50,11 @@ public class ListPostController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // 회원 정보 불러오기
+        setupDI();
+
         this.postService = DIContainer.getInstance().resolve(PostService.class);
-        allPosts = postService.getAllPosts();
+        allPosts = postService.getAllPosts(memberSession.getMember().getId());
 
         search_icon.setOnMouseClicked(event -> handleSearch());
         search_title.setOnAction(event -> handleSearch()); // 엔터 키도 가능하게
@@ -78,27 +84,26 @@ public class ListPostController implements Initializable {
         });
     }
 
+    // 회원 정보 불러오기
+    private void setupDI() {
+        DIContainer diContainer = DIContainer.getInstance();
+        memberService = diContainer.resolve(MemberService.class);
+        memberSession = diContainer.resolve(MemberSession.class);
+    }
+
     // 게시글 정보 검색
     private void handleSearch() {
-        boolean isFilterSelected = checkIfFilterIsSelected(); // 필터 선택 여부 검사
-
         String keyword = search_title.getText();
         String type = select_title.getValue();
 
         if (keyword == null || keyword.isBlank() || type == null) {
-            allPosts = postService.getAllPosts(); // 전체 조회
+            allPosts = postService.getAllPosts(memberSession.getMember().getId()); // 전체 조회
         } else {
             allPosts = postService.searchPost(keyword, type); // 조건 검색
         }
 
         // 검색 결과 표시
         showPage(1);
-    }
-
-
-    // 필터 선택 여부 검사
-    private boolean checkIfFilterIsSelected() {
-        return select_title.getValue() != null && !select_title.getValue().isBlank();
     }
 
     private void setupPagination() {

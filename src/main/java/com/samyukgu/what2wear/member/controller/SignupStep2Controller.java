@@ -25,6 +25,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+// 작성자 : 백승준
 public class SignupStep2Controller {
     @FXML private HBox signupBanner;
     @FXML private TextField inputIdField;

@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
+// 작성자 : 백승준
 public class MemberInfoFixController {
     @FXML private Label memberEmailLabel;
     @FXML private Label memberNameLabel;

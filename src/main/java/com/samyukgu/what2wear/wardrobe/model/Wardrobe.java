@@ -1,3 +1,4 @@
+// 작성자 : 김동현
 package com.samyukgu.what2wear.wardrobe.model;
 
 public class Wardrobe {
@@ -13,8 +14,6 @@ public class Wardrobe {
     private String color;
     private String brand;
     private String deleted;
-    // 추가
-    private String imagePath;
 
     public Wardrobe() {}
 

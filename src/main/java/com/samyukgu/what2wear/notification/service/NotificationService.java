@@ -8,6 +8,7 @@ import com.samyukgu.what2wear.notification.dao.NotificationDAO;
 import java.util.ArrayList;
 import java.util.List;
 
+// 작성자 : 백승준
 public class NotificationService {
     private FriendDAO friendDAO;
     private NotificationDAO notificationDAO;

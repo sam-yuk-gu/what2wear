@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<!-- 작성자 : 오수경 -->
 <StackPane fx:id="root" prefHeight="768.0" prefWidth="880.0" stylesheets="/com/samyukgu/what2wear/ai/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.ai.controller.IntroduceAiController">
 
     <VBox fx:id="container_vbox" alignment="TOP_RIGHT" maxWidth="800" prefHeight="768.0" prefWidth="800.0" style="-fx-padding: 20;">
@@ -18,8 +19,7 @@
         <!-- 인사말 -->
         <VBox fx:id="top_title_vbox" alignment="CENTER_LEFT" maxWidth="Infinity">
             <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="1030.0" spacing="4">
-                <Label text="안녕하세요," styleClass="description_text" />
-                <Label text="OOO님! 😊" styleClass="description_text" />
+                <Label text="안녕하세요!" styleClass="description_text" />
             </HBox>
             <Label text="오늘도 어떤 옷을 입을지 고민되시죠?" styleClass="description_text" />
         </VBox>

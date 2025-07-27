@@ -1,3 +1,4 @@
+// 작성자 : 김동현
 package com.samyukgu.what2wear.myCodi.controller;
 
 import com.samyukgu.what2wear.layout.controller.MainLayoutController;
@@ -515,7 +516,7 @@ public class ListMyCodiController implements Initializable {
         }
     }
 
-    // 즐겨찾기 필터링 (향후 구현)
+    // 즐겨찾기 필터링
     @FXML
     private void filterFavorites() {
         showFavoritesOnly = !showFavoritesOnly;

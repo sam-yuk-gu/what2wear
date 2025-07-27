@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.StackPane;
 
+// 작성자 : 백승준
 public class MemberPasswordFixController {
     @FXML private Label passwordRule;
     @FXML private StackPane root;

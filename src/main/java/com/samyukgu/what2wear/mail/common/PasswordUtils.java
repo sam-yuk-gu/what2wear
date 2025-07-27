@@ -2,6 +2,7 @@ package com.samyukgu.what2wear.mail.common;
 
 import java.security.SecureRandom;
 
+// 작성자 : 백승준
 public class PasswordUtils {
     static final int PASSWORD_LENGTH = 12;
 

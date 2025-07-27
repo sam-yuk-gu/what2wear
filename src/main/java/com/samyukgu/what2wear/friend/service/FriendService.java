@@ -6,6 +6,7 @@ import com.samyukgu.what2wear.member.model.Member;
 import com.samyukgu.what2wear.notification.dao.NotificationDAO;
 import java.util.List;
 
+// 작성자 : 백승준
 public class FriendService {
     MemberDAO memberDAO;
     FriendDAO friendDAO;

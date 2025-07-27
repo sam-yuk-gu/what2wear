@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<!-- 작성자 : 오수경 -->
 <StackPane fx:id="root" prefHeight="768.0" stylesheets="/com/samyukgu/what2wear/post/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.samyukgu.what2wear.post.controller.CreatePostController">
 
    <HBox>
@@ -36,9 +37,9 @@
                   </HBox>
 
                <!-- 내용 !-->
-                  <HBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="1010.0" style="-fx-border-color: #EEEEEE; -fx-border-width: 0 0 1 0;">
+                  <HBox layoutX="10.0" layoutY="10.0" prefHeight="300.0" prefWidth="1010.0" style="-fx-border-color: #EEEEEE; -fx-border-width: 0 0 1 0;">
                      <children>
-                        <Pane fx:id="content_pane" prefHeight="100.0" prefWidth="1010.0">
+                        <Pane fx:id="content_pane" prefHeight="300.0" prefWidth="1010.0">
                            <children>
                               <Label fx:id="content_text" layoutX="29.0" layoutY="22.0" styleClass="create_title_text" text="내용">
                                  <font>
@@ -46,33 +47,9 @@
                                  </font>
                               </Label>
                               <!-- wrapText 으로 자동으로 줄 바꿈 !-->
-                              <TextArea fx:id="content_title" layoutX="152.0" layoutY="22.0" prefHeight="50.0" prefWidth="810.0" wrapText="true" styleClass="textarea-box" promptText="내용을 입력해주세요." />
+                              <TextArea fx:id="content_title" layoutX="152.0" layoutY="22.0" prefHeight="250.0" prefWidth="810.0" wrapText="true" styleClass="textarea-box" promptText="내용을 입력해주세요." />
                            </children>
                         </Pane>
-                     </children>
-                  </HBox>
-
-               <!-- 코디 !-->
-                  <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #EEEEEE; -fx-border-width: 0 0 1 0;">
-                     <children>
-                     <Pane fx:id="codi_pane" prefHeight="100.0" prefWidth="1010.0">
-                        <children>
-                           <Label fx:id="codi_text" layoutX="29.0" layoutY="22.0" styleClass="create_title_text" text="코디">
-                              <font>
-                                 <Font size="18.0" />
-                              </font>
-                           </Label>
-                           <Button fx:id="codi_button" layoutX="151.0" layoutY="20.0" prefHeight="60.0" prefWidth="224.0" styleClass="gray_stroke_button" text="내 코디 불러오기">
-                              <graphic>
-                                 <ImageView fitHeight="24" fitWidth="24">
-                                    <image>
-                                       <Image url="@/assets/icons/blackLogo.png" />
-                                    </image>
-                                 </ImageView>
-                              </graphic>
-                           </Button>
-                        </children>
-                     </Pane>
                      </children>
                   </HBox>
             </children>

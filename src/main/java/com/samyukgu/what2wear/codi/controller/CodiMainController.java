@@ -99,6 +99,13 @@ public class CodiMainController {
 
 
     private void setupWeather() {
+        // null 체크 추가
+        if (weather != null) {
+            System.out.println(weather.getTemp());
+        } else {
+            System.out.println("weather is null!");
+        }
+
         temperatureLabel.setText(weather.getTemp().toString() + "°C");
         regionLabel.setText(region.getRegionParent() + " " + region.getRegionChild());
         dateLabel.setText(formatKoreanDate(currentDate));

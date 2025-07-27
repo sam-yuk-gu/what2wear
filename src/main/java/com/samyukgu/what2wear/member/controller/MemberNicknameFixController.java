@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 
+// 작성자 : 백승준
 public class MemberNicknameFixController {
 
 

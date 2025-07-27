@@ -52,6 +52,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+// 작성자 : 백승준
 public class FriendMainController {
     private LocalDate currentDateSelected;
 
@@ -312,35 +313,6 @@ public class FriendMainController {
         showScheduleDetail(currentDateSelected);
     }
 
-    /**
-     * 친구 목록을 업데이트하는 메서드 (외부에서 호출 가능)
-     */
-    public void updateFriendList(List<Member> newFriendList) {
-        this.friendList = newFriendList;
-        renderFriendList();
-    }
-
-    /**
-     * 특정 친구를 추가하는 메서드
-     */
-    public void addFriend(Member newFriend) {
-        if (friendList == null) {
-            friendList = new ArrayList<>();
-        }
-        friendList.add(newFriend);
-        renderFriendList();
-    }
-
-    /**
-     * 특정 친구를 제거하는 메서드
-     */
-    public void removeFriend(Member friendToRemove) {
-        if (friendList != null) {
-            friendList.remove(friendToRemove);
-            renderFriendList();
-        }
-    }
-
     private void loadScheduleForMonth(LocalDate month) {
         if (selectedFriend == null) {
             dotScheduleMap = new HashMap<>();
@@ -473,6 +445,7 @@ public class FriendMainController {
             if (isCurrentMonth) {
                 dayCell.setOnMouseClicked(e -> {
                     currentDateSelected = dateForCell;
+                    loadScheduleForDay(dateForCell);
                     renderCalendar(currentDate);
                     showScheduleDetail(dateForCell);
                 });

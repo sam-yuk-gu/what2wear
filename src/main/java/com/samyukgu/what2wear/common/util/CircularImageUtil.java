@@ -9,6 +9,7 @@ import java.io.ByteArrayInputStream;
 /**
  * 원형 프로필 이미지를 생성하는 유틸리티 클래스
  */
+// 작성자 : 백승준
 public class CircularImageUtil {
 
     /**
