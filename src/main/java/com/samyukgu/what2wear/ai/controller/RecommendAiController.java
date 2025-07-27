@@ -2,6 +2,7 @@ package com.samyukgu.what2wear.ai.controller;
 
 import com.samyukgu.what2wear.ai.service.OpenAiChatService;
 import com.samyukgu.what2wear.ai.service.WeatherAiService;
+import com.samyukgu.what2wear.codi.service.CodiService;
 import com.samyukgu.what2wear.common.controller.CustomModalController;
 import com.samyukgu.what2wear.config.ConfigUtil;
 import com.samyukgu.what2wear.di.DIContainer;
@@ -24,6 +25,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -268,6 +270,37 @@ public class RecommendAiController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/samyukgu/what2wear/common/CustomModal.fxml"));
         StackPane modal = loader.load();
 
+        // DIContainer에서 CodiService 가져오기
+        CodiService codiService = DIContainer.getInstance().resolve(CodiService.class);
+
+        // 필요한 값 설정
+        Long memberId = memberSession.getMember().getId(); // 로그인 사용자
+        String title = "AI 추천 코디";
+        LocalDate date = LocalDate.now(); // 오늘 날짜
+        int scope = 0;
+
+        // AI에서 추천받은 옷 데이터를 바탕으로 Wardrobe 객체 리스트 구성
+        List<Wardrobe> selectedOutfits = new ArrayList<>();
+        Wardrobe top = new Wardrobe();
+        top.setName(topLabel.getText().replace("· 상의: ", ""));
+        top.setCategoryId(1L); // "상의"에 해당하는 category_id
+
+        Wardrobe bottom = new Wardrobe();
+        bottom.setName(bottomLabel.getText().replace("· 하의: ", ""));
+        bottom.setCategoryId(2L);
+
+        Wardrobe shoes = new Wardrobe();
+        shoes.setName(shoesLabel.getText().replace("· 신발: ", ""));
+        shoes.setCategoryId(6L);
+
+        Wardrobe acc = new Wardrobe();
+        acc.setName(accLabel.getText().replace("· 악세사리: ", ""));
+        acc.setCategoryId(7L);
+
+        // 코디 생성
+        codiService.createCodiSchedule(memberId, title, date, scope, selectedOutfits);
+
+        // 모달 설정
         CustomModalController controller = loader.getController();
         controller.configure(
                 "코디 저장 완료",
@@ -279,10 +312,11 @@ public class RecommendAiController {
                 () -> root.getChildren().remove(modal),
                 () -> {
                     root.getChildren().remove(modal);
-                    MainLayoutController.loadView("/com/samyukgu/what2wear/ai/LoadingAi.fxml");
+                    MainLayoutController.loadView("/com/samyukgu/what2wear/codi/CodiMainView.fxml");
                 }
         );
 
         root.getChildren().add(modal);
     }
+
 }
